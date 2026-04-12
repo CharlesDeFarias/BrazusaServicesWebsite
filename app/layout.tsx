@@ -1,17 +1,18 @@
 import type { Metadata } from 'next'
-import { DM_Serif_Display, DM_Sans } from 'next/font/google'
+import { Cormorant_Garamond, Syne } from 'next/font/google'
 import './globals.css'
 
-const dmSerif = DM_Serif_Display({
-  weight: '400',
+const cormorant = Cormorant_Garamond({
+  weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
-  variable: '--font-dm-serif',
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
+const syne = Syne({
   subsets: ['latin'],
-  variable: '--font-dm-sans',
+  variable: '--font-syne',
   display: 'swap',
 })
 
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${dmSerif.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${syne.variable}`}>
       <body>{children}</body>
     </html>
   )

@@ -1,46 +1,31 @@
 const ways = [
-  {
-    title: 'Referrals',
-    desc: 'Send us a client. If we complete a cleaning, you get rewarded.',
-  },
-  {
-    title: 'Schedule with neighbors',
-    desc: 'If you and nearby clients book on the same day, it reduces our travel time — which lowers your cost.',
-  },
-  {
-    title: 'Flexible timing',
-    desc: "If you're flexible on when we clean, it lets us optimize our schedule.",
-  },
-  {
-    title: 'Recurring service',
-    desc: 'Consistent cleanings are easier to maintain and more efficient.',
-  },
-  {
-    title: 'Helping us grow locally',
-    desc: "Connecting us with property managers, letting us share info in your building, or helping us build local relationships can all translate into better pricing.",
-  },
+  { title: 'Referrals',             desc: 'Send us a client. Get rewarded when we complete the job.' },
+  { title: 'Schedule with neighbors', desc: 'Same-day nearby bookings reduce travel — we pass the savings on.' },
+  { title: 'Flexible timing',       desc: 'Flexibility lets us optimize our schedule and your cost.' },
+  { title: 'Recurring service',     desc: 'Consistent bookings are simpler to maintain and better priced.' },
+  { title: 'Help us grow locally',  desc: 'Introductions to property managers or neighbors can translate into better pricing.' },
 ]
 
 export default function Promotions() {
   return (
-    <section className="bg-off-white border-t border-light-gray py-16 px-6">
-      <div className="max-w-2xl mx-auto">
-        <h2 className="text-2xl md:text-3xl text-navy mb-4">Ways to lower your cost</h2>
-        <p className="text-gray-600 leading-relaxed mb-10">
-          If you help us operate more efficiently, we pass that savings to you.
-        </p>
-        <div className="space-y-7 mb-10">
-          {ways.map((w) => (
-            <div key={w.title}>
-              <p className="font-semibold text-navy mb-1">{w.title}</p>
-              <p className="text-gray-600 text-sm leading-relaxed">{w.desc}</p>
+    <section className="bg-off-white py-14 px-6" style={{ borderTop: '1px solid #D8D0C6' }}>
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-8">
+          <h2 className="italic text-3xl md:text-4xl text-navy mb-2" style={{ fontWeight: 300 }}>
+            Ways to lower your cost
+          </h2>
+          <p className="text-sm" style={{ color: '#7A7470' }}>Help us operate more efficiently — we share the savings.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {ways.map((w, i) => (
+            <div key={w.title} className="bg-white rounded-xl p-5 relative overflow-hidden" style={{ border: '1px solid #D8D0C6' }}>
+              <span className="absolute -bottom-2 -right-1 text-7xl font-bold leading-none pointer-events-none select-none" style={{ color: 'rgba(11,29,46,0.03)', fontFamily: 'var(--font-syne)' }}>
+                {i + 1}
+              </span>
+              <p className="font-semibold text-navy mb-1.5 text-sm relative">{w.title}</p>
+              <p className="text-xs leading-relaxed relative" style={{ color: '#7A7470' }}>{w.desc}</p>
             </div>
           ))}
-        </div>
-        <div className="border-t border-light-gray pt-6">
-          <p className="text-sm text-gray-500">
-            We&apos;re open to creative setups. If there&apos;s a way to make things work better for both sides, we&apos;ll usually find it.
-          </p>
         </div>
       </div>
     </section>

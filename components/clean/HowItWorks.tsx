@@ -1,30 +1,36 @@
 const steps = [
-  { n: '01', text: 'Reach out — quick or detailed' },
-  { n: '02', text: 'We respond fast' },
-  { n: '03', text: 'We provide a quote or schedule a visit' },
-  { n: '04', text: 'Cleaning begins' },
+  { n: '01', title: 'Reach out',      desc: 'Quick message or detailed — whatever works' },
+  { n: '02', title: 'Fast response',  desc: 'We get back to you promptly' },
+  { n: '03', title: 'Get a quote',    desc: 'A visit or estimate based on what you need' },
+  { n: '04', title: 'We handle it',   desc: 'Cleaning begins — no follow-up required' },
 ]
 
 export default function HowItWorks() {
   return (
-    <section className="bg-off-white border-t border-light-gray py-16 px-6">
-      <div className="max-w-2xl mx-auto">
-        <h2 className="text-2xl md:text-3xl text-navy mb-10">How it works</h2>
-        <div className="space-y-7 mb-8">
+    <section
+      id="how-it-works"
+      className="bg-off-white py-14 px-6"
+      style={{ borderTop: '1px solid #D8D0C6', scrollMarginTop: '56px' }}
+    >
+      <div className="max-w-5xl mx-auto">
+        <h2 className="italic text-3xl md:text-4xl text-navy mb-12" style={{ fontWeight: 300 }}>
+          How it works
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((s) => (
-            <div key={s.n} className="flex items-start gap-5">
-              <span className="text-2xl font-light flex-shrink-0 w-10 leading-none" style={{ color: '#2DAAE1', opacity: 0.5 }}>
+            <div key={s.n}>
+              <div className="text-7xl font-bold leading-none mb-3 select-none" style={{ color: 'rgba(11,29,46,0.06)', fontFamily: 'var(--font-syne)' }}>
                 {s.n}
-              </span>
-              <span className="text-lg text-navy leading-snug pt-0.5">{s.text}</span>
+              </div>
+              <div className="w-6 h-px mb-3" style={{ background: '#C49A44' }} />
+              <p className="font-semibold text-navy mb-1.5 text-sm">{s.title}</p>
+              <p className="text-xs leading-relaxed" style={{ color: '#7A7470' }}>{s.desc}</p>
             </div>
           ))}
         </div>
-        <div className="border-t border-light-gray pt-6">
-          <p className="text-sm text-gray-500 leading-relaxed">
-            If something is different from what we expected when quoting, we&apos;ll tell you before starting — no surprises.
-          </p>
-        </div>
+        <p className="text-xs mt-10 pt-5" style={{ borderTop: '1px solid #D8D0C6', color: '#9B9288' }}>
+          If something unexpected comes up, we&apos;ll tell you before starting — no surprises.
+        </p>
       </div>
     </section>
   )

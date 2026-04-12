@@ -1,35 +1,69 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #0B2A3C;
-  --color-off-white: #F7F9FB;
-  --color-light-gray: #E5E9EF;
-  --color-brand-blue: #2DAAE1;
-  --color-brand-yellow: #F4C430;
+  --color-navy:        #0B1D2E;
+  --color-off-white:   #F2EDE6;
+  --color-linen:       #EAE3DA;
+  --color-light-gray:  #D8D0C6;
+  --color-brand-blue:  #2DAAE1;
+  --color-brand-gold:  #C49A44;
+  --color-brand-yellow: #C49A44;
   --color-brand-green: #4CAF50;
-  --color-brand-red: #D62828;
-  --font-display: var(--font-dm-serif);
-  --font-sans: var(--font-dm-sans);
+  --color-brand-red:   #D62828;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: #F7F9FB;
-  color: #0B2A3C;
-  font-family: var(--font-dm-sans, ui-sans-serif, system-ui);
+  background-color: #F2EDE6;
+  color: #0B1D2E;
+  font-family: var(--font-syne, ui-sans-serif, system-ui);
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3 {
-  font-family: var(--font-dm-serif, Georgia, serif);
+  font-family: var(--font-cormorant, Georgia, serif);
   font-weight: 400;
 }
 
+/* Grain texture overlay — applied to sections that need depth */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+/* Ensure children of .grain appear above the grain layer */
+.grain > * {
+  position: relative;
+  z-index: 2;
+}
+
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.fade-up   { animation: fadeUp 0.65s ease both; }
-.fade-up-1 { animation: fadeUp 0.65s 0.15s ease both; }
-.fade-up-2 { animation: fadeUp 0.65s 0.3s  ease both; }
-.fade-up-3 { animation: fadeUp 0.65s 0.45s ease both; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.fade-up   { animation: fadeUp 0.7s ease both; }
+.fade-up-1 { animation: fadeUp 0.7s 0.15s ease both; }
+.fade-up-2 { animation: fadeUp 0.7s 0.3s  ease both; }
+.fade-up-3 { animation: fadeUp 0.7s 0.45s ease both; }
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}

@@ -8,44 +8,80 @@ interface StickyNavProps {
   onQuoteClick: () => void
 }
 
-export default function StickyNav({ heroRef, onQuoteClick }: StickyNavProps) {
-  const [visible, setVisible] = useState(false)
+const navLinks = [
+  { label: 'Services',     href: '#services' },
+  { label: 'How It Works', href: '#how-it-works' },
+  { label: 'Pricing',      href: '#pricing' },
+  { label: 'About',        href: '#about' },
+]
+
+export default function StickyNav({ onQuoteClick }: StickyNavProps) {
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const target = heroRef.current
-    if (!target) return
-    const observer = new IntersectionObserver(
-      ([entry]) => setVisible(!entry.isIntersecting),
-      { threshold: 0 }
-    )
-    observer.observe(target)
-    return () => observer.disconnect()
-  }, [heroRef])
+    const onScroll = () => setScrolled(window.scrollY > 80)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-light-gray"
+      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
       style={{
-        transition: 'opacity 0.2s ease, transform 0.2s ease',
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(-100%)',
-        pointerEvents: visible ? 'auto' : 'none',
+        background: scrolled ? '#F2EDE6' : 'rgba(11,29,46,0.75)',
+        backdropFilter: 'blur(14px)',
+        WebkitBackdropFilter: 'blur(14px)',
+        borderBottom: scrolled ? '1px solid #D8D0C6' : '1px solid rgba(255,255,255,0.07)',
       }}
     >
-      <div className="max-w-4xl mx-auto px-6 py-3 flex justify-between items-center">
-        <Image
-          src="/logo.jpg"
-          alt="Brazusa Cleaning"
-          width={130}
-          height={44}
-          className="h-9 w-auto object-contain"
-          priority
-        />
+      <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
+
+        {/* Logo — click to scroll to top */}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="flex-shrink-0 focus:outline-none"
+          aria-label="Back to top"
+        >
+          <Image
+            src="/logo.jpg"
+            alt="Brazusa Cleaning"
+            width={110}
+            height={38}
+            className="h-8 w-auto object-contain"
+            priority
+            style={{ filter: scrolled ? 'none' : 'brightness(0) invert(1)' }}
+          />
+        </button>
+
+        {/* Nav links — desktop */}
+        <div className="hidden md:flex items-center gap-7 flex-1 justify-center">
+          {navLinks.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              className="text-xs font-medium transition-opacity hover:opacity-100"
+              style={{
+                color: scrolled ? 'rgba(11,29,46,0.55)' : 'rgba(255,255,255,0.6)',
+                letterSpacing: '0.06em',
+                textDecoration: 'none',
+              }}
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+
+        {/* Quote CTA */}
         <button
           onClick={onQuoteClick}
-          className="bg-brand-blue text-white px-5 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity"
+          className="flex-shrink-0 text-xs font-medium px-4 py-2 transition-all duration-200 text-white"
+          style={{
+            background: scrolled ? '#0B1D2E' : 'rgba(255,255,255,0.1)',
+            borderLeft: '2px solid #C49A44',
+            letterSpacing: '0.05em',
+          }}
         >
-          Get a Quote
+          Free Quote
         </button>
       </div>
     </nav>

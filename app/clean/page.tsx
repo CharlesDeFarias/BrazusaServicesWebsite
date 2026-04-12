@@ -1,98 +1,141 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import StickyNav    from '@/components/StickyNav'
-import Hero         from '@/components/clean/Hero'
-import TrustStrip   from '@/components/clean/TrustStrip'
-import ClientSelector from '@/components/clean/ClientSelector'
-import WhyDifferent from '@/components/clean/WhyDifferent'
-import ClientSection from '@/components/clean/ClientSection'
-import Services     from '@/components/clean/Services'
-import HowItWorks   from '@/components/clean/HowItWorks'
-import Pricing      from '@/components/clean/Pricing'
-import Promotions   from '@/components/clean/Promotions'
-import Testimonials from '@/components/clean/Testimonials'
-import ServiceArea  from '@/components/clean/ServiceArea'
-import About        from '@/components/clean/About'
-import FinalCTA     from '@/components/clean/FinalCTA'
-import Footer       from '@/components/clean/Footer'
-import QuoteDrawer  from '@/components/clean/QuoteDrawer'
+import StickyNav        from '@/components/StickyNav'
+import Hero             from '@/components/clean/Hero'
+import TrustStrip       from '@/components/clean/TrustStrip'
+import WhyDifferent     from '@/components/clean/WhyDifferent'
+import ClientSelector   from '@/components/clean/ClientSelector'
+import ClientAccordion  from '@/components/clean/ClientAccordion'
+import type { ClientItem } from '@/components/clean/ClientAccordion'
+import Services         from '@/components/clean/Services'
+import HowItWorks       from '@/components/clean/HowItWorks'
+import Pricing          from '@/components/clean/Pricing'
+import QuickContact     from '@/components/clean/QuickContact'
+import NewsletterCTA    from '@/components/clean/NewsletterCTA'
+import Promotions       from '@/components/clean/Promotions'
+import Testimonials     from '@/components/clean/Testimonials'
+import ServiceArea      from '@/components/clean/ServiceArea'
+import About            from '@/components/clean/About'
+import FinalCTA         from '@/components/clean/FinalCTA'
+import Footer           from '@/components/clean/Footer'
+import QuoteDrawer      from '@/components/clean/QuoteDrawer'
+import ScrollToTop      from '@/components/clean/ScrollToTop'
+
+const clientItems: ClientItem[] = [
+  {
+    id: 'str',
+    n: '01',
+    label: 'Short-Term Rentals',
+    teaser: 'Fast turnovers, consistent quality, no surprises',
+    headline: 'Short-Term Rental Cleaning',
+    imageLabel: 'STR unit photo',
+    spaceType: 'str',
+    body: (
+      <>
+        <p>Fast turnovers, consistent quality, no surprises — we build repeatable systems around your units.</p>
+        <p>We handle every turnover the same way so you can stop thinking about it. We also help with small operational tasks that make managing your properties easier.</p>
+        <p>A missed detail can mean a bad review — and a bad review costs more than a cleaning ever will.</p>
+      </>
+    ),
+  },
+  {
+    id: 'property',
+    n: '02',
+    label: 'Property Managers & Buildings',
+    teaser: 'Multi-unit coordination, reliability at scale',
+    headline: 'Cleaning for Property Managers & Buildings',
+    imageLabel: 'Building / property photo',
+    spaceType: 'property',
+    body: (
+      <>
+        <p>Property management requires reliability across multiple units, consistency across different jobs, and professionalism with tenants, staff, and vendors.</p>
+        <p>We document, standardize, and communicate clearly — so you don&apos;t have to manage us. We manage ourselves.</p>
+        <p>Whether it&apos;s routine cleaning, move-out prep, or anything in between, we adapt to your properties and your systems.</p>
+      </>
+    ),
+  },
+  {
+    id: 'offices',
+    n: '03',
+    label: 'Offices & Clinics',
+    teaser: 'Consistent, minimally disruptive cleaning',
+    headline: 'Office & Clinic Cleaning',
+    imageLabel: 'Office space photo',
+    spaceType: 'office',
+    body: (
+      <>
+        <p>Most office cleaning happens when no one&apos;s around — and that&apos;s exactly how we like it.</p>
+        <p>Consistent, reliable service that works around your schedule. Simple communication, easy billing, no unnecessary complexity. Just dependable cleaning that works.</p>
+      </>
+    ),
+  },
+  {
+    id: 'homes',
+    n: '04',
+    label: 'Apartments & Homes',
+    teaser: 'Trusted, detail-oriented care for your home',
+    headline: 'Apartment & Home Cleaning',
+    imageLabel: 'Home / apartment photo',
+    spaceType: 'apartment',
+    body: (
+      <>
+        <p>Quality, trust, affordability, and real communication. We treat your space the way we&apos;d want ours treated.</p>
+        <p>Whether it&apos;s a one-time deep clean or recurring service, we adapt to what you actually need — not a fixed package that doesn&apos;t quite fit.</p>
+      </>
+    ),
+  },
+]
 
 export default function CleanPage() {
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen]         = useState(false)
+  const [drawerSpaceType, setDrawerSpaceType] = useState('')
+  const [activeClient, setActiveClient]     = useState<string | null>(null)
   const heroRef = useRef<HTMLElement>(null)
-  const openDrawer = () => setDrawerOpen(true)
+
+  const openDrawer = (spaceType = '') => {
+    setDrawerSpaceType(spaceType)
+    setDrawerOpen(true)
+  }
+
+  const handleClientSelect = (id: string) => {
+    setActiveClient(id)
+    setTimeout(() => {
+      document.getElementById('client-types')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 50)
+  }
 
   return (
     <main>
-      <StickyNav heroRef={heroRef} onQuoteClick={openDrawer} />
-      <Hero heroRef={heroRef} onQuoteClick={openDrawer} />
+      <StickyNav heroRef={heroRef} onQuoteClick={() => openDrawer()} />
+      <Hero heroRef={heroRef} onQuoteClick={() => openDrawer()} />
       <TrustStrip />
-      <ClientSelector />
       <WhyDifferent />
-
-      <ClientSection
-        id="str"
-        headline="Short-Term Rental Cleaning"
+      <ClientSelector onSelect={handleClientSelect} />
+      <ClientAccordion
+        items={clientItems}
+        openId={activeClient}
+        onOpenChange={setActiveClient}
         onCTAClick={openDrawer}
-        body={
-          <>
-            <p>We know what matters for short-term rentals: fast turnovers, consistent quality, no surprises.</p>
-            <p>A missed detail can mean a bad review — and a bad review costs more than a cleaning ever will.</p>
-            <p>We build repeatable systems around your units so you can rely on us without thinking about it. We can also help with small operational tasks that make managing your units easier.</p>
-          </>
-        }
       />
-
-      <ClientSection
-        id="property"
-        headline="Cleaning for Property Managers & Buildings"
-        onCTAClick={openDrawer}
-        bg="white"
-        body={
-          <>
-            <p>Property management requires more than just cleaning. It requires reliability across multiple units, consistency across different jobs, understanding building rules and systems, and professionalism with tenants, staff, and vendors.</p>
-            <p>We&apos;re built to handle that. We document, standardize, and communicate clearly so you don&apos;t have to manage the cleaners — we manage ourselves.</p>
-          </>
-        }
-      />
-
-      <ClientSection
-        id="offices"
-        headline="Office & Clinic Cleaning"
-        onCTAClick={openDrawer}
-        body={
-          <>
-            <p>Most office cleaning happens when no one&apos;s around — and that&apos;s exactly how we like it.</p>
-            <p>We focus on consistent, reliable cleaning, simple communication, and easy billing and scheduling. No unnecessary complexity. Just dependable service that works.</p>
-          </>
-        }
-      />
-
-      <ClientSection
-        id="homes"
-        headline="Apartment & Home Cleaning"
-        onCTAClick={openDrawer}
-        bg="white"
-        body={
-          <>
-            <p>For residential clients, it comes down to a few things: quality, trust, affordability, and communication.</p>
-            <p>We treat your space with the same level of care we&apos;d expect in our own. Whether it&apos;s a one-time clean or something recurring, we&apos;ll adapt to what you actually need.</p>
-          </>
-        }
-      />
-
       <Services />
       <HowItWorks />
       <Pricing />
+      <QuickContact />
+      <NewsletterCTA />
       <Promotions />
       <Testimonials />
-      <ServiceArea onQuoteClick={openDrawer} />
+      <ServiceArea onQuoteClick={() => openDrawer()} />
       <About />
-      <FinalCTA onQuoteClick={openDrawer} />
+      <FinalCTA onQuoteClick={() => openDrawer()} />
       <Footer />
 
-      <QuoteDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      <QuoteDrawer
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        defaultSpaceType={drawerSpaceType}
+      />
+      <ScrollToTop />
     </main>
   )
 }

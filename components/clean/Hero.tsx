@@ -1,4 +1,7 @@
+'use client'
+
 import type { RefObject } from 'react'
+import ImagePlaceholder from './ImagePlaceholder'
 
 interface HeroProps {
   heroRef: RefObject<HTMLElement | null>
@@ -9,43 +12,61 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
   return (
     <section
       ref={heroRef}
-      style={{ background: 'linear-gradient(160deg, #0d3347 0%, #0B2A3C 55%)' }}
-      className="text-white py-28 md:py-36 px-6"
+      className="grain bg-navy text-white min-h-screen flex items-center px-6 md:px-12 lg:px-16 pt-14"
     >
-      <div className="max-w-3xl mx-auto text-center">
-        <h1
-          className="fade-up text-4xl md:text-5xl lg:text-[3.4rem] leading-tight tracking-tight mb-6"
-          style={{ fontFamily: 'var(--font-dm-serif, Georgia, serif)', fontWeight: 400 }}
-        >
-          Reliable, high-detail cleaning for apartments, short-term rentals, and managed properties
-        </h1>
+      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 lg:gap-20 items-center py-20">
 
-        {/* Brand accent */}
-        <div className="fade-up-1 w-10 h-[2px] bg-brand-yellow mx-auto mb-7" />
+        {/* Text column */}
+        <div>
+          <div className="fade-up flex items-center gap-3 mb-10">
+            <div className="w-8 h-px bg-brand-gold" />
+            <span className="text-xs uppercase tracking-[0.22em]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+              Greater Boston · Since 1994
+            </span>
+          </div>
 
-        <p className="fade-up-1 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: 'rgba(255,255,255,0.72)' }}>
-          A family-run cleaning company with decades of experience — now built with the speed, structure, and communication of a modern service.
-        </p>
-
-        <div className="fade-up-2 flex flex-col sm:flex-row gap-3 justify-center mb-5">
-          <button
-            onClick={onQuoteClick}
-            className="bg-brand-blue text-white px-8 py-3.5 rounded-md text-base font-medium hover:opacity-90 transition-opacity"
+          <h1
+            className="fade-up-1 italic leading-none mb-8"
+            style={{ fontSize: 'clamp(3rem, 6.5vw, 5.25rem)', fontWeight: 300, letterSpacing: '-0.01em' }}
           >
-            Request a Quote
-          </button>
-          <a
-            href="tel:+1"
-            className="border text-white px-8 py-3.5 rounded-md text-base font-medium hover:bg-white/10 transition-colors"
-            style={{ borderColor: 'rgba(255,255,255,0.35)' }}
-          >
-            Call / Text Us
-          </a>
+            Reliable,<br />
+            high-detail<br />
+            cleaning.
+          </h1>
+
+          <div className="fade-up-1 w-12 h-px bg-brand-gold mb-8" />
+
+          <p className="fade-up-2 text-base md:text-lg leading-relaxed mb-10 max-w-md" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            Apartments, short-term rentals, and managed properties —
+            cleaned with the consistency and communication modern owners expect.
+          </p>
+
+          <div className="fade-up-2 flex flex-col sm:flex-row gap-3 mb-8">
+            <button
+              onClick={onQuoteClick}
+              className="text-sm font-medium px-6 py-3.5 text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
+              style={{ background: '#2DAAE1', borderLeft: '2px solid rgba(255,255,255,0.3)' }}
+            >
+              Get a Free Quote
+            </button>
+            <a
+              href="tel:7816867189"
+              className="text-sm font-medium px-6 py-3.5 text-white text-center transition-colors hover:bg-white/10"
+              style={{ border: '1px solid rgba(255,255,255,0.22)' }}
+            >
+              Call / Text: 781-686-7189
+            </a>
+          </div>
+
+          <p className="fade-up-3 text-xs" style={{ color: 'rgba(255,255,255,0.28)' }}>
+            Not the right fit? We&apos;ll help you find someone who is.
+          </p>
         </div>
 
-        <p className="fade-up-3 text-sm" style={{ color: 'rgba(255,255,255,0.42)' }}>
-          Not sure if we&apos;re the right fit? Call us anyway — we&apos;ll help you find someone who is.
-        </p>
+        {/* Image placeholder */}
+        <div className="fade-up-1 hidden lg:block">
+          <ImagePlaceholder aspect="3/4" label="Hero photo" dark className="w-full shadow-2xl" />
+        </div>
       </div>
     </section>
   )

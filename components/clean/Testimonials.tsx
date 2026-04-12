@@ -1,54 +1,45 @@
 const cases = [
   {
-    title: 'Short-term rental, inconsistent cleaners',
-    situation: 'Client had inconsistent cleaning and guest complaints.',
-    action: 'Created a repeatable turnover system with consistent expectations.',
-    result: 'More reliable cleanings and fewer issues between guests.',
+    title: 'Short-term rental owner',
+    result: 'More reliable cleanings, fewer issues between guests.',
+    detail: 'Created a repeatable turnover system with consistent expectations.',
   },
   {
-    title: 'Partial cleaning, reduced cost',
-    situation: "Client didn't need full cleaning and didn't want to pay for it.",
-    action: 'Built a custom plan focused only on key areas.',
+    title: 'Residential client',
     result: 'Lower cost and better satisfaction.',
+    detail: "Didn't need a full clean — we built a custom plan for key areas only.",
   },
   {
-    title: 'Property management support',
-    situation: 'Manager needed flexible help across different units and situations.',
-    action: 'Handled a mix of jobs while maintaining consistent communication.',
-    result: 'Less oversight required and smoother operations.',
+    title: 'Property manager',
+    result: 'Less oversight required, smoother operations.',
+    detail: 'Handled a mix of jobs across multiple units with consistent communication.',
   },
-]
-
-const rows: { key: keyof (typeof cases)[0]; label: string }[] = [
-  { key: 'situation', label: 'Situation' },
-  { key: 'action',    label: 'What we did' },
-  { key: 'result',    label: 'Result' },
 ]
 
 export default function Testimonials() {
   return (
-    <section className="bg-white border-t border-light-gray py-16 px-6">
-      <div className="max-w-2xl mx-auto">
-        <h2 className="text-2xl md:text-3xl text-navy mb-3">Real clients, real situations</h2>
-        <p className="text-gray-500 mb-10 leading-relaxed">
-          A few examples of the kinds of work we do and how we approach it.
-        </p>
-        <div className="space-y-6">
+    <section className="bg-white py-14 px-6" style={{ borderTop: '1px solid #D8D0C6' }}>
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-8">
+          <h2 className="italic text-3xl md:text-4xl text-navy mb-2" style={{ fontWeight: 300 }}>
+            Real clients, real situations
+          </h2>
+          <p className="text-sm" style={{ color: '#9B9288' }}>A few examples of the work we do and how we approach it.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {cases.map((c) => (
-            <div key={c.title} className="border border-light-gray rounded-lg p-6">
-              <p className="font-semibold text-navy mb-5 text-base">{c.title}</p>
-              <div className="space-y-3">
-                {rows.map(({ key, label }) => (
-                  <div key={label} className="flex gap-4 text-sm">
-                    <span className="text-gray-400 w-24 flex-shrink-0 pt-0.5">{label}</span>
-                    <span className="text-gray-600 leading-relaxed">{c[key]}</span>
-                  </div>
-                ))}
+            <div key={c.title} className="rounded-xl p-6 flex flex-col gap-3" style={{ border: '1px solid #D8D0C6' }}>
+              <span className="text-4xl leading-none select-none" style={{ fontFamily: 'var(--font-cormorant)', color: '#D8D0C6', lineHeight: 1 }}>&ldquo;</span>
+              <p className="italic text-navy leading-snug" style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.1rem', fontWeight: 400 }}>
+                {c.result}
+              </p>
+              <p className="text-xs leading-relaxed mt-auto" style={{ color: '#9B9288' }}>{c.detail}</p>
+              <div className="pt-3" style={{ borderTop: '1px solid #D8D0C6' }}>
+                <span className="text-xs font-medium" style={{ color: '#B0A89E' }}>{c.title}</span>
               </div>
             </div>
           ))}
         </div>
-        <p className="text-xs text-gray-400 mt-8">More testimonials coming soon.</p>
       </div>
     </section>
   )

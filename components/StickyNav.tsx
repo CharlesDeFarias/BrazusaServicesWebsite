@@ -43,7 +43,7 @@ export default function StickyNav({ onQuoteClick }: StickyNavProps) {
           aria-label="Back to top"
         >
           <Image
-            src="/logo.jpg"
+            src="/brand/logo.jpg"
             alt="Brazusa Cleaning"
             width={110}
             height={38}

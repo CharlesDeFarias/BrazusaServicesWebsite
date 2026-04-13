@@ -1,4 +1,4 @@
-import ImagePlaceholder from './ImagePlaceholder'
+import Image from 'next/image'
 
 export default function About() {
   return (
@@ -25,7 +25,15 @@ export default function About() {
             <span className="text-xs uppercase" style={{ color: '#B0A89E', letterSpacing: '0.14em' }}>Serving Boston since 1994</span>
           </div>
         </div>
-        <ImagePlaceholder aspect="4/5" label="Family / team photo" className="w-full hidden lg:block" />
+        <div className="relative hidden lg:block rounded-2xl overflow-hidden" style={{ aspectRatio: '4/5' }}>
+          <Image
+            src="/images/team.png"
+            alt="Brazusa Cleaning team"
+            fill
+            className="object-cover"
+            sizes="50vw"
+          />
+        </div>
       </div>
     </section>
   )

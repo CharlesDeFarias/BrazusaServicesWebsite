@@ -1,7 +1,7 @@
 'use client'
 
 import type { RefObject } from 'react'
-import ImagePlaceholder from './ImagePlaceholder'
+import Image from 'next/image'
 
 interface HeroProps {
   heroRef: RefObject<HTMLElement | null>
@@ -14,7 +14,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
       ref={heroRef}
       className="grain bg-navy text-white min-h-screen flex items-center px-6 md:px-12 lg:px-16 pt-14"
     >
-      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 lg:gap-20 items-center py-20">
+      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 lg:gap-20 items-center py-20">
 
         {/* Text column */}
         <div>
@@ -61,11 +61,32 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
           <p className="fade-up-3 text-xs" style={{ color: 'rgba(255,255,255,0.28)' }}>
             Not the right fit? We&apos;ll help you find someone who is.
           </p>
+
+          {/* Mobile image — shown below CTAs, hidden on desktop */}
+          <div className="fade-up-3 lg:hidden mt-10 rounded-xl overflow-hidden" style={{ aspectRatio: '16/9', position: 'relative' }}>
+            <Image
+              src="/images/hero.png"
+              alt="Professional cleaning"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
+            />
+          </div>
         </div>
 
-        {/* Image placeholder */}
+        {/* Desktop image — right column, portrait */}
         <div className="fade-up-1 hidden lg:block">
-          <ImagePlaceholder aspect="3/4" label="Hero photo" dark className="w-full shadow-2xl" />
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: '3/4' }}>
+            <Image
+              src="/images/hero.png"
+              alt="Professional cleaning"
+              fill
+              className="object-cover"
+              sizes="380px"
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>

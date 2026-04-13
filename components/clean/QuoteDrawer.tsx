@@ -60,6 +60,26 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
     }
   }, [isOpen, defaultSpaceType])
 
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [isOpen])
+
+  // Escape key closes without clearing form data
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onClose])
+
   const toggleDay = (day: string) =>
     setPreferredDays((p) => p.includes(day) ? p.filter((d) => d !== day) : [...p, day])
 
@@ -77,13 +97,16 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
     setSubmitted(true)
   }
 
+  // Only reset form state after a successful submit — preserve data on all other closes
   const handleClose = () => {
     onClose()
-    setTimeout(() => {
-      setSubmitted(false)
-      setDetailsOpen(false)
-      setError('')
-    }, 300)
+    if (submitted) {
+      setTimeout(() => {
+        setSubmitted(false)
+        setDetailsOpen(false)
+        setError('')
+      }, 300)
+    }
   }
 
   const getInputStyle = (field: string) => ({
@@ -206,7 +229,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                   </div>
                 </div>
 
-                {/* ── "Tell us more" expandable — moved above space type ── */}
+                {/* ── "Tell us more" expandable ── */}
                 <button
                   type="button"
                   onClick={() => setDetailsOpen(!detailsOpen)}
@@ -228,7 +251,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                         Add details for a more accurate quote
                       </p>
                       <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                        Rooms, frequency, focus areas, photos
+                        Rooms, frequency, focus areas
                       </p>
                     </div>
                   </div>
@@ -241,55 +264,57 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                   </svg>
                 </button>
 
-                {/* Expandable detail fields */}
+                {/* Expandable detail fields — grid trick for true-height animation */}
                 <div
-                  className="overflow-hidden"
                   style={{
-                    maxHeight: detailsOpen ? '600px' : '0',
+                    display: 'grid',
+                    gridTemplateRows: detailsOpen ? '1fr' : '0fr',
                     opacity: detailsOpen ? 1 : 0,
-                    transition: 'max-height 0.4s ease, opacity 0.3s ease',
+                    transition: 'grid-template-rows 0.4s ease, opacity 0.3s ease',
                   }}
                 >
-                  <div className="space-y-4 pt-1 pb-2">
-                    <div>
-                      <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Number of rooms</label>
-                      <input type="text" value={rooms} onChange={(e) => setRooms(e.target.value)}
-                        className={inputCls} placeholder="e.g. 3 bedrooms"
-                        style={getInputStyle('rooms')} onFocus={() => setFocusedField('rooms')} onBlur={() => setFocusedField(null)} />
-                    </div>
-                    <div>
-                      <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Number of bathrooms</label>
-                      <input type="text" value={bathrooms} onChange={(e) => setBathrooms(e.target.value)}
-                        className={inputCls} placeholder="e.g. 2"
-                        style={getInputStyle('bathrooms')} onFocus={() => setFocusedField('bathrooms')} onBlur={() => setFocusedField(null)} />
-                    </div>
-                    <div>
-                      <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Level of cleaning needed</label>
-                      <select value={cleanLevel} onChange={(e) => setCleanLevel(e.target.value)}
-                        className={inputCls} style={{ ...getInputStyle('cleanLevel'), appearance: 'none' }}
-                        onFocus={() => setFocusedField('cleanLevel')} onBlur={() => setFocusedField(null)}>
-                        <option value="" style={{ background: '#0B1D2E' }}>Select...</option>
-                        <option value="light" style={{ background: '#0B1D2E' }}>Light</option>
-                        <option value="moderate" style={{ background: '#0B1D2E' }}>Moderate</option>
-                        <option value="heavy" style={{ background: '#0B1D2E' }}>Heavy</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Frequency</label>
-                      <select value={frequency} onChange={(e) => setFrequency(e.target.value)}
-                        className={inputCls} style={{ ...getInputStyle('frequency'), appearance: 'none' }}
-                        onFocus={() => setFocusedField('frequency')} onBlur={() => setFocusedField(null)}>
-                        <option value="" style={{ background: '#0B1D2E' }}>Select...</option>
-                        <option value="one-time" style={{ background: '#0B1D2E' }}>One-time</option>
-                        <option value="recurring" style={{ background: '#0B1D2E' }}>Recurring</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Areas or tasks to focus on</label>
-                      <textarea value={focusAreas} onChange={(e) => setFocusAreas(e.target.value)}
-                        className={`${inputCls} resize-none`} rows={3}
-                        placeholder="e.g. kitchen and bathrooms only"
-                        style={getInputStyle('focus')} onFocus={() => setFocusedField('focus')} onBlur={() => setFocusedField(null)} />
+                  <div style={{ minHeight: 0, overflow: 'hidden' }}>
+                    <div className="space-y-4 pt-1 pb-2">
+                      <div>
+                        <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Number of rooms</label>
+                        <input type="text" value={rooms} onChange={(e) => setRooms(e.target.value)}
+                          className={inputCls} placeholder="e.g. 3 bedrooms"
+                          style={getInputStyle('rooms')} onFocus={() => setFocusedField('rooms')} onBlur={() => setFocusedField(null)} />
+                      </div>
+                      <div>
+                        <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Number of bathrooms</label>
+                        <input type="text" value={bathrooms} onChange={(e) => setBathrooms(e.target.value)}
+                          className={inputCls} placeholder="e.g. 2"
+                          style={getInputStyle('bathrooms')} onFocus={() => setFocusedField('bathrooms')} onBlur={() => setFocusedField(null)} />
+                      </div>
+                      <div>
+                        <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Level of cleaning needed</label>
+                        <select value={cleanLevel} onChange={(e) => setCleanLevel(e.target.value)}
+                          className={inputCls} style={{ ...getInputStyle('cleanLevel'), appearance: 'none' }}
+                          onFocus={() => setFocusedField('cleanLevel')} onBlur={() => setFocusedField(null)}>
+                          <option value="" style={{ background: '#0B1D2E' }}>Select...</option>
+                          <option value="light" style={{ background: '#0B1D2E' }}>Light</option>
+                          <option value="moderate" style={{ background: '#0B1D2E' }}>Moderate</option>
+                          <option value="heavy" style={{ background: '#0B1D2E' }}>Heavy</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Frequency</label>
+                        <select value={frequency} onChange={(e) => setFrequency(e.target.value)}
+                          className={inputCls} style={{ ...getInputStyle('frequency'), appearance: 'none' }}
+                          onFocus={() => setFocusedField('frequency')} onBlur={() => setFocusedField(null)}>
+                          <option value="" style={{ background: '#0B1D2E' }}>Select...</option>
+                          <option value="one-time" style={{ background: '#0B1D2E' }}>One-time</option>
+                          <option value="recurring" style={{ background: '#0B1D2E' }}>Recurring</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>Areas or tasks to focus on</label>
+                        <textarea value={focusAreas} onChange={(e) => setFocusAreas(e.target.value)}
+                          className={`${inputCls} resize-none`} rows={3}
+                          placeholder="e.g. kitchen and bathrooms only"
+                          style={getInputStyle('focus')} onFocus={() => setFocusedField('focus')} onBlur={() => setFocusedField(null)} />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -327,7 +352,6 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                     onFocus={() => setFocusedField('notes')}
                     onBlur={() => setFocusedField(null)}
                   />
-                  {/* File upload inline below textarea */}
                   <input ref={baseFileRef} type="file" multiple
                     onChange={(e) => setBaseFiles(Array.from(e.target.files ?? []))}
                     className="hidden" />
@@ -368,7 +392,6 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                     ))}
                   </div>
 
-                  {/* Nudge for rough quote */}
                   {outcome === 'quote' && (
                     <div className="mt-3 px-3.5 py-3 flex items-start gap-2.5"
                       style={{ background: 'rgba(196,154,68,0.07)', border: '1px solid rgba(196,154,68,0.2)' }}>
@@ -435,13 +458,17 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                 Submit Free Request
               </button>
 
-              <p className="text-xs text-center mt-3" style={{ color: 'rgba(255,255,255,0.25)' }}>
+              <p className="text-xs text-center mt-2.5" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                We&apos;ll respond within a few hours, usually sooner.
+              </p>
+
+              <p className="text-xs text-center mt-3" style={{ color: 'rgba(255,255,255,0.5)' }}>
                 Prefer to talk?{' '}
-                <a href="tel:7816867189" className="underline underline-offset-2 transition-colors" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                <a href="tel:7816867189" className="underline underline-offset-2 transition-colors" style={{ color: 'rgba(255,255,255,0.7)' }}>
                   781-686-7189
                 </a>
                 {' · '}
-                <a href="mailto:info@brazusa.com" className="underline underline-offset-2 transition-colors" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                <a href="mailto:info@brazusa.com" className="underline underline-offset-2 transition-colors" style={{ color: 'rgba(255,255,255,0.7)' }}>
                   info@brazusa.com
                 </a>
               </p>

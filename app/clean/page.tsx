@@ -5,18 +5,17 @@ import StickyNav        from '@/components/StickyNav'
 import Hero             from '@/components/clean/Hero'
 import TrustStrip       from '@/components/clean/TrustStrip'
 import WhyDifferent     from '@/components/clean/WhyDifferent'
-import ClientSelector   from '@/components/clean/ClientSelector'
 import ClientAccordion  from '@/components/clean/ClientAccordion'
 import type { ClientItem } from '@/components/clean/ClientAccordion'
 import Services         from '@/components/clean/Services'
 import HowItWorks       from '@/components/clean/HowItWorks'
 import Pricing          from '@/components/clean/Pricing'
-import QuickContact     from '@/components/clean/QuickContact'
-import NewsletterCTA    from '@/components/clean/NewsletterCTA'
-import Promotions       from '@/components/clean/Promotions'
 import Testimonials     from '@/components/clean/Testimonials'
 import ServiceArea      from '@/components/clean/ServiceArea'
 import About            from '@/components/clean/About'
+import QuickContact     from '@/components/clean/QuickContact'
+import NewsletterCTA    from '@/components/clean/NewsletterCTA'
+import Promotions       from '@/components/clean/Promotions'
 import FinalCTA         from '@/components/clean/FinalCTA'
 import Footer           from '@/components/clean/Footer'
 import QuoteDrawer      from '@/components/clean/QuoteDrawer'
@@ -30,6 +29,7 @@ const clientItems: ClientItem[] = [
     teaser: 'Fast turnovers, consistent quality, no surprises',
     headline: 'Short-Term Rental Cleaning',
     imageLabel: 'STR unit photo',
+    imageSrc: '/images/str.png',
     spaceType: 'str',
     body: (
       <>
@@ -46,6 +46,7 @@ const clientItems: ClientItem[] = [
     teaser: 'Multi-unit coordination, reliability at scale',
     headline: 'Cleaning for Property Managers & Buildings',
     imageLabel: 'Building / property photo',
+    imageSrc: '/images/property.png',
     spaceType: 'property',
     body: (
       <>
@@ -62,6 +63,7 @@ const clientItems: ClientItem[] = [
     teaser: 'Consistent, minimally disruptive cleaning',
     headline: 'Office & Clinic Cleaning',
     imageLabel: 'Office space photo',
+    imageSrc: '/images/office.png',
     spaceType: 'office',
     body: (
       <>
@@ -77,6 +79,7 @@ const clientItems: ClientItem[] = [
     teaser: 'Trusted, detail-oriented care for your home',
     headline: 'Apartment & Home Cleaning',
     imageLabel: 'Home / apartment photo',
+    imageSrc: '/images/home.png',
     spaceType: 'apartment',
     body: (
       <>
@@ -88,21 +91,14 @@ const clientItems: ClientItem[] = [
 ]
 
 export default function CleanPage() {
-  const [drawerOpen, setDrawerOpen]         = useState(false)
+  const [drawerOpen, setDrawerOpen]           = useState(false)
   const [drawerSpaceType, setDrawerSpaceType] = useState('')
-  const [activeClient, setActiveClient]     = useState<string | null>(null)
+  const [activeClient, setActiveClient]       = useState<string | null>(null)
   const heroRef = useRef<HTMLElement>(null)
 
   const openDrawer = (spaceType = '') => {
     setDrawerSpaceType(spaceType)
     setDrawerOpen(true)
-  }
-
-  const handleClientSelect = (id: string) => {
-    setActiveClient(id)
-    setTimeout(() => {
-      document.getElementById('client-types')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 50)
   }
 
   return (
@@ -111,7 +107,6 @@ export default function CleanPage() {
       <Hero heroRef={heroRef} onQuoteClick={() => openDrawer()} />
       <TrustStrip />
       <WhyDifferent />
-      <ClientSelector onSelect={handleClientSelect} />
       <ClientAccordion
         items={clientItems}
         openId={activeClient}
@@ -121,12 +116,12 @@ export default function CleanPage() {
       <Services />
       <HowItWorks />
       <Pricing />
-      <QuickContact />
-      <NewsletterCTA />
-      <Promotions />
       <Testimonials />
       <ServiceArea onQuoteClick={() => openDrawer()} />
       <About />
+      <QuickContact />
+      <NewsletterCTA />
+      <Promotions />
       <FinalCTA onQuoteClick={() => openDrawer()} />
       <Footer />
 

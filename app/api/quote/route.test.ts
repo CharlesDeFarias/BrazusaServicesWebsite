@@ -12,6 +12,7 @@ vi.mock('@/lib/integrations/google-sheets', () => ({
 }))
 
 import { POST } from '@/app/api/quote/route'
+import { sendQuoteNotification } from '@/lib/integrations/resend'
 
 const validQuote = {
   clientId: 'brazusa-cleaning',
@@ -63,5 +64,13 @@ describe('POST /api/quote', () => {
     })
     const res = await POST(req)
     expect(res.status).toBe(400)
+  })
+
+  it('returns 500 when an integration throws', async () => {
+    vi.mocked(sendQuoteNotification).mockRejectedValueOnce(new Error('Resend down'))
+    const res = await POST(makeRequest(validQuote))
+    expect(res.status).toBe(500)
+    const body = await res.json()
+    expect(body.success).toBe(false)
   })
 })

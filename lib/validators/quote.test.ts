@@ -63,6 +63,12 @@ describe('validateQuote', () => {
     if (!result.valid) expect(result.error).toMatch(/outcome/)
   })
 
+  it('returns invalid for unknown spaceType', () => {
+    const result = validateQuote({ ...validBase, spaceType: 'garbage' })
+    expect(result.valid).toBe(false)
+    if (!result.valid) expect(result.error).toMatch(/spaceType/)
+  })
+
   it('returns invalid for null input', () => {
     const result = validateQuote(null)
     expect(result.valid).toBe(false)

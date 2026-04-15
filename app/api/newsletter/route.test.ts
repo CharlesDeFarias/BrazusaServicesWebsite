@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { NextRequest } from 'next/server'
 
 vi.mock('@/lib/integrations/resend', () => ({
@@ -12,6 +12,7 @@ vi.mock('@/lib/integrations/google-sheets', () => ({
 }))
 
 import { POST } from '@/app/api/newsletter/route'
+import { sendNewsletterConfirmation } from '@/lib/integrations/resend'
 
 function makeRequest(body: unknown) {
   return new NextRequest('http://localhost/api/newsletter', {
@@ -51,5 +52,13 @@ describe('POST /api/newsletter', () => {
     })
     const res = await POST(req)
     expect(res.status).toBe(400)
+  })
+
+  it('returns 500 when an integration throws', async () => {
+    vi.mocked(sendNewsletterConfirmation).mockRejectedValueOnce(new Error('Resend down'))
+    const res = await POST(makeRequest({ clientId: 'brazusa-cleaning', email: 'sub@example.com' }))
+    expect(res.status).toBe(500)
+    const body = await res.json()
+    expect(body.success).toBe(false)
   })
 })

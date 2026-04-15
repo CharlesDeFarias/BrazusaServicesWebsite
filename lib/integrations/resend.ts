@@ -23,7 +23,7 @@ export async function sendQuoteNotification(
 
 export async function sendNewsletterConfirmation(
   email: string,
-  config: ClientConfig
+  _config: ClientConfig
 ): Promise<void> {
   const resend = getClient()
   await resend.emails.send({

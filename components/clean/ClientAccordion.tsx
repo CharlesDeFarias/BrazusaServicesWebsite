@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
 import Image from 'next/image'
+
+const blurDataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
 export interface ClientItem {
   id: string
@@ -36,12 +37,12 @@ function AccordionItem({
   return (
     <div
       id={item.id}
-      style={{ borderBottom: '1px solid #D8D0C6', scrollMarginTop: '72px' }}
+      style={{ borderBottom: '1px solid #D8D0C6' }}
     >
       {/* Header */}
       <button
         onClick={() => onOpenChange(isOpen ? null : item.id)}
-        className="w-full flex items-center justify-between py-5 text-left group"
+        className="w-full flex items-center justify-between py-5 min-h-[44px] text-left group"
       >
         <div className="flex items-center gap-5 flex-1 min-w-0">
           <span
@@ -81,14 +82,15 @@ function AccordionItem({
       >
         <div style={{ minHeight: 0, overflow: 'hidden' }}>
           <div className="pb-8">
-            {/* Full-width image within the column */}
             <div className="relative w-full mb-5 rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
               <Image
                 src={item.imageSrc}
                 alt={item.label}
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 1024px) 100vw, 44vw"
+                placeholder="blur"
+                blurDataURL={blurDataURL}
               />
             </div>
             <h2
@@ -120,61 +122,50 @@ export default function ClientAccordion({
   onOpenChange,
   onCTAClick,
 }: ClientAccordionProps) {
-  // Scroll to newly-opened item — 'nearest' avoids overshooting when item is already visible
-  useEffect(() => {
-    if (!openId) return
-    const el = document.getElementById(openId)
-    if (el) {
-      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60)
-    }
-  }, [openId])
-
-  // col 1: STR (0) + Offices (2) — col 2: Property (1) + Homes (3)
-  const col1 = [items[0], items[2]].filter(Boolean)
-  const col2 = [items[1], items[3]].filter(Boolean)
-
   return (
-    <section
-      id="client-types"
-      className="bg-white"
-      style={{ borderTop: '1px solid #D8D0C6', scrollMarginTop: '56px' }}
-    >
-      <div className="max-w-5xl mx-auto px-6 pt-12 pb-4">
-        <h2
-          className="italic text-2xl md:text-3xl text-navy mb-8"
-          style={{ fontWeight: 300 }}
+    <div>
+      <h2
+        className="italic text-2xl md:text-3xl text-navy mb-5"
+        style={{ fontWeight: 300 }}
+      >
+        What kind of space?
+      </h2>
+
+      {/* "We clean it all!" — moved to top, gold-bordered card */}
+      <button
+        onClick={() => onCTAClick('other')}
+        className="w-full mb-4 flex items-center gap-5 px-5 py-4 min-h-[44px] text-left transition-colors hover:bg-white/80"
+        style={{ border: '1.5px solid #C49A44', borderRadius: '10px', background: 'rgba(196,154,68,0.04)' }}
+      >
+        <span
+          className="text-xs font-semibold flex-shrink-0 tabular-nums"
+          style={{ color: '#C49A44', fontFamily: 'var(--font-syne)' }}
         >
-          What kind of space?
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-14">
-          {/* Column 1 */}
-          <div>
-            {col1.map((item) => (
-              <AccordionItem
-                key={item.id}
-                item={item}
-                isOpen={openId === item.id}
-                onOpenChange={onOpenChange}
-                onCTAClick={onCTAClick}
-              />
-            ))}
-          </div>
-
-          {/* Column 2 */}
-          <div>
-            {col2.map((item) => (
-              <AccordionItem
-                key={item.id}
-                item={item}
-                isOpen={openId === item.id}
-                onOpenChange={onOpenChange}
-                onCTAClick={onCTAClick}
-              />
-            ))}
-          </div>
+          ✦
+        </span>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-navy text-sm leading-none mb-1">We clean it all</p>
+          <p className="text-xs" style={{ color: '#9B9288' }}>
+            Not sure which applies? We adapt — reach out and we&apos;ll figure it out.
+          </p>
         </div>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0 hidden sm:block">
+          <path d="M3 7h8M7 3l4 4-4 4" stroke="#C49A44" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+
+      {/* Accordion items */}
+      <div style={{ borderTop: '1px solid #D8D0C6' }}>
+        {items.map((item) => (
+          <AccordionItem
+            key={item.id}
+            item={item}
+            isOpen={openId === item.id}
+            onOpenChange={onOpenChange}
+            onCTAClick={onCTAClick}
+          />
+        ))}
       </div>
-    </section>
+    </div>
   )
 }

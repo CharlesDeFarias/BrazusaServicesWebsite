@@ -19,6 +19,12 @@ const syne = Syne({
 export const metadata: Metadata = {
   title: 'Brazusa Cleaning',
   description: 'Reliable, high-detail cleaning for apartments, short-term rentals, and managed properties across Greater Boston.',
+  openGraph: {
+    title: 'Brazusa Cleaning',
+    description: 'Reliable, high-detail cleaning for apartments, short-term rentals, and managed properties across Greater Boston.',
+    type: 'website',
+    images: [{ url: '/images/hero.png' }],
+  },
   icons: {
     icon: [
       { url: '/favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -31,7 +37,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${syne.variable}`}>
-      <body>{children}</body>
+      <body className="overflow-x-hidden">{children}</body>
     </html>
   )
 }

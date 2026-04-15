@@ -1,3 +1,8 @@
+'use client'
+
+import Image from 'next/image'
+import NewsletterCTA from './NewsletterCTA'
+
 const serviceLinks = [
   { label: 'Painting',     href: '/painting' },
   { label: 'Construction', href: '/construction' },
@@ -8,18 +13,44 @@ const serviceLinks = [
 export default function Footer() {
   return (
     <footer
-      className="bg-navy text-white py-12 px-6"
+      className="bg-navy text-white px-6"
       style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
     >
-      <div className="max-w-5xl mx-auto">
+      {/* Newsletter strip */}
+      <div
+        className="max-w-5xl mx-auto py-8"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}
+      >
+        <div className="flex flex-col sm:flex-row sm:items-start gap-5">
+          <div className="flex-shrink-0">
+            <p className="text-sm font-medium text-white mb-0.5">For hosts &amp; managers</p>
+            <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.38)' }}>
+              Occasional tips for homes, STR hosts &amp; property managers — plus promo windows when we have availability.
+            </p>
+          </div>
+          <div className="flex-1 min-w-0">
+            <NewsletterCTA />
+          </div>
+        </div>
+      </div>
+
+      {/* Main footer content */}
+      <div className="max-w-5xl mx-auto py-10">
         <div className="flex flex-col md:flex-row justify-between gap-10 mb-10">
           <div>
-            <p
-              className="font-semibold text-white mb-3"
-              style={{ fontFamily: 'var(--font-syne)' }}
+            <div
+              className="inline-flex mb-4"
+              style={{ background: 'rgba(255,255,255,0.92)', padding: 0, overflow: 'hidden', lineHeight: 0, borderRadius: 0 }}
             >
-              Brazusa Cleaning
-            </p>
+              <Image
+                src="/brand/logo.jpg"
+                alt="Brazusa Cleaning"
+                width={160}
+                height={55}
+                className="h-10 w-auto object-contain"
+                style={{ display: 'block' }}
+              />
+            </div>
             <p className="text-sm mb-1" style={{ color: 'rgba(255,255,255,0.38)' }}>
               Greater Boston &amp; surrounding areas
             </p>

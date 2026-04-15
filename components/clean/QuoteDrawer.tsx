@@ -154,7 +154,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
             </h3>
             <button
               onClick={handleClose}
-              className="w-8 h-8 flex items-center justify-center text-xl leading-none transition-colors"
+              className="w-11 h-11 flex items-center justify-center text-xl leading-none transition-colors"
               style={{ color: 'rgba(255,255,255,0.35)' }}
               onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
               onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.35)')}
@@ -216,7 +216,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                         key={m}
                         type="button"
                         onClick={() => setContactMethod(m)}
-                        className="flex-1 py-2 text-xs font-medium transition-all duration-150"
+                        className="flex-1 min-h-[44px] py-2 text-xs font-medium transition-all duration-150"
                         style={{
                           background: contactMethod === m ? '#C49A44' : 'transparent',
                           color: contactMethod === m ? '#0B1D2E' : 'rgba(255,255,255,0.5)',
@@ -421,7 +421,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                       <div className="flex flex-wrap gap-2">
                         {DAYS.map((day) => (
                           <button key={day} type="button" onClick={() => toggleDay(day)}
-                            className="px-3 py-1 text-xs transition-all duration-150"
+                            className="px-3 py-2 min-h-[44px] text-xs transition-all duration-150"
                             style={{
                               background: preferredDays.includes(day) ? '#C49A44' : 'transparent',
                               color: preferredDays.includes(day) ? '#0B1D2E' : 'rgba(255,255,255,0.5)',

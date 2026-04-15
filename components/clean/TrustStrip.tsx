@@ -5,12 +5,6 @@ const badges = [
   'Residential + commercial',
   'No surprises, ever',
   'Fast, flexible communication',
-  'Fully insured',
-  'Family-owned & operated',
-  'Serving Greater Boston since 1994',
-  'Residential + commercial',
-  'No surprises, ever',
-  'Fast, flexible communication',
 ]
 
 export default function TrustStrip() {
@@ -20,7 +14,7 @@ export default function TrustStrip() {
       style={{ borderColor: '#D8D0C6' }}
     >
       <div className="flex marquee-track whitespace-nowrap">
-        {badges.map((b, i) => (
+        {[...badges, ...badges].map((b, i) => (
           <span
             key={i}
             className="inline-flex items-center gap-2.5 mx-8 text-xs font-medium flex-shrink-0"

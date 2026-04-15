@@ -1,10 +1,12 @@
 import Image from 'next/image'
 
+const blurDataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+
 export default function About() {
   return (
     <section
       id="about"
-      className="bg-white py-14 px-6"
+      className="bg-off-white py-14 px-6"
       style={{ borderTop: '1px solid #D8D0C6', scrollMarginTop: '56px' }}
     >
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
@@ -25,13 +27,16 @@ export default function About() {
             <span className="text-xs uppercase" style={{ color: '#B0A89E', letterSpacing: '0.14em' }}>Serving Boston since 1994</span>
           </div>
         </div>
-        <div className="relative hidden lg:block rounded-2xl overflow-hidden" style={{ aspectRatio: '4/5' }}>
+        <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-[4/5]">
           <Image
             src="/images/team.png"
             alt="Brazusa Cleaning team"
             fill
             className="object-cover"
-            sizes="50vw"
+            style={{ objectPosition: 'center top' }}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            placeholder="blur"
+            blurDataURL={blurDataURL}
           />
         </div>
       </div>

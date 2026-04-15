@@ -8,17 +8,27 @@ interface HeroProps {
   onQuoteClick: () => void
 }
 
+const blurDataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
+
+const differentiators = [
+  { n: '01', text: 'Consistent team that genuinely cares' },
+  { n: '02', text: 'Fast, flexible communication' },
+  { n: '03', text: 'Fully insured & professionally managed' },
+  { n: '04', text: 'Decades of real cleaning experience' },
+]
+
 export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
   return (
     <section
       ref={heroRef}
-      className="grain bg-navy text-white min-h-screen flex items-center px-6 md:px-12 lg:px-16 pt-14"
+      className="grain bg-navy text-white flex items-center px-6 md:px-12 lg:px-16 pt-14"
+      style={{ minHeight: '82vh' }}
     >
-      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 lg:gap-20 items-center py-20">
+      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 lg:gap-10 items-start py-10 lg:py-14">
 
         {/* Text column */}
         <div>
-          <div className="fade-up flex items-center gap-3 mb-10">
+          <div className="fade-up flex items-center gap-3 mb-8">
             <div className="w-8 h-px bg-brand-gold" />
             <span className="text-xs uppercase tracking-[0.22em]" style={{ color: 'rgba(255,255,255,0.4)' }}>
               Greater Boston · Since 1994
@@ -26,33 +36,49 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
           </div>
 
           <h1
-            className="fade-up-1 italic leading-none mb-8"
-            style={{ fontSize: 'clamp(3rem, 6.5vw, 5.25rem)', fontWeight: 300, letterSpacing: '-0.01em' }}
+            className="fade-up-1 italic leading-none mb-6"
+            style={{ fontSize: 'clamp(3rem, 7.5vw, 6rem)', fontWeight: 300, letterSpacing: '-0.01em' }}
           >
-            Reliable,<br />
-            high-detail<br />
-            cleaning.
+            Reliable, high-detail cleaning.
           </h1>
 
-          <div className="fade-up-1 w-12 h-px bg-brand-gold mb-8" />
+          <div className="fade-up-1 w-12 h-px bg-brand-gold mb-6" />
 
-          <p className="fade-up-2 text-base md:text-lg leading-relaxed mb-10 max-w-md" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            Apartments, short-term rentals, and managed properties —
-            cleaned with the consistency and communication modern owners expect.
+          <p className="fade-up-2 text-base md:text-lg leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            Residential and commercial cleaning for apartments, short-term rentals,
+            offices, and managed properties — consistent, professional, and built
+            around how you operate.
           </p>
+
+          {/* Differentiators 2×2 grid */}
+          <div className="fade-up-2 grid grid-cols-2 gap-x-8 gap-y-2 mb-8">
+            {differentiators.map((d) => (
+              <div key={d.n} className="flex items-start gap-2">
+                <span
+                  className="text-xs font-semibold flex-shrink-0 tabular-nums mt-0.5"
+                  style={{ color: '#C49A44', fontFamily: 'var(--font-syne)' }}
+                >
+                  {d.n}
+                </span>
+                <span className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.42)' }}>
+                  {d.text}
+                </span>
+              </div>
+            ))}
+          </div>
 
           <div className="fade-up-2 flex flex-col sm:flex-row gap-3 mb-8">
             <button
               onClick={onQuoteClick}
-              className="text-sm font-medium px-6 py-3.5 text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
-              style={{ background: '#2DAAE1', borderLeft: '2px solid rgba(255,255,255,0.3)' }}
+              className="w-full sm:w-auto text-sm font-medium px-10 py-4 min-h-[52px] min-w-[180px] transition-all duration-200 hover:opacity-90"
+              style={{ background: '#C49A44', color: '#0B1D2E' }}
             >
               Get a Free Quote
             </button>
             <a
               href="tel:7816867189"
-              className="text-sm font-medium px-6 py-3.5 text-white text-center transition-colors hover:bg-white/10"
-              style={{ border: '1px solid rgba(255,255,255,0.22)' }}
+              className="w-full sm:w-auto text-sm font-medium px-8 py-4 min-h-[52px] text-white text-center transition-colors hover:bg-white/10 flex items-center justify-center"
+              style={{ border: '1.5px solid rgba(255,255,255,0.40)' }}
             >
               Call / Text: 781-686-7189
             </a>
@@ -62,15 +88,21 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
             Not the right fit? We&apos;ll help you find someone who is.
           </p>
 
-          {/* Mobile image — shown below CTAs, hidden on desktop */}
-          <div className="fade-up-3 lg:hidden mt-10 rounded-xl overflow-hidden" style={{ aspectRatio: '16/9', position: 'relative' }}>
+          {/* Mobile image — full-bleed, shown below CTAs on small screens */}
+          <div
+            className="fade-up-3 lg:hidden mt-10 overflow-hidden"
+            style={{ aspectRatio: '4/3', position: 'relative', marginLeft: '-1.5rem', marginRight: '-1.5rem' }}
+          >
             <Image
               src="/images/hero.png"
               alt="Professional cleaning"
               fill
               className="object-cover"
+              style={{ objectPosition: 'center top' }}
               sizes="100vw"
               priority
+              placeholder="blur"
+              blurDataURL={blurDataURL}
             />
           </div>
         </div>
@@ -83,8 +115,11 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
               alt="Professional cleaning"
               fill
               className="object-cover"
-              sizes="380px"
+              style={{ objectPosition: 'center top' }}
+              sizes="420px"
               priority
+              placeholder="blur"
+              blurDataURL={blurDataURL}
             />
           </div>
         </div>

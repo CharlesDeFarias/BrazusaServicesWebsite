@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from 'react'
 
-export default function ScrollToTop() {
+interface ScrollToTopProps {
+  drawerOpen: boolean
+}
+
+export default function ScrollToTop({ drawerOpen }: ScrollToTopProps) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -20,8 +24,8 @@ export default function ScrollToTop() {
       className="fixed bottom-6 right-6 z-50 w-11 h-11 flex items-center justify-center transition-all duration-300 shadow-lg"
       style={{
         background: '#C49A44',
-        opacity: visible ? 1 : 0,
-        pointerEvents: visible ? 'auto' : 'none',
+        opacity: visible && !drawerOpen ? 1 : 0,
+        pointerEvents: visible && !drawerOpen ? 'auto' : 'none',
         transform: visible ? 'translateY(0)' : 'translateY(12px)',
       }}
     >

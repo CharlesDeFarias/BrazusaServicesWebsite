@@ -1,5 +1,31 @@
 # Brazusa Cleaning Page Implementation Plan
 
+> **STATUS: COMPLETED** — Page built and subsequently refactored. This document records the original build plan. For current architecture, see the spec doc: `docs/superpowers/specs/2026-04-11-brazusa-cleaning-page-design.md`.
+
+---
+
+## What Changed From This Plan (2026-04-13 Refactor)
+
+The following divergences exist between this original plan and the current codebase:
+
+| Plan | Current |
+|---|---|
+| Font: Inter | Fonts: Cormorant Garamond + Syne |
+| Colors: `#0B2A3C` navy, `#F7F9FB` off-white | Colors: `#0B1D2E` navy, `#F2EDE6` off-white, `#C49A44` gold |
+| `ClientSelector.tsx` + 4× `ClientSection.tsx` | Single `ClientAccordion.tsx` (2-col expandable) |
+| `WhyDifferent.tsx` standalone section | Absorbed into `Hero.tsx` as 2×2 differentiator grid |
+| `HowItWorks.tsx` section | Deleted; nav link removed |
+| `Promotions.tsx` standalone section | Merged into `Pricing.tsx` as collapsible subsection |
+| `NewsletterCTA.tsx` standalone dark section | Simplified and embedded inside `Footer.tsx` |
+| `QuickContact.tsx` with message form | Contact-info only (form removed) |
+| `StickyNav` appears via IntersectionObserver | Always fixed; scroll-based style toggle at 80px |
+| No mobile navigation | Hamburger menu with client-type dropdown |
+| No mobile CTA bar | `MobileCTABar.tsx` — fixed bottom bar (mobile only) |
+| `FinalCTA` dark navy | `FinalCTA` light off-white (to avoid consecutive dark sections) |
+| No Open Graph tags | OG tags in `app/layout.tsx` |
+
+---
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build the Brazusa Cleaning flagship page (`/clean`) as a Next.js static site with all 13 content sections, a sticky nav, and a two-tier quote drawer.

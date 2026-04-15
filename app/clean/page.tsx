@@ -1,25 +1,22 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import StickyNav        from '@/components/StickyNav'
 import Hero             from '@/components/clean/Hero'
 import TrustStrip       from '@/components/clean/TrustStrip'
-import WhyDifferent     from '@/components/clean/WhyDifferent'
 import ClientAccordion  from '@/components/clean/ClientAccordion'
 import type { ClientItem } from '@/components/clean/ClientAccordion'
 import Services         from '@/components/clean/Services'
-import HowItWorks       from '@/components/clean/HowItWorks'
 import Pricing          from '@/components/clean/Pricing'
 import Testimonials     from '@/components/clean/Testimonials'
 import ServiceArea      from '@/components/clean/ServiceArea'
 import About            from '@/components/clean/About'
 import QuickContact     from '@/components/clean/QuickContact'
-import NewsletterCTA    from '@/components/clean/NewsletterCTA'
-import Promotions       from '@/components/clean/Promotions'
 import FinalCTA         from '@/components/clean/FinalCTA'
 import Footer           from '@/components/clean/Footer'
 import QuoteDrawer      from '@/components/clean/QuoteDrawer'
 import ScrollToTop      from '@/components/clean/ScrollToTop'
+import MobileCTABar     from '@/components/clean/MobileCTABar'
 
 const clientItems: ClientItem[] = [
   {
@@ -94,7 +91,32 @@ export default function CleanPage() {
   const [drawerOpen, setDrawerOpen]           = useState(false)
   const [drawerSpaceType, setDrawerSpaceType] = useState('')
   const [activeClient, setActiveClient]       = useState<string | null>(null)
-  const heroRef = useRef<HTMLElement>(null)
+  const [showServicesHint, setShowServicesHint] = useState(false)
+  const heroRef      = useRef<HTMLElement>(null)
+  const leftPanelRef = useRef<HTMLDivElement>(null)
+
+  // Briefly show mobile scroll hint when a client type is selected
+  useEffect(() => {
+    if (!activeClient) return
+    setShowServicesHint(true)
+    const t = setTimeout(() => setShowServicesHint(false), 2200)
+    return () => clearTimeout(t)
+  }, [activeClient])
+
+  // Scroll left panel so the opened accordion item is at the top of the panel
+  useEffect(() => {
+    if (!activeClient || !leftPanelRef.current) return
+    const panel = leftPanelRef.current
+    const el = document.getElementById(activeClient)
+    if (!el) return
+    // Small delay so the accordion begins opening before we measure positions
+    const t = setTimeout(() => {
+      const panelRect = panel.getBoundingClientRect()
+      const elRect    = el.getBoundingClientRect()
+      panel.scrollTo({ top: panel.scrollTop + (elRect.top - panelRect.top), behavior: 'smooth' })
+    }, 60)
+    return () => clearTimeout(t)
+  }, [activeClient])
 
   const openDrawer = (spaceType = '') => {
     setDrawerSpaceType(spaceType)
@@ -102,26 +124,73 @@ export default function CleanPage() {
   }
 
   return (
-    <main>
-      <StickyNav heroRef={heroRef} onQuoteClick={() => openDrawer()} />
+    <main className="pb-16 md:pb-0">
+      <StickyNav
+        heroRef={heroRef}
+        onQuoteClick={() => openDrawer()}
+        setActiveClient={setActiveClient}
+        onOtherClick={() => openDrawer('other')}
+      />
       <Hero heroRef={heroRef} onQuoteClick={() => openDrawer()} />
       <TrustStrip />
-      <WhyDifferent />
-      <ClientAccordion
-        items={clientItems}
-        openId={activeClient}
-        onOpenChange={setActiveClient}
-        onCTAClick={openDrawer}
-      />
-      <Services />
-      <HowItWorks />
-      <Pricing />
+
+      {/* Combined client accordion + services — two-panel layout on desktop */}
+      <section
+        id="client-types"
+        style={{ borderTop: '1px solid #D8D0C6', scrollMarginTop: '56px' }}
+      >
+        <div className="flex flex-col lg:flex-row">
+          {/* Left panel: accordion — off-white, independently scrollable on desktop */}
+          <div
+            ref={leftPanelRef}
+            className="bg-off-white lg:w-1/2 px-6 lg:px-10 pt-12 pb-8 lg:max-h-[calc(100vh-56px)] lg:overflow-y-auto"
+          >
+            <ClientAccordion
+              items={clientItems}
+              openId={activeClient}
+              onOpenChange={setActiveClient}
+              onCTAClick={openDrawer}
+            />
+          </div>
+
+          {/* Mobile: brief "scroll to services" hint when client is selected */}
+          {showServicesHint && (
+            <div
+              className="lg:hidden flex items-center justify-center gap-2 py-2.5 bg-off-white transition-opacity duration-500"
+              style={{ borderTop: '1px solid #D8D0C6', opacity: showServicesHint ? 1 : 0 }}
+            >
+              <span className="text-xs" style={{ color: '#9B9288' }}>See matching services</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M6 2v8M2 6l4 4 4-4" stroke="#C49A44" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          )}
+
+          {/* Gold divider — desktop only */}
+          <div
+            className="hidden lg:block flex-shrink-0"
+            style={{ width: '1px', background: 'rgba(196,154,68,0.25)' }}
+          />
+
+          {/* Right panel: services — navy, sticky on desktop */}
+          <div
+            id="services"
+            className="grain bg-navy text-white lg:w-1/2 px-6 lg:px-10 py-12 lg:overflow-y-auto"
+            style={{ scrollMarginTop: '56px' }}
+          >
+            <Services
+              activeClientId={activeClient}
+              onQuoteClick={() => openDrawer()}
+            />
+          </div>
+        </div>
+      </section>
+
+      <Pricing onQuoteClick={() => openDrawer()} />
       <Testimonials />
       <ServiceArea onQuoteClick={() => openDrawer()} />
       <About />
       <QuickContact />
-      <NewsletterCTA />
-      <Promotions />
       <FinalCTA onQuoteClick={() => openDrawer()} />
       <Footer />
 
@@ -130,7 +199,8 @@ export default function CleanPage() {
         onClose={() => setDrawerOpen(false)}
         defaultSpaceType={drawerSpaceType}
       />
-      <ScrollToTop />
+      <ScrollToTop drawerOpen={drawerOpen} />
+      <MobileCTABar onQuoteClick={() => openDrawer()} drawerOpen={drawerOpen} />
     </main>
   )
 }

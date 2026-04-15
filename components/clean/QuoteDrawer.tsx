@@ -50,6 +50,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
   const [timeOfDay, setTimeOfDay]         = useState('')
 
   const [error, setError]           = useState('')
+  const [loading, setLoading]       = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
   const baseFileRef = useRef<HTMLInputElement>(null)
 
@@ -83,18 +84,37 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
   const toggleDay = (day: string) =>
     setPreferredDays((p) => p.includes(day) ? p.filter((d) => d !== day) : [...p, day])
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name.trim() || !contact.trim()) {
       setError('Please add your name and a way to reach you.')
       return
     }
     setError('')
-    console.log({
-      name, contact, contactMethod, spaceType, notes, outcome, baseFiles,
-      ...(detailsOpen && { rooms, bathrooms, cleanLevel, frequency, focusAreas }),
-      ...(outcome === 'schedule' && { address, preferredDays, timeOfDay }),
-    })
-    setSubmitted(true)
+    setLoading(true)
+
+    try {
+      const res = await fetch('/api/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientId: 'brazusa-cleaning',
+          name: name.trim(),
+          contact: contact.trim(),
+          contactMethod,
+          spaceType,
+          notes,
+          outcome,
+          ...(detailsOpen && { rooms, bathrooms, cleanLevel, frequency, focusAreas }),
+          ...(outcome === 'schedule' && { address, preferredDays, timeOfDay }),
+        }),
+      })
+      if (!res.ok) throw new Error('Request failed')
+      setSubmitted(true)
+    } catch {
+      setError("Something went wrong — please call or text us at 781-686-7189.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   // Only reset form state after a successful submit — preserve data on all other closes
@@ -452,10 +472,11 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
 
               <button
                 onClick={handleSubmit}
-                className="w-full py-3.5 font-medium text-sm mt-6 text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
+                disabled={loading}
+                className="w-full py-3.5 font-medium text-sm mt-6 text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy disabled:opacity-50"
                 style={{ background: '#2DAAE1', borderLeft: '2px solid rgba(255,255,255,0.25)' }}
               >
-                Submit Free Request
+                {loading ? 'Sending…' : 'Submit Free Request'}
               </button>
 
               <p className="text-xs text-center mt-2.5" style={{ color: 'rgba(255,255,255,0.4)' }}>

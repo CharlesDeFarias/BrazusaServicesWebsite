@@ -3,16 +3,30 @@
 import { useState } from 'react'
 
 export default function NewsletterCTA() {
-  const [email, setEmail]       = useState('')
-  const [phone, setPhone]       = useState('')
+  const [email, setEmail]         = useState('')
+  const [phone, setPhone]         = useState('')
   const [submitted, setSubmitted] = useState(false)
-  const [error, setError]       = useState('')
+  const [loading, setLoading]     = useState(false)
+  const [error, setError]         = useState('')
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!email.trim()) { setError('Please enter your email address.'); return }
     setError('')
-    console.log({ email, phone })
-    setSubmitted(true)
+    setLoading(true)
+
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clientId: 'brazusa-cleaning', email: email.trim(), phone: phone.trim() || undefined }),
+      })
+      if (!res.ok) throw new Error('Request failed')
+      setSubmitted(true)
+    } catch {
+      setError("Something went wrong — please try calling us at 781-686-7189.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (submitted) {
@@ -37,10 +51,11 @@ export default function NewsletterCTA() {
         />
         <button
           onClick={handleSubmit}
-          className="flex-shrink-0 px-4 py-2 text-xs font-medium text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
+          disabled={loading}
+          className="flex-shrink-0 px-4 py-2 text-xs font-medium text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy disabled:opacity-50"
           style={{ background: '#2DAAE1', borderLeft: '2px solid rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}
         >
-          Subscribe
+          {loading ? 'Sending…' : 'Subscribe'}
         </button>
       </div>
       <input

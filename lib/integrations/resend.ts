@@ -6,7 +6,7 @@ function getClient() {
   return new Resend(process.env.RESEND_API_KEY)
 }
 
-const FROM_ADDRESS = 'Brazusa Cleaning <hello@brazusacleaning.com>'
+const FROM_ADDRESS = 'Brazusa Cleaning <hello@brazusa.com>'
 
 export async function sendQuoteNotification(
   data: QuoteFormData,

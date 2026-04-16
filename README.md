@@ -1,6 +1,6 @@
-# Brazusa Cleaning — Landing Page
+# Brazusa Cleaning — Website
 
-A Next.js landing page for Brazusa Cleaning, a professional cleaning service based in Greater Boston since 1994.
+A Next.js website for Brazusa Cleaning, a professional cleaning service based in Greater Boston since 1994. Includes a full form backend: quote requests and newsletter signups are validated, emailed via Resend, saved to Airtable, and saved to Google Sheets.
 
 **Live contact info:**
 - Phone / Text: [781-686-7189](tel:7816867189)
@@ -130,6 +130,68 @@ The newsletter opt-in is embedded in the **Footer** as a compact strip (email fi
 
 ---
 
+## Backend Architecture
+
+Form submissions from the site hit two Next.js API routes:
+
+| Route | Component | What it does |
+|---|---|---|
+| `POST /api/quote` | `QuoteDrawer` | Validates, then runs 3 integrations in parallel |
+| `POST /api/newsletter` | Footer newsletter strip | Validates, then runs 3 integrations in parallel |
+
+Each route runs three things at the same time (via `Promise.all`):
+1. **Resend** — sends an email notification to `cddefari@gmail.com`
+2. **Airtable** — writes a row to the Brazusa Cleaning base
+3. **Google Sheets** — appends a row to the Brazusa Cleaning spreadsheet
+
+The backend is multi-tenant by design. Each client (Brazusa Cleaning, and future clients) has a config file in `lib/clients/`. Adding a new client means adding one config file and registering it — the integration code is shared.
+
+```
+QuoteDrawer / Newsletter footer
+        |  POST
+        ↓
+app/api/quote/route.ts
+app/api/newsletter/route.ts
+        |
+        ├── lib/integrations/resend.ts        → email to owner
+        ├── lib/integrations/airtable.ts      → row in Airtable base
+        └── lib/integrations/google-sheets.ts → row in Google Sheet
+```
+
+---
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` in the project root and fill in real values:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Where to get it |
+|---|---|
+| `RESEND_API_KEY` | resend.com → API Keys → Create API Key |
+| `AIRTABLE_API_TOKEN` | airtable.com/create/tokens |
+| `GOOGLE_SERVICE_ACCOUNT_KEY` | Base64-encoded service account JSON from Google Cloud |
+| `BRAZUSA_CLEANING_NOTIFICATION_EMAIL` | The email address that receives quote notifications |
+| `BRAZUSA_CLEANING_AIRTABLE_BASE_ID` | From Airtable URL: `airtable.com/appXXXXXX/...` |
+| `BRAZUSA_CLEANING_SHEET_ID` | From Google Sheets URL: `spreadsheets/d/XXXXXXXXX/edit` |
+
+`.env.local` is git-ignored. Never commit it. See Task 13 in the implementation plan for step-by-step setup instructions.
+
+---
+
+## Testing
+
+```bash
+npm test          # run all tests once
+npm run test:watch  # re-run on file changes
+```
+
+Tests use [Vitest](https://vitest.dev/). Test files live next to the code they test (e.g. `lib/validators/quote.test.ts`). All external services (Resend, Airtable, Google Sheets) are mocked in tests — no real API calls are made.
+
+---
+
 ## Tech Stack
 
 - **Next.js 15** (App Router, static site generation)
@@ -137,7 +199,10 @@ The newsletter opt-in is embedded in the **Footer** as a compact strip (email fi
 - **TypeScript**
 - **Fonts:** Cormorant Garamond (display/italic) + Syne (UI/numerals)
 - **Images:** `next/image` with blur placeholders on all content images
-- **No backend** — form submissions log to console; real delivery to be wired separately
+- **Email:** Resend SDK (`resend` package)
+- **Lead storage:** Airtable REST API (native `fetch`, no library)
+- **Lead backup:** Google Sheets API (`googleapis` package, service account auth)
+- **Tests:** Vitest
 
 ---
 
@@ -172,7 +237,9 @@ The newsletter opt-in is embedded in the **Footer** as a compact strip (email fi
 
 - Parent hub (`/`) implementation
 - Stub service pages beyond scaffolded routes
-- Real form backend / email delivery
+- File/photo uploads from the QuoteDrawer (Phase 2)
 - Real pricing values (shown as `$X – $Y` placeholders)
 - Real testimonial review quotes
 - Analytics / tracking
+- SMS notifications
+- Admin dashboard or CRM

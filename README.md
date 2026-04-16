@@ -194,7 +194,7 @@ Tests use [Vitest](https://vitest.dev/). Test files live next to the code they t
 
 ## Tech Stack
 
-- **Next.js 15** (App Router, static site generation)
+- **Next.js 16** (App Router, static site generation)
 - **Tailwind CSS v4**
 - **TypeScript**
 - **Fonts:** Cormorant Garamond (display/italic) + Syne (UI/numerals)

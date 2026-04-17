@@ -53,10 +53,10 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
           {/* Table column */}
           <div>
             <h2 className="italic text-3xl md:text-4xl text-navy mb-3" style={{ fontWeight: 300 }}>
-              Transparent, flexible pricing
+              Pricing that actually reflects the work
             </h2>
             <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--color-warm-gray-dark)' }}>
-              We price based on what the job actually requires. Reference ranges:
+              Standard cleaning is priced on space, condition, and frequency. If you need operational support on top of that — coordination, documentation, restocking — we layer that in separately. Nothing hidden; we talk through it before we start. Reference ranges:
             </p>
 
             <div className="rounded-xl overflow-hidden mb-4" style={{ border: '1px solid var(--color-light-gray)' }}>

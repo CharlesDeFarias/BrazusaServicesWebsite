@@ -4,9 +4,11 @@ import { type JSX, useState, useRef, useEffect } from 'react'
 import StickyNav        from '@/components/StickyNav'
 import Hero             from '@/components/clean/Hero'
 import TrustStrip       from '@/components/clean/TrustStrip'
+import Positioning      from '@/components/clean/Positioning'
 import ClientAccordion  from '@/components/clean/ClientAccordion'
 import type { ClientItem } from '@/components/clean/ClientAccordion'
 import Services         from '@/components/clean/Services'
+import HowItWorks       from '@/components/clean/HowItWorks'
 import Pricing          from '@/components/clean/Pricing'
 import Testimonials     from '@/components/clean/Testimonials'
 import ServiceArea      from '@/components/clean/ServiceArea'
@@ -30,9 +32,9 @@ const clientItems: ClientItem[] = [
     spaceType: 'str',
     body: (
       <>
-        <p>Fast turnovers, consistent quality, no surprises — we build repeatable systems around your units.</p>
-        <p>We handle every turnover the same way so you can stop thinking about it. We also help with small operational tasks that make managing your properties easier.</p>
-        <p>A missed detail can mean a bad review — and a bad review costs more than a cleaning ever will.</p>
+        <p>Most STR hosts don&apos;t have a cleaning problem — they have a coordination problem. Things fall through the gap between checkout and check-in: linens not restocked, supplies running low, something broken that nobody flagged.</p>
+        <p>We build a repeatable system around your units. Consistent checklists, direct communication, same-day confirmations when you need them. We can also handle linen processing, inventory tracking, and small operational tasks so you&apos;re not managing the details yourself.</p>
+        <p>A missed detail can mean a bad review. A bad review costs more than a cleaning ever will. We treat your units like the business they are.</p>
       </>
     ),
   },
@@ -47,9 +49,9 @@ const clientItems: ClientItem[] = [
     spaceType: 'property',
     body: (
       <>
-        <p>Property management requires reliability across multiple units, consistency across different jobs, and professionalism with tenants, staff, and vendors.</p>
-        <p>We document, standardize, and communicate clearly — so you don&apos;t have to manage us. We manage ourselves.</p>
-        <p>Whether it&apos;s routine cleaning, move-out prep, or anything in between, we adapt to your properties and your systems.</p>
+        <p>Property management means juggling multiple units, coordinating with tenants and vendors, and making sure nothing slips. You don&apos;t need another vendor you have to manage on top of that.</p>
+        <p>We document condition, communicate clearly before and after every job, and flag issues before they become problems. Move-in ready, move-out documented, common areas handled — we adapt to your buildings and your process, not the other way around.</p>
+        <p>We&apos;ve worked with independent landlords, building owners, and property management companies. The common thread: they stop worrying about whether the cleaning got done.</p>
       </>
     ),
   },
@@ -64,8 +66,9 @@ const clientItems: ClientItem[] = [
     spaceType: 'office',
     body: (
       <>
-        <p>Most office cleaning happens when no one&apos;s around — and that&apos;s exactly how we like it.</p>
-        <p>Consistent, reliable service that works around your schedule. Simple communication, easy billing, no unnecessary complexity. Just dependable cleaning that works.</p>
+        <p>Office cleaning works best when you don&apos;t have to think about it. We schedule around your hours, show up when we say we will, and keep the same team so the space stays consistent.</p>
+        <p>We work with small offices, coworking spaces, and medical and clinical environments where cleanliness standards are higher. We can accommodate after-hours access, specific room requirements, and health or compliance-sensitive areas.</p>
+        <p>Simple communication, consistent service. No reminders, no follow-ups needed on your end.</p>
       </>
     ),
   },
@@ -80,8 +83,9 @@ const clientItems: ClientItem[] = [
     spaceType: 'apartment',
     body: (
       <>
-        <p>Quality, trust, affordability, and real communication. We treat your space the way we&apos;d want ours treated.</p>
-        <p>Whether it&apos;s a one-time deep clean or recurring service, we adapt to what you actually need — not a fixed package that doesn&apos;t quite fit.</p>
+        <p>We&apos;ve been cleaning homes since 1994. The people doing your cleaning are the same people who built this business — not a rotating crew working off a checklist.</p>
+        <p>We&apos;re flexible on scope. Don&apos;t need the whole apartment cleaned? That&apos;s fine. Need specific rooms, certain tasks, or a one-time deep clean before an event? We work around what you actually need, not what a package requires.</p>
+        <p>We&apos;re also honest — if we think something will take longer than expected, we&apos;ll say so before we start.</p>
       </>
     ),
   },
@@ -133,6 +137,7 @@ export default function CleanPage(): JSX.Element {
       />
       <Hero heroRef={heroRef} onQuoteClick={() => openDrawer()} />
       <TrustStrip />
+      <Positioning />
 
       {/* Combined client accordion + services — two-panel layout on desktop */}
       <section
@@ -186,6 +191,7 @@ export default function CleanPage(): JSX.Element {
         </div>
       </section>
 
+      <HowItWorks />
       <Pricing onQuoteClick={() => openDrawer()} />
       <Testimonials />
       <ServiceArea onQuoteClick={() => openDrawer()} />

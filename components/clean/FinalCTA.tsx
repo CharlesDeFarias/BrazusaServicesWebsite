@@ -27,7 +27,7 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
           Tell us what you need.
         </h2>
         <p className="text-base mb-8 max-w-sm mx-auto leading-relaxed" style={{ color: 'rgba(11,29,46,0.5)' }}>
-          A quick message or full details — we&apos;ll take it from there.
+          You can send a quick message or a detailed breakdown. Either way, we&apos;ll figure it out with you.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
           <button

@@ -31,11 +31,16 @@ const services = [
     desc: 'Dust, debris, and detail work after builds',
     clients: ['property', 'offices'],
   },
-  {
-    name: 'Custom Requests',
-    desc: 'Only the rooms or tasks you actually need',
-    clients: ['str', 'property', 'offices', 'apartment'],
-  },
+]
+
+const extendedServices = [
+  { name: 'Linen processing', desc: 'Wash, dry, fold, and stage between guests' },
+  { name: 'Inventory tracking', desc: 'Supplies, amenities, restocking — documented and managed' },
+  { name: 'Closet & storage organization', desc: 'One-time or periodic organization for units and common areas' },
+  { name: 'Maintenance coordination', desc: 'Identify and flag issues; coordinate with vendors when needed' },
+  { name: 'Minor task handling', desc: 'Light fixture changes, touch-up work, things that fall through the cracks' },
+  { name: 'Guest support tasks', desc: 'Check-in prep, early access handling, last-minute requests' },
+  { name: 'Key & access management', desc: 'Lockbox coordination, key handoffs, access documentation' },
 ]
 
 // Map accordion spaceType values → services clients keys
@@ -106,8 +111,32 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
         </div>
       </div>
 
-      <p className="text-xs mt-6 mb-8" style={{ color: 'rgba(255,255,255,0.28)' }}>
-        Can&apos;t find what you need? We do partial and one-off jobs too — if we can&apos;t help, we&apos;ll point you to someone who can.
+      {/* Extended / operational services */}
+      <div className="mt-8 mb-6">
+        <p
+          className="text-xs uppercase mb-4"
+          style={{ color: 'rgba(196,154,68,0.7)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+        >
+          We can also help with
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5">
+          {extendedServices.map((s) => (
+            <div key={s.name} className="flex items-start gap-2.5">
+              <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: 'var(--color-brand-gold)' }}>→</span>
+              <div>
+                <span className="text-xs font-medium text-white">{s.name}</span>
+                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.42)' }}> — {s.desc}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs mt-4" style={{ color: 'rgba(255,255,255,0.28)' }}>
+          These are add-ons, not packages. Mix and match based on what your operation actually needs.
+        </p>
+      </div>
+
+      <p className="text-xs mb-8" style={{ color: 'rgba(255,255,255,0.28)' }}>
+        Don&apos;t see what you need? We do partial and one-off jobs too — if we can&apos;t help, we&apos;ll point you to someone who can.
       </p>
 
       <button

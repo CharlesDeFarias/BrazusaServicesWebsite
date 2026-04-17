@@ -80,7 +80,7 @@ export default function Footer(): JSX.Element {
                 fontFamily: 'var(--font-syne)',
               }}
             >
-              More Services
+              Need more than cleaning? We also help with:
             </p>
             <ul className="space-y-2">
               {serviceLinks.map((l) => (

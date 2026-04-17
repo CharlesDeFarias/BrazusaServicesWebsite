@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { type JSX, useState, useRef, useEffect } from 'react'
 import StickyNav        from '@/components/StickyNav'
 import Hero             from '@/components/clean/Hero'
 import TrustStrip       from '@/components/clean/TrustStrip'
@@ -87,7 +87,7 @@ const clientItems: ClientItem[] = [
   },
 ]
 
-export default function CleanPage() {
+export default function CleanPage(): JSX.Element {
   const [drawerOpen, setDrawerOpen]           = useState(false)
   const [drawerSpaceType, setDrawerSpaceType] = useState('')
   const [activeClient, setActiveClient]       = useState<string | null>(null)
@@ -99,8 +99,8 @@ export default function CleanPage() {
   useEffect(() => {
     if (!activeClient) return
     setShowServicesHint(true)
-    const t = setTimeout(() => setShowServicesHint(false), 2200)
-    return () => clearTimeout(t)
+    const hintTimer = setTimeout(() => setShowServicesHint(false), 2200)
+    return () => clearTimeout(hintTimer)
   }, [activeClient])
 
   // Scroll left panel so the opened accordion item is at the top of the panel
@@ -110,15 +110,15 @@ export default function CleanPage() {
     const el = document.getElementById(activeClient)
     if (!el) return
     // Small delay so the accordion begins opening before we measure positions
-    const t = setTimeout(() => {
+    const scrollTimer = setTimeout(() => {
       const panelRect = panel.getBoundingClientRect()
       const elRect    = el.getBoundingClientRect()
       panel.scrollTo({ top: panel.scrollTop + (elRect.top - panelRect.top), behavior: 'smooth' })
     }, 60)
-    return () => clearTimeout(t)
+    return () => clearTimeout(scrollTimer)
   }, [activeClient])
 
-  const openDrawer = (spaceType = '') => {
+  const openDrawer = (spaceType = ''): void => {
     setDrawerSpaceType(spaceType)
     setDrawerOpen(true)
   }
@@ -137,7 +137,7 @@ export default function CleanPage() {
       {/* Combined client accordion + services — two-panel layout on desktop */}
       <section
         id="client-types"
-        style={{ borderTop: '1px solid #D8D0C6', scrollMarginTop: '56px' }}
+        style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
       >
         <div className="flex flex-col lg:flex-row">
           {/* Left panel: accordion — off-white, independently scrollable on desktop */}
@@ -157,11 +157,11 @@ export default function CleanPage() {
           {showServicesHint && (
             <div
               className="lg:hidden flex items-center justify-center gap-2 py-2.5 bg-off-white transition-opacity duration-500"
-              style={{ borderTop: '1px solid #D8D0C6', opacity: showServicesHint ? 1 : 0 }}
+              style={{ borderTop: '1px solid var(--color-light-gray)', opacity: showServicesHint ? 1 : 0 }}
             >
-              <span className="text-xs" style={{ color: '#9B9288' }}>See matching services</span>
+              <span className="text-xs" style={{ color: 'var(--color-warm-gray)' }}>See matching services</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M6 2v8M2 6l4 4 4-4" stroke="#C49A44" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M6 2v8M2 6l4 4 4-4" stroke="var(--color-brand-gold)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
           )}

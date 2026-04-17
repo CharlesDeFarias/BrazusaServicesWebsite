@@ -1,6 +1,6 @@
 'use client'
 
-import type { RefObject } from 'react'
+import type { JSX, RefObject } from 'react'
 import Image from 'next/image'
 
 interface HeroProps {
@@ -17,7 +17,7 @@ const differentiators = [
   { n: '04', text: 'Decades of real cleaning experience' },
 ]
 
-export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
+export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element {
   return (
     <section
       ref={heroRef}
@@ -56,7 +56,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
               <div key={d.n} className="flex items-start gap-2">
                 <span
                   className="text-xs font-semibold flex-shrink-0 tabular-nums mt-0.5"
-                  style={{ color: '#C49A44', fontFamily: 'var(--font-syne)' }}
+                  style={{ color: 'var(--color-brand-gold)', fontFamily: 'var(--font-syne)' }}
                 >
                   {d.n}
                 </span>
@@ -71,7 +71,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps) {
             <button
               onClick={onQuoteClick}
               className="w-full sm:w-auto text-sm font-medium px-10 py-4 min-h-[52px] min-w-[180px] transition-all duration-200 hover:opacity-90"
-              style={{ background: '#C49A44', color: '#0B1D2E' }}
+              style={{ background: 'var(--color-brand-gold)', color: 'var(--color-navy)' }}
             >
               Get a Free Quote
             </button>

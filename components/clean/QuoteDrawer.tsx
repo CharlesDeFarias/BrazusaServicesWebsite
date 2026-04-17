@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { type JSX, useState, useRef, useEffect } from 'react'
 
 type ContactMethod = 'phone' | 'sms' | 'email'
 type Outcome = 'contact' | 'quote' | 'schedule'
@@ -27,7 +27,7 @@ const inputStyle = {
 const inputFocusStyle = { borderColor: 'rgba(196,154,68,0.6)' }
 const labelCls = 'block text-xs font-medium mb-1.5 uppercase tracking-wider'
 
-export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: QuoteDrawerProps) {
+export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: QuoteDrawerProps): JSX.Element {
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [submitted, setSubmitted]     = useState(false)
 
@@ -74,17 +74,17 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
   // Escape key closes without clearing form data
   useEffect(() => {
     if (!isOpen) return
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.key === 'Escape') onClose()
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, onClose])
 
-  const toggleDay = (day: string) =>
+  const toggleDay = (day: string): void =>
     setPreferredDays((p) => p.includes(day) ? p.filter((d) => d !== day) : [...p, day])
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     if (!name.trim() || !contact.trim()) {
       setError('Please add your name and a way to reach you.')
       return
@@ -118,7 +118,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
   }
 
   // Only reset form state after a successful submit — preserve data on all other closes
-  const handleClose = () => {
+  const handleClose = (): void => {
     onClose()
     if (submitted) {
       setTimeout(() => {
@@ -153,7 +153,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
       <div
         className="fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl shadow-2xl max-h-[92vh] overflow-y-auto"
         style={{
-          background: '#0B1D2E',
+          background: 'var(--color-navy)',
           transition: 'transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)',
           transform: isOpen ? 'translateY(0)' : 'translateY(100%)',
           borderTop: '1px solid rgba(255,255,255,0.08)',
@@ -162,7 +162,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
         <div className="max-w-lg mx-auto px-6 py-6">
 
           {/* Handle bar */}
-          <div className="w-10 h-1 rounded-full mx-auto mb-5" style={{ background: '#C49A44' }} />
+          <div className="w-10 h-1 rounded-full mx-auto mb-5" style={{ background: 'var(--color-brand-gold)' }} />
 
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
@@ -187,7 +187,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
           {submitted ? (
             <div className="py-10 text-center">
               <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: 'rgba(196,154,68,0.12)' }}>
-                <span className="text-xl" style={{ color: '#C49A44' }}>✓</span>
+                <span className="text-xl" style={{ color: 'var(--color-brand-gold)' }}>✓</span>
               </div>
               <p className="text-white font-medium mb-2">We&apos;ll be in touch shortly.</p>
               <p className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
@@ -204,7 +204,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                 {/* Name */}
                 <div>
                   <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>
-                    Name <span style={{ color: '#C49A44' }}>*</span>
+                    Name <span style={{ color: 'var(--color-brand-gold)' }}>*</span>
                   </label>
                   <input type="text" value={name} onChange={(e) => setName(e.target.value)}
                     className={inputCls} placeholder="Your name"
@@ -217,7 +217,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                 {/* Contact info */}
                 <div>
                   <label className={labelCls} style={{ color: 'rgba(255,255,255,0.45)' }}>
-                    Phone or Email <span style={{ color: '#C49A44' }}>*</span>
+                    Phone or Email <span style={{ color: 'var(--color-brand-gold)' }}>*</span>
                   </label>
                   <input type="text" value={contact} onChange={(e) => setContact(e.target.value)}
                     className={inputCls} placeholder="Phone number or email address"
@@ -238,9 +238,9 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                         onClick={() => setContactMethod(m)}
                         className="flex-1 min-h-[44px] py-2 text-xs font-medium transition-all duration-150"
                         style={{
-                          background: contactMethod === m ? '#C49A44' : 'transparent',
-                          color: contactMethod === m ? '#0B1D2E' : 'rgba(255,255,255,0.5)',
-                          border: `1px solid ${contactMethod === m ? '#C49A44' : 'rgba(255,255,255,0.15)'}`,
+                          background: contactMethod === m ? 'var(--color-brand-gold)' : 'transparent',
+                          color: contactMethod === m ? 'var(--color-navy)' : 'rgba(255,255,255,0.5)',
+                          border: `1px solid ${contactMethod === m ? 'var(--color-brand-gold)' : 'rgba(255,255,255,0.15)'}`,
                         }}
                       >
                         {contactMethodLabels[m]}
@@ -263,11 +263,11 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                     <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
                       style={{ background: detailsOpen ? 'rgba(196,154,68,0.2)' : 'rgba(255,255,255,0.06)' }}>
                       <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                        <path d="M6.5 1v11M1 6.5h11" stroke={detailsOpen ? '#C49A44' : 'rgba(255,255,255,0.4)'} strokeWidth="1.5" strokeLinecap="round"/>
+                        <path d="M6.5 1v11M1 6.5h11" stroke={detailsOpen ? 'var(--color-brand-gold)' : 'rgba(255,255,255,0.4)'} strokeWidth="1.5" strokeLinecap="round"/>
                       </svg>
                     </div>
                     <div>
-                      <p className="text-sm font-medium" style={{ color: detailsOpen ? '#C49A44' : 'rgba(255,255,255,0.75)' }}>
+                      <p className="text-sm font-medium" style={{ color: detailsOpen ? 'var(--color-brand-gold)' : 'rgba(255,255,255,0.75)' }}>
                         Add details for a more accurate quote
                       </p>
                       <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>
@@ -280,7 +280,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                     className="flex-shrink-0 transition-transform duration-300"
                     style={{ transform: detailsOpen ? 'rotate(180deg)' : 'none' }}
                   >
-                    <path d="M3 5l4 4 4-4" stroke={detailsOpen ? '#C49A44' : 'rgba(255,255,255,0.35)'} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M3 5l4 4 4-4" stroke={detailsOpen ? 'var(--color-brand-gold)' : 'rgba(255,255,255,0.35)'} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
 
@@ -312,10 +312,10 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                         <select value={cleanLevel} onChange={(e) => setCleanLevel(e.target.value)}
                           className={inputCls} style={{ ...getInputStyle('cleanLevel'), appearance: 'none' }}
                           onFocus={() => setFocusedField('cleanLevel')} onBlur={() => setFocusedField(null)}>
-                          <option value="" style={{ background: '#0B1D2E' }}>Select...</option>
-                          <option value="light" style={{ background: '#0B1D2E' }}>Light</option>
-                          <option value="moderate" style={{ background: '#0B1D2E' }}>Moderate</option>
-                          <option value="heavy" style={{ background: '#0B1D2E' }}>Heavy</option>
+                          <option value="" style={{ background: 'var(--color-navy)' }}>Select...</option>
+                          <option value="light" style={{ background: 'var(--color-navy)' }}>Light</option>
+                          <option value="moderate" style={{ background: 'var(--color-navy)' }}>Moderate</option>
+                          <option value="heavy" style={{ background: 'var(--color-navy)' }}>Heavy</option>
                         </select>
                       </div>
                       <div>
@@ -323,9 +323,9 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                         <select value={frequency} onChange={(e) => setFrequency(e.target.value)}
                           className={inputCls} style={{ ...getInputStyle('frequency'), appearance: 'none' }}
                           onFocus={() => setFocusedField('frequency')} onBlur={() => setFocusedField(null)}>
-                          <option value="" style={{ background: '#0B1D2E' }}>Select...</option>
-                          <option value="one-time" style={{ background: '#0B1D2E' }}>One-time</option>
-                          <option value="recurring" style={{ background: '#0B1D2E' }}>Recurring</option>
+                          <option value="" style={{ background: 'var(--color-navy)' }}>Select...</option>
+                          <option value="one-time" style={{ background: 'var(--color-navy)' }}>One-time</option>
+                          <option value="recurring" style={{ background: 'var(--color-navy)' }}>Recurring</option>
                         </select>
                       </div>
                       <div>
@@ -348,12 +348,12 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                     onFocus={() => setFocusedField('space')}
                     onBlur={() => setFocusedField(null)}
                   >
-                    <option value="" style={{ background: '#0B1D2E' }}>Select...</option>
-                    <option value="apartment" style={{ background: '#0B1D2E' }}>Apartment / Home</option>
-                    <option value="str" style={{ background: '#0B1D2E' }}>Short-Term Rental</option>
-                    <option value="office" style={{ background: '#0B1D2E' }}>Office / Clinic</option>
-                    <option value="property" style={{ background: '#0B1D2E' }}>Property / Building</option>
-                    <option value="other" style={{ background: '#0B1D2E' }}>Other — we&apos;ll figure it out</option>
+                    <option value="" style={{ background: 'var(--color-navy)' }}>Select...</option>
+                    <option value="apartment" style={{ background: 'var(--color-navy)' }}>Apartment / Home</option>
+                    <option value="str" style={{ background: 'var(--color-navy)' }}>Short-Term Rental</option>
+                    <option value="office" style={{ background: 'var(--color-navy)' }}>Office / Clinic</option>
+                    <option value="property" style={{ background: 'var(--color-navy)' }}>Property / Building</option>
+                    <option value="other" style={{ background: 'var(--color-navy)' }}>Other — we&apos;ll figure it out</option>
                   </select>
                   {spaceType === 'other' && (
                     <p className="text-xs mt-2 leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>
@@ -388,7 +388,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                     <ul className="mt-2 space-y-1">
                       {baseFiles.map((f, i) => (
                         <li key={i} className="text-xs flex items-center gap-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                          <span style={{ color: '#C49A44' }}>↑</span> {f.name}
+                          <span style={{ color: 'var(--color-brand-gold)' }}>↑</span> {f.name}
                         </li>
                       ))}
                     </ul>
@@ -415,9 +415,9 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                   {outcome === 'quote' && (
                     <div className="mt-3 px-3.5 py-3 flex items-start gap-2.5"
                       style={{ background: 'rgba(196,154,68,0.07)', border: '1px solid rgba(196,154,68,0.2)' }}>
-                      <span style={{ color: '#C49A44', fontSize: '0.85rem', lineHeight: 1.4 }}>ℹ</span>
+                      <span style={{ color: 'var(--color-brand-gold)', fontSize: '0.85rem', lineHeight: 1.4 }}>ℹ</span>
                       <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                        For a more accurate quote, expand <span style={{ color: '#C49A44' }}>Add details</span> above and fill in rooms, frequency, and focus areas.
+                        For a more accurate quote, expand <span style={{ color: 'var(--color-brand-gold)' }}>Add details</span> above and fill in rooms, frequency, and focus areas.
                       </p>
                     </div>
                   )}
@@ -426,7 +426,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                 {/* Scheduling fields */}
                 {outcome === 'schedule' && (
                   <div className="rounded-none p-4 space-y-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                    <p className="text-xs font-medium uppercase tracking-wider" style={{ color: '#C49A44' }}>Scheduling details</p>
+                    <p className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--color-brand-gold)' }}>Scheduling details</p>
                     <div>
                       <label className="block text-xs mb-1.5 uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.35)' }}>Address or neighborhood</label>
                       <input type="text" value={address} onChange={(e) => setAddress(e.target.value)}
@@ -443,9 +443,9 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                           <button key={day} type="button" onClick={() => toggleDay(day)}
                             className="px-3 py-2 min-h-[44px] text-xs transition-all duration-150"
                             style={{
-                              background: preferredDays.includes(day) ? '#C49A44' : 'transparent',
-                              color: preferredDays.includes(day) ? '#0B1D2E' : 'rgba(255,255,255,0.5)',
-                              border: `1px solid ${preferredDays.includes(day) ? '#C49A44' : 'rgba(255,255,255,0.15)'}`,
+                              background: preferredDays.includes(day) ? 'var(--color-brand-gold)' : 'transparent',
+                              color: preferredDays.includes(day) ? 'var(--color-navy)' : 'rgba(255,255,255,0.5)',
+                              border: `1px solid ${preferredDays.includes(day) ? 'var(--color-brand-gold)' : 'rgba(255,255,255,0.15)'}`,
                             }}>
                             {day}
                           </button>
@@ -474,7 +474,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                 onClick={handleSubmit}
                 disabled={loading}
                 className="w-full py-3.5 font-medium text-sm mt-6 text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy disabled:opacity-50"
-                style={{ background: '#2DAAE1', borderLeft: '2px solid rgba(255,255,255,0.25)' }}
+                style={{ background: 'var(--color-brand-blue)', borderLeft: '2px solid rgba(255,255,255,0.25)' }}
               >
                 {loading ? 'Sending…' : 'Submit Free Request'}
               </button>

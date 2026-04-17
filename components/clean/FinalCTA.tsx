@@ -1,12 +1,14 @@
+import type { JSX } from 'react'
+
 interface FinalCTAProps {
   onQuoteClick: () => void
 }
 
-export default function FinalCTA({ onQuoteClick }: FinalCTAProps) {
+export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
   return (
     <section
       className="bg-off-white py-20 px-6 relative overflow-hidden"
-      style={{ borderTop: '1px solid #D8D0C6' }}
+      style={{ borderTop: '1px solid var(--color-light-gray)' }}
     >
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 pointer-events-none" style={{
@@ -17,7 +19,7 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps) {
         background: 'radial-gradient(circle, rgba(196,154,68,0.06) 0%, transparent 70%)',
       }} />
       <div className="max-w-3xl mx-auto text-center relative">
-        <div className="w-8 h-px mx-auto mb-8" style={{ background: '#C49A44' }} />
+        <div className="w-8 h-px mx-auto mb-8" style={{ background: 'var(--color-brand-gold)' }} />
         <h2
           className="italic leading-none mb-5 text-navy"
           style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 300 }}
@@ -31,7 +33,7 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps) {
           <button
             onClick={onQuoteClick}
             className="text-sm font-medium px-7 py-3.5 min-h-[44px] transition-all duration-200 hover:opacity-90"
-            style={{ background: '#C49A44', color: '#0B1D2E' }}
+            style={{ background: 'var(--color-brand-gold)', color: 'var(--color-navy)' }}
           >
             Get a Free Quote
           </button>

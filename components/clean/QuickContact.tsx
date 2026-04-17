@@ -1,15 +1,17 @@
-export default function QuickContact() {
+import type { JSX } from 'react'
+
+export default function QuickContact(): JSX.Element {
   return (
     <section
       id="contact"
       className="bg-white py-14 px-6"
-      style={{ borderTop: '1px solid #D8D0C6', scrollMarginTop: '56px' }}
+      style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
       <div className="max-w-5xl mx-auto">
         <h2 className="italic text-3xl md:text-4xl text-navy mb-2 leading-snug" style={{ fontWeight: 300 }}>
           Reach us directly
         </h2>
-        <p className="text-sm mb-10" style={{ color: '#9B9288' }}>
+        <p className="text-sm mb-10" style={{ color: 'var(--color-warm-gray)' }}>
           We respond quickly — usually same day.
         </p>
 
@@ -21,14 +23,14 @@ export default function QuickContact() {
           >
             <div
               className="w-11 h-11 flex items-center justify-center flex-shrink-0 transition-colors group-hover:bg-navy"
-              style={{ background: 'rgba(11,29,46,0.07)' }}
+              style={{ background: 'var(--color-navy-subtle)' }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy group-hover:text-white transition-colors">
                 <path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25z"/>
               </svg>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: '#B0A89E' }}>Call or Text</p>
+              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--color-warm-gray-light)' }}>Call or Text</p>
               <p className="font-medium text-navy group-hover:underline underline-offset-2" style={{ fontFamily: 'var(--font-syne)' }}>
                 781-686-7189
               </p>
@@ -42,14 +44,14 @@ export default function QuickContact() {
           >
             <div
               className="w-11 h-11 flex items-center justify-center flex-shrink-0 transition-colors group-hover:bg-navy"
-              style={{ background: 'rgba(11,29,46,0.07)' }}
+              style={{ background: 'var(--color-navy-subtle)' }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-navy group-hover:text-white transition-colors">
                 <path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/>
               </svg>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: '#B0A89E' }}>Email</p>
+              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--color-warm-gray-light)' }}>Email</p>
               <p className="font-medium text-navy group-hover:underline underline-offset-2" style={{ fontFamily: 'var(--font-syne)' }}>
                 info@brazusa.com
               </p>
@@ -62,7 +64,7 @@ export default function QuickContact() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 p-4 group transition-all duration-200 hover:shadow-md flex-1 min-w-[220px]"
-            style={{ border: '1px solid #D8D0C6', background: 'white' }}
+            style={{ border: '1px solid var(--color-light-gray)', background: 'white' }}
           >
             <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 rounded-lg" style={{ background: '#F8F4EE' }}>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -73,13 +75,13 @@ export default function QuickContact() {
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: '#B0A89E' }}>Google Business</p>
+              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--color-warm-gray-light)' }}>Google Business</p>
               <p className="font-medium text-navy text-sm" style={{ fontFamily: 'var(--font-syne)' }}>
                 View our profile &amp; reviews
               </p>
             </div>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0 transition-transform group-hover:translate-x-0.5">
-              <path d="M3 7h8M7 3l4 4-4 4" stroke="#C49A44" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M3 7h8M7 3l4 4-4 4" stroke="var(--color-brand-gold)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </a>
         </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, type RefObject } from 'react'
+import { type JSX, useState, useEffect, useRef, type RefObject } from 'react'
 import Image from 'next/image'
 
 interface StickyNavProps {
@@ -24,14 +24,14 @@ const navLinks = [
   { label: 'Contact',  href: '#contact' },
 ]
 
-export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick }: StickyNavProps) {
+export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick }: StickyNavProps): JSX.Element {
   const [scrolled, setScrolled]     = useState(false)
   const [menuOpen, setMenuOpen]     = useState(false)
   const [cleanOpen, setCleanOpen]   = useState(false)
   const cleanRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80)
+    const onScroll = (): void => setScrolled(window.scrollY > 80)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -44,12 +44,12 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
   // Close "Clean my…" dropdown on outside click or Escape
   useEffect(() => {
     if (!cleanOpen) return
-    const handleClick = (e: MouseEvent) => {
+    const handleClick = (e: MouseEvent): void => {
       if (cleanRef.current && !cleanRef.current.contains(e.target as Node)) {
         setCleanOpen(false)
       }
     }
-    const handleKey = (e: KeyboardEvent) => {
+    const handleKey = (e: KeyboardEvent): void => {
       if (e.key === 'Escape') setCleanOpen(false)
     }
     document.addEventListener('mousedown', handleClick)
@@ -60,9 +60,9 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
     }
   }, [cleanOpen])
 
-  const closeMenu = () => setMenuOpen(false)
+  const closeMenu = (): void => setMenuOpen(false)
 
-  const handleClientSelect = (id: string) => {
+  const handleClientSelect = (id: string): void => {
     setActiveClient(id)
     setCleanOpen(false)
     closeMenu()
@@ -71,10 +71,10 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
     }, 60)
   }
 
-  const navBg   = scrolled ? '#F2EDE6'              : 'rgba(11,29,46,0.75)'
-  const navBdr  = scrolled ? '1px solid #D8D0C6'   : '1px solid rgba(255,255,255,0.07)'
-  const linkClr = scrolled ? 'rgba(11,29,46,0.55)' : 'rgba(255,255,255,0.6)'
-  const barClr  = scrolled ? '#0B1D2E'              : 'white'
+  const navBg   = scrolled ? 'var(--color-off-white)'          : 'rgba(11,29,46,0.75)'
+  const navBdr  = scrolled ? '1px solid var(--color-light-gray)' : '1px solid rgba(255,255,255,0.07)'
+  const linkClr = scrolled ? 'rgba(11,29,46,0.55)'             : 'rgba(255,255,255,0.6)'
+  const barClr  = scrolled ? 'var(--color-navy)'               : 'white'
 
   return (
     <nav
@@ -118,7 +118,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               fontWeight: 400,
               fontStyle: 'italic',
               letterSpacing: '0.03em',
-              color: scrolled ? '#0B1D2E' : 'rgba(255,255,255,0.88)',
+              color: scrolled ? 'var(--color-navy)' : 'rgba(255,255,255,0.88)',
               transition: 'color 0.3s',
               whiteSpace: 'nowrap',
             }}
@@ -152,8 +152,8 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               <div
                 className="absolute top-full left-0 mt-2 w-52 py-1.5 shadow-xl z-50"
                 style={{
-                  background: scrolled ? '#F2EDE6' : '#0B1D2E',
-                  border: scrolled ? '1px solid #D8D0C6' : '1px solid rgba(255,255,255,0.10)',
+                  background: scrolled ? 'var(--color-off-white)' : 'var(--color-navy)',
+                  border: scrolled ? '1px solid var(--color-light-gray)' : '1px solid rgba(255,255,255,0.10)',
                 }}
               >
                 {clientTypes.map((ct) => (
@@ -171,12 +171,12 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
                     {ct.label}
                   </button>
                 ))}
-                <div style={{ borderTop: scrolled ? '1px solid #D8D0C6' : '1px solid rgba(255,255,255,0.08)', margin: '4px 0' }} />
+                <div style={{ borderTop: scrolled ? '1px solid var(--color-light-gray)' : '1px solid rgba(255,255,255,0.08)', margin: '4px 0' }} />
                 <button
                   onClick={() => { onOtherClick(); setCleanOpen(false) }}
                   className="w-full text-left px-4 py-2.5 text-xs transition-colors"
                   style={{
-                    color: '#C49A44',
+                    color: 'var(--color-brand-gold)',
                     minHeight: '36px',
                   }}
                   onMouseEnter={e => (e.currentTarget.style.background = scrolled ? 'rgba(11,29,46,0.06)' : 'rgba(255,255,255,0.06)')}
@@ -207,8 +207,8 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
             onClick={onQuoteClick}
             className="hidden md:block text-xs font-medium px-4 py-2 transition-all duration-200 text-white"
             style={{
-              background: scrolled ? '#0B1D2E' : 'rgba(255,255,255,0.1)',
-              borderLeft: '2px solid #C49A44',
+              background: scrolled ? 'var(--color-navy)' : 'rgba(255,255,255,0.1)',
+              borderLeft: '2px solid var(--color-brand-gold)',
               letterSpacing: '0.05em',
             }}
           >
@@ -243,7 +243,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
         className="md:hidden overflow-hidden transition-all duration-300"
         style={{
           maxHeight: menuOpen ? '420px' : '0',
-          background: scrolled ? '#F2EDE6' : '#0B1D2E',
+          background: scrolled ? 'var(--color-off-white)' : 'var(--color-navy)',
           borderTop: menuOpen ? navBdr : 'none',
         }}
       >
@@ -251,7 +251,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           {/* Clean my… section */}
           <div
             className="text-xs font-medium py-2 mb-1"
-            style={{ color: '#C49A44', letterSpacing: '0.1em' }}
+            style={{ color: 'var(--color-brand-gold)', letterSpacing: '0.1em' }}
           >
             CLEAN MY…
           </div>
@@ -275,7 +275,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
             onClick={() => { onOtherClick(); closeMenu() }}
             className="text-sm font-medium py-2.5 text-left"
             style={{
-              color: '#C49A44',
+              color: 'var(--color-brand-gold)',
               borderBottom: scrolled ? '1px solid rgba(11,29,46,0.05)' : '1px solid rgba(255,255,255,0.05)',
               minHeight: '44px',
               display: 'flex',
@@ -310,7 +310,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           <button
             onClick={() => { onQuoteClick(); closeMenu() }}
             className="mt-4 w-full text-sm font-medium text-white transition-all duration-200"
-            style={{ background: '#2DAAE1', borderLeft: '2px solid rgba(255,255,255,0.3)', minHeight: '44px' }}
+            style={{ background: 'var(--color-brand-blue)', borderLeft: '2px solid rgba(255,255,255,0.3)', minHeight: '44px' }}
           >
             Free Quote
           </button>

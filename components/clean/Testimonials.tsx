@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { type JSX, useState, useRef, useEffect, useCallback } from 'react'
 
 type Category = 'all' | 'str' | 'property' | 'offices' | 'homes' | 'other'
 
@@ -61,7 +61,7 @@ const filters: { label: string; value: Category }[] = [
 const CARD_W = 320
 const GAP    = 16
 
-export default function Testimonials() {
+export default function Testimonials(): JSX.Element {
   const [active, setActive]               = useState<Category>('all')
   const [canScrollLeft, setCanScrollLeft]   = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
@@ -72,14 +72,14 @@ export default function Testimonials() {
 
   const filtered = active === 'all' ? cases : cases.filter((c) => c.category === active)
 
-  const updateScrollState = useCallback(() => {
+  const updateScrollState = useCallback((): void => {
     const el = scrollRef.current
     if (!el) return
     setCanScrollLeft(el.scrollLeft > 10)
     setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10)
   }, [])
 
-  const resetAutoScroll = useCallback((count: number) => {
+  const resetAutoScroll = useCallback((count: number): void => {
     if (intervalRef.current) clearInterval(intervalRef.current)
     if (count < 3) return
     intervalRef.current = setInterval(() => {
@@ -105,21 +105,21 @@ export default function Testimonials() {
     }
   }, [active, filtered.length, resetAutoScroll, updateScrollState])
 
-  const scrollByCard = (dir: 'left' | 'right') => {
+  const scrollByCard = (dir: 'left' | 'right'): void => {
     const el = scrollRef.current
     if (!el) return
     el.scrollBy({ left: dir === 'right' ? CARD_W + GAP : -(CARD_W + GAP), behavior: 'smooth' })
     resetAutoScroll(filtered.length) // Reset timer on manual interaction
   }
 
-  const categoryLabel = (cat: Category) =>
+  const categoryLabel = (cat: Category): string =>
     filters.find((f) => f.value === cat)?.label ?? cat
 
   return (
     <section
       id="testimonials"
       className="bg-off-white py-14 px-6"
-      style={{ borderTop: '1px solid #D8D0C6', scrollMarginTop: '56px' }}
+      style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
       <div className="max-w-5xl mx-auto">
 
@@ -129,7 +129,7 @@ export default function Testimonials() {
             <h2 className="italic text-3xl md:text-4xl text-navy mb-1.5" style={{ fontWeight: 300 }}>
               Real clients, real situations
             </h2>
-            <p className="text-sm" style={{ color: '#9B9288' }}>
+            <p className="text-sm" style={{ color: 'var(--color-warm-gray)' }}>
               A few examples of the work we do and how we approach it.
             </p>
           </div>
@@ -144,9 +144,9 @@ export default function Testimonials() {
                   className="text-xs px-3 py-1.5 rounded-full transition-all duration-200"
                   style={{
                     fontFamily: 'var(--font-syne)',
-                    background: active === f.value ? '#0B1D2E' : 'transparent',
-                    color: active === f.value ? '#fff' : '#9B9288',
-                    border: active === f.value ? '1px solid #0B1D2E' : '1px solid #D8D0C6',
+                    background: active === f.value ? 'var(--color-navy)' : 'transparent',
+                    color: active === f.value ? '#fff' : 'var(--color-warm-gray)',
+                    border: active === f.value ? '1px solid var(--color-navy)' : '1px solid var(--color-light-gray)',
                   }}
                 >
                   {f.label}
@@ -163,9 +163,9 @@ export default function Testimonials() {
                 className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
                 style={{
                   border: '1px solid',
-                  borderColor: canScrollLeft ? '#C49A44' : '#D8D0C6',
-                  background: canScrollLeft ? '#C49A44' : 'transparent',
-                  color: canScrollLeft ? '#0B1D2E' : '#D8D0C6',
+                  borderColor: canScrollLeft ? 'var(--color-brand-gold)' : 'var(--color-light-gray)',
+                  background: canScrollLeft ? 'var(--color-brand-gold)' : 'transparent',
+                  color: canScrollLeft ? 'var(--color-navy)' : 'var(--color-light-gray)',
                   cursor: canScrollLeft ? 'pointer' : 'not-allowed',
                 }}
               >
@@ -180,9 +180,9 @@ export default function Testimonials() {
                 className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
                 style={{
                   border: '1px solid',
-                  borderColor: canScrollRight ? '#C49A44' : '#D8D0C6',
-                  background: canScrollRight ? '#C49A44' : 'transparent',
-                  color: canScrollRight ? '#0B1D2E' : '#D8D0C6',
+                  borderColor: canScrollRight ? 'var(--color-brand-gold)' : 'var(--color-light-gray)',
+                  background: canScrollRight ? 'var(--color-brand-gold)' : 'transparent',
+                  color: canScrollRight ? 'var(--color-navy)' : 'var(--color-light-gray)',
                   cursor: canScrollRight ? 'pointer' : 'not-allowed',
                 }}
               >
@@ -217,7 +217,7 @@ export default function Testimonials() {
                 style={{
                   width: `${CARD_W}px`,
                   maxWidth: '80vw',
-                  border: '1px solid #D8D0C6',
+                  border: '1px solid var(--color-light-gray)',
                   scrollSnapAlign: 'start',
                 }}
               >
@@ -227,17 +227,17 @@ export default function Testimonials() {
                 >
                   {c.result}
                 </p>
-                <p className="text-xs leading-relaxed mt-auto" style={{ color: '#9B9288' }}>
+                <p className="text-xs leading-relaxed mt-auto" style={{ color: 'var(--color-warm-gray)' }}>
                   {c.detail}
                 </p>
-                <div className="pt-3 flex items-center justify-between" style={{ borderTop: '1px solid #D8D0C6' }}>
-                  <span className="text-xs font-medium" style={{ color: '#B0A89E' }}>{c.title}</span>
+                <div className="pt-3 flex items-center justify-between" style={{ borderTop: '1px solid var(--color-light-gray)' }}>
+                  <span className="text-xs font-medium" style={{ color: 'var(--color-warm-gray-light)' }}>{c.title}</span>
                   <span
                     className="text-xs px-2 py-0.5 rounded-full"
                     style={{
-                      background: '#F2EDE6',
-                      color: '#C49A44',
-                      border: '1px solid #E8E0D6',
+                      background: 'var(--color-off-white)',
+                      color: 'var(--color-brand-gold)',
+                      border: '1px solid var(--color-linen-dark)',
                       fontFamily: 'var(--font-syne)',
                     }}
                   >
@@ -250,9 +250,9 @@ export default function Testimonials() {
             {filtered.length === 0 && (
               <div
                 className="flex-shrink-0 rounded-xl p-8 flex items-center justify-center"
-                style={{ width: `${CARD_W}px`, maxWidth: '80vw', border: '1px dashed #D8D0C6' }}
+                style={{ width: `${CARD_W}px`, maxWidth: '80vw', border: '1px dashed var(--color-light-gray)' }}
               >
-                <p className="text-sm text-center" style={{ color: '#B0A89E' }}>
+                <p className="text-sm text-center" style={{ color: 'var(--color-warm-gray-light)' }}>
                   No examples for this category yet — reach out directly.
                 </p>
               </div>
@@ -262,7 +262,7 @@ export default function Testimonials() {
           {/* Right-edge fade */}
           <div
             className="pointer-events-none absolute top-0 right-0 bottom-4 w-16"
-            style={{ background: 'linear-gradient(to right, transparent, #F2EDE6)' }}
+            style={{ background: 'linear-gradient(to right, transparent, var(--color-off-white))' }}
           />
         </div>
       </div>

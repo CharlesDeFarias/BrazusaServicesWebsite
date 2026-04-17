@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 interface ServiceAreaProps {
   onQuoteClick: () => void
 }
@@ -21,31 +23,31 @@ const greaterBostonTowns = [
 ]
 
 const chipStyle = {
-  border: '1px solid #D8D0C6',
-  color: '#5A5451',
-  background: '#F2EDE6',
+  border: '1px solid var(--color-light-gray)',
+  color: 'var(--color-warm-gray-darkest)',
+  background: 'var(--color-off-white)',
   fontFamily: 'var(--font-syne)',
 }
 
-export default function ServiceArea({ onQuoteClick }: ServiceAreaProps) {
+export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Element {
   return (
     <section
       id="service-area"
       className="bg-white py-14 px-6"
-      style={{ borderTop: '1px solid #D8D0C6', scrollMarginTop: '56px' }}
+      style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div>
           <h2 className="italic text-3xl md:text-4xl text-navy mb-4 leading-snug" style={{ fontWeight: 300 }}>
             Greater Boston &amp;<br />surrounding areas
           </h2>
-          <p className="text-sm leading-relaxed mb-6" style={{ color: '#7A7470' }}>
+          <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--color-warm-gray-dark)' }}>
             We serve apartments, high-rises, offices, and multi-unit properties across the metro area. Not sure if you&apos;re in range? Just ask — we&apos;re flexible.
           </p>
           <button
             onClick={onQuoteClick}
             className="text-sm font-medium text-navy pb-0.5 hover:opacity-60 transition-opacity"
-            style={{ borderBottom: '1px solid #0B1D2E' }}
+            style={{ borderBottom: '1px solid var(--color-navy)' }}
           >
             Check if we cover your area →
           </button>
@@ -56,7 +58,7 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps) {
           <div>
             <p
               className="text-xs uppercase mb-3"
-              style={{ color: '#B0A89E', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+              style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
             >
               Greater Boston towns
             </p>
@@ -68,7 +70,7 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps) {
               ))}
               <span
                 className="text-xs px-3 py-1.5 rounded-full"
-                style={{ border: '1px dashed #D8D0C6', color: '#B0A89E', fontFamily: 'var(--font-syne)' }}
+                style={{ border: '1px dashed var(--color-light-gray)', color: 'var(--color-warm-gray-light)', fontFamily: 'var(--font-syne)' }}
               >
                 + more
               </span>
@@ -76,13 +78,13 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps) {
           </div>
 
           {/* Divider */}
-          <div style={{ height: '1px', background: '#D8D0C6' }} />
+          <div style={{ height: '1px', background: 'var(--color-light-gray)' }} />
 
           {/* Boston neighborhoods */}
           <div>
             <p
               className="text-xs uppercase mb-3"
-              style={{ color: '#B0A89E', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+              style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
             >
               Boston neighborhoods
             </p>
@@ -94,7 +96,7 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps) {
               ))}
               <span
                 className="text-xs px-3 py-1.5 rounded-full"
-                style={{ border: '1px dashed #D8D0C6', color: '#B0A89E', fontFamily: 'var(--font-syne)' }}
+                style={{ border: '1px dashed var(--color-light-gray)', color: 'var(--color-warm-gray-light)', fontFamily: 'var(--font-syne)' }}
               >
                 + more
               </span>

@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 const badges = [
   'Fully insured',
   'Family-owned & operated',
@@ -7,22 +9,22 @@ const badges = [
   'Fast, flexible communication',
 ]
 
-export default function TrustStrip() {
+export default function TrustStrip(): JSX.Element {
   return (
     <div
       className="bg-white border-b py-3.5 overflow-hidden"
-      style={{ borderColor: '#D8D0C6' }}
+      style={{ borderColor: 'var(--color-light-gray)' }}
     >
       <div className="flex marquee-track whitespace-nowrap">
         {[...badges, ...badges].map((b, i) => (
           <span
             key={i}
             className="inline-flex items-center gap-2.5 mx-8 text-xs font-medium flex-shrink-0"
-            style={{ color: '#0B1D2E', letterSpacing: '0.04em' }}
+            style={{ color: 'var(--color-navy)', letterSpacing: '0.04em' }}
           >
             <span
               className="w-1 h-1 rounded-full flex-shrink-0"
-              style={{ background: '#C49A44' }}
+              style={{ background: 'var(--color-brand-gold)' }}
             />
             {b}
           </span>

@@ -1,5 +1,6 @@
 'use client'
 
+import type { JSX } from 'react'
 import Image from 'next/image'
 import NewsletterCTA from './NewsletterCTA'
 
@@ -10,7 +11,7 @@ const serviceLinks = [
   { label: 'Tiling',       href: '/tiling' },
 ]
 
-export default function Footer() {
+export default function Footer(): JSX.Element {
   return (
     <footer
       className="bg-navy text-white px-6"

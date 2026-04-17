@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 interface ServicesProps {
   onQuoteClick: () => void
   activeClientId?: string | null
@@ -45,7 +47,7 @@ const spaceTypeMap: Record<string, string> = {
   apartment: 'apartment',
 }
 
-export default function Services({ onQuoteClick, activeClientId }: ServicesProps) {
+export default function Services({ onQuoteClick, activeClientId }: ServicesProps): JSX.Element {
   const mappedId = activeClientId ? spaceTypeMap[activeClientId] ?? null : null
   const hasFilter = !!mappedId
 
@@ -94,7 +96,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
               >
                 <div
                   className="w-5 h-px mb-4 transition-all duration-300 group-hover:w-10"
-                  style={{ background: '#C49A44', opacity: isHighlighted ? 1 : 0.5 }}
+                  style={{ background: 'var(--color-brand-gold)', opacity: isHighlighted ? 1 : 0.5 }}
                 />
                 <p className="font-medium text-white text-sm mb-1.5">{s.name}</p>
                 <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{s.desc}</p>
@@ -111,7 +113,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
       <button
         onClick={onQuoteClick}
         className="text-sm font-medium px-6 py-3.5 min-h-[44px] text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
-        style={{ background: 'rgba(255,255,255,0.08)', borderLeft: '2px solid #C49A44' }}
+        style={{ background: 'rgba(255,255,255,0.08)', borderLeft: '2px solid var(--color-brand-gold)' }}
       >
         Not sure which service fits? Tell us what you need →
       </button>

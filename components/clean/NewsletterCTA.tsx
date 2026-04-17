@@ -1,15 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { type JSX, useState } from 'react'
 
-export default function NewsletterCTA() {
+export default function NewsletterCTA(): JSX.Element {
   const [email, setEmail]         = useState('')
   const [phone, setPhone]         = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading]     = useState(false)
   const [error, setError]         = useState('')
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     if (!email.trim()) { setError('Please enter your email address.'); return }
     setError('')
     setLoading(true)
@@ -53,7 +53,7 @@ export default function NewsletterCTA() {
           onClick={handleSubmit}
           disabled={loading}
           className="flex-shrink-0 px-4 py-2 text-xs font-medium text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy disabled:opacity-50"
-          style={{ background: '#2DAAE1', borderLeft: '2px solid rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}
+          style={{ background: 'var(--color-brand-blue)', borderLeft: '2px solid rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}
         >
           {loading ? 'Sending…' : 'Subscribe'}
         </button>

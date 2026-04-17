@@ -1,15 +1,56 @@
-# dependencies
+# ============================================================
+# DEPENDENCIES
+# The node_modules folder contains all installed packages.
+# It's never committed because it can be rebuilt from package.json
+# using `npm install`. Committing it would bloat the repo massively.
+# ============================================================
 node_modules/
 
-# Next.js build output
+# ============================================================
+# NEXT.JS BUILD OUTPUT
+# .next/ is generated every time you run `npm run build` or `npm run dev`.
+# out/ is generated when you export a static site.
+# Neither should be committed — they're build artifacts, not source code.
+# ============================================================
 .next/
 out/
 
-# Claude Code
+# ============================================================
+# ENVIRONMENT VARIABLES
+# .env files contain secrets (API keys, tokens, credentials).
+# These must NEVER be committed to git — if pushed to GitHub,
+# they become publicly visible and can be exploited.
+# Use .env.example (without real values) to document what's needed.
+# ============================================================
+.env
+.env.local
+.env.development
+.env.production
+
+# ============================================================
+# SESSION LOGS
+# docs/session-log.md tracks every Claude prompt and response
+# during development sessions. It's kept local-only because it
+# may contain sensitive context, work-in-progress notes, or
+# details not intended for the public repo.
+# ============================================================
+docs/session-log.md
+
+# ============================================================
+# CLAUDE CODE & SUPERPOWERS
+# .claude/ contains Claude Code's internal state and memory.
+# .superpowers/ contains skill definitions for the Claude Code harness.
+# These are tool-specific config files, not project source code.
+# ============================================================
 .claude/
 .superpowers/
 
-# misc
+# ============================================================
+# OS & EDITOR ARTIFACTS
+# .DS_Store is a hidden macOS folder metadata file — irrelevant on other systems.
+# *.log files are runtime logs that should not be tracked in version control.
+# tsconfig.tsbuildinfo is a TypeScript incremental build cache file.
+# ============================================================
 .DS_Store
 *.log
 tsconfig.tsbuildinfo

@@ -12,7 +12,6 @@ vi.mock('resend', () => {
 
 import { sendQuoteNotification, sendNewsletterConfirmation } from '@/lib/integrations/resend'
 import { Resend } from 'resend'
-import type { VitestMockInstance } from 'vitest'
 
 const mockConfig = {
   clientId: 'brazusa-cleaning' as const,
@@ -51,7 +50,7 @@ describe('sendQuoteNotification', () => {
 describe('sendNewsletterConfirmation', () => {
   it('calls resend.emails.send with the subscriber email', async () => {
     const instance = new (Resend as any)()
-    await sendNewsletterConfirmation('subscriber@example.com', mockConfig)
+    await sendNewsletterConfirmation('subscriber@example.com')
     expect(instance.emails.send).toHaveBeenCalledWith(
       expect.objectContaining({ to: 'subscriber@example.com' })
     )

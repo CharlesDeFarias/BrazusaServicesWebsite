@@ -2,7 +2,7 @@ import { Resend } from 'resend'
 import type { QuoteFormData } from '@/lib/validators/quote'
 import type { ClientConfig } from '@/lib/clients'
 
-function getClient() {
+function getClient(): Resend {
   return new Resend(process.env.RESEND_API_KEY)
 }
 
@@ -21,10 +21,8 @@ export async function sendQuoteNotification(
   })
 }
 
-export async function sendNewsletterConfirmation(
-  email: string,
-  _config: ClientConfig
-): Promise<void> {
+export async function sendNewsletterConfirmation(email: string): Promise<void> {
+  // config not required — confirmation email content is identical for all clients
   const resend = getClient()
   await resend.emails.send({
     from: FROM_ADDRESS,

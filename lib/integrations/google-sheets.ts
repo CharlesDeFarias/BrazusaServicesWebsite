@@ -3,7 +3,7 @@ import type { QuoteFormData } from '@/lib/validators/quote'
 import type { NewsletterFormData } from '@/lib/validators/newsletter'
 import type { ClientConfig } from '@/lib/clients'
 
-function getAuth() {
+function getAuth(): InstanceType<typeof google.auth.GoogleAuth> {
   const keyJson = Buffer.from(
     process.env.GOOGLE_SERVICE_ACCOUNT_KEY!,
     'base64'

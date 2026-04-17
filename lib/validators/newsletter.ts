@@ -11,18 +11,18 @@ export function validateNewsletter(data: unknown): ValidationResult {
     return { valid: false, error: 'Invalid request body' }
   }
 
-  const d = data as Record<string, unknown>
+  const newsletterCandidate = data as Record<string, unknown>
 
-  if (!d.clientId || typeof d.clientId !== 'string') {
+  if (!newsletterCandidate.clientId || typeof newsletterCandidate.clientId !== 'string') {
     return { valid: false, error: 'clientId is required' }
   }
 
-  if (!d.email || typeof d.email !== 'string') {
+  if (!newsletterCandidate.email || typeof newsletterCandidate.email !== 'string') {
     return { valid: false, error: 'email is required' }
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(d.email)) {
+  if (!emailRegex.test(newsletterCandidate.email)) {
     return { valid: false, error: 'email is invalid' }
   }
 

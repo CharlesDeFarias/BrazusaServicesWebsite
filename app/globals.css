@@ -1,15 +1,32 @@
 @import "tailwindcss";
 
 @theme {
+  /* Core palette */
   --color-navy:        #0B1D2E;
   --color-off-white:   #F2EDE6;
   --color-linen:       #EAE3DA;
+  --color-linen-dark:  #E8E0D6;
   --color-light-gray:  #D8D0C6;
-  --color-brand-blue:  #2DAAE1;
+
+  /* Brand accents */
   --color-brand-gold:  #C49A44;
-  --color-brand-yellow: #C49A44;
+  --color-brand-blue:  #2DAAE1;
   --color-brand-green: #4CAF50;
   --color-brand-red:   #D62828;
+
+  /* Warm gray scale — muted text, borders, and subtle backgrounds */
+  --color-warm-gray-light:   #B0A89E;
+  --color-warm-gray:         #9B9288;
+  --color-warm-gray-dark:    #7A7470;
+  --color-warm-gray-darker:  #6B6360;
+  --color-warm-gray-darkest: #5A5451;
+
+  /* Transparency overlays — navy and white at common opacities */
+  --color-navy-subtle: rgba(11, 29, 46, 0.07);
+  --color-navy-dim:    rgba(11, 29, 46, 0.15);
+  --color-navy-muted:  rgba(11, 29, 46, 0.30);
+  --color-white-faint: rgba(255, 255, 255, 0.10);
+  --color-white-mid:   rgba(255, 255, 255, 0.45);
 }
 
 html {
@@ -17,8 +34,8 @@ html {
 }
 
 body {
-  background-color: #F2EDE6;
-  color: #0B1D2E;
+  background-color: var(--color-off-white);
+  color: var(--color-navy);
   font-family: var(--font-syne, ui-sans-serif, system-ui);
   -webkit-font-smoothing: antialiased;
 }

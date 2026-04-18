@@ -21,12 +21,51 @@
   --color-warm-gray-darker:  #6B6360;
   --color-warm-gray-darkest: #5A5451;
 
-  /* Transparency overlays — navy and white at common opacities */
+  /* Transparency overlays — semantic aliases (kept for backwards compatibility) */
   --color-navy-subtle: rgba(11, 29, 46, 0.07);
   --color-navy-dim:    rgba(11, 29, 46, 0.15);
   --color-navy-muted:  rgba(11, 29, 46, 0.30);
   --color-white-faint: rgba(255, 255, 255, 0.10);
   --color-white-mid:   rgba(255, 255, 255, 0.45);
+
+  /* White opacity scale — rgba(255,255,255,N) — use instead of raw rgba */
+  --color-white-5:  rgba(255, 255, 255, 0.05);
+  --color-white-10: rgba(255, 255, 255, 0.10);
+  --color-white-15: rgba(255, 255, 255, 0.15);
+  --color-white-20: rgba(255, 255, 255, 0.20);
+  --color-white-25: rgba(255, 255, 255, 0.25);
+  --color-white-30: rgba(255, 255, 255, 0.30);
+  --color-white-35: rgba(255, 255, 255, 0.35);
+  --color-white-40: rgba(255, 255, 255, 0.40);
+  --color-white-45: rgba(255, 255, 255, 0.45);
+  --color-white-50: rgba(255, 255, 255, 0.50);
+  --color-white-55: rgba(255, 255, 255, 0.55);
+  --color-white-60: rgba(255, 255, 255, 0.60);
+  --color-white-70: rgba(255, 255, 255, 0.70);
+  --color-white-90: rgba(255, 255, 255, 0.90);
+
+  /* Navy opacity scale — rgba(11,29,46,N) — use instead of raw rgba */
+  --color-navy-5:  rgba(11, 29, 46, 0.05);
+  --color-navy-10: rgba(11, 29, 46, 0.10);
+  --color-navy-15: rgba(11, 29, 46, 0.15);
+  --color-navy-20: rgba(11, 29, 46, 0.20);
+  --color-navy-25: rgba(11, 29, 46, 0.25);
+  --color-navy-30: rgba(11, 29, 46, 0.30);
+  --color-navy-40: rgba(11, 29, 46, 0.40);
+  --color-navy-50: rgba(11, 29, 46, 0.50);
+  --color-navy-60: rgba(11, 29, 46, 0.60);
+
+  /* Gold tint scale — rgba(196,154,68,N) — use instead of raw gold rgba */
+  --color-gold-5:  rgba(196, 154, 68, 0.05); /* barely-there background wash */
+  --color-gold-10: rgba(196, 154, 68, 0.10); /* faint border or line accent */
+  --color-gold-25: rgba(196, 154, 68, 0.25); /* subtle mid-weight accent */
+  --color-gold-60: rgba(196, 154, 68, 0.60); /* soft glow or active indicator */
+  --color-gold-90: rgba(196, 154, 68, 0.90); /* near-solid, strong active states */
+
+  /* Error state tokens — form validation and inline error messages */
+  --color-error:        #E07070;
+  --color-error-bg:     rgba(224, 112, 112, 0.08);
+  --color-error-border: rgba(224, 112, 112, 0.30);
 }
 
 html {

@@ -2,7 +2,9 @@
 
 ## Session Start
 
-Read `lib/clients/` and `app/api/` before making any substantive changes in a new session.
+**First:** invoke the `session-start` agent. It reads `docs/decisions.md`, recent git history, and open TODOs and returns a brief in under a minute. Do not skip this — it exists specifically to prevent rebuilding context from scratch.
+
+**Then:** read `lib/clients/` and `app/api/` before making any substantive changes.
 
 **Project:** Next.js multi-client agency hub. First live client: Brazusa Cleaning (real,
 family business, full content control). Future pages (roofing, painting, tiling,
@@ -31,8 +33,11 @@ Show what is being removed and ask first. Err toward additive changes. This is a
 Claude failure mode — actively counter it.
 
 **3. Always flag before touching live integrations.**
-Resend, Airtable, and Google Sheets serve a real paying client. Flag and confirm before
-any change to API routes, environment variables, or data writes.
+Resend, Airtable, and Google Sheets serve a real paying client. Before any change to
+API routes, environment variables, or data writes: invoke the `integration-safety` agent.
+It reads the current payload shape, field mappings across all three destinations, and
+surfaces exactly what would need to change. Do not touch a single file until Charles
+has reviewed that manifest and confirmed each destination change explicitly.
 
 **4. Always ask before pushing to remote.**
 No exceptions — even if previously told to push. Commit unilaterally; push only with permission.
@@ -111,6 +116,21 @@ No loose utility functions.
 - Brazusa Cleaning color scheme (navy/gold/off-white) is locked for the Brazusa pages.
 - Other client pages get their own color schemes — no assumption Brazusa's palette applies.
 
+### CSS Token System
+
+Opacity tokens use **numeric naming**: `--color-[base]-[opacity-as-integer]`.
+Example: `--color-white-10` = white at 10% opacity, `--color-navy-30` = navy at 30%.
+
+Defined scales (full list in `globals.css`):
+- White: 5 through 90
+- Navy: 5 through 60
+- Gold tints: 5, 10, 25, 60, 90 — each has a usage comment in globals.css
+
+Error tokens: `--color-error`, `--color-error-bg`, `--color-error-border`
+
+Never use raw `rgba()` values when a token exists. For values with no matching token,
+add `/* no token: intentional */` comment so it's obviously deliberate.
+
 ---
 
 ## Frontend Design Aesthetics
@@ -140,6 +160,10 @@ Do not default to solid colors.
 - Any output that could have been generated for a different project
 
 Vary between light and dark themes across different clients. Think outside the box.
+
+**After any visual component work:** invoke the `design-review` agent before committing.
+It audits for token violations, forbidden fonts, flat backgrounds, and layout anti-patterns.
+This is not optional — the no-staging constraint means violations go straight to production.
 
 ---
 
@@ -218,10 +242,67 @@ and offer a natural alternative.
 
 ---
 
+## Architectural Decisions
+
+Locked decisions live in `docs/decisions.md` (git-ignored, local only).
+Read it at session start alongside `lib/clients/` and `app/api/`.
+When a significant architectural or UX decision is made during a session, add it to
+`docs/decisions.md` before the session ends — not the session log.
+
+---
+
+## Working with ChatGPT / Gemini (copy handoff workflow)
+
+Charles frequently drafts copy in ChatGPT (which has more business context and voice
+history) and brings it back here for implementation.
+
+**When preparing a prompt for ChatGPT:**
+Invoke the `chatgpt-prep` agent with the component name. It reads the source file,
+counts characters per section, maps the data structure, and outputs a ready-to-paste
+brief with format constraints already filled in. Do not manually write ChatGPT briefs
+for copy work — the agent produces a more accurate brief faster.
+
+**When receiving copy from ChatGPT:**
+Invoke the `copy-review` agent before implementing anything. Paste the returned copy
+into the prompt. It flags AI writing violations, character count drift, and generic
+phrasing before any of it touches the codebase.
+
+When implementing: do not paste copy directly into components. Map each section name
+from the returned copy to the exact data structure key in the component first. If a
+section name doesn't match a key, flag it before writing anything.
+
+This same workflow applies when preparing prompts for Gemini or any other model.
+
+---
+
+## Agent Roster
+
+Custom agents live in `.claude/agents/`. Invoke with `@agent-name` or let Claude route
+ambient triggers. The description field in each file is what Claude uses for auto-discovery.
+
+| Agent | Invoke when | What to do with output |
+|---|---|---|
+| `session-start` | First thing in every new session | Read the brief, then proceed with the task |
+| `design-review` | After any visual component work, before committing | Fix violations before committing — no staging means violations go live |
+| `chatgpt-prep` | Before preparing any copy for ChatGPT or Gemini | Paste the output brief directly into ChatGPT, fill in `INSTRUCTION_HERE` |
+| `copy-review` | After receiving copy from any external AI model | Fix violations before implementing — do not paste flagged copy into components |
+| `integration-safety` | Before any change to API routes, Airtable, Resend, or Google Sheets | Get explicit confirmation on each destination change before touching files |
+
+**Hard rule:** `integration-safety` and `session-start` are not optional. The others can
+be skipped in a declared fast-coding session, but integration-safety is never suspended —
+see Rule 3.
+
+---
+
 ## Session Log
 
 When the developer says they are wrapping up, append a summary to `docs/session-log.md`
-(git-ignored, local only). Include: each prompt submitted, what was done, and any
-decisions or trade-offs made.
+(git-ignored, local only).
+
+**Format:**
+- Top section: "Decisions made this session" — what was decided and why (this is for
+  Claude's use in future sessions).
+- Bottom section: chronological prompt log — each prompt and what was done (this is
+  for Charles's personal learning record).
 
 ---

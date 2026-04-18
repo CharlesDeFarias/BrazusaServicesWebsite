@@ -28,15 +28,6 @@ out/
 .env.production
 
 # ============================================================
-# SESSION LOGS
-# docs/session-log.md tracks every Claude prompt and response
-# during development sessions. It's kept local-only because it
-# may contain sensitive context, work-in-progress notes, or
-# details not intended for the public repo.
-# ============================================================
-docs/session-log.md
-
-# ============================================================
 # CLAUDE CODE & SUPERPOWERS
 # .claude/ contains Claude Code's internal state and memory.
 # .superpowers/ contains skill definitions for the Claude Code harness.

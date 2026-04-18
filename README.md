@@ -243,3 +243,56 @@ Tests use [Vitest](https://vitest.dev/). Test files live next to the code they t
 - Analytics / tracking
 - SMS notifications
 - Admin dashboard or CRM
+
+---
+
+## How Claude Was Used to Build This
+
+This project was built with Claude Code as the primary development tool. What follows is an honest account of the methodology — written for anyone curious about using Claude seriously on a real project, not just as an autocomplete tool.
+
+### The core setup
+
+Three files govern how Claude behaves on this project:
+
+- **`CLAUDE.md`** — loaded into every session automatically. Contains absolute rules (never touch live integrations without confirming, never delete working code, never push without permission), architecture constraints (multi-client pattern, always 3 parallel integration destinations), and workflow defaults (TDD, descriptive naming, CSS variables only).
+- **`docs/decisions.md`** — locked architectural and design decisions that Claude reads at session start. Prevents context loss between sessions: decisions made in one conversation survive to the next without being re-explained.
+- **`.claude/agents/`** — five custom subagents, each scoped to a specific task.
+
+### Custom agents
+
+Subagents run in their own context window with their own tool list and system prompt. They're invoked explicitly and don't bleed context into the main session.
+
+| Agent | What it does |
+|---|---|
+| `session-start` | Reads decisions.md, recent git log, open TODOs, and git status — produces a 60-second brief to restore context at the start of any session |
+| `chatgpt-prep` | Reads a component, extracts all user-facing text, counts characters per section, and produces a ready-to-paste ChatGPT brief with ±20% character constraints and exact data structure key names |
+| `copy-review` | Reviews copy for specific AI writing violations: "this isn't X — it's Y" constructions, vague phrases, generic benefit lists, AI buzzwords, 30% character drift from original, section name mismatches vs. the component's data structure |
+| `integration-safety` | Before any change to API routes, Airtable fields, Resend templates, or Google Sheets columns — reads all three destinations, produces a field-mapping table, and requires explicit confirmation before any file is touched |
+| `design-review` | Audits components against locked aesthetic decisions: CSS variable usage, font choices, color token violations, animation patterns |
+
+### What made this approach work
+
+**CLAUDE.md as a contract, not a hint.** Rather than hoping Claude picks up conventions from context, the rules are written as hard constraints with explicit failure modes ("never do X without Y" rather than "prefer Y"). Absolute rules are separated from defaults — Claude knows which can flex and which cannot.
+
+**Volatile state solved with docs/decisions.md.** Architectural decisions made in one session evaporate when the context window resets. Putting them in a file Claude reads at session start means they persist. The session-start agent automates this — it's the first thing invoked in any new session.
+
+**Subagents for enforcement, not just delegation.** The integration-safety agent doesn't just help — it requires explicit confirmation before proceeding. The copy-review agent flags specific violations with exact quoted text, not general impressions. These agents encode the *quality bar*, not just the task.
+
+**Multi-model workflow.** ChatGPT handles copy and brand voice; Claude handles code and architecture. The chatgpt-prep agent bridges this — it formats handoffs precisely so copy comes back mapped to the exact data structure keys the component expects. The copy-review agent validates the return before anything lands in code.
+
+### How to read the project's Claude setup
+
+If you want to understand how this project uses Claude, start here:
+
+1. **`CLAUDE.md`** — the rules Claude operates under. Read the "Rules: Always" section first.
+2. **`.claude/agents/`** — five `.md` files, each with a frontmatter block (name, tools, model) and a system prompt. Each file is self-contained: you can read it cold and understand exactly what that agent does, what it checks, and what output it produces.
+3. **`docs/decisions.md`** — locked decisions with rationale. Shows what was *decided* vs. what was *deferred*.
+4. **`docs/session-log.md`** — every Claude prompt submitted and a summary of what happened. A complete record of how the project was built, session by session.
+
+The most non-obvious part of the setup is the agent tool lists. Each agent is given only the tools it actually needs (the integration-safety agent gets Glob, Grep, Read — no write access, no Bash). Giving agents broad tool lists is a common mistake; it increases the risk of accidental side effects and makes agent behavior harder to predict.
+
+### What's notable about this approach
+
+Most people use Claude as a smarter autocomplete — paste in a problem, get code back. This project treats Claude more like a junior developer with a defined role: specific rules, specific tools per task, explicit confirmation gates before risky actions.
+
+The result is that the agent behaves consistently across sessions without requiring constant re-explanation. The quality bar is encoded in the tooling, not just in the developer's head.

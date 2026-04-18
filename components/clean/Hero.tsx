@@ -11,10 +11,13 @@ interface HeroProps {
 const blurDataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
 const differentiators = [
-  { n: '01', text: 'Consistent team that genuinely cares' },
-  { n: '02', text: 'Fast, flexible communication' },
-  { n: '03', text: 'Fully insured & professionally managed' },
-  { n: '04', text: 'Decades of real cleaning experience' },
+  { n: '01', text: 'Real people managing your space, not a rotating crew' },
+  { n: '02', text: '24/7 communication through our virtual team' },
+  { n: '03', text: 'We can use whatever tools, apps, or systems you already have' },
+  { n: '04', text: 'Highly customized cleaning plans and pricing' },
+  { n: '05', text: 'We scale up or down depending on your needs' },
+  { n: '06', text: 'We track details so things don\'t fall through the cracks' },
+  { n: '07', text: 'We can handle more than just cleaning if needed' },
 ]
 
 export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element {
@@ -37,21 +40,30 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
 
           <h1
             className="fade-up-1 italic leading-none mb-6"
-            style={{ fontSize: 'clamp(3rem, 7.5vw, 6rem)', fontWeight: 300, letterSpacing: '-0.01em' }}
+            style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)', fontWeight: 300, letterSpacing: '-0.01em' }}
           >
-            Reliable, high-detail cleaning.
+            Cleaning that actually works the way your operation works.
           </h1>
 
           <div className="fade-up-1 w-12 h-px bg-brand-gold mb-6" />
 
-          <p className="fade-up-2 text-base md:text-lg leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            Residential and commercial cleaning for apartments, short-term rentals,
-            offices, and managed properties — consistent, professional, and built
-            around how you operate.
-          </p>
+          <div className="fade-up-2 space-y-3 text-base md:text-lg leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            <p>
+              We&apos;re a family business that&apos;s been doing this since 1994.
+              But we&apos;re not stuck in 1994.
+            </p>
+            <p>
+              You get the care and consistency of a small, experienced team,
+              with the communication, structure, and flexibility most companies struggle to offer.
+            </p>
+            <p>
+              We work with homeowners, short-term rentals, and multi-building operations.
+              We can keep it simple, or we can build systems around your space.
+            </p>
+          </div>
 
-          {/* Differentiators 2×2 grid */}
-          <div className="fade-up-2 grid grid-cols-2 gap-x-8 gap-y-2 mb-8">
+          {/* Differentiators 2-column grid */}
+          <div className="fade-up-2 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 mb-8">
             {differentiators.map((d) => (
               <div key={d.n} className="flex items-start gap-2">
                 <span
@@ -73,7 +85,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
               className="w-full sm:w-auto text-sm font-medium px-10 py-4 min-h-[52px] min-w-[180px] transition-all duration-200 hover:opacity-90"
               style={{ background: 'var(--color-brand-gold)', color: 'var(--color-navy)' }}
             >
-              Get a Free Quote
+              Get a Quote
             </button>
             <a
               href="tel:7816867189"
@@ -85,7 +97,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
           </div>
 
           <p className="fade-up-3 text-xs" style={{ color: 'rgba(255,255,255,0.28)' }}>
-            Not the right fit? We&apos;ll help you find someone who is.
+            Not sure if we&apos;re the right fit? Reach out anyway. We&apos;ll point you in the right direction.
           </p>
 
           {/* Mobile image — full-bleed, shown below CTAs on small screens */}

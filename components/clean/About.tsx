@@ -17,10 +17,20 @@ export default function About(): JSX.Element {
           </h2>
           <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--color-warm-gray-darker)' }}>
             <p>
-              Brazusa Cleaning started in 1994 when our mother began cleaning homes. Our father joined in the early 2000s, and the business grew to serve both residential and commercial clients across Greater Boston.
+              Brazusa started in 1994 when our mother began cleaning homes.
             </p>
             <p>
-              Today, the next generation is modernizing the operation — better systems, better communication, same level of care that built the reputation.
+              Over time, it grew into a full business when our father joined after being laid off during the housing crisis.
+            </p>
+            <p>
+              Since then, we&apos;ve worked across homes, apartments, offices, and large property operations.
+            </p>
+            <p>
+              The difference now is structure.
+            </p>
+            <p>
+              The next generation is building systems around that experience — so the quality stays the same,
+              but everything around it works better.
             </p>
           </div>
           <div className="mt-7 flex items-center gap-4">

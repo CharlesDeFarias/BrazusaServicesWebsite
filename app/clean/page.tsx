@@ -97,34 +97,36 @@ export default function CleanPage(): JSX.Element {
   const [activeClient, setActiveClient]       = useState<string | null>(null)
   const [showServicesHint, setShowServicesHint] = useState(false)
   const heroRef      = useRef<HTMLElement>(null)
-  const leftPanelRef = useRef<HTMLDivElement>(null)
+  const servicesHintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Briefly show mobile scroll hint when a client type is selected
   useEffect(() => {
-    if (!activeClient) return
-    setShowServicesHint(true)
-    const hintTimer = setTimeout(() => setShowServicesHint(false), 2200)
-    return () => clearTimeout(hintTimer)
-  }, [activeClient])
-
-  // Scroll left panel so the opened accordion item is at the top of the panel
-  useEffect(() => {
-    if (!activeClient || !leftPanelRef.current) return
-    const panel = leftPanelRef.current
-    const el = document.getElementById(activeClient)
-    if (!el) return
-    // Small delay so the accordion begins opening before we measure positions
-    const scrollTimer = setTimeout(() => {
-      const panelRect = panel.getBoundingClientRect()
-      const elRect    = el.getBoundingClientRect()
-      panel.scrollTo({ top: panel.scrollTop + (elRect.top - panelRect.top), behavior: 'smooth' })
-    }, 60)
-    return () => clearTimeout(scrollTimer)
-  }, [activeClient])
+    return () => {
+      if (servicesHintTimerRef.current) {
+        clearTimeout(servicesHintTimerRef.current)
+      }
+    }
+  }, [])
 
   const openDrawer = (spaceType = ''): void => {
     setDrawerSpaceType(spaceType)
     setDrawerOpen(true)
+  }
+
+  const handleActiveClientChange = (clientId: string | null): void => {
+    setActiveClient(clientId)
+
+    if (!clientId) {
+      setShowServicesHint(false)
+      return
+    }
+
+    setShowServicesHint(true)
+    if (servicesHintTimerRef.current) {
+      clearTimeout(servicesHintTimerRef.current)
+    }
+    servicesHintTimerRef.current = setTimeout(() => {
+      setShowServicesHint(false)
+    }, 2200)
   }
 
   return (
@@ -132,64 +134,35 @@ export default function CleanPage(): JSX.Element {
       <StickyNav
         heroRef={heroRef}
         onQuoteClick={() => openDrawer()}
-        setActiveClient={setActiveClient}
+        setActiveClient={handleActiveClientChange}
         onOtherClick={() => openDrawer('other')}
       />
       <Hero heroRef={heroRef} onQuoteClick={() => openDrawer()} />
       <TrustStrip />
       <Positioning />
+      <ClientAccordion
+        items={clientItems}
+        openId={activeClient}
+        onOpenChange={handleActiveClientChange}
+        onCTAClick={openDrawer}
+      />
 
-      {/* Combined client accordion + services — two-panel layout on desktop */}
-      <section
-        id="client-types"
-        style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
-      >
-        <div className="flex flex-col lg:flex-row">
-          {/* Left panel: accordion — off-white, independently scrollable on desktop */}
-          <div
-            ref={leftPanelRef}
-            className="bg-off-white lg:w-1/2 px-6 lg:px-10 pt-12 pb-8 lg:max-h-[calc(100vh-56px)] lg:overflow-y-auto"
-          >
-            <ClientAccordion
-              items={clientItems}
-              openId={activeClient}
-              onOpenChange={setActiveClient}
-              onCTAClick={openDrawer}
-            />
-          </div>
-
-          {/* Mobile: brief "scroll to services" hint when client is selected */}
-          {showServicesHint && (
-            <div
-              className="lg:hidden flex items-center justify-center gap-2 py-2.5 bg-off-white transition-opacity duration-500"
-              style={{ borderTop: '1px solid var(--color-light-gray)', opacity: showServicesHint ? 1 : 0 }}
-            >
-              <span className="text-xs" style={{ color: 'var(--color-warm-gray)' }}>See matching services</span>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M6 2v8M2 6l4 4 4-4" stroke="var(--color-brand-gold)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-          )}
-
-          {/* Gold divider — desktop only */}
-          <div
-            className="hidden lg:block flex-shrink-0"
-            style={{ width: '1px', background: 'rgba(196,154,68,0.25)' }}
-          />
-
-          {/* Right panel: services — navy, sticky on desktop */}
-          <div
-            id="services"
-            className="grain bg-navy text-white lg:w-1/2 px-6 lg:px-10 py-12 lg:overflow-y-auto"
-            style={{ scrollMarginTop: '56px' }}
-          >
-            <Services
-              activeClientId={activeClient}
-              onQuoteClick={() => openDrawer()}
-            />
-          </div>
+      {showServicesHint && (
+        <div
+          className="flex items-center justify-center gap-2 py-2.5 bg-off-white transition-opacity duration-500"
+          style={{ borderTop: '1px solid var(--color-light-gray)', opacity: showServicesHint ? 1 : 0 }}
+        >
+          <span className="text-xs" style={{ color: 'var(--color-warm-gray)' }}>Matching services are just below</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M6 2v8M2 6l4 4 4-4" stroke="var(--color-brand-gold)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
-      </section>
+      )}
+
+      <Services
+        activeClientId={activeClient}
+        onQuoteClick={() => openDrawer()}
+      />
 
       <HowItWorks />
       <Pricing onQuoteClick={() => openDrawer()} />

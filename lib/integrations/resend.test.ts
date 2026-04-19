@@ -1,8 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
+
+const mockSend = vi.fn().mockResolvedValue({ data: { id: 'mock-id' }, error: null })
 
 // Mock the resend module before importing our code
 vi.mock('resend', () => {
-  const mockSend = vi.fn().mockResolvedValue({ data: { id: 'mock-id' }, error: null })
   return {
     Resend: class {
       emails = { send: mockSend }
@@ -11,7 +12,6 @@ vi.mock('resend', () => {
 })
 
 import { sendQuoteNotification, sendNewsletterConfirmation } from '@/lib/integrations/resend'
-import { Resend } from 'resend'
 
 const mockConfig = {
   clientId: 'brazusa-cleaning' as const,
@@ -31,17 +31,17 @@ const mockQuote = {
 
 describe('sendQuoteNotification', () => {
   it('calls resend.emails.send with the owner email', async () => {
-    const instance = new (Resend as any)()
+    mockSend.mockClear()
     await sendQuoteNotification(mockQuote, mockConfig)
-    expect(instance.emails.send).toHaveBeenCalledWith(
+    expect(mockSend).toHaveBeenCalledWith(
       expect.objectContaining({ to: 'owner@example.com' })
     )
   })
 
   it('includes name and contact in the email text', async () => {
-    const instance = new (Resend as any)()
+    mockSend.mockClear()
     await sendQuoteNotification(mockQuote, mockConfig)
-    const call = (instance.emails.send as any).mock.calls[0][0]
+    const call = mockSend.mock.calls[0][0]
     expect(call.text).toContain('Jane Smith')
     expect(call.text).toContain('jane@example.com')
   })
@@ -49,9 +49,9 @@ describe('sendQuoteNotification', () => {
 
 describe('sendNewsletterConfirmation', () => {
   it('calls resend.emails.send with the subscriber email', async () => {
-    const instance = new (Resend as any)()
+    mockSend.mockClear()
     await sendNewsletterConfirmation('subscriber@example.com')
-    expect(instance.emails.send).toHaveBeenCalledWith(
+    expect(mockSend).toHaveBeenCalledWith(
       expect.objectContaining({ to: 'subscriber@example.com' })
     )
   })

@@ -29,17 +29,23 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
   const [menuOpen, setMenuOpen]     = useState(false)
   const [cleanOpen, setCleanOpen]   = useState(false)
   const cleanRef = useRef<HTMLDivElement>(null)
+  const previousScrolledRef = useRef(false)
 
   useEffect(() => {
-    const onScroll = (): void => setScrolled(window.scrollY > 80)
+    const onScroll = (): void => {
+      const nextScrolled = window.scrollY > 80
+
+      if (nextScrolled !== previousScrolledRef.current) {
+        previousScrolledRef.current = nextScrolled
+        setScrolled(nextScrolled)
+        setMenuOpen(false)
+      }
+    }
+
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  // Close mobile menu when nav state changes (user scrolled)
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [scrolled])
 
   // Close "Clean my…" dropdown on outside click or Escape
   useEffect(() => {

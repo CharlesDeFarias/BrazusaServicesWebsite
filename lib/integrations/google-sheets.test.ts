@@ -1,5 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
+const mockAppend = vi.fn().mockResolvedValue({})
+
 vi.mock('googleapis', () => {
   return {
     google: {
@@ -9,7 +11,7 @@ vi.mock('googleapis', () => {
       sheets: vi.fn().mockReturnValue({
         spreadsheets: {
           values: {
-            append: vi.fn().mockResolvedValue({}),
+            append: mockAppend,
           },
         },
       }),
@@ -18,7 +20,6 @@ vi.mock('googleapis', () => {
 })
 
 import { saveQuoteToSheets, saveNewsletterToSheets } from '@/lib/integrations/google-sheets'
-import { google } from 'googleapis'
 
 const mockConfig = {
   clientId: 'brazusa-cleaning' as const,
@@ -39,6 +40,7 @@ const mockQuote = {
 describe('saveQuoteToSheets', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockAppend.mockClear()
     vi.stubEnv('GOOGLE_SERVICE_ACCOUNT_KEY', Buffer.from(JSON.stringify({
       type: 'service_account',
       client_email: 'test@test.iam.gserviceaccount.com',
@@ -48,16 +50,14 @@ describe('saveQuoteToSheets', () => {
 
   it('calls spreadsheets.values.append with the correct spreadsheetId', async () => {
     await saveQuoteToSheets(mockQuote, mockConfig)
-    const sheets = google.sheets({} as any)
-    expect(sheets.spreadsheets.values.append).toHaveBeenCalledWith(
+    expect(mockAppend).toHaveBeenCalledWith(
       expect.objectContaining({ spreadsheetId: 'sheetABC' })
     )
   })
 
   it('includes the name in the appended row values', async () => {
     await saveQuoteToSheets(mockQuote, mockConfig)
-    const sheets = google.sheets({} as any)
-    const call = (sheets.spreadsheets.values.append as any).mock.calls[0][0]
+    const call = mockAppend.mock.calls[0][0]
     expect(call.requestBody.values[0]).toContain('Jane Smith')
   })
 })
@@ -65,6 +65,7 @@ describe('saveQuoteToSheets', () => {
 describe('saveNewsletterToSheets', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockAppend.mockClear()
     vi.stubEnv('GOOGLE_SERVICE_ACCOUNT_KEY', Buffer.from(JSON.stringify({
       type: 'service_account',
       client_email: 'test@test.iam.gserviceaccount.com',
@@ -74,8 +75,7 @@ describe('saveNewsletterToSheets', () => {
 
   it('appends to the Newsletter sheet', async () => {
     await saveNewsletterToSheets({ clientId: 'brazusa-cleaning', email: 'sub@example.com' }, mockConfig)
-    const sheets = google.sheets({} as any)
-    const call = (sheets.spreadsheets.values.append as any).mock.calls[0][0]
+    const call = mockAppend.mock.calls[0][0]
     expect(call.range).toContain('Newsletter')
   })
 })

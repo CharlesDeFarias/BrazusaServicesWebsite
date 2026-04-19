@@ -66,9 +66,14 @@ When a decision is made, add it here before the session ends. Format:
 
 ## Deferred Items (not decisions — pending)
 
+- Static inline style cleanup — many `style={{ color: 'var(--color-...)' }}` calls should be Tailwind utilities (e.g. `text-white-40`). Tailwind v4 exposes all `@theme` tokens as utilities automatically. Static values only — dynamic/conditional inline styles require a separate decision (data attributes or Tailwind variants). Scope: all components in `components/clean/`.
+
 - Service area town list (awaiting ChatGPT audit)
 - Testimonials pricing context (awaiting real data from Charles)
-- Token migration pass 2 (second commit after token definitions)
+- ~~Token migration pass 2~~ — completed 2026-04-18
 - ChatGPT refinement of per-client service copy
+- QuoteDrawer file uploads — temporary Phase 1 should be email-first, with file metadata saved to the existing integrations. Charles wants broad file-type support for now, especially images, videos, and PDFs, but Gmail's documented direct attachment limit is about 25 MB total, so a 1 GB pure-email upload flow is not viable. When files exceed the email-safe limit, the UI should recommend sending them by WhatsApp to the default Brazusa contact number: 781-686-7189. Revisit later with a proper storage-backed upload system.
 - Accordion image file replacements (Charles to re-export)
 - Shareable hash links for Pricing filter chips
+- Create agent for clean code / Charles's code preferences (naming, structure, TS standards, etc.)
+- Create agent for LLM / Claude optimization engineering (prompt design, context management, token efficiency)

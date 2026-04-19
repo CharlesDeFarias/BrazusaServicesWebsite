@@ -979,3 +979,170 @@ Q13 — There's a misunderstanding…. - Ah yes, ok in that case yes remove that
 
 ### 04/18/2026, 07:52:38 PM
 **Prompt:** i forgot to commit since recent major changes, do that first and then we'll begin on a round of tasks i have for you
+
+### 04/18/2026, 07:53:19 PM
+**Prompt:** Session start: Read lib/clients/, app/api/, and docs/decisions.md before starting.
+
+  ---
+  Follow-up reminders — do not lose these
+
+  After this session, the following need separate follow-up. Add them to any todo list you generate:
+
+  - Token migration pass 2 — Group 1 only defines the tokens. A second session migrates all raw rgba() values across 17 components. Remind Charles to schedule this.  
+  - ChatGPT service copy refinement — Services descriptions per client type are currently derived from existing data only. A ChatGPT pass to research comparable      
+  cleaning companies and refine wording per client type (STR, office, residential) should happen after.
+  - Testimonials pricing context — Placeholder fields are added but empty. Charles must provide real price ranges before they display.
+  - Service area towns — Deferred entirely. Charles is auditing via ChatGPT. Add to todo.
+  - Accordion image file replacements — Code adds a size cap, but original files are too large. Flag which image files need re-exporting and recommend max dimensions.
+  - Shareable hash links on Pricing filter chips — Implemented as in-page scroll. Hash link version is a future todo.
+
+  ---
+  Group 1 — Token system (two passes)
+
+  Pass 1 — Define tokens in app/globals.css:
+
+  Add under @theme. Use numeric naming — --color-[base]-[opacity-as-integer]:
+
+  White: stops at 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 90
+  Navy: stops at 5, 10, 15, 20, 25, 30, 40, 50, 60
+  Gold tints (add inline comment describing intended use for each):
+  - --color-gold-5 — barely-there background wash
+  - --color-gold-10 — faint border or line accent
+  - --color-gold-25 — subtle mid-weight accent
+  - --color-gold-60 — soft glow or active indicator
+  - --color-gold-90 — near-solid, strong active states
+
+  Error tokens:
+  - --color-error: #E07070
+  - --color-error-bg: rgba(224, 112, 112, 0.08)
+  - --color-error-border: rgba(224, 112, 112, 0.3)
+
+  Keep all existing named tokens (--color-white-faint, --color-white-mid, --color-navy-subtle/dim/muted) — they remain valid aliases.
+
+  After globals.css, also update docs/briefs/aesthetics.txt to document the numeric token system and gold tint descriptions.
+
+  Commit: chore: expand CSS token system with numeric opacity scale and error tokens
+
+  Pass 2 — Migrate (separate commit, after Pass 1):
+
+  Scan components/clean/*.tsx. Replace raw rgba() calls with tokens where the match is clean (exact or within ±0.02 opacity). For values with no matching token, leave
+   as-is and add /* no token: intentional */.
+
+  Three confirmed drop-ins:
+  - FinalCTA.tsx:48 → var(--color-navy-30)
+  - MobileCTABar.tsx:22 → var(--color-white-10)
+  - #E07070 in NewsletterCTA.tsx + QuoteDrawer.tsx → var(--color-error)
+
+  After this commit, prompt Charles: "Run a visual check in the browser. If anything looks unexpectedly different, the raw value was intentional — revert that file   
+  and add the /* no token: intentional */ comment."
+
+  Commit: refactor: migrate raw rgba values to CSS tokens across components
+
+
+### 04/18/2026, 08:02:07 PM
+**Prompt:** -why is all of this css being done inside the style attribute of elements? i usually prefer separation of powers and general clean code
+
+### 04/18/2026, 08:03:42 PM
+**Prompt:** i want it done properly, so yes note it as a deferred item before we move on
+
+### 04/18/2026, 08:04:08 PM
+**Prompt:**  Group 2 — Image fixes
+
+  Hero image — max-size cap:
+
+  Add a max-width constraint on the desktop image column — cap at 280px (down from 420px). Also constrain the image container height so the portrait doesn't dominate 
+  on mid-width screens. The image should read as a visual accent, not a structural element, at anything below xl:. If after the cap the image still looks awkward at a
+   specific breakpoint, the fallback is hiding it — note this to Charles in the commit message so he can check.
+
+  Ensure sizes prop on the Next.js Image component accurately reflects the constrained dimensions so the browser doesn't download a full-size image for a small       
+  container.
+
+  Accordion images — max-size cap:
+
+  Add maxHeight: '220px' on the image container inside each expanded accordion panel. Keep existing fill + object-cover behavior — just constrain the container so it 
+  can never grow beyond a reasonable height regardless of screen width.
+
+  List the current image file paths used in the accordion and note: "These files should be re-exported at max 800px wide to match the visual cap in code."
+
+  Commit: fix: cap hero portrait and accordion image sizes
+
+
+### 04/18/2026, 08:06:05 PM
+**Prompt:** hero image: it still looks off, now on a normal desktop, the image looks too small (by a little, definitely less than 50%), and too far to the left.
+accordian images look good
+
+### 04/18/2026, 08:07:15 PM
+**Prompt:** still not perfect but its ok for now until the copy gets trimmed down so we know what we're actually dealing with content wise to accomodate.
+ Group 2 — Image fixes
+
+  Hero image — max-size cap:
+
+  Add a max-width constraint on the desktop image column — cap at 280px (down from 420px). Also constrain the image container height so the portrait doesn't dominate 
+  on mid-width screens. The image should read as a visual accent, not a structural element, at anything below xl:. If after the cap the image still looks awkward at a
+   specific breakpoint, the fallback is hiding it — note this to Charles in the commit message so he can check.
+
+  Ensure sizes prop on the Next.js Image component accurately reflects the constrained dimensions so the browser doesn't download a full-size image for a small       
+  container.
+
+  Accordion images — max-size cap:
+
+  Add maxHeight: '220px' on the image container inside each expanded accordion panel. Keep existing fill + object-cover behavior — just constrain the container so it 
+  can never grow beyond a reasonable height regardless of screen width.
+
+  List the current image file paths used in the accordion and note: "These files should be re-exported at max 800px wide to match the visual cap in code."
+
+  Commit: fix: cap hero portrait and accordion image sizes
+
+
+### 04/18/2026, 08:08:24 PM
+**Prompt:** good enough for now but definitely still requires improvement. we'll leave it for now until the copy is nailed down so know what we're actually dealing with for space needs. lets continue for now:
+  Group 3 — Background layering on flat sections
+
+  Seven sections use solid fills with no depth: About, QuickContact, ServiceArea, Positioning, HowItWorks, Testimonials, Pricing. Apply treatments:
+
+  Treatment A (About, Positioning, HowItWorks, Testimonials, QuickContact, Pricing): Subtle linen-to-off-white gradient (top to bottom, barely perceptible) +
+  geometric grid pattern at ~1.5% opacity using navy. Reference FinalCTA.tsx lines 14–16 for the grid implementation, but reduce opacity from 0.025 to 0.015.
+
+  Treatment B (ServiceArea only): Add .grain class + faint gold radial glow in one corner using var(--color-gold-5) (defined in Group 1).
+
+  Sections should not all look identical — Treatment A is the default, Treatment B is specifically for ServiceArea.
+
+  Commit: feat: add background depth treatments to flat sections
+
+
+
+### 04/18/2026, 08:13:33 PM
+**Prompt:** -add to the todo list, i want to create an agent for clean code/my code preferences, and an agent for LLM/claude optimizingengineering
+-it's strange that theres no difference between  the "different kind of cleaning company" and the dual section below it. it doesnt flow weell.
+-now that there's so much below the services section, we need to move the  "we clean it all" section to the bottom of the list and have it auto expanded, but closes when another expandble space menu is opened, and vice versa.
+-there's now a massive blank space above the service area section and the real clients/real situations
+
+### 04/18/2026, Codex alignment
+**Prompt:** Align Codex with the established Claude workflow so both tools feel similar to Charles, preserve the same meta-analysis habits, and support ongoing prompt and usage optimization.
+
+**Response summary:** Reviewed the repo's Claude contract, decision docs, session log, and custom agents. Established a Codex adaptation plan with separate global behavior, preferences, and LLM-workflow layers; added a Codex-facing project adapter; and began scaffolding a Codex skill for prompt, plan, and handoff optimization across Codex, Claude, ChatGPT, and Gemini.
+
+### 04/18/2026, Codex integration safety
+**Prompt:** Preserve the claudecoding project's live-integration safety workflow in Codex so changes to form flows and downstream destinations do not bypass the existing Claude guardrails.
+
+**Response summary:** Reviewed the current API routes, integration layer, and Claude integration-safety agent. Created a Codex-native `claudecoding-integration-safety` skill, updated the repo's Codex adapter to require its manifest before risky integration edits, and preserved the workflow in the session log so Codex and Claude can stay aligned.
+
+### 04/18/2026, Codex repo adapter
+**Prompt:** Go ahead with the codex.md
+
+**Response summary:** Added a thin `CODEX.md` for the repo so Codex has an explicit local adapter without duplicating `CLAUDE.md`. The file defines read order, session-start behavior, safety expectations, durable tracking expectations, and when to use Charles's Codex skills.
+
+### 04/18/2026, Hardening pass
+**Prompt:** Let's go ahead and make your hardening pass recommendations first
+
+**Response summary:** Completed a low-risk hardening pass without touching the live integrations. Removed the misleading fake upload UI from `QuoteDrawer`, ensured successful submissions fully reset form state, fixed current lint failures in the page and nav state handling, and cleaned up the integration tests so lint passes again.
+
+### 04/18/2026, Upload decision follow-up
+**Prompt:** Don't make any changes to the integrations yet, instead just update the todo list
+
+**Response summary:** Verified Gmail's real direct attachment limit and updated `docs/decisions.md` with a deferred item for temporary email-first uploads, metadata-only storage in existing integrations, and WhatsApp fallback for oversized files. Did not touch the live integration code.
+
+### 04/18/2026, Groups 3 and 4
+**Prompt:** do groups 3 and 4 now
+
+**Response summary:** Finished the remaining Group 3 background-treatment drift by aligning `Positioning` with the same subtle layered treatment as the other light sections. Implemented Group 4 by separating `ClientAccordion` and `Services` into independent full-width sections, preserving one-way state sync, moving the "We clean it all" card to the bottom with inline expansion, adding auto-derived service pills inside accordion items, and giving `Services` its own client filter with contextual wording derived from the current service mapping. Verified with `npm run lint`.

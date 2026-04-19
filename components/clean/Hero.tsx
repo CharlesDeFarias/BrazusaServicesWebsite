@@ -27,7 +27,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
       className="grain bg-navy text-white flex items-center px-6 md:px-12 lg:px-16 pt-14"
       style={{ minHeight: '82vh' }}
     >
-      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8 lg:gap-10 items-start py-10 lg:py-14">
+      <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-8 lg:gap-10 items-start py-10 lg:py-14">
 
         {/* Text column */}
         <div>
@@ -121,15 +121,15 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
 
         {/* Desktop image — right column, portrait accent. Capped at 280px wide / 373px tall. */}
         {/* If this looks awkward at a specific breakpoint, the fallback is xl:block (hide below xl). */}
-        <div className="fade-up-1 hidden lg:block" style={{ maxWidth: '280px' }}>
-          <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: '3/4', maxHeight: '373px' }}>
+        <div className="fade-up-1 hidden lg:block">
+          <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: '3/4', maxHeight: '453px' }}>
             <Image
               src="/images/hero.png"
               alt="Professional cleaning"
               fill
               className="object-cover"
               style={{ objectPosition: 'center top' }}
-              sizes="280px"
+              sizes="340px"
               priority
               placeholder="blur"
               blurDataURL={blurDataURL}

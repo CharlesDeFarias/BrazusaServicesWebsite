@@ -1,6 +1,6 @@
 'use client'
 
-import { type JSX, useState, useRef, useEffect } from 'react'
+import { type JSX, useState, useEffect } from 'react'
 
 type ContactMethod = 'phone' | 'sms' | 'email'
 type Outcome = 'contact' | 'quote' | 'schedule'
@@ -37,7 +37,6 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
   const [spaceType, setSpaceType]         = useState('')
   const [notes, setNotes]                 = useState('')
   const [outcome, setOutcome]             = useState<Outcome>('contact')
-  const [baseFiles, setBaseFiles]         = useState<File[]>([])
 
   const [rooms, setRooms]           = useState('')
   const [bathrooms, setBathrooms]   = useState('')
@@ -52,7 +51,6 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
   const [error, setError]           = useState('')
   const [loading, setLoading]       = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
-  const baseFileRef = useRef<HTMLInputElement>(null)
 
   // Pre-fill spaceType when drawer opens with a default
   useEffect(() => {
@@ -117,14 +115,34 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
     }
   }
 
+  const resetForm = (): void => {
+    setDetailsOpen(false)
+    setSubmitted(false)
+    setName('')
+    setContact('')
+    setContactMethod('phone')
+    setSpaceType('')
+    setNotes('')
+    setOutcome('contact')
+    setRooms('')
+    setBathrooms('')
+    setCleanLevel('')
+    setFrequency('')
+    setFocusAreas('')
+    setAddress('')
+    setPreferredDays([])
+    setTimeOfDay('')
+    setError('')
+    setLoading(false)
+    setFocusedField(null)
+  }
+
   // Only reset form state after a successful submit — preserve data on all other closes
   const handleClose = (): void => {
     onClose()
     if (submitted) {
       setTimeout(() => {
-        setSubmitted(false)
-        setDetailsOpen(false)
-        setError('')
+        resetForm()
       }, 300)
     }
   }
@@ -362,7 +380,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                   )}
                 </div>
 
-                {/* Notes + file upload */}
+                {/* Notes */}
                 <div>
                   <label className={labelCls} style={{ color: 'var(--color-white-45)' }}>Notes or questions</label>
                   <textarea value={notes} onChange={(e) => setNotes(e.target.value)}
@@ -372,27 +390,9 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                     onFocus={() => setFocusedField('notes')}
                     onBlur={() => setFocusedField(null)}
                   />
-                  <input ref={baseFileRef} type="file" multiple
-                    onChange={(e) => setBaseFiles(Array.from(e.target.files ?? []))}
-                    className="hidden" />
-                  <button type="button" onClick={() => baseFileRef.current?.click()}
-                    className="w-full mt-2 px-4 py-2.5 text-xs transition-colors text-center"
-                    style={{
-                      background: 'transparent',
-                      border: '1px dashed var(--color-white-10)',
-                      color: 'var(--color-white-30)',
-                    }}>
-                    Attach photos or files (optional)
-                  </button>
-                  {baseFiles.length > 0 && (
-                    <ul className="mt-2 space-y-1">
-                      {baseFiles.map((f, i) => (
-                        <li key={i} className="text-xs flex items-center gap-1.5" style={{ color: 'var(--color-white-50)' }}>
-                          <span style={{ color: 'var(--color-brand-gold)' }}>↑</span> {f.name}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <p className="mt-2 text-xs leading-relaxed" style={{ color: 'var(--color-white-35)' }}>
+                    If photos would help, mention that here and we&apos;ll tell you the best way to send them.
+                  </p>
                 </div>
 
                 {/* What are you looking for */}

@@ -38,7 +38,7 @@ Example absolute rule: before any change to API routes, Airtable fields, Resend 
 
 **`.claude/agents/`** - five Claude subagents, each with one job. They run in their own context window with their own tool list. Giving an agent only the tools it needs is structural enforcement - the integration-safety agent cannot edit files because it does not have write access, not just because you told it not to.
 
-**`~/.codex/preferences/` and `~/.codex/skills/`** - Codex reusable behavior, stored globally outside the repo. These cover collaboration style, session structure, question-asking policy, and repeated workflows like session start and durable updates. Because they live outside the repo, they apply across all Codex sessions, not just this project.
+**`~/.codex/preferences/` and `~/.codex/skills/`** - Codex reusable behavior at runtime. These cover collaboration style, session structure, question-asking policy, and repeated workflows like session start and durable updates. For portability, this repo now mirrors the relevant Codex setup under `docs/ai-config-export/codex/`, but the live runtime copy still lives in `~/.codex/`.
 
 ---
 
@@ -215,9 +215,9 @@ There is no protocol for what happens when Claude and Codex both attempt to edit
 - `docs/session-log.md` - the human-facing session diary. Not read by AI tools at startup.
 - `.claude/agents/` - five subagent files. Each is self-contained: you can read any one cold and understand exactly what it does, what tools it has, and what it produces.
 
-**Outside the repo (Codex global config):**
+**Codex runtime config and repo export:**
 
-These live in `~/.codex/` on the developer's machine, not in the repo. They apply across all Codex sessions, not just this project. Available separately on request.
+At runtime these live in `~/.codex/` on the developer's machine, and they apply across all Codex sessions, not just this project. For reproducibility, the relevant files are also mirrored in this repo under `docs/ai-config-export/codex/`.
 
 - `~/.codex/preferences/charles-core.md` - collaboration style, question-asking policy, response defaults
 - `~/.codex/preferences/charles-codex.md` - Codex-specific optimization and session structure

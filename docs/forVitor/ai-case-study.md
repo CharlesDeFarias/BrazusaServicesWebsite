@@ -38,7 +38,7 @@ Exemplo de regra absoluta: antes de qualquer mudança em rotas de API, campos do
 
 **`.claude/agents/`** - cinco subagentes do Claude, cada um com uma função. Cada um roda no seu próprio context window com sua própria lista de tools. Dar pra um agente só os tools que ele precisa é aplicação estrutural - o agente de integration-safety não consegue editar arquivos porque não tem acesso de escrita, não só porque você mandou ele não fazer isso.
 
-**`~/.codex/preferences/` e `~/.codex/skills/`** - comportamento reutilizável do Codex, guardado globalmente fora do repo. Cobre estilo de colaboração, estrutura de sessão, política de perguntas, e workflows repetidos como startup de sessão e atualizações de arquivos duráveis. Por ficarem fora do repo, se aplicam a todas as sessões do Codex, não só nesse projeto.
+**`~/.codex/preferences/` e `~/.codex/skills/`** - comportamento reutilizável do Codex em runtime. Cobre estilo de colaboração, estrutura de sessão, política de perguntas, e workflows repetidos como startup de sessão e atualizações de arquivos duráveis. Pra reprodutibilidade, o repo agora espelha a parte relevante dessa configuração em `docs/ai-config-export/codex/`, mas a cópia usada pelo Codex continua morando em `~/.codex/`.
 
 ---
 
@@ -215,9 +215,9 @@ Ainda não existe protocolo pro que acontece quando Claude e Codex tentam editar
 - `docs/session-log.md` - o diário de sessão voltado pra humanos. Os tools de IA não leem isso no startup.
 - `.claude/agents/` - cinco arquivos de subagente. Cada um é autocontido: você consegue ler qualquer um a frio e entender exatamente o que faz, quais tools tem, e o que produz.
 
-**Fora do repo (config global do Codex):**
+**Config do Codex em runtime e espelho no repo:**
 
-Esses ficam em `~/.codex/` na máquina do dev, não no repo. Se aplicam a todas as sessões do Codex, não só nesse projeto. Disponíveis separadamente se precisar.
+Em runtime esses arquivos ficam em `~/.codex/` na máquina do dev e se aplicam a todas as sessões do Codex, não só nesse projeto. Pra facilitar replicação, a parte relevante também foi espelhada no repo em `docs/ai-config-export/codex/`.
 
 - `~/.codex/preferences/charles-core.md` - estilo de colaboração, política de perguntas, defaults de resposta
 - `~/.codex/preferences/charles-codex.md` - otimização específica do Codex e estrutura de sessão

@@ -1,8 +1,8 @@
 # Session Log
 
-This file tracks every prompt submitted to Claude and a summary of the response produced.
+This file is the human-facing learning record for the project: chronology, prompts, summaries, and workflow notes.
 Token counts are not yet tracked — placeholder for future integration.
-This file is git-ignored and stays local only.
+AI tools do not use it as startup context; `docs/decisions.md` is the startup file for durable decisions.
 
 ---
 
@@ -2844,3 +2844,315 @@ You are making two changes to this repo:
 
 ### 04/19/2026, 03:16:07 PM
 **Prompt:** excellent, do a session update and commit to git. dont push yet, codex is working on something
+
+### 04/19/2026, 03:22:55 PM
+**Prompt:** I had codex review a final change to the meta-system to improve reproducability. review this prompt that it prepared for me to feed back into itself, and give me feedback/suggestions, including notes on anything you think would be better handleed by you, claude, insteaed of codex.
+
+Repository architecture task. Do not treat this as a meta discussion. Implement the repo-local AI setup export/reproducibility layer so this repository becomes the source of truth for how Claude and Codex were configured for this project.
+
+Important constraints:
+- Do not implement any broad redesign beyond what is needed for reproducibility.
+- Do not change the actual meaning of the current AI operating system unless required for portability.
+- Prefer additive changes.
+- Preserve working behavior.
+- If a file is currently global/machine-local but can be represented locally for reproducibility, copy/export it into the repo rather than deleting the original source.
+- Where something might be smarter as a true global config long-term, note that briefly in a comment or doc note, but still localize it for now.
+- The repo is the source of truth for now, even if that is not the ideal long-term architecture.
+- Do not push.
+
+Primary audience:
+- future Charles on another machine
+- Vitor replicating the setup
+Secondary audience:
+- eventual public case study readers
+
+## Goal
+
+Make this repo contain a complete, reproducible, inspectable snapshot of the AI setup used for this project, including:
+- project-local Claude operating files
+- Codex global config/preferences/skills/meta that currently live outside the repo
+- a clear install/replication guide
+- corrected ignore rules so important project AI files are not accidentally hidden
+- corrected docs where they still imply “local only” or otherwise contradict the new source-of-truth model
+
+## Read first
+
+Read these files before making changes:
+1. `README.md`
+2. `AGENTS.md`
+3. `CLAUDE.md`
+4. `CODEX.md`
+5. `docs/decisions.md`
+6. `docs/session-log.md`
+7. `.gitignore`
+8. `C:\Users\charl\.codex\config.toml`
+9. `C:\Users\charl\.codex\preferences\charles-core.md`
+10. `C:\Users\charl\.codex\preferences\charles-tech.md`
+11. `C:\Users\charl\.codex\preferences\charles-llm-workflow.md`
+12. `C:\Users\charl\.codex\preferences\charles-codex.md`
+13. `C:\Users\charl\.codex\meta\codex-usage-log.md`
+14. all custom Codex skill folders under `C:\Users\charl\.codex\skills\`
+15. `.claude/agents/` contents
+16. `.claude/settings.local.json` if it exists
+17. `.claude/agent-memory/` only if needed to decide whether it should remain ignored
+
+Before editing, give a short summary of:
+- what is currently only machine-global
+- what is already project-local
+- what should become tracked directly
+- what should remain ignored
+
+## Target architecture
+
+Implement this architecture unless the repo reveals a clearly better local variant:
+
+### 1. Track Claude project files directly
+- `.claude/agents/` should be tracked directly in the repo
+- keep machine-local Claude state ignored if it is not portable
+- do not blindly start tracking `.claude/agent-memory/` unless you determine it is genuinely part of the intended reproducible setup
+- do not assume `.claude/settings.local.json` is portable; inspect first and decide carefully
+
+### 2. Add a repo-local Codex source-of-truth area
+Create a tracked folder for Codex setup inside the repo, preferably:
+
+- `docs/ai-config-export/codex/`
+
+Mirror the relevant global Codex setup into it, including:
+- `config.toml`
+- `preferences/`
+- `skills/`
+- `meta/`
+
+For now, include everything under the custom/global Codex setup that is relevant to reproducing this environment, even if some of it may later be narrowed before public sharing.
+
+Do not just describe these files. Copy/export them into the repo.
+
+### 3. Add a repo-local Claude source-of-truth area if helpful
+Because `.claude/agents/` will be tracked directly, do not duplicate unnecessarily.
+But if a small index or mirrored explanation under `docs/ai-config-export/claude/` helps reproducibility, add it.
+
+### 4. Add a single index/install guide
+Create one clear tracked doc, likely:
+
+- `docs/ai-config-export/INDEX.md`
+
+This file should explain:
+- what this export package is
+- that the repo is currently the source of truth for the AI setup
+- which files are Claude-specific
+- which files are Codex-specific
+- which files are project-specific vs machine-global in their normal runtime locations
+- where each exported file normally lives on disk
+- how future Charles or Vitor can copy the setup onto another machine
+- which pieces are safe to copy directly
+- which pieces should be reviewed before copying
+- which pieces may eventually belong in global config instead of repo-local config
+
+Keep this practical, not theoretical.
+
+### 5. Optionally add a Vitor-facing replication guide
+If it improves clarity, add:
+- `docs/forVitor/replicate-ai-setup.md`
+
+Only do this if it materially helps. Do not create redundant docs if `INDEX.md` can do the job well.
+
+### 6. Correct stale documentation
+Update any repo docs that still contradict the new source-of-truth model.
+
+Most likely places:
+- `.gitignore`
+- `docs/decisions.md`
+- `README.md`
+
+Examples of contradictions to fix:
+- files described as “git-ignored and local only” when they are now tracked and intended as shared source of truth
+- blanket ignore patterns that hide important tracked project AI files
+- wording that understates the Claude+Codex setup story if README is the right place to note the new exportability
+
+Do not rewrite the README into a giant case study in this task unless needed to point to the new AI export docs. Keep README changes focused.
+
+## .gitignore requirements
+
+Review `.gitignore` carefully.
+
+Goals:
+- keep secrets and real machine-local noise ignored
+- stop blanket-ignoring important project AI files that should now be tracked
+- allow `.claude/agents/` to be tracked directly
+- keep `.env*`, build output, caches, and similar noise ignored
+- make the ignore rules reflect the architecture intentionally, not by accident
+
+If you use unignore patterns, keep them precise and readable.
+
+## Codex source-of-truth export requirements
+
+For the Codex export inside the repo:
+- preserve folder structure clearly
+- include custom preferences
+- include custom skills
+- include the usage log/meta if it is part of the reproducible operating system
+- include `config.toml`
+- include reference/checklist files inside exported skills if they are part of the current live setup
+
+Do not omit files just because they live outside the repo today.
+
+If some exported files contain obviously machine-specific paths, keep them for reproducibility but add a short note in `INDEX.md` about path review on a new machine.
+
+## Claude source-of-truth requirements
+
+For Claude:
+- track `.claude/agents/` directly if feasible
+- make sure the repo contains the agent definitions themselves, not just references to them
+- decide whether `.claude/settings.local.json` should remain ignored or be represented elsewhere
+- do not expose or track ephemeral state unless it is genuinely part of the reproducible setup
+
+## Session log / case-study handling
+
+For now, include the session log in the repo as part of the reproducible/history layer.
+Do not remove it.
+Do not redesign the whole session-log architecture in this task.
+
+If useful, note in `INDEX.md` that:
+- `docs/session-log.md` is part of the learning/history record
+- it may be too personal/noisy for later public sharing, but it is included now for maximum reproducibility
+
+## Documentation notes
+
+Where appropriate, add brief notes like:
+- “This is currently tracked locally for reproducibility, though a future public/shared version may want to move it back to a true global config.”
+Keep notes short and only where they add real value.
+
+## Verification
+
+After implementation:
+1. Show the final tracked file/folder structure for the new AI source-of-truth/export layer.
+2. Show the `.gitignore` diff and explain why each AI-related change was made.
+3. Confirm whether `.claude/agents/` is now tracked directly.
+4. Confirm what remained ignored under `.claude/` and why.
+5. Confirm the Codex global setup is now represented in the repo.
+6. Identify any files that still cannot be cleanly made portable and explain why.
+7. Run `git status --short` and summarize exactly what changed.
+8. Do not push.
+
+## Commit
+
+If the result is coherent and verification is clean enough, create one commit.
+
+Commit message:
+`docs: localize AI configuration as repo source of truth`
+
+If you think the work should be split into two commits, explain why first and then choose the better structure. Otherwise prefer one clean commit.
+
+## Final response
+
+Report:
+- what architecture you implemented
+- which files/folders were added or changed
+- any decisions you had to make about what stays ignored
+- anything still non-portable or machine-specific
+- commit hash
+- any follow-up you recommend before sharing this setup publicly
+
+
+### 04/19/2026, 03:26:33 PM
+**Prompt:** generate the prompt i should feed into codex
+
+### 04/19/2026, 03:31:59 PM
+**Prompt:** Here's codex's handoff. go ahead and impelement your half. 
+Implemented the Codex half of the AI configuration export layer and committed it.
+
+Commit hash:
+- `6ee5fe2`
+
+**Files added to `docs/ai-config-export/`**
+- `docs/ai-config-export/codex/config.toml`
+- `docs/ai-config-export/codex/meta/codex-usage-log.md`
+- `docs/ai-config-export/codex/preferences/charles-codex.md`
+- `docs/ai-config-export/codex/preferences/charles-core.md`
+- `docs/ai-config-export/codex/preferences/charles-llm-workflow.md`
+- `docs/ai-config-export/codex/preferences/charles-tech.md`
+- `docs/ai-config-export/codex/skills/charles-clean-code/SKILL.md`
+- `docs/ai-config-export/codex/skills/charles-clean-code/agents/openai.yaml`
+- `docs/ai-config-export/codex/skills/charles-clean-code/references/clean-code-checklist.md`
+- `docs/ai-config-export/codex/skills/charles-codex-optimizer/SKILL.md`
+- `docs/ai-config-export/codex/skills/charles-codex-optimizer/agents/openai.yaml`
+- `docs/ai-config-export/codex/skills/charles-codex-optimizer/references/codex-review-checklist.md`
+- `docs/ai-config-export/codex/skills/charles-durable-update/SKILL.md`
+- `docs/ai-config-export/codex/skills/charles-durable-update/agents/openai.yaml`
+- `docs/ai-config-export/codex/skills/charles-durable-update/references/durable-update-checklist.md`
+- `docs/ai-config-export/codex/skills/charles-llm-workflow/SKILL.md`
+- `docs/ai-config-export/codex/skills/charles-llm-workflow/agents/openai.yaml`
+- `docs/ai-config-export/codex/skills/charles-llm-workflow/references/review-checklist.md`
+- `docs/ai-config-export/codex/skills/charles-session-start/SKILL.md`
+- `docs/ai-config-export/codex/skills/charles-session-start/agents/openai.yaml`
+- `docs/ai-config-export/codex/skills/charles-session-start/references/session-start-checklist.md`
+- `docs/ai-config-export/codex/skills/claudecoding-integration-safety/SKILL.md`
+- `docs/ai-config-export/codex/skills/claudecoding-integration-safety/agents/openai.yaml`
+- `docs/ai-config-export/codex/skills/claudecoding-integration-safety/references/integration-safety-checklist.md`
+
+**Files/folders excluded and why**
+- `C:\Users\charl\.codex\skills\.system\`
+  - excluded because it is built-in/system skill content, not Charles customization
+- `C:\Users\charl\.codex\skills\codex-primary-runtime\`
+  - excluded because it is built-in runtime skill content
+- any folder not matching `charles-*` or `claudecoding-*`
+  - excluded per scope rules
+- I did not touch `.gitignore`, `README.md`, `docs/decisions.md`, or any Claude files
+  - excluded by instruction because Claude is handling those
+
+**Copied files containing absolute paths needing review on a new machine**
+- `docs/ai-config-export/codex/config.toml`
+  - contains:
+    - `C:\Users\charl\Desktop\claudecoding`
+    - `C:\Users\charl\Documents\Codex\2026-04-18-i-want-to-configure-codex-to`
+
+I did not modify those paths; they were copied as-is per instructions.
+
+**`git status --short` after the export commit**
+- `M docs/session-log.md`
+
+That modified `docs/session-log.md` was already present and was not part of this export commit.
+
+**What I did**
+- Exported the approved Codex global config into the repo as `docs/ai-config-export/codex/`
+- Preserved folder structure
+- Copied files without modifying their contents
+- Included the `agents/openai.yaml` files found inside the included skill folders because they are part of those skill folder structures
+- Created one scoped commit with only the Codex export files
+
+**What remains for Claude**
+- `.gitignore` change:
+  - unignore/track `.claude/agents/` instead of blanket-hiding the whole `.claude/` setup
+- docs Claude still needs to write:
+  - `docs/ai-config-export/INDEX.md`
+  - `docs/forVitor/replicate-ai-setup.md`
+  - `docs/decisions.md` header fix
+  - any README updates Claude planned
+- path review note for a new machine:
+  - `docs/ai-config-export/codex/config.toml` contains absolute Windows paths that will need machine-specific review before reuse
+
+---
+
+## Session: 2026-04-19 (Codex follow-up after Claude limit)
+
+### Decisions made this session
+
+- `.claude/agents/` is now actually trackable in git. The first `.gitignore` pass had the right intent but did not unignore agent file contents correctly; the final rule uses `.claude/*` plus explicit unignore patterns for `.claude/agents/` and its contents.
+- The repo-local AI export model is now documented as the current source of truth for reproducibility, while Codex still reads from `~/.codex/` at runtime.
+
+### Session record
+
+- **Claude usage limit was reached mid-pass.** Claude completed part of the AI export/documentation work, then stopped before finishing the replication guide, README pointer updates, and final commit.
+- **Codex completed the remaining doc/export pass.** This included:
+  - fixing `.gitignore` so `.claude/agents/**` is actually unignored and trackable
+  - writing `docs/forVitor/replicate-ai-setup.md`
+  - updating `docs/ai-config-export/INDEX.md` so it reflects the repo-source-of-truth model instead of describing the Codex export as only a manual snapshot
+  - updating the English and Portuguese AI case-study docs so they point to the repo-local Codex export instead of saying the relevant files live only outside the repo
+  - adding README pointers to the export/replication docs
+- **Claude-authored work preserved:** the earlier `.gitignore` intent, `docs/decisions.md` header fix, and the first draft of `docs/ai-config-export/INDEX.md` came from Claude before the limit was hit.
+- **Codex-authored work preserved:** the final `.gitignore` implementation fix, Vitor replication guide, doc consistency updates, this durable update, and the final commit.
+
+### Follow-up items
+
+- Claude should do a session update the next time it is used after session reset so its own log/history reflects that its previous run ended on a usage-limit boundary and that Codex completed the remaining documentation/export pass.
+- README still has broader content drift and mojibake issues unrelated to this export pass. That is separate cleanup, not a blocker for returning to product work.

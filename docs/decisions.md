@@ -1,7 +1,7 @@
 # Architectural Decisions
 
 This file tracks locked decisions about architecture, UX behavior, and project structure.
-Git-ignored and local only. Read this at session start alongside `lib/clients/` and `app/api/`.
+Tracked in the repo. Read this at session start alongside `lib/clients/` and `app/api/`.
 
 When a decision is made, add it here before the session ends. Format:
 **Decision:** what was decided

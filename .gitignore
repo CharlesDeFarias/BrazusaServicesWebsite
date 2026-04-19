@@ -30,10 +30,14 @@ out/
 # ============================================================
 # CLAUDE CODE & SUPERPOWERS
 # .claude/ contains Claude Code's internal state and memory.
+# .claude/agents/ is unignored below — agent definitions are project
+# source of truth and should be tracked.
 # .superpowers/ contains skill definitions for the Claude Code harness.
 # These are tool-specific config files, not project source code.
 # ============================================================
-.claude/
+.claude/*
+!.claude/agents/
+!.claude/agents/**
 .superpowers/
 
 # ============================================================

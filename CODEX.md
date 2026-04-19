@@ -100,6 +100,7 @@ Handoff signals:
 
 Workflow governance:
 - When a repeated workflow pattern emerges, encode it in preferences or skills rather than re-explaining it in chat
+- If a shared durable file (`docs/decisions.md`, `docs/session-log.md`, `CLAUDE.md`, `CODEX.md`, `AGENTS.md`) already has uncommitted edits, stop and confirm before editing. Do not overwrite, reorder, or silently merge another tool's pending durable update.
 - Changes to either tool's operating files require confirmation before editing
 
 ## Anti-Duplication Rule

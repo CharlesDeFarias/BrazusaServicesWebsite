@@ -72,12 +72,11 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** Both Claude and Codex now have authorship notation rules, but no shared convention. Without one, session log entries will accumulate inconsistent formats.
 **Constraints:** Use exactly three labels — `Claude-authored`, `Codex-authored`, `Joint decision`. No other variants. Apply at the artifact level (each decision, implementation block, or reasoning artifact), not at the session level.
 
-**Known open gap:** No protocol exists for multi-tool write conflicts — what happens when Claude and Codex both attempt to write to the same durable file in the same session. Not a current problem (sessions are sequential). Revisit when concurrent usage becomes real.
-
 ---
 
 ## Deferred Items (not decisions — pending)
 
+- No protocol exists for multi-tool write conflicts — what happens when Claude and Codex both attempt to write to the same durable file in the same session. Not a current problem (sessions are sequential). Revisit when concurrent usage becomes real.
 - Static inline style cleanup — many `style={{ color: 'var(--color-...)' }}` calls should be Tailwind utilities (e.g. `text-white-40`). Tailwind v4 exposes all `@theme` tokens as utilities automatically. Static values only — dynamic/conditional inline styles require a separate decision (data attributes or Tailwind variants). Scope: all components in `components/clean/`.
 
 - Service area town list (awaiting ChatGPT audit)

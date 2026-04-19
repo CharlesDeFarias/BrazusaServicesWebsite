@@ -12,7 +12,7 @@
 
 ## Persistent Project Tracking
 - Contribute faithfully to `docs/session-log.md`.
-- Preserve the dual purpose of the session log: decision support for the assistant and a learning record for Charles.
+- Treat `docs/decisions.md` as the AI-facing startup context and `docs/session-log.md` as the human-facing learning record.
 - Treat meta-analysis of Claude/Codex usage, prompting strategy, and agent/skill design as part of project work, not as off-topic discussion.
 
 ## Safety

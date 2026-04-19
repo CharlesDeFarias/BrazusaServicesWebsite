@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-const mockAppend = vi.fn().mockResolvedValue({})
+const mockAppend = vi.hoisted(() => vi.fn().mockResolvedValue({}))
 
 vi.mock('googleapis', () => {
   return {

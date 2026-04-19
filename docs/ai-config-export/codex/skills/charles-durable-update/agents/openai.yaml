@@ -1,0 +1,4 @@
+interface:
+  display_name: "Charles Durable Update"
+  short_description: "Capture decisions, logs, and durable lessons at wrap-up."
+  default_prompt: "Use $charles-durable-update to decide what from this session should go into logs, decisions, skills, or preferences before we wrap up."

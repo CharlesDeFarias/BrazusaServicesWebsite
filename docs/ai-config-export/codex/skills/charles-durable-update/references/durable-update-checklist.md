@@ -1,0 +1,18 @@
+- Use this workflow when a meaningful session is ending or a durable update is needed.
+- Identify decisions, completed work, risks, follow-up items, and workflow lessons.
+- Note authorship when Claude and Codex both contributed.
+- Separate what happened from what was decided.
+- Keep chronology in the session record and locked rules in the decisions doc.
+- Ask whether the information will matter next session.
+- Ask whether future Codex behavior improves if the lesson is saved.
+- Distinguish one-off details from reusable rules.
+- Decide whether the lesson is project-specific or global.
+- Prefer the smallest durable destination that preserves the lesson reliably.
+- Use the session log for what happened and what was learned.
+- Use the decisions doc for locked architectural, UX, or workflow decisions.
+- Use AGENTS or preferences when future behavior needs to change systematically.
+- Use skills when a repeated workflow deserves a reusable tool.
+- Use the Codex usage log for cross-project lessons about Codex itself.
+- Preserve Charles's learning journey, not just engineering facts.
+- Favor durable updates that improve future sessions.
+- Say plainly when nothing durable emerged.

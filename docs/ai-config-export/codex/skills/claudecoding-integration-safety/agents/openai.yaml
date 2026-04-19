@@ -1,0 +1,4 @@
+interface:
+  display_name: "claudecoding Integration Safety"
+  short_description: "Protect live form integrations before any risky edits."
+  default_prompt: "Use $claudecoding-integration-safety before changing a live integration path in claudecoding and produce the full manifest first."

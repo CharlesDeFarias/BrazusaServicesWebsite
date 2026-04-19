@@ -1,0 +1,18 @@
+- Start meaningful repo work by restoring durable context before implementation.
+- Read the strongest project instruction sources first.
+- Prioritize AGENTS, CLAUDE, GEMINI, TEAM_GUIDE, or .agents docs when present.
+- Treat docs/decisions.md as the primary durable startup context when the repo uses it.
+- Do not read docs/session-log.md at session start unless Charles explicitly wants historical or process review.
+- Pull in only the smallest set of durable files needed to explain the current situation.
+- Use recent git history to ground the brief in real repo activity.
+- Check open TODOs in high-signal areas rather than scanning everything.
+- Check git status or equivalent signs of in-progress work.
+- Identify the operating constraints that matter for this session.
+- Surface live-integration or destructive-change risks explicitly.
+- Note deferred work that could shape the next move.
+- Recommend the best starting move instead of dumping raw context.
+- Ask only questions that materially change the work or improve Charles's understanding.
+- Keep the brief concise, scannable, and grounded in files.
+- Prefer constraints and implications over long summaries.
+- Follow a stronger local startup workflow when the repo defines one.
+- Remember that meaningful work will likely need a durable update later.

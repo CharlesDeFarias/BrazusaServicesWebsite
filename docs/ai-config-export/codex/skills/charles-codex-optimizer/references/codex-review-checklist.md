@@ -1,0 +1,18 @@
+- Optimize Codex performance, not just generic prompt quality.
+- Check whether the request restores repo context before implementation.
+- Flag unclear scope, weak sequencing, and missing success criteria.
+- Separate risky work from safe exploratory work.
+- Make sure the task is narrow enough for one strong Codex pass.
+- Identify when Charles would likely want to steer the decision directly.
+- Recommend a cleaner Codex-native rewrite when the prompt is weak.
+- Review plans for sensible phases and proper discovery before coding.
+- Check whether risky steps are gated appropriately.
+- Decide what belongs in chat versus durable files.
+- Choose the smallest durable mechanism that preserves the lesson.
+- Explain why guidance belongs in config, AGENTS, project docs, skills, or logs.
+- Prefer repo adapters when a project has its own operating contract.
+- Prefer skills when a repeated workflow keeps reappearing.
+- Focus on better context restoration, task scoping, and verification.
+- Improve question timing rather than just adding more wording.
+- Explain why the improved structure should work better in Codex.
+- Preserve learning value for Charles, not just execution speed.

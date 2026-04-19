@@ -1,0 +1,4 @@
+interface:
+  display_name: "Charles Codex Optimizer"
+  short_description: "Shape prompts and plans for better Codex sessions."
+  default_prompt: "Review this for Codex specifically and tell me how to structure it for maximum impact, clarity, and learning value."

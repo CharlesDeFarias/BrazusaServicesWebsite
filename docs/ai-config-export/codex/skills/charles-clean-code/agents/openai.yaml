@@ -1,0 +1,4 @@
+interface:
+  display_name: "Charles Clean Code"
+  short_description: "Apply Charles-style clean-code rules while implementing."
+  default_prompt: "Use $charles-clean-code to review or shape this implementation so it matches Charles's clean-code preferences."

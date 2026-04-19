@@ -1,0 +1,4 @@
+interface:
+  display_name: "Charles LLM Workflow"
+  short_description: "Optimize prompts and cross-model handoffs."
+  default_prompt: "Use $charles-llm-workflow to review this prompt, plan, or handoff workflow and show me how to improve it."

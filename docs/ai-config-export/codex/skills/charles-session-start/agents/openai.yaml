@@ -1,0 +1,4 @@
+interface:
+  display_name: "Charles Session Start"
+  short_description: "Open strong Codex sessions with context and priorities."
+  default_prompt: "Use $charles-session-start to restore context and produce a brief before we start substantive work."

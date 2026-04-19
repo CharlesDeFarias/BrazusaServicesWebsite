@@ -1,0 +1,19 @@
+- Preserve working code unless removal or replacement was approved.
+- Prefer additive, reversible changes while the right shape is still emerging.
+- Keep diffs tightly scoped and avoid unrelated cleanup.
+- Do not hide a refactor inside a feature unless it is necessary.
+- Flag broader cleanup separately instead of expanding scope quietly.
+- Use descriptive names that explain domain role, not just type.
+- Avoid vague names like data, item, result, config, or handleClick.
+- Favor focused files and components when the split is justified.
+- Ask before splitting or restructuring existing code when it was not requested.
+- Keep helpers in intentional locations rather than scattering utilities.
+- Use TypeScript intentionally and avoid accidental any.
+- If any is necessary, make it explicit and explain why.
+- Ask before adding dependencies and explain alternatives.
+- Prefer existing platform capabilities or current dependencies when they solve the problem cleanly.
+- Default toward test-aware implementation for meaningful logic.
+- Strongly prefer tests for validators, API behavior, and transformation logic.
+- Stop and explain if a test failure materially changes the plan.
+- Write comments that explain why, not what.
+- Teach through explanations so the code does not feel like generic AI output.

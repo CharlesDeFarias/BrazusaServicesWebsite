@@ -1,0 +1,14 @@
+project_doc_max_bytes = 131072
+project_doc_fallback_filenames = ["CLAUDE.md", "GEMINI.md", "TEAM_GUIDE.md", ".agents.md"]
+
+[features]
+memories = true
+
+[windows]
+sandbox = "elevated"
+
+[projects.'C:\Users\charl\Desktop\claudecoding']
+trust_level = "trusted"
+
+[projects.'C:\Users\charl\Documents\Codex\2026-04-18-i-want-to-configure-codex-to']
+trust_level = "trusted"

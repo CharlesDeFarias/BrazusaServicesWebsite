@@ -1,0 +1,18 @@
+- Use this skill before any meaningful change to live form or integration flows.
+- Treat Resend, Airtable, and Google Sheets as three parallel destinations that must stay aligned.
+- Do not skip the workflow because the change seems small.
+- Read the relevant API route first.
+- Read the relevant validator second.
+- Read resend, Airtable, and Google Sheets integration files in order.
+- Read the relevant client config last.
+- Trace exactly where a proposed field or payload change would propagate.
+- Produce a manifest, not an implementation plan.
+- Document the current payload shape with field, type, required state, and validation summary.
+- Map each field across Resend, Airtable, and Sheets.
+- Call out the impact on every destination when a change is proposed.
+- List the exact files that would need updating.
+- Do not recommend implementation details before the manifest is reviewed.
+- Do not touch code while producing the manifest.
+- Flag any destination that appears unaffected as an explicit risk.
+- Treat this as a live-risk workflow, not a normal refactor.
+- End with confirmation-required language before any code changes proceed.

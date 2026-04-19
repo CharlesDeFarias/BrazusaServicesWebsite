@@ -19,7 +19,7 @@ export default function MobileCTABar({ onQuoteClick, drawerOpen }: MobileCTABarP
       <button
         onClick={onQuoteClick}
         className="py-4 text-sm font-medium text-white transition-colors active:opacity-80"
-        style={{ background: 'var(--color-navy)', borderRight: '1px solid rgba(255,255,255,0.1)' }}
+        style={{ background: 'var(--color-navy)', borderRight: '1px solid var(--color-white-10)' }}
       >
         Get a Free Quote
       </button>

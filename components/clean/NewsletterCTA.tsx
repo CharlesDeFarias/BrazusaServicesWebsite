@@ -31,7 +31,7 @@ export default function NewsletterCTA(): JSX.Element {
 
   if (submitted) {
     return (
-      <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+      <p className="text-sm" style={{ color: 'var(--color-white-50)' }}>
         You&apos;re on the list. ✓
       </p>
     )
@@ -46,14 +46,14 @@ export default function NewsletterCTA(): JSX.Element {
           onChange={e => setEmail(e.target.value)}
           placeholder="your@email.com"
           className="flex-1 min-w-0 px-3 py-2 text-sm focus:outline-none text-white placeholder:text-white/30"
-          style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)' }}
+          style={{ background: 'var(--color-white-5)', border: '1px solid var(--color-white-10)' }}
           onKeyDown={e => e.key === 'Enter' && handleSubmit()}
         />
         <button
           onClick={handleSubmit}
           disabled={loading}
           className="flex-shrink-0 px-4 py-2 text-xs font-medium text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy disabled:opacity-50"
-          style={{ background: 'var(--color-brand-blue)', borderLeft: '2px solid rgba(255,255,255,0.25)', whiteSpace: 'nowrap' }}
+          style={{ background: 'var(--color-brand-blue)', borderLeft: '2px solid var(--color-white-25)', whiteSpace: 'nowrap' }}
         >
           {loading ? 'Sending…' : 'Subscribe'}
         </button>
@@ -64,9 +64,9 @@ export default function NewsletterCTA(): JSX.Element {
         onChange={e => setPhone(e.target.value)}
         placeholder="Also by text (optional): 617-555-0123"
         className="w-full px-3 py-2 text-sm focus:outline-none text-white placeholder:text-white/25"
-        style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+        style={{ background: 'var(--color-white-5)', border: '1px solid var(--color-white-10)' }}
       />
-      {error && <p className="text-xs" style={{ color: '#E07070' }}>{error}</p>}
+      {error && <p className="text-xs" style={{ color: 'var(--color-error)' }}>{error}</p>}
     </div>
   )
 }

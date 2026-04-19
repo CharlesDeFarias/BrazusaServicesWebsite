@@ -33,7 +33,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
         <div>
           <div className="fade-up flex items-center gap-3 mb-8">
             <div className="w-8 h-px bg-brand-gold" />
-            <span className="text-xs uppercase tracking-[0.22em]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            <span className="text-xs uppercase tracking-[0.22em]" style={{ color: 'var(--color-white-40)' }}>
               Greater Boston · Since 1994
             </span>
           </div>
@@ -47,7 +47,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
 
           <div className="fade-up-1 w-12 h-px bg-brand-gold mb-6" />
 
-          <div className="fade-up-2 space-y-3 text-base md:text-lg leading-relaxed mb-6" style={{ color: 'rgba(255,255,255,0.55)' }}>
+          <div className="fade-up-2 space-y-3 text-base md:text-lg leading-relaxed mb-6" style={{ color: 'var(--color-white-55)' }}>
             <p>
               We&apos;re a family business that&apos;s been doing this since 1994.
               But we&apos;re not stuck in 1994.
@@ -72,7 +72,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
                 >
                   {d.n}
                 </span>
-                <span className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.42)' }}>
+                <span className="text-xs leading-relaxed" style={{ color: 'var(--color-white-40)' }}>
                   {d.text}
                 </span>
               </div>
@@ -90,13 +90,13 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
             <a
               href="tel:7816867189"
               className="w-full sm:w-auto text-sm font-medium px-8 py-4 min-h-[52px] text-white text-center transition-colors hover:bg-white/10 flex items-center justify-center"
-              style={{ border: '1.5px solid rgba(255,255,255,0.40)' }}
+              style={{ border: '1.5px solid var(--color-white-40)' }}
             >
               Call / Text: 781-686-7189
             </a>
           </div>
 
-          <p className="fade-up-3 text-xs" style={{ color: 'rgba(255,255,255,0.28)' }}>
+          <p className="fade-up-3 text-xs" style={{ color: 'var(--color-white-30)' }}>
             Not sure if we&apos;re the right fit? Reach out anyway. We&apos;ll point you in the right direction.
           </p>
 

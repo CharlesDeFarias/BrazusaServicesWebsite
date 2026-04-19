@@ -66,7 +66,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
           {!hasFilter && (
             <p
               className="text-xs mt-2 italic"
-              style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-cormorant)', fontSize: '0.9rem' }}
+              style={{ color: 'var(--color-white-35)', fontFamily: 'var(--font-cormorant)', fontSize: '0.9rem' }}
             >
               Select a space type to see what applies to you
             </p>
@@ -74,17 +74,17 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
           {hasFilter && (
             <p
               className="text-xs mt-2"
-              style={{ color: 'rgba(196,154,68,0.9)', fontFamily: 'var(--font-syne)' }}
+              style={{ color: 'var(--color-gold-90)', fontFamily: 'var(--font-syne)' }}
             >
               Filtered for selected space type
             </p>
           )}
         </div>
-        <div className="hidden sm:block flex-1 h-px mb-1" style={{ background: 'rgba(196,154,68,0.25)' }} />
+        <div className="hidden sm:block flex-1 h-px mb-1" style={{ background: 'var(--color-gold-25)' }} />
       </div>
 
       {/* Grid with overflow-hidden container — clips excess borders at all breakpoints */}
-      <div className="rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--color-white-10)' }}>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => {
             const isHighlighted = !hasFilter || s.clients.includes(mappedId!)
@@ -93,10 +93,10 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
                 key={s.name}
                 className="group p-7 transition-all duration-300"
                 style={{
-                  borderRight: '1px solid rgba(255,255,255,0.08)',
-                  borderBottom: '1px solid rgba(255,255,255,0.08)',
+                  borderRight: '1px solid var(--color-white-10)',
+                  borderBottom: '1px solid var(--color-white-10)',
                   opacity: isHighlighted ? 1 : 0.3,
-                  background: isHighlighted && hasFilter ? 'rgba(255,255,255,0.04)' : undefined,
+                  background: isHighlighted && hasFilter ? 'var(--color-white-5)' : undefined,
                 }}
               >
                 <div
@@ -104,7 +104,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
                   style={{ background: 'var(--color-brand-gold)', opacity: isHighlighted ? 1 : 0.5 }}
                 />
                 <p className="font-medium text-white text-sm mb-1.5">{s.name}</p>
-                <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{s.desc}</p>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--color-white-70)' }}>{s.desc}</p>
               </div>
             )
           })}
@@ -115,7 +115,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
       <div className="mt-8 mb-6">
         <p
           className="text-xs uppercase mb-4"
-          style={{ color: 'rgba(196,154,68,0.7)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+          style={{ color: 'rgba(196,154,68,0.7)' /* no token: intentional */, letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
         >
           We can also help with
         </p>
@@ -125,24 +125,24 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
               <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: 'var(--color-brand-gold)' }}>→</span>
               <div>
                 <span className="text-xs font-medium text-white">{s.name}</span>
-                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.42)' }}> — {s.desc}</span>
+                <span className="text-xs" style={{ color: 'var(--color-white-40)' }}> — {s.desc}</span>
               </div>
             </div>
           ))}
         </div>
-        <p className="text-xs mt-4" style={{ color: 'rgba(255,255,255,0.28)' }}>
+        <p className="text-xs mt-4" style={{ color: 'var(--color-white-30)' }}>
           These are add-ons, not packages. Mix and match based on what your operation actually needs.
         </p>
       </div>
 
-      <p className="text-xs mb-8" style={{ color: 'rgba(255,255,255,0.28)' }}>
+      <p className="text-xs mb-8" style={{ color: 'var(--color-white-30)' }}>
         Don&apos;t see what you need? We do partial and one-off jobs too — if we can&apos;t help, we&apos;ll point you to someone who can.
       </p>
 
       <button
         onClick={onQuoteClick}
         className="text-sm font-medium px-6 py-3.5 min-h-[44px] text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
-        style={{ background: 'rgba(255,255,255,0.08)', borderLeft: '2px solid var(--color-brand-gold)' }}
+        style={{ background: 'var(--color-white-10)', borderLeft: '2px solid var(--color-brand-gold)' }}
       >
         Not sure which service fits? Tell us what you need →
       </button>

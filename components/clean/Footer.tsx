@@ -15,17 +15,17 @@ export default function Footer(): JSX.Element {
   return (
     <footer
       className="bg-navy text-white px-6"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+      style={{ borderTop: '1px solid var(--color-white-5)' }}
     >
       {/* Newsletter strip */}
       <div
         className="max-w-5xl mx-auto py-8"
-        style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}
+        style={{ borderBottom: '1px solid var(--color-white-10)' }}
       >
         <div className="flex flex-col sm:flex-row sm:items-start gap-5">
           <div className="flex-shrink-0">
             <p className="text-sm font-medium text-white mb-0.5">For hosts &amp; managers</p>
-            <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.38)' }}>
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--color-white-40)' }}>
               Occasional tips for homes, STR hosts &amp; property managers — plus promo windows when we have availability.
             </p>
           </div>
@@ -41,7 +41,7 @@ export default function Footer(): JSX.Element {
           <div>
             <div
               className="inline-flex mb-4"
-              style={{ background: 'rgba(255,255,255,0.92)', padding: 0, overflow: 'hidden', lineHeight: 0, borderRadius: 0 }}
+              style={{ background: 'var(--color-white-90)', padding: 0, overflow: 'hidden', lineHeight: 0, borderRadius: 0 }}
             >
               <Image
                 src="/brand/logo.jpg"
@@ -52,20 +52,20 @@ export default function Footer(): JSX.Element {
                 style={{ display: 'block' }}
               />
             </div>
-            <p className="text-sm mb-1" style={{ color: 'rgba(255,255,255,0.38)' }}>
+            <p className="text-sm mb-1" style={{ color: 'var(--color-white-40)' }}>
               Greater Boston &amp; surrounding areas
             </p>
             <a
               href="tel:7816867189"
               className="text-sm block mt-1.5 hover:text-white transition-colors"
-              style={{ color: 'rgba(255,255,255,0.38)' }}
+              style={{ color: 'var(--color-white-40)' }}
             >
               781-686-7189
             </a>
             <a
               href="mailto:info@brazusa.com"
               className="text-sm block mt-1 hover:text-white transition-colors"
-              style={{ color: 'rgba(255,255,255,0.38)' }}
+              style={{ color: 'var(--color-white-40)' }}
             >
               info@brazusa.com
             </a>
@@ -75,7 +75,7 @@ export default function Footer(): JSX.Element {
             <p
               className="text-xs uppercase mb-5"
               style={{
-                color: 'rgba(255,255,255,0.22)',
+                color: 'var(--color-white-20)',
                 letterSpacing: '0.14em',
                 fontFamily: 'var(--font-syne)',
               }}
@@ -88,7 +88,7 @@ export default function Footer(): JSX.Element {
                   <a
                     href={l.href}
                     className="text-sm hover:text-white transition-colors"
-                    style={{ color: 'rgba(255,255,255,0.38)' }}
+                    style={{ color: 'var(--color-white-40)' }}
                   >
                     {l.label}
                   </a>
@@ -101,8 +101,8 @@ export default function Footer(): JSX.Element {
         <p
           className="text-xs pt-6"
           style={{
-            borderTop: '1px solid rgba(255,255,255,0.06)',
-            color: 'rgba(255,255,255,0.18)',
+            borderTop: '1px solid var(--color-white-5)',
+            color: 'var(--color-white-20)',
           }}
         >
           © {new Date().getFullYear()} Brazusa Cleaning. All rights reserved.

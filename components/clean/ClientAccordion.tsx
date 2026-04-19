@@ -136,7 +136,7 @@ export default function ClientAccordion({
       <button
         onClick={() => onCTAClick('other')}
         className="w-full mb-4 flex items-center gap-5 px-5 py-4 min-h-[44px] text-left transition-colors hover:bg-white/80"
-        style={{ border: '1.5px solid var(--color-brand-gold)', borderRadius: '10px', background: 'rgba(196,154,68,0.04)' }}
+        style={{ border: '1.5px solid var(--color-brand-gold)', borderRadius: '10px', background: 'var(--color-gold-5)' }}
       >
         <span
           className="text-xs font-semibold flex-shrink-0 tabular-nums"

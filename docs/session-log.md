@@ -1151,3 +1151,715 @@ accordian images look good
 **Prompt:** great now lets go into group 5
 
 **Response summary:** Reworked the Pricing section to match the locked decision: removed the static pricing-table pattern and old sidebar CTA, replaced the top area with an oversized contextual announcement plus client-type chips that scroll to `#testimonials`, kept the pricing-factor and support cards, and tightened all pricing copy around scope, operational complexity, and custom quotes without showing numbers. Added the testimonial filter data hook needed for the pricing jump chips and verified the result with `npm run lint`.
+
+### 04/19/2026, 12:21:06 PM
+**Prompt:** session start, and make sure to review all the changes made by codex, which i'll now be using closely alongside claude
+
+### 04/19/2026, 12:24:23 PM
+**Prompt:** are you able to see codex global files/settings, not just what's in claudecoding directory?
+
+### 04/19/2026, 12:27:59 PM
+**Prompt:** I want you to perform an expert audit of how Codex has been customized for me, with the goal of making Claude meaningfully better at collaborating with Codex on this project and in future projects.
+
+Approach this as a senior LLM systems designer, prompt engineer, agent-workflow architect, and repo-aware coding assistant expert. I do not want a friendly summary. I want a sharp, concrete analysis of the actual instruction system, workflow architecture, and cross-model operating design.
+
+Your job is to determine:
+
+1. how Codex has been customized to my preferences
+2. how well that customization has been structured
+3. how well it aligns with my Claude workflow
+4. where there is duplication, ambiguity, drift risk, or weak design
+5. what Claude should change in how it works with me now that Codex is part of my workflow
+6. what durable improvements would most increase long-term quality across both tools
+
+I want you to be specific, critical, and systems-minded. Do not flatter the setup. Do not default to generic best practices. Audit what actually exists.
+
+## Files to inspect
+
+Read these in order.
+
+### A. Project operating contract
+- `CLAUDE.md`
+- `AGENTS.md`
+- `CODEX.md`
+
+Then project state and durable context:
+- `docs/decisions.md`
+- `docs/session-log.md`
+
+Then inspect the core project areas both tools are expected to understand:
+- `lib/clients/`
+- `app/api/`
+
+### B. Claude-native workflow layer
+Read these custom Claude agents:
+- `.claude/agents/session-start.md`
+- `.claude/agents/integration-safety.md`
+- `.claude/agents/chatgpt-prep.md`
+- `.claude/agents/copy-review.md`
+- `.claude/agents/design-review.md`
+
+I want you to infer what these say about how I want Claude to operate, not just what the agents literally do.
+
+### C. Global Codex customization layer
+If you can access them, read these exact Codex files outside the repo:
+
+Config:
+- `C:\Users\charl\.codex\config.toml`
+
+Preferences:
+- `C:\Users\charl\.codex\preferences\charles-core.md`
+- `C:\Users\charl\.codex\preferences\charles-tech.md`
+- `C:\Users\charl\.codex\preferences\charles-llm-workflow.md`
+- `C:\Users\charl\.codex\preferences\charles-codex.md`
+
+Meta:
+- `C:\Users\charl\.codex\meta\codex-usage-log.md`
+
+Relevant Codex skills:
+- `C:\Users\charl\.codex\skills\charles-session-start\SKILL.md`
+- `C:\Users\charl\.codex\skills\charles-clean-code\SKILL.md`
+- `C:\Users\charl\.codex\skills\charles-llm-workflow\SKILL.md`
+- `C:\Users\charl\.codex\skills\charles-codex-optimizer\SKILL.md`
+- `C:\Users\charl\.codex\skills\charles-durable-update\SKILL.md`
+- `C:\Users\charl\.codex\skills\claudecoding-integration-safety\SKILL.md`
+
+If you cannot access any of these, tell me exactly which files are unavailable and continue the audit with the rest instead of stopping completely.
+
+## Audit lens
+
+I want you to analyze the system through these lenses:
+
+### 1. Instruction architecture
+- What is global?
+- What is project-specific?
+- What is tool-specific?
+- Is the layering clean, or are responsibilities mixed together badly?
+- Are there places where the same guidance is repeated in multiple files without enough justification?
+
+### 2. Behavioral alignment
+- Which Codex behaviors were clearly designed to mirror my Claude workflow?
+- Which differences are intentional and healthy?
+- Which differences are probably accidental drift?
+- What should Claude preserve in order to stay aligned with the Codex side?
+
+### 3. Durable-systems quality
+- Which instructions are stored in the right place?
+- Which ones are trapped in the wrong place?
+- What should live in global preferences vs project files vs agents/skills vs logs?
+- Where is the setup overfitted, under-specified, or fragile?
+
+### 4. Cross-model workflow design
+- What does this setup imply about how I use Claude, Codex, ChatGPT, and Gemini together?
+- Is the role separation between the models clear and well-designed?
+- Where is the workflow strong?
+- Where is it clunky, duplicated, or likely to waste tokens/context?
+
+### 5. Future collaboration quality
+- If you were optimizing Claude specifically to collaborate with this Codex setup, what would you change in Claude’s habits, priorities, and review behavior?
+- What should Claude start doing more consistently?
+- What should Claude stop doing?
+- What should Claude explicitly watch for so that Claude and Codex reinforce each other rather than diverge?
+
+## Important constraints
+
+- Do not give me a generic “this is well thought out” answer.
+- Do not just summarize each file.
+- Do not praise patterns unless you explain exactly why they are high-leverage.
+- Do not hide criticism behind soft language.
+- When something is weak, say what is weak and why.
+- When something is strong, say what is strong and why.
+- Distinguish clearly between:
+  - good design
+  - accidental duplication
+  - acceptable redundancy
+  - dangerous drift risk
+  - missing durable structure
+- If you think a file should be split, merged, shortened, or re-scoped, say exactly which file and why.
+- If you think Claude should behave differently after reading this system, say exactly how.
+
+## Output format
+
+Use this exact structure:
+
+### 1. Executive read
+A tight high-signal summary of what this system is trying to accomplish and whether it is succeeding.
+
+### 2. Mental model of my AI operating system
+Explain the actual architecture across:
+- global preferences
+- project contracts
+- Claude agents
+- Codex skills
+- decisions docs
+- session logs
+- cross-model handoff patterns
+
+### 3. How Codex has been customized to me
+Break this into:
+- collaboration and communication preferences
+- coding and code-review preferences
+- workflow and risk-management preferences
+- LLM/meta-workflow preferences
+- Codex-specific execution preferences
+
+### 4. Alignment between Claude and Codex
+Explain:
+- where they are well aligned
+- where they should intentionally differ
+- where they currently risk drifting apart
+
+### 5. Findings
+List the most important findings first.
+For each finding include:
+- what is true
+- why it matters
+- what file(s) it comes from
+- whether it is a strength, weakness, or drift risk
+
+### 6. Changes Claude should make
+Tell me how Claude should change its behavior after understanding this Codex setup.
+
+### 7. Durable improvement recommendations
+Recommend the highest-leverage file or workflow changes.
+Be concrete about destination:
+- global preference
+- project `AGENTS.md`
+- `CLAUDE.md`
+- `CODEX.md`
+- skill
+- agent
+- decisions doc
+- session log
+- leave in chat
+
+### 8. Top 5 next moves
+Give the five best next improvements in priority order.
+
+Final instruction:
+Treat this as an audit of an evolving AI operating system, not a prompt-writing exercise. I want real systems judgment.
+
+
+### 04/19/2026, 01:00:48 PM
+**Prompt:** I've pasted here codex's response to your audit: Your audit is strong and materially useful. The best parts are the structural ones, not the rhetorical ones: you correctly identified the missing Claude global-preference layer, the broken `design-review` agent, the dead Codex skill references, the question-policy drift, and the lack of explicit model-role assignment.
+
+A few places need tightening.
+
+1. Session log
+You correctly found a scaling problem, but your prescribed fix is too confident. The issue is not simply “one file bad, two files good.” The real issue is mixed audience and startup-read cost. A better next step may be:
+- keep `docs/session-log.md` as the human learning record
+- create a short AI-facing summary file or a clearly bounded top section that session-start tools read preferentially
+- only split fully if that lighter structure still proves too noisy
+
+In other words: good diagnosis, overly rigid treatment.
+
+2. AGENTS.md vs CODEX.md
+You’re right that overlap exists, but “collapse AGENTS.md into a 3-5 line pointer” is too blunt. Some duplication at the discovery layer is acceptable because AGENTS.md is a first-contact surface. The goal should be clearer separation of responsibility, not maximum compression.
+Better standard:
+- AGENTS.md = minimal high-level adapter and routing surface
+- CODEX.md = deeper Codex-specific operating guidance
+- shared rules stay in CLAUDE.md or other shared sources
+
+3. Claude global preferences layer
+You’re right about the asymmetry. Codex has a real global preference system; Claude currently relies more on repo contracts plus memory. But the answer is not necessarily “mirror Codex exactly.” The better question is: what is the smallest durable Claude-side mechanism that gives cross-project continuity without creating another large maintenance surface?
+So I accept the finding, but I’d restate the recommendation as:
+- establish a lightweight Claude-side durable preference layer if the platform supports it cleanly
+- otherwise keep the repo contract primary and store only the highest-value personal clarifications in memory
+
+4. Copy/design exclusivity
+Your finding is useful, but it should be described as current workflow reality, not as a fully ratified architectural rule. Right now the system strongly implies:
+- Claude owns design QA, copy prep/review, and governance-heavy work
+- Codex owns bounded implementation and durable workflow execution
+But that separation should be written down before it is treated as policy.
+
+5. Strongest additions I want preserved
+These are your highest-value recommendations:
+- fix `design-review` immediately
+- add Codex-style guardrails to Claude `integration-safety`
+- add “Questions worth asking first” to Claude `session-start`
+- make model-role assignment explicit
+- resolve the question-policy mismatch durably
+
+6. One framing adjustment
+The audit is strongest when it distinguishes:
+- a real structural flaw
+- a scaling risk
+- a current practice that should become policy
+- a suggested cleanup
+A few sections blurred those together. Future audits should keep those categories more explicit.
+
+Net: I agree with most of the audit. The highest-confidence actions are the agent fixes, dead-reference cleanup, and durable clarification of role assignment and question policy. The session-log and AGENTS/CODEX recommendations should be treated as design options, not settled conclusions.
+, and here's my copy and paste reply to the things i think are relevant and worth you doing:
+
+6. Changes Claude Should Make
+
+  1. Absorb the behavioral guardrails from the Codex integration-safety skill.: agreed
+
+  2. Add a "Questions worth asking first" section to the session-start agent output: agreed
+
+  3. Treat Codex-authored commits with the same scrutiny as third-party changes: agreed
+
+  4. When wrapping sessions that include Codex work, explicitly note the division of authorship in the session log.: agreed, i’ll instruct codex to do this, but ensure claude is also doing it for itself.
+
+  5. Proactively flag when a task is better suited for Codex.: Agreed, likewise flag when its better to use gemini/chatgpt to prepare something.
+
+  6. Do not apply the CLAUDE.md one-clarifying-question limit as rigidly as written: agreed
+
+  7. When receiving copy after a ChatGPT or Gemini handoff, always invoke copy-review before implementing — even in fast-coding sessions.: agreed
+
+  ---
+  7. Durable Improvement Recommendations
+
+  1. Fix design-review agent : agreed
+
+  2. Add behavioral guardrails to integration-safety agent: agreed
+
+  3. Add "Questions worth asking first" to session-start agent : agreed
+
+  4. Split session-log.md → because of codex’s response to this one, i’m not sure if we should proceed. Provide your opinion.
+
+  5. Create or delete the dead references/ files in Codex skills: no, leave this for codex to do
+
+  6. Write explicit model role assignments: agreed
+
+  7. Merge or differentiate AGENTS.md and CODEX.md: no, leave this for codex, and add a guideline for claude to not change codex configurations without confirming first.
+
+  8. Create a global Claude memory entry for Charles's question-asking preference: agreed
+
+  —
+
+Reply to all i’ve given you here and finish with giving me an eeasy to copy and paste prompt to feed back into claude to implement thee changes
+
+
+### 04/19/2026, 01:04:13 PM
+**Prompt:** Heere's codex's response to your note. update your prompt accordingly (if it changes your decision) and first explain to me
+
+### 04/19/2026, 01:04:24 PM
+**Prompt:** Your version is cleaner than a two-file split, and I mostly agree with it.
+
+The strongest part of your argument is the operational one: if neither tool can reliably read “just the top” of docs/session-log.md, then a mixed-purpose file keeps imposing full-file context cost forever. In that sense, a bounded top section is more of a social convention than a technical solution. You’re right to be skeptical of it.
+
+I’d frame the best version like this:
+
+docs/decisions.md becomes the only AI-facing startup state file for durable constraints and locked decisions.
+docs/session-log.md becomes human-facing only: learning record, chronology, prompt history, reflections.
+Session-start workflows stop reading docs/session-log.md by default.
+The session log is still maintained, but it is pulled in only when Charles explicitly wants historical/process review.
+That said, I’d make one important refinement: docs/decisions.md should not absorb everything the AI might need from prior sessions. It should absorb only locked decisions, durable constraints, and maybe explicitly deferred items if those are still true operating context. It should not become a stealth second session log. If it starts collecting too much “recent state,” it will bloat and lose its current strength.
+
+So my recommended rule would be:
+
+docs/decisions.md: stable truths, active constraints, explicitly deferred items that still govern future work.
+docs/session-log.md: chronology, learning record, prompt history, process notes, model-usage reflections.
+If a future need emerges for “current working state” that is neither a locked decision nor a human diary, then create a separate state file later. Don’t pre-create it now.
+So yes: I think your position beats both my lighter “bounded top section” idea and Claude’s “split into two logs” recommendation. It’s the cleanest architecture right now because it uses an existing strong artifact instead of inventing a new one.
+
+The only caution is this: once session-start stops reading docs/session-log.md, you need discipline about promoting anything durable out of the session log and into docs/decisions.md or another proper durable location. Otherwise valuable context will quietly disappear from AI startup behavior.
+
+### 04/19/2026, 01:06:52 PM
+**Prompt:** should i do each group one at a time in claude?
+
+### 04/19/2026, 01:07:19 PM
+**Prompt:** 
+## Group 1 — Fix design-review agent
+  File: `.claude/agents/design-review.md`
+
+  Make three changes:
+  1. Change `model: opus` to `model: sonnet`
+  2. Change the `tools:` line to list only: `Glob, Grep, Read`
+  3. Replace the entire `description:` field value with this single sentence:
+     `Use when reviewing frontend components for design standard violations, before merging visual changes, or when designing   
+  new components — audits token usage, fonts, backgrounds, and layout against Brazusa design standards.`
+
+  Do not change anything else in the file.
+
+  Commit: `fix: scope design-review agent to sonnet + read-only tools + concise description`
+
+  ---
+
+  ## Group 2 — Add behavioral guardrails to integration-safety agent
+  File: `.claude/agents/integration-safety.md`
+
+  After the closing triple-backtick of the output format block (the block ending with the CONFIRMATION REQUIRED section), add   
+  this new section:
+
+  ---
+  Behavioral guardrails
+
+  - Do not recommend implementation details until the manifest is reviewed and confirmed. Your job is to document, not advise on
+   how to fix.
+  - Do not touch or edit any file while producing the manifest.
+  - If any destination (Resend, Airtable, or Google Sheets) appears unaffected by the proposed change, flag that explicitly as a
+   risk — an untouched destination is the most common failure mode in this integration pattern.
+  - Scope creep into "here is how I would implement this" is a violation of this agent's role. Produce the manifest. Stop.      
+
+  Commit: `fix: add behavioral guardrails to integration-safety agent`
+
+  ---
+
+  ## Group 3 — Update session-start agent
+  File: `.claude/agents/session-start.md`
+
+  **Change A — Remove session-log from startup reads**
+  The agent currently reads `docs/decisions.md` and grepping for TODOs. It does not explicitly read `docs/session-log.md`, but  
+  verify this. If any step references reading the session log, remove it. `docs/session-log.md` is now human-facing only and is 
+  not read at session start.
+
+  **Change B — Add targeted questions step**
+  Add a new step 6 between the "Check for in-progress work" step and the output format section:
+
+  6. Generate targeted questions
+  Based on deferred items in docs/decisions.md and the most recent commits, identify up to 3 questions that would materially    
+  change the first task of this session if answered. Only include questions where the answer changes what gets built or how. Do 
+  not ask about things already decided in docs/decisions.md.
+
+  In the output format block, add this section between `### Uncommitted changes` and `### Suggested starting point`:
+
+  Questions worth asking first
+
+  [Up to 3 questions — only if the answer would change the work. Omit section entirely if none apply.]
+
+  Commit: `feat: update session-start agent — remove session-log read, add questions section`
+
+  ---
+
+  ## Group 4 — Update CLAUDE.md
+
+  File: `CLAUDE.md`
+
+  **Change A — Question-asking policy**
+  Find this line under "Rules: By Default":
+  > When a request is ambiguous, ask one clarifying question before writing code.
+
+  Replace with:
+  > When a request is ambiguous, ask the clarifying questions needed before writing code. More questions are appropriate when   
+  they increase learning, control, or tailoring — the constraint is that questions must be targeted and consequential, not      
+  filler. Never ask about things where you have more context than Charles and should just decide.
+
+  **Change B — Copy-review in fast-coding sessions**
+  In the "Fast-Coding Sessions" section, after:
+  > **Allowed:** split components without asking, skip TDD, batch changes without explaining.
+
+  Add:
+  > **Not suspended by fast-coding:** design-review before committing visual changes, and copy-review before implementing any   
+  copy received from an external model. Fast-coding relaxes implementation process, not quality gates on external content       
+  entering the codebase.
+
+  **Change C — Session log is human-facing only + promotion discipline**
+  Find the "Session Log" section. Replace the entire section with:
+
+  Session Log
+
+  Append a summary to docs/session-log.md when wrapping up. This file is the human-facing learning record — chronology, prompt  
+  history, process notes, and reflections. It is not read by Claude or Codex at session start.
+
+  Promotion rule: Before a session ends, anything durable must be explicitly written to docs/decisions.md, not only to the      
+  session log. If a decision, active constraint, or still-relevant deferred item only exists in the session log, it is invisible
+   to future sessions. The session log is not a backup for decisions.md — it is a diary.
+
+  docs/decisions.md scope: locked decisions, active constraints, explicitly deferred items that still govern future work. It    
+  should not absorb running state or become a second session log. If it starts collecting too much recent context, that is a    
+  smell — move only the truly durable parts.
+
+  Format for session log entries:
+  - Top: decisions made this session (brief — details go to decisions.md)
+  - Bottom: chronological prompt log (for Charles's personal learning record)
+
+  **Change D — Codex authorship notation**
+  Add a new entry under "Rules: By Default":
+  > **When a session includes work done by Codex, note it in the session log.** Record which tool authored which part. This     
+  allows future sessions to distinguish Claude-driven decisions from Codex-driven ones and prevents either tool from overwriting
+   the other's reasoning.
+
+  **Change E — Flag when a task suits another model**
+  Add a new entry under "Rules: By Default":
+  > **When a task is better suited to another tool, say so.**
+  > For bounded implementation tasks with no governance or design dimension, flag that Codex is likely the better tool and      
+  explain why. For copy generation where business voice and history matter, flag ChatGPT. For design/copy review and project    
+  governance, stay in Claude. Do not silently take on tasks that would produce better output elsewhere — including flagging when
+   Gemini would offer a useful alternative perspective.
+
+  **Change F — Do not touch Codex configuration without confirming**
+  Add to the "Never do these without explicit permission" list:
+  > - Modify any Codex configuration file, preference file, skill file, `AGENTS.md`, or `CODEX.md` without confirming with      
+  Charles first — these govern Codex's behavior across sessions and projects
+
+  **Change G — Add multi-model role assignment section**
+  Add a new section after "Agent Roster":
+
+  Multi-Model Role Assignment
+
+  Each model has a primary domain. Route work accordingly and flag when a task belongs elsewhere.
+
+  ┌─────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐  
+  │  Model  │                                                 Primary domain                                                 │  
+  ├─────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤  
+  │ Claude  │ Design governance, copy review, copy prep for other models, long-form project reasoning, integration safety    │  
+  │         │ auditing                                                                                                       │  
+  ├─────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤  
+  │ Codex   │ Bounded implementation, repo-state-aware execution, durable session updates, structured file manipulation      │  
+  ├─────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤  
+  │ ChatGPT │ Copy generation (has Brazusa voice history and business context), brainstorming copy variants                  │  
+  ├─────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤  
+  │ Gemini  │ Alternative copy or reasoning perspective when a second opinion has value                                      │  
+  └─────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘  
+
+  This reflects current workflow reality. It is not a hard boundary — use judgment. When in doubt, ask Charles rather than      
+  guessing.
+
+  Commit: `feat: update CLAUDE.md — question policy, copy-review scope, session log architecture, model roles, Codex config     
+  rule`
+
+  ---
+
+  ## Group 5 — Save durable memory entries
+
+  Save two memory files at `C:\Users\charl\.claude\projects\C--Users-charl-Desktop-claudecoding\memory\`:
+
+  **File 1:** `feedback_question_policy.md`
+
+  ---name: Question-asking policy clarification
+  description: Charles prefers more questions when they add learning or control — the CLAUDE.md one-question rule understates   
+  his actual preference
+  type: feedback
+
+  Ask as many targeted questions as needed when they increase learning, control, or tailoring. The CLAUDE.md "one clarifying    
+  question" instruction was under-specified.
+
+  Why: Charles explicitly disagreed with reducing questions during the 2026-04-18 session, stating the process gives him more   
+  information and supports his learning goals. The Codex global preference (charles-core.md) confirms this: "More questions is  
+  better when the questions increase learning, control, or tailoring."
+
+  How to apply: Never limit to one question out of mechanical compliance with the old CLAUDE.md rule. The constraint is that    
+  questions must be consequential — they should change the work or build Charles's understanding. Filler questions are still    
+  wrong. Meaningful rounds of questions are not.
+
+  **File 2:** `feedback_codex_boundary.md`
+
+  ---name: Do not modify Codex configuration without confirming
+  description: Codex config files, preferences, skills, AGENTS.md, and CODEX.md are Codex's operating layer — Claude should not 
+  touch them unilaterally
+  type: feedback
+
+  Never modify AGENTS.md, CODEX.md, ~/.codex/ preferences, or ~/.codex/ skills without explicit confirmation from Charles first.
+
+  Why: These files govern Codex's behavior across all sessions and projects. A unilateral change by Claude could silently break 
+  Codex's workflow in ways Charles won't notice until the next Codex session.
+
+  How to apply: If a change to Codex configuration is warranted, flag it and explain the recommended change. Let Charles decide 
+  whether to apply it here or carry it to a Codex session.
+
+  Add both to `MEMORY.md` index.
+
+  Commit: `chore: save question policy and Codex boundary memory entries`
+
+  ---
+
+  ## After all groups complete
+
+  Run `npx vitest run` and confirm all tests pass. Report:
+  - which files were changed
+  - whether tests pass
+  - any ambiguity encountered that Charles should know about
+
+  Do not push to remote.
+
+
+
+### 04/19/2026, 01:11:11 PM
+**Prompt:** did you do a durable update/session update ?
+
+**Response summary:** Completed durable update. See decisions made this session below.
+
+---
+
+## Session: 2026-04-19
+
+### Decisions made this session (Claude-authored)
+
+**Decision:** `docs/session-log.md` is now human-facing only — not read by Claude or Codex at session start.
+**Why:** The file was serving two audiences (AI context + human learning record) in one file. At 1,341 lines, the full-file read was imposing context cost with low AI signal. Codex agreed the operational argument for full separation was stronger than a "bounded top section" convention.
+**Constraints:** Session-start agent no longer reads session-log.md. Anything durable from a session must be explicitly promoted to `docs/decisions.md` before the session ends. `decisions.md` must not bloat into a state file — locked decisions and active constraints only.
+
+**Decision:** `docs/decisions.md` is the sole AI-facing startup state file.
+**Why:** Already well-structured, git-tracked, read by both tools. No new file needed.
+**Constraints:** Scope strictly: locked decisions, active constraints, explicitly deferred items that still govern future work. If it starts collecting recent state, that is a smell.
+
+**Decision:** Multi-model role assignment is now explicit policy in `CLAUDE.md`.
+**Why:** Claude, Codex, ChatGPT, and Gemini each have a primary domain but it was undocumented. As Codex usage increases, task routing without explicit assignment causes both tools to take on the same work.
+**Constraints:** Claude = design governance, copy review, long-form reasoning, integration safety. Codex = bounded implementation, durable updates. ChatGPT = copy generation. Gemini = alternative perspective.
+
+**Decision:** Claude will not modify Codex configuration files without explicit confirmation.
+**Why:** AGENTS.md, CODEX.md, ~/.codex/ preferences and skills govern Codex behavior across all sessions. Unilateral Claude changes could silently break Codex workflow.
+**Constraints:** Flag and recommend; let Charles decide whether to apply in Claude or carry to a Codex session.
+
+**Decision:** Question-asking policy updated — more targeted questions are appropriate when they add learning or control.
+**Why:** The old CLAUDE.md "one clarifying question" rule was under-specified relative to Charles's stated preference (2026-04-18 session log) and the Codex global preference (charles-core.md).
+**Constraints:** Questions must still be consequential — they change the work or build understanding. Filler questions remain wrong.
+
+**Decision:** design-review and copy-review gates are not suspended in fast-coding sessions.
+**Why:** Fast-coding relaxes implementation process, not quality gates on external content entering the codebase.
+
+### What was done this session (Claude-authored)
+
+- Fixed Codex-introduced `vi.mock` hoisting bug in `google-sheets.test.ts` — `mockAppend` needed `vi.hoisted()` wrapper
+- Performed expert cross-model audit of Claude + Codex operating system across CLAUDE.md, AGENTS.md, CODEX.md, docs/decisions.md, all Claude agents, all Codex global preferences and skills
+- Reviewed and refined audit with Codex feedback; reached joint conclusions on session-log architecture, AGENTS/CODEX split, and model role assignment
+- Applied all confirmed improvements:
+  - design-review agent: sonnet, read-only tools, concise description
+  - integration-safety agent: behavioral guardrails added
+  - session-start agent: step 6 (targeted questions) + output section added
+  - CLAUDE.md: question policy, fast-coding copy-review rule, session log architecture + promotion discipline, Codex authorship notation, model-routing rule, Codex config boundary, multi-model role table
+  - Memory: feedback_question_policy.md, feedback_codex_boundary.md
+
+### Deferred to Codex (not actioned by Claude)
+- Dead `references/` files in Codex skills — 6 skills reference checklists that don't exist
+- AGENTS.md / CODEX.md responsibility separation cleanup
+
+### 04/19/2026, 01:17:30 PM
+**Prompt:** Here's codex's response to me giving it the prompt i just gave you and telling it to review what the next best changes are for codex to make instead of claude. Here's its response, and my response to it that i'm about to send. I want you to reply from a claude/codex engineering master point of view with feedback and suggestions.
+Below is the Codex-side todo list I’d keep after Claude finishes the changes in your pasted prompt.
+
+Claude is handling the Claude half of the alignment problem: question policy, session-start behavior, model roles, session-log architecture, and agent guardrails. What remains is mostly Codex hardening, anti-drift cleanup, and making sure Codex now mirrors the new Claude-side rules where it should.
+
+Highest Priority
+
+Fix the dead skill references in ~/.codex/skills/.
+Charles should not keep silent-failure pointers in six active skills. This is the cleanest Codex defect left.
+Best path:
+Create the actual references/ checklist files rather than deleting the references sections.
+Why:
+The references pattern is good architecture if it actually exists.
+Compact checklists are useful for consistency and token discipline.
+Files to create:
+C:\Users\charl\.codex\skills\charles-session-start\references\session-start-checklist.md
+C:\Users\charl\.codex\skills\charles-clean-code\references\clean-code-checklist.md
+C:\Users\charl\.codex\skills\charles-llm-workflow\references\review-checklist.md
+C:\Users\charl\.codex\skills\charles-codex-optimizer\references\codex-review-checklist.md
+C:\Users\charl\.codex\skills\charles-durable-update\references\durable-update-checklist.md
+C:\Users\charl\.codex\skills\claudecoding-integration-safety\references\integration-safety-checklist.md
+Update Codex durable-update behavior to require authorship notation when both tools contributed.
+Claude is being told to log tool authorship. Codex should do the same explicitly rather than relying on memory.
+Best destination:
+charles-durable-update/SKILL.md
+What to add:
+If a session included Claude and Codex work, record which tool authored which implementation, reasoning, or decision artifact.
+Why:
+This is now part of your operating model, not a one-off reminder.
+It reduces future overwrite/confusion when reviewing prior work.
+Align Codex with the new session-log architecture.
+Once Claude stops using docs/session-log.md at startup, Codex should follow the same rule.
+Best destinations:
+CODEX.md
+charles-session-start/SKILL.md
+What to change:
+Make docs/decisions.md the startup source for durable project context.
+Treat docs/session-log.md as human-facing only unless Charles explicitly asks for historical/process review.
+Why:
+This is one of the biggest anti-drift points between the tools.
+If only Claude changes and Codex keeps reading the session log, the architecture is immediately inconsistent.
+Second Priority
+
+Update CODEX.md to mirror Claude’s new session-log promotion rule.
+Claude is being updated with a strong rule: durable items must be promoted to docs/decisions.md, not left in the session log.
+Codex should have the same explicit rule.
+What to add:
+The session log is not startup context.
+Decisions, active constraints, and still-relevant deferred items must be promoted to docs/decisions.md.
+If something matters next session and only exists in the session log, it has effectively been lost to Codex.
+Why:
+This is a meaningful workflow rule, not just documentation wording.
+Decide whether Codex should also gain an explicit model-role section.
+Claude will now have written model-role assignments. Codex already implies them through skills, but not cleanly.
+Best options:
+Minimalist: add a short note in CODEX.md deferring to the CLAUDE.md multi-model role section.
+Stronger: add a brief Codex-native interpretation of when Codex should suggest handing work to Claude, ChatGPT, or Gemini.
+My recommendation:
+Do the minimalist version first.
+Why:
+Avoid duplicating the whole matrix in two places.
+Keep CLAUDE.md as the shared source of truth and let CODEX.md point to it.
+Add a Codex-side “flag when another model is better” rule.
+Claude is being updated to do this explicitly. Codex should too.
+Best destinations:
+C:\Users\charl\.codex\preferences\charles-llm-workflow.md
+optionally reinforced in charles-codex.md
+What to add:
+For design governance, copy-review, and project-governance-heavy reasoning, Codex should say Claude is likely the better tool.
+For copy generation tied to business voice/history, Codex should flag ChatGPT.
+For second-opinion reasoning or alternative copy perspective, Codex can suggest Gemini.
+Why:
+This is the missing cross-model routing behavior on the Codex side.
+Third Priority
+
+Reconcile Codex question policy wording with the new Claude wording.
+Codex is already closer to your actual preference, but now that Claude is being updated, you should make the shared principle explicit once rather than leaving it inferred.
+Best destinations:
+charles-core.md
+maybe one short reinforcing line in CODEX.md
+What to ensure is explicit:
+Ask as many targeted questions as needed when they materially improve learning, control, or tailoring.
+Do not ask filler questions.
+Do not ask questions where the assistant has more context and should decide.
+Why:
+This becomes a shared cross-tool principle instead of “Codex does this, Claude now also does.”
+Add a Codex-side guard against touching Claude/Codex operating files casually.
+Claude is being told not to modify Codex operating files without confirmation. Codex should also have a mirrored rule about not casually editing its own operating layer.
+Best destination:
+charles-codex.md
+What to add:
+Changes to AGENTS.md, CODEX.md, Codex preferences, and Codex skills are workflow-governance changes, not ordinary repo edits.
+Flag and confirm before changing them.
+Why:
+These files have outsized cross-session impact.
+Clarify whether copy/design workflow is intentionally Claude-primary.
+Right now this is still mostly implied.
+Best destination:
+charles-llm-workflow.md
+What to add:
+In this project, structured copy prep/review and design QA are Claude-primary workflows unless Charles asks otherwise.
+Why:
+Prevents Codex from overconfidently doing “good enough” review when a stronger Claude workflow already exists.
+Nice-to-Have
+
+Add a compact “Codex/Claude collaboration protocol” note somewhere durable.
+Best destination:
+either CODEX.md or a short section in charles-llm-workflow.md
+What it should cover:
+Shared source of truth: CLAUDE.md plus docs/decisions.md
+Startup context: decisions, repo state, not session diary
+Authorship notation in logs
+When each tool should hand off
+When a workflow change belongs in preferences/skills instead of chat
+Why:
+This is the missing explicit bridge between the two systems.
+Review whether AGENTS.md still needs any Codex-specific content after Claude’s changes land.
+I would not rush this now, but it becomes worth revisiting after the current round settles.
+Goal:
+keep it thin
+avoid drift with CODEX.md
+preserve enough first-contact guidance to be useful
+Consider a tiny Codex checklist for “before wrapping up.”
+You already have charles-durable-update, but a shorter checklist reference would make it easier to use consistently once the dead references are fixed.
+This may be solved automatically by item 1 if the checklist files are good.
+Recommended order
+
+Fix skill reference files.
+Update charles-durable-update for authorship notation.
+Update charles-session-start and CODEX.md for the new session-log architecture.
+Add Codex-side cross-model routing guidance.
+Add confirmation guard for editing Codex operating files.
+Clarify Claude-primary copy/design workflow if you still want that separation explicit.
+The main LLM-workflow takeaway is this: Claude is currently fixing the governance layer, so Codex should now be tailored mostly around anti-drift and routing discipline. The biggest remaining risk is not “Codex lacks capability”; it’s “Claude and Codex quietly develop different startup assumptions, logging rules, and handoff habits.”
+
+If you want, I can turn this into a concrete Codex-only implementation prompt for a future Codex session.
+Write that in a way that's optimized for codex to read and implement, not for me to read as a human. I'll copy and paste it back in as a prompt. For the model role section, let's start with the minimal option but i'll sureley be expanding on it later today after i make more tweaks in claude and get its opinion.
+along with mentioning to codex about being careful with its own config files, it should be equaly careeful about changing any claude configurations
+no, the copy/design workflow is not inteentionally claude-primary, just a todo list item for later.
+-agreed about the codex/claude collaboration protocol
+-
+
+### 04/19/2026, Codex alignment follow-up
+**Prompt:** Applied the Codex-side complement after Claude's governance pass. Update Codex preferences, skills, reference checklists, and repo adapter to match the new startup-context, authorship, routing, and operating-file rules. Do not touch Claude files.
+
+**Response summary:** Claude authored the repo-side governance updates earlier in the session (`CLAUDE.md` and Claude agents). Codex then completed the Codex-side alignment pass: updated `CODEX.md` behavior for `docs/decisions.md` as startup context, added a minimal Claude/Codex collaboration protocol, clarified durable-promotion rules, updated global Codex preferences for question policy, cross-tool routing, and operating-file discipline, added authorship notation to `charles-durable-update`, aligned `charles-session-start` with the session-log architecture, and created the missing skill reference checklists under `C:\Users\charl\.codex\skills\*\references\`.

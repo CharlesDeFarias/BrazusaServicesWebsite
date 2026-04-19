@@ -13,7 +13,6 @@ For meaningful work in this repo, read in this order:
 3. `docs/decisions.md`
 4. `lib/clients/`
 5. `app/api/`
-6. `docs/session-log.md` when recent context or follow-up state matters
 
 ## Purpose
 
@@ -30,6 +29,8 @@ At the start of meaningful work:
 - check `git status`
 - identify in-progress work that should not be disturbed
 - summarize the current state briefly before substantial implementation
+- `docs/decisions.md` is the AI-facing startup context file — read it for locked decisions, active constraints, and deferred items
+- `docs/session-log.md` is the human-facing learning record — do not read it at session start; only pull it in when Charles explicitly asks for historical or process review
 
 If the task is substantial, prefer the `charles-session-start` workflow.
 
@@ -50,6 +51,7 @@ If the task is substantial, prefer the `charles-session-start` workflow.
 ## Durable Project Tracking
 
 - Contribute faithfully to `docs/session-log.md` when the session produces meaningful work or durable lessons.
+- Promotion rule: before a session ends, anything durable must be explicitly written to `docs/decisions.md`. If a decision or active constraint only exists in the session log, it is invisible to future sessions. The session log is not a backup for `docs/decisions.md`.
 - Preserve the distinction between:
   - session history
   - locked decisions
@@ -78,6 +80,27 @@ Use the Charles skills when relevant:
 - `charles-codex-optimizer` when the task is about improving Codex usage itself
 - `charles-durable-update` when wrapping up meaningful work and deciding what to preserve
 - `claudecoding-integration-safety` before any live integration change
+
+## Claude/Codex Collaboration Protocol
+
+Shared source of truth:
+- `CLAUDE.md` and `docs/decisions.md` are the shared project contracts both tools read
+- `docs/decisions.md` is the AI-facing startup context; `docs/session-log.md` is human-facing only
+
+Startup context:
+- Both tools start from `docs/decisions.md` for durable constraints and deferred items
+- Neither tool reads `docs/session-log.md` at session start
+
+Authorship notation:
+- When both Claude and Codex contributed to a session, the session log entry records which tool authored which part
+
+Handoff signals:
+- See `CLAUDE.md` `Multi-Model Role Assignment` for the shared model-role table
+- When a task clearly belongs to another tool, flag it and explain rather than doing it silently
+
+Workflow governance:
+- When a repeated workflow pattern emerges, encode it in preferences or skills rather than re-explaining it in chat
+- Changes to either tool's operating files require confirmation before editing
 
 ## Anti-Duplication Rule
 

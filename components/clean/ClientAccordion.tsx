@@ -83,13 +83,13 @@ function AccordionItem({
       >
         <div style={{ minHeight: 0, overflow: 'hidden' }}>
           <div className="pb-8">
-            <div className="relative w-full mb-5 rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
+            <div className="relative w-full mb-5 rounded-xl overflow-hidden" style={{ aspectRatio: '16/9', maxHeight: '220px' }}>
               <Image
                 src={item.imageSrc}
                 alt={item.label}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 44vw"
+                sizes="(max-width: 1024px) min(100vw, 800px), 44vw"
                 placeholder="blur"
                 blurDataURL={blurDataURL}
               />

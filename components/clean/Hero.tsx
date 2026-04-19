@@ -119,16 +119,17 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
           </div>
         </div>
 
-        {/* Desktop image — right column, portrait */}
-        <div className="fade-up-1 hidden lg:block">
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: '3/4' }}>
+        {/* Desktop image — right column, portrait accent. Capped at 280px wide / 373px tall. */}
+        {/* If this looks awkward at a specific breakpoint, the fallback is xl:block (hide below xl). */}
+        <div className="fade-up-1 hidden lg:block" style={{ maxWidth: '280px' }}>
+          <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: '3/4', maxHeight: '373px' }}>
             <Image
               src="/images/hero.png"
               alt="Professional cleaning"
               fill
               className="object-cover"
               style={{ objectPosition: 'center top' }}
-              sizes="420px"
+              sizes="280px"
               priority
               placeholder="blur"
               blurDataURL={blurDataURL}

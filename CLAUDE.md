@@ -60,8 +60,11 @@ Commit messages must be descriptive. Format: `type: short description`.
 Types: `feat`, `fix`, `refactor`, `test`, `chore`, `docs`.
 Example: `feat: add quote form validation for STR space type`.
 
-**When a request is ambiguous, ask one clarifying question before writing code.**
-Do not guess and proceed.
+**When a request is ambiguous, ask the clarifying questions needed before writing code.**
+More questions are appropriate when they increase learning, control, or tailoring — the constraint is that questions must be targeted and consequential, not filler. Never ask about things where you have more context than Charles and should just decide.
+
+**When a task is better suited to another tool, say so.**
+For bounded implementation tasks with no governance or design dimension, flag that Codex is likely the better tool and explain why. For copy generation where business voice and history matter, flag ChatGPT. For design/copy review and project governance, stay in Claude. Do not silently take on tasks that would produce better output elsewhere — including flagging when Gemini would offer a useful alternative perspective.
 
 **After completing a task, immediately suggest next steps.**
 Always offer two distinctly different options: one moving *forward* (next feature),
@@ -77,6 +80,7 @@ Do not attempt to fix it first. Explain what broke and why, then ask how to proc
 - Rename or move files imported elsewhere without verifying all import paths
 - Begin a refactor that wasn't part of the original request
 - Any destructive git operation (reset, force push, branch delete)
+- Modify any Codex configuration file, preference file, skill file, `AGENTS.md`, or `CODEX.md` without confirming with Charles first — these govern Codex's behavior across sessions and projects
 
 ---
 
@@ -185,6 +189,8 @@ Active only when developer explicitly says so ("let's move fast", "I'm in a rush
 
 **Allowed:** split components without asking, skip TDD, batch changes without explaining.
 
+**Not suspended by fast-coding:** design-review before committing visual changes, and copy-review before implementing any copy received from an external model. Fast-coding relaxes implementation process, not quality gates on external content entering the codebase.
+
 **Never suspended (see Rules: Always above):** live integrations, working code deletion,
 npm installs, pushing to remote — these always require confirmation.
 
@@ -288,6 +294,23 @@ ambient triggers. The description field in each file is what Claude uses for aut
 | `copy-review` | After receiving copy from any external AI model | Fix violations before implementing — do not paste flagged copy into components |
 | `integration-safety` | Before any change to API routes, Airtable, Resend, or Google Sheets | Get explicit confirmation on each destination change before touching files |
 
+---
+
+## Multi-Model Role Assignment
+
+Each model has a primary domain. Route work accordingly and flag when a task belongs elsewhere.
+
+| Model | Primary domain |
+|---|---|
+| Claude | Design governance, copy review, copy prep for other models, long-form project reasoning, integration safety auditing |
+| Codex | Bounded implementation, repo-state-aware execution, durable session updates, structured file manipulation |
+| ChatGPT | Copy generation (has Brazusa voice history and business context), brainstorming copy variants |
+| Gemini | Alternative copy or reasoning perspective when a second opinion has value |
+
+This reflects current workflow reality. It is not a hard boundary — use judgment. When in doubt, ask Charles rather than guessing.
+
+---
+
 **Hard rule:** `integration-safety` and `session-start` are not optional. The others can
 be skipped in a declared fast-coding session, but integration-safety is never suspended —
 see Rule 3.
@@ -296,13 +319,26 @@ see Rule 3.
 
 ## Session Log
 
-When the developer says they are wrapping up, append a summary to `docs/session-log.md`
-(git-ignored, local only).
+Append a summary to `docs/session-log.md` when wrapping up. This file is the human-facing
+learning record — chronology, prompt history, process notes, and reflections. It is **not**
+read by Claude or Codex at session start.
 
-**Format:**
-- Top section: "Decisions made this session" — what was decided and why (this is for
-  Claude's use in future sessions).
-- Bottom section: chronological prompt log — each prompt and what was done (this is
-  for Charles's personal learning record).
+**Promotion rule:** Before a session ends, anything durable must be explicitly written to
+`docs/decisions.md`, not only to the session log. If a decision, active constraint, or
+still-relevant deferred item only exists in the session log, it is invisible to future
+sessions. The session log is not a backup for `decisions.md` — it is a diary.
+
+**`docs/decisions.md` scope:** locked decisions, active constraints, explicitly deferred
+items that still govern future work. It should not absorb running state or become a second
+session log. If it starts collecting too much recent context, that is a smell — move only
+the truly durable parts.
+
+**Format for session log entries:**
+- Top: decisions made this session (brief — details go to `decisions.md`)
+- Bottom: chronological prompt log (for Charles's personal learning record)
+
+**When a session includes Codex work:** note which tool authored which part. This allows
+future sessions to distinguish Claude-driven decisions from Codex-driven ones and prevents
+either tool from overwriting the other's reasoning.
 
 ---

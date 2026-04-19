@@ -42,10 +42,15 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
   return (
     <section
       id="pricing"
-      className="bg-white py-14 px-6"
-      style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
+      className="py-14 px-6 relative overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, var(--color-linen), var(--color-off-white))', borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
-      <div className="max-w-5xl mx-auto">
+      {/* no token: intentional — 1.5% opacity falls below all stops */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: `linear-gradient(rgba(11,29,46,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(11,29,46,0.015) 1px, transparent 1px)`,
+        backgroundSize: '48px 48px',
+      }} />
+      <div className="max-w-5xl mx-auto relative">
 
         {/* Top row: pricing table (left) + sidebar (right) */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_270px] gap-10 mb-8">

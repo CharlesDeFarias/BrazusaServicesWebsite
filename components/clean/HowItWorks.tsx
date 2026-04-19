@@ -26,10 +26,15 @@ const steps = [
 export default function HowItWorks(): JSX.Element {
   return (
     <section
-      className="bg-off-white py-14 px-6"
-      style={{ borderTop: '1px solid var(--color-light-gray)' }}
+      className="py-14 px-6 relative overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, var(--color-linen), var(--color-off-white))', borderTop: '1px solid var(--color-light-gray)' }}
     >
-      <div className="max-w-5xl mx-auto">
+      {/* no token: intentional — 1.5% opacity falls below all stops */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: `linear-gradient(rgba(11,29,46,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(11,29,46,0.015) 1px, transparent 1px)`,
+        backgroundSize: '48px 48px',
+      }} />
+      <div className="max-w-5xl mx-auto relative">
         <h2
           className="italic text-3xl md:text-4xl text-navy mb-10 leading-snug"
           style={{ fontWeight: 300 }}

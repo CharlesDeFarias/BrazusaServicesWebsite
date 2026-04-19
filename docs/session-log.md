@@ -1146,3 +1146,8 @@ accordian images look good
 **Prompt:** do groups 3 and 4 now
 
 **Response summary:** Finished the remaining Group 3 background-treatment drift by aligning `Positioning` with the same subtle layered treatment as the other light sections. Implemented Group 4 by separating `ClientAccordion` and `Services` into independent full-width sections, preserving one-way state sync, moving the "We clean it all" card to the bottom with inline expansion, adding auto-derived service pills inside accordion items, and giving `Services` its own client filter with contextual wording derived from the current service mapping. Verified with `npm run lint`.
+
+### 04/18/2026, Group 5
+**Prompt:** great now lets go into group 5
+
+**Response summary:** Reworked the Pricing section to match the locked decision: removed the static pricing-table pattern and old sidebar CTA, replaced the top area with an oversized contextual announcement plus client-type chips that scroll to `#testimonials`, kept the pricing-factor and support cards, and tightened all pricing copy around scope, operational complexity, and custom quotes without showing numbers. Added the testimonial filter data hook needed for the pricing jump chips and verified the result with `npm run lint`.

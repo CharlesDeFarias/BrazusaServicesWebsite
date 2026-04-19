@@ -139,6 +139,8 @@ export default function Testimonials(): JSX.Element {
               {filters.map((f) => (
                 <button
                   key={f.value}
+                  type="button"
+                  data-category={f.value}
                   onClick={() => setActive(f.value)}
                   className="text-xs px-3 py-1.5 rounded-full transition-all duration-200"
                   style={{

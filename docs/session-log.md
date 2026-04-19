@@ -1863,3 +1863,9 @@ no, the copy/design workflow is not inteentionally claude-primary, just a todo l
 **Prompt:** Applied the Codex-side complement after Claude's governance pass. Update Codex preferences, skills, reference checklists, and repo adapter to match the new startup-context, authorship, routing, and operating-file rules. Do not touch Claude files.
 
 **Response summary:** Claude authored the repo-side governance updates earlier in the session (`CLAUDE.md` and Claude agents). Codex then completed the Codex-side alignment pass: updated `CODEX.md` behavior for `docs/decisions.md` as startup context, added a minimal Claude/Codex collaboration protocol, clarified durable-promotion rules, updated global Codex preferences for question policy, cross-tool routing, and operating-file discipline, added authorship notation to `charles-durable-update`, aligned `charles-session-start` with the session-log architecture, and created the missing skill reference checklists under `C:\Users\charl\.codex\skills\*\references\`.
+
+### 04/19/2026, 02:04:03 PM
+**Prompt:** alright codex has finished its changes. i want you to review everything again from a point of view of an LLM and specifically claude/codex expeeret to provide feedback/recommendandations
+
+### 04/19/2026, 02:08:00 PM
+**Prompt:** push to git before we continue

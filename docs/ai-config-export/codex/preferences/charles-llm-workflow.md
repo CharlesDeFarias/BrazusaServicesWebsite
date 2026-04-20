@@ -64,3 +64,5 @@ Help Charles make the most of each tool's usage limits.
 - When tasks are separable with non-overlapping write surfaces, propose an explicit Claude+Codex parallel split - name the exact boundary between what each tool owns
 - Do not recommend parallelization when tasks are tightly coupled or share write surfaces
 - When handing back to Claude, produce a structured context summary: what was completed, what changed, what decisions were made, what is unresolved - not just "done"
+- Do not switch tools just because the other tool could handle the task. Every tool switch has a cold-start cost - the receiving tool rebuilds context from scratch. Only route when the gain materially justifies that cost.
+- Claude review after Codex implementation is a production safety gate for this project, not optional polish. The Brazusa project has no staging environment - all changes go straight to production. Treat post-implementation Claude review as required for anything touching design judgment, copy, or integration logic. Flag this explicitly when handing back to Claude.

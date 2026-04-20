@@ -1,7 +1,7 @@
 'use client'
 
 import { type JSX, useState, useRef, useEffect } from 'react'
-import StickyNav        from '@/components/StickyNav'
+import StickyNav        from '@/components/clean/StickyNav'
 import Hero             from '@/components/clean/Hero'
 import TrustStrip       from '@/components/clean/TrustStrip'
 import Positioning      from '@/components/clean/Positioning'

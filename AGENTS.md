@@ -4,8 +4,28 @@
 - Treat `CLAUDE.md` in this repo as the primary operating contract.
 - Use this file to adapt that contract cleanly into Codex behavior, not to replace it.
 
-## Encoding
-- Em dashes in JS/TS: Never use the literal em dash character (`—`, `U+2014`) in JavaScript or TypeScript string literals, `setError` calls, or JSX prop strings (for example `placeholder` and `aria-label`). Use the Unicode escape `\u2014` instead. The Windows PowerShell environment in this project has a known UTF-8 encoding issue (`chcp 437` / UTF-8 mismatch) that can silently corrupt literal Unicode punctuation when files are read and rewritten by shell tools. JSX text node content is lower risk, but `\u2014` is preferred everywhere for consistency. Code comments may use hyphens freely; typography does not apply there.
+## Unicode Punctuation in Source Files
+
+Any non-ASCII punctuation in a JS/TS string literal or JSX prop string must be written
+as a Unicode escape -- not a literal character. In .ts/.tsx source, represent non-ASCII
+punctuation in JSX text nodes in a shell-safe way; default to Unicode escapes.
+
+  em dash          \u2014   (was: --)
+  en dash          \u2013   (was: -)
+  ellipsis         \u2026   (was: ...)
+  right apostrophe \u2019   (was: ')
+  curly quotes     \u201C / \u201D   (was: "...")
+
+Why: Windows PowerShell codepage mismatch (chcp 437) corrupts literal non-ASCII bytes
+during read-modify-write cycles. Unicode escapes are pure ASCII in source and immune to this.
+
+Scope:
+  - JS/TS string literals: always
+  - JSX prop strings (title=, alt=, aria-label=, etc.): always
+  - JSX text nodes in .ts/.tsx files: default to Unicode escapes
+  - Config/instruction files (AGENTS.md, CLAUDE.md, CODEX.md): use plain ASCII
+    punctuation throughout -- no fancy characters, no escapes needed
+  - Markdown/docs: literal Unicode is acceptable
 
 ## Session Start
 - At the start of meaningful work, restore context before coding.

@@ -23,7 +23,7 @@ export default function NewsletterCTA(): JSX.Element {
       if (!res.ok) throw new Error('Request failed')
       setSubmitted(true)
     } catch {
-      setError("Something went wrong — please try calling us at 781-686-7189.")
+      setError("Something went wrong \u2014 please try calling us at 781-686-7189.")
     } finally {
       setLoading(false)
     }

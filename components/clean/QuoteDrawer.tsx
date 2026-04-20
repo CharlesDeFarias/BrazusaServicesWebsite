@@ -109,7 +109,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
       if (!res.ok) throw new Error('Request failed')
       setSubmitted(true)
     } catch {
-      setError("Something went wrong — please call or text us at 781-686-7189.")
+      setError("Something went wrong \u2014 please call or text us at 781-686-7189.")
     } finally {
       setLoading(false)
     }

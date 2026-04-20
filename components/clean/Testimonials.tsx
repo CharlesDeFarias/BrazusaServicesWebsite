@@ -7,27 +7,27 @@ type Category = 'all' | 'str' | 'property' | 'offices' | 'homes' | 'other'
 const cases: { category: Category; title: string; result: string; detail: string }[] = [
   {
     category: 'str',
-    title: 'Thatch — multi-building STR operation',
+    title: 'Thatch \u2014 multi-building STR operation',
     result: 'Turnover coordination across multiple units, no dropped handoffs.',
-    detail: 'Managing several short-term rentals across different buildings meant scheduling was constantly changing. We built a system around their calendar — same-day confirmations, consistent checklists, and a direct line so nothing fell through between guests.',
+    detail: 'Managing several short-term rentals across different buildings meant scheduling was constantly changing. We built a system around their calendar \u2014 same-day confirmations, consistent checklists, and a direct line so nothing fell through between guests.',
   },
   {
     category: 'str',
-    title: 'Michelle & Wendy — independent STR hosts',
+    title: 'Michelle & Wendy \u2014 independent STR hosts',
     result: 'Review scores improved. They stopped thinking about cleaning.',
-    detail: 'Two separate hosts who each had issues with their previous cleaners — inconsistency, missed items, bad communication. We took over both and standardized the process. They now text us the booking; we handle the rest.',
+    detail: 'Two separate hosts who each had issues with their previous cleaners \u2014 inconsistency, missed items, bad communication. We took over both and standardized the process. They now text us the booking; we handle the rest.',
   },
   {
     category: 'property',
-    title: 'Diana — corporate housing (Capital One)',
+    title: 'Diana \u2014 corporate housing (Capital One)',
     result: 'Reliable turnovers for furnished units housing traveling employees.',
-    detail: 'Corporate housing runs on tight schedules — employees check out, new ones check in within hours. Diana needed someone who could work on short notice, document the condition of units, and communicate clearly. We\'ve been handling these ever since.',
+    detail: 'Corporate housing runs on tight schedules \u2014 employees check out, new ones check in within hours. Diana needed someone who could work on short notice, document the condition of units, and communicate clearly. We\'ve been handling these ever since.',
   },
   {
     category: 'homes',
-    title: 'Roommates — partial apartment cleaning',
+    title: 'Roommates \u2014 partial apartment cleaning',
     result: 'Cleaned one bedroom and shared areas only. No pressure for more.',
-    detail: 'One roommate wanted regular cleaning; the others didn\'t want to pay for rooms they\'d handle themselves. We set up a custom plan covering just the shared spaces and one bedroom — fair, straightforward, and exactly what they asked for.',
+    detail: 'One roommate wanted regular cleaning; the others didn\'t want to pay for rooms they\'d handle themselves. We set up a custom plan covering just the shared spaces and one bedroom \u2014 fair, straightforward, and exactly what they asked for.',
   },
   {
     category: 'str',
@@ -39,7 +39,7 @@ const cases: { category: Category; title: string; result: string; detail: string
     category: 'other',
     title: 'Post-construction deep clean',
     result: 'Construction dust gone. The space was move-in ready the same week.',
-    detail: 'After a significant renovation, the unit had drywall dust in every corner, adhesive residue on floors, and debris in the HVAC vents. We handled the full post-construction detail — surfaces, fixtures, floors — and the client moved in three days later.',
+    detail: 'After a significant renovation, the unit had drywall dust in every corner, adhesive residue on floors, and debris in the HVAC vents. We handled the full post-construction detail \u2014 surfaces, fixtures, floors \u2014 and the client moved in three days later.',
   },
 ]
 

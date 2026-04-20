@@ -9,13 +9,13 @@ const cases: { category: Category; title: string; result: string; detail: string
     category: 'str',
     title: 'Thatch \u2014 multi-building STR operation',
     result: 'Turnover coordination across multiple units, no dropped handoffs.',
-    detail: 'Managing several short-term rentals across different buildings meant scheduling was constantly changing. We built a system around their calendar \u2014 same-day confirmations, consistent checklists, and a direct line so nothing fell through between guests.',
+    detail: 'Managing several short-term rentals across different buildings meant scheduling was constantly changing. We built a system around their calendar \u2014 same-day confirmations, consistent checklists, and a direct line so nothing fell through between guests. At volume, turnovers ran $25\u201345 each.',
   },
   {
     category: 'str',
     title: 'Michelle \u2014 Bed and Breakfast Boston',
     result: 'Units run without oversight while she is away most of the year.',
-    detail: 'Michelle runs multiple Boston units but is away most of the year. We handle turnovers, guest issues, small repairs, and day-to-day coordination. She texts bookings when needed; the units stay ready without her being present.',
+    detail: 'Michelle runs multiple Boston units but is away most of the year. We handle turnovers, guest issues, small repairs, and day-to-day coordination. She texts bookings when needed; the units stay ready without her being present. Recurring at roughly $125/month.',
   },
   {
     category: 'str',
@@ -45,13 +45,13 @@ const cases: { category: Category; title: string; result: string; detail: string
     category: 'offices',
     title: 'New Horizons \u2014 office operations',
     result: 'Cleaning runs on schedule without follow-ups or oversight.',
-    detail: 'New Horizons needed a fixed cleaning schedule without having to manage the vendor themselves. We keep the same team, work the same days, and complete each visit without reminders needed. The schedule holds, and they haven\'t had to redirect us.',
+    detail: 'New Horizons needed a fixed cleaning schedule without having to manage the vendor themselves. We keep the same team, work the same days, and complete each visit without reminders needed. The schedule holds, and they haven\'t had to redirect us. Six visits per week at $30 each.',
   },
   {
     category: 'offices',
     title: 'Dr. Jeffrey E. Silver \u2014 clinic',
     result: 'Same team, same routine. No disruption to staff or patients.',
-    detail: 'This clinic required recurring cleaning that would not interrupt staff or patients. We maintain the same team, follow set routines, and work around their schedule so the space meets the same standard each visit without added coordination.',
+    detail: 'This clinic required recurring cleaning that would not interrupt staff or patients. We maintain the same team, follow set routines, and work around their schedule so the space meets the same standard each visit without added coordination. Three visits per week at $50 each.',
   },
   {
     category: 'other',

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source not "../docs";
 
 @theme {
   /* Core palette */
@@ -14,21 +15,21 @@
   --color-brand-green: #4CAF50;
   --color-brand-red:   #D62828;
 
-  /* Warm gray scale — muted text, borders, and subtle backgrounds */
+  /* Warm gray scale - muted text, borders, and subtle backgrounds */
   --color-warm-gray-light:   #B0A89E;
   --color-warm-gray:         #9B9288;
   --color-warm-gray-dark:    #7A7470;
   --color-warm-gray-darker:  #6B6360;
   --color-warm-gray-darkest: #5A5451;
 
-  /* Transparency overlays — semantic aliases (kept for backwards compatibility) */
+  /* Transparency overlays - semantic aliases (kept for backwards compatibility) */
   --color-navy-subtle: rgba(11, 29, 46, 0.07);
   --color-navy-dim:    rgba(11, 29, 46, 0.15);
   --color-navy-muted:  rgba(11, 29, 46, 0.30);
   --color-white-faint: rgba(255, 255, 255, 0.10);
   --color-white-mid:   rgba(255, 255, 255, 0.45);
 
-  /* White opacity scale — rgba(255,255,255,N) — use instead of raw rgba */
+  /* White opacity scale - rgba(255,255,255,N) - use instead of raw rgba */
   --color-white-5:  rgba(255, 255, 255, 0.05);
   --color-white-10: rgba(255, 255, 255, 0.10);
   --color-white-15: rgba(255, 255, 255, 0.15);
@@ -44,7 +45,7 @@
   --color-white-70: rgba(255, 255, 255, 0.70);
   --color-white-90: rgba(255, 255, 255, 0.90);
 
-  /* Navy opacity scale — rgba(11,29,46,N) — use instead of raw rgba */
+  /* Navy opacity scale - rgba(11,29,46,N) - use instead of raw rgba */
   --color-navy-5:  rgba(11, 29, 46, 0.05);
   --color-navy-10: rgba(11, 29, 46, 0.10);
   --color-navy-15: rgba(11, 29, 46, 0.15);
@@ -55,14 +56,14 @@
   --color-navy-50: rgba(11, 29, 46, 0.50);
   --color-navy-60: rgba(11, 29, 46, 0.60);
 
-  /* Gold tint scale — rgba(196,154,68,N) — use instead of raw gold rgba */
+  /* Gold tint scale - rgba(196,154,68,N) - use instead of raw gold rgba */
   --color-gold-5:  rgba(196, 154, 68, 0.05); /* barely-there background wash */
   --color-gold-10: rgba(196, 154, 68, 0.10); /* faint border or line accent */
   --color-gold-25: rgba(196, 154, 68, 0.25); /* subtle mid-weight accent */
   --color-gold-60: rgba(196, 154, 68, 0.60); /* soft glow or active indicator */
   --color-gold-90: rgba(196, 154, 68, 0.90); /* near-solid, strong active states */
 
-  /* Error state tokens — form validation and inline error messages */
+  /* Error state tokens - form validation and inline error messages */
   --color-error:        #E07070;
   --color-error-bg:     rgba(224, 112, 112, 0.08);
   --color-error-border: rgba(224, 112, 112, 0.30);
@@ -84,7 +85,7 @@ h1, h2, h3 {
   font-weight: 400;
 }
 
-/* Grain texture overlay — applied to sections that need depth */
+/* Grain texture overlay - applied to sections that need depth */
 .grain {
   position: relative;
   isolation: isolate;

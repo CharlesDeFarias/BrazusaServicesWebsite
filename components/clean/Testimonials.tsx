@@ -7,27 +7,27 @@ type Category = 'all' | 'str' | 'property' | 'offices' | 'homes' | 'other'
 const cases: { category: Category; title: string; result: string; detail: string }[] = [
   {
     category: 'str',
-    title: 'Thatch — multi-building STR operation',
+    title: 'Thatch - multi-building STR operation',
     result: 'Turnover coordination across multiple units, no dropped handoffs.',
-    detail: 'Managing several short-term rentals across different buildings meant scheduling was constantly changing. We built a system around their calendar — same-day confirmations, consistent checklists, and a direct line so nothing fell through between guests.',
+    detail: 'Managing several short-term rentals across different buildings meant scheduling was constantly changing. We built a system around their calendar - same-day confirmations, consistent checklists, and a direct line so nothing fell through between guests.',
   },
   {
     category: 'str',
-    title: 'Michelle & Wendy — independent STR hosts',
+    title: 'Michelle & Wendy - independent STR hosts',
     result: 'Review scores improved. They stopped thinking about cleaning.',
-    detail: 'Two separate hosts who each had issues with their previous cleaners — inconsistency, missed items, bad communication. We took over both and standardized the process. They now text us the booking; we handle the rest.',
+    detail: 'Two separate hosts who each had issues with their previous cleaners - inconsistency, missed items, bad communication. We took over both and standardized the process. They now text us the booking; we handle the rest.',
   },
   {
     category: 'property',
-    title: 'Diana — corporate housing (Capital One)',
+    title: 'Diana - corporate housing (Capital One)',
     result: 'Reliable turnovers for furnished units housing traveling employees.',
-    detail: 'Corporate housing runs on tight schedules — employees check out, new ones check in within hours. Diana needed someone who could work on short notice, document the condition of units, and communicate clearly. We\'ve been handling these ever since.',
+    detail: 'Corporate housing runs on tight schedules - employees check out, new ones check in within hours. Diana needed someone who could work on short notice, document the condition of units, and communicate clearly. We\'ve been handling these ever since.',
   },
   {
     category: 'homes',
-    title: 'Roommates — partial apartment cleaning',
+    title: 'Roommates - partial apartment cleaning',
     result: 'Cleaned one bedroom and shared areas only. No pressure for more.',
-    detail: 'One roommate wanted regular cleaning; the others didn\'t want to pay for rooms they\'d handle themselves. We set up a custom plan covering just the shared spaces and one bedroom — fair, straightforward, and exactly what they asked for.',
+    detail: 'One roommate wanted regular cleaning; the others didn\'t want to pay for rooms they\'d handle themselves. We set up a custom plan covering just the shared spaces and one bedroom - fair, straightforward, and exactly what they asked for.',
   },
   {
     category: 'str',
@@ -52,11 +52,36 @@ const filters: { label: string; value: Category }[] = [
   { label: 'Other',    value: 'other' },
 ]
 
+const testimonialHashToCategory: Record<string, Category> = {
+  '#testimonials': 'all',
+  '#testimonials-str': 'str',
+  '#testimonials-property': 'property',
+  '#testimonials-offices': 'offices',
+  '#testimonials-homes': 'homes',
+  '#testimonials-other': 'other',
+}
+
+function getCategoryFromHash(hash: string): Category | null {
+  return testimonialHashToCategory[hash] ?? null
+}
+
+function updateHashForCategory(category: Category): void {
+  const nextHash = category === 'all' ? '#testimonials' : `#testimonials-${category}`
+  if (window.location.hash === nextHash) return
+  window.history.replaceState(null, '', nextHash)
+}
+
 const CARD_W = 320
 const GAP    = 16
 
 export default function Testimonials(): JSX.Element {
-  const [active, setActive]               = useState<Category>('all')
+  const [active, setActive] = useState<Category>(() => {
+    if (typeof window === 'undefined') {
+      return 'all'
+    }
+
+    return getCategoryFromHash(window.location.hash) ?? 'all'
+  })
   const [canScrollLeft, setCanScrollLeft]   = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
 
@@ -65,6 +90,18 @@ export default function Testimonials(): JSX.Element {
   const intervalRef  = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const filtered = active === 'all' ? cases : cases.filter((c) => c.category === active)
+
+  const applyCategoryFromHash = useCallback((hash: string, behavior: ScrollBehavior): void => {
+    const categoryFromHash = getCategoryFromHash(hash)
+    if (!categoryFromHash) return
+
+    setActive(categoryFromHash)
+
+    const testimonialsSection = document.getElementById('testimonials')
+    if (!testimonialsSection) return
+
+    testimonialsSection.scrollIntoView({ behavior })
+  }, [])
 
   const updateScrollState = useCallback((): void => {
     const el = scrollRef.current
@@ -99,6 +136,19 @@ export default function Testimonials(): JSX.Element {
     }
   }, [active, filtered.length, resetAutoScroll, updateScrollState])
 
+  useEffect(() => {
+    if (getCategoryFromHash(window.location.hash)) {
+      document.getElementById('testimonials')?.scrollIntoView({ behavior: 'auto' })
+    }
+
+    const handleHashChange = (): void => {
+      applyCategoryFromHash(window.location.hash, 'smooth')
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [applyCategoryFromHash])
+
   const scrollByCard = (dir: 'left' | 'right'): void => {
     const el = scrollRef.current
     if (!el) return
@@ -115,7 +165,7 @@ export default function Testimonials(): JSX.Element {
       className="py-14 px-6 relative overflow-hidden"
       style={{ background: 'linear-gradient(to bottom, var(--color-linen), var(--color-off-white))', borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
-      {/* no token: intentional — 1.5% opacity falls below all stops */}
+      {/* no token: intentional - 1.5% opacity falls below all stops */}
       <div className="absolute inset-0 pointer-events-none" style={{
         backgroundImage: `linear-gradient(rgba(11,29,46,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(11,29,46,0.015) 1px, transparent 1px)`,
         backgroundSize: '48px 48px',
@@ -141,7 +191,10 @@ export default function Testimonials(): JSX.Element {
                   key={f.value}
                   type="button"
                   data-category={f.value}
-                  onClick={() => setActive(f.value)}
+                  onClick={() => {
+                    setActive(f.value)
+                    updateHashForCategory(f.value)
+                  }}
                   className="text-xs px-3 py-1.5 rounded-full transition-all duration-200"
                   style={{
                     fontFamily: 'var(--font-syne)',
@@ -155,7 +208,7 @@ export default function Testimonials(): JSX.Element {
               ))}
             </div>
 
-            {/* Arrow controls — desktop only */}
+            {/* Arrow controls - desktop only */}
             <div className="hidden sm:flex gap-2">
               <button
                 onClick={() => scrollByCard('left')}
@@ -254,7 +307,7 @@ export default function Testimonials(): JSX.Element {
                 style={{ width: `${CARD_W}px`, maxWidth: '80vw', border: '1px dashed var(--color-light-gray)' }}
               >
                 <p className="text-sm text-center" style={{ color: 'var(--color-warm-gray-light)' }}>
-                  No examples for this category yet — reach out directly.
+                  No examples for this category yet - reach out directly.
                 </p>
               </div>
             )}

@@ -3954,3 +3954,144 @@ session start
 
 ### 04/19/2026, 10:47:24 PM
 **Prompt:** commit and push
+
+### 04/19/2026, 10:47:55 PM
+**Prompt:** You are doing a design review of the Brazusa Cleaning site (/clean) after a full copy                    repositioning pass. The goal is a prioritized list of design changes — not a standards                 
+  audit (that runs separately via the design-review agent), but a judgment call on whether                 the current design still serves the new brand positioning.                                                                                                                                                        ## What changed                                                                                                                                                                                                 
+  The copy repositioning moved the brand from "cleaning service" to "operational partner" —
+  reliable, structured, professional. New positioning phrase: "Cleaning that actually works
+  the way your operation works." Target clients are property managers, STR hosts, and
+  office/clinic operators — not lifestyle consumers.
+
+  Key copy signals to hold against the design:
+  - "Built for operators, not oversight" (Positioning section headline)
+  - "Built through real work, not theory" (About headline)
+  - No aspiration language — only mechanism and confirmation
+  - Communication, confirmation, flagging issues — these are the trust claims
+
+  ## What to read
+
+  1. docs/briefs/marketresearch.txt — focus on sections covering client psychology,
+     trust signals, and competitive positioning. Extract anything that implies design
+     expectations (e.g. what operators trust, what reads "legitimate" vs "amateur").
+
+  2. docs/decisions.md — the navy/gold design audit decision and the background treatment
+     decision are both locked. Do not re-litigate those.
+
+  3. Scan these components for current design state:
+     - components/clean/Hero.tsx
+     - components/clean/Positioning.tsx
+     - components/clean/ClientAccordion.tsx
+     - components/clean/Services.tsx
+     - components/clean/Testimonials.tsx
+     - components/clean/FinalCTA.tsx
+     - app/globals.css (for token reference)
+
+  4. After reading, invoke the design-review agent on the same components to run the
+     standards audit in parallel.
+
+  ## Output required
+
+  Two sections:
+
+  ### Strategic design gaps
+  For each gap: what the positioning implies vs. what the design currently does.
+  Only flag things that are actually misaligned — not things that are fine.
+  Max 8 items. Each item: one sentence on the gap, one sentence on the direction.
+
+  ### Locked or confirmed — do not change
+  Short list of what the design audit confirms is working and should be left alone.
+
+  ## Hard constraints
+
+  - Do not suggest font changes unless there is a specific mismatch with the operational/
+    professional positioning.
+  - Do not suggest color changes — navy/gold is locked per docs/decisions.md.
+  - Do not produce a generic "make it more professional" suggestion — every item must name
+    a specific component or element.
+  - Do not invoke integration-safety (no integrations touched here).
+
+  ---
+  Key choices:
+  - Separates strategic gaps (Claude judgment) from standards audit (design-review agent) — they answer  
+  different questions and can run simultaneously.
+  - Explicitly locks color/font decisions from re-litigation so the output doesn't re-debate things      
+  already decided.
+  - "Max 8 items" and "only flag real misalignments" counters the failure mode where design reviews      
+  produce 20 items of which 3 are actionable.
+
+### 04/19/2026, 10:51:00 PM
+**Prompt:** <task-notification>
+<task-id>a8e3891aea165be26</task-id>
+<tool-use-id>toolu_01Wnunfx1AXYZ9fWkw7ExgXi</tool-use-id>
+<output-file>C:\Users\charl\AppData\Local\Temp\claude\C--Users-charl-Desktop-claudecoding\63490091-7f49-4dcc-a048-2456d20af05c\tasks\a8e3891aea165be26.output</output-file>
+<status>completed</status>
+<summary>Agent "Design standards audit" completed</summary>
+<result>Now I have everything I need. Let me cross-reference all findings against the token definitions before reporting.
+
+---
+
+## Design Audit — components/clean/
+
+### Violations
+
+**ClientAccordion.tsx**
+
+- [MEDIUM] `ClientAccordion.tsx:184` — `bg-off-white` Tailwind utility on `&lt;section&gt;` with no texture layer. The section has no `.grain` class, no grid pattern overlay, and no gradient — it is a flat solid fill. Every neighboring light section (Positioning, Testimonials, FinalCTA) layers either a gradient + grid pattern or a radial gold glow. This one does not.
+
+- [LOW] `ClientAccordion.tsx:138–143` — Service tag chips use `background: 'white'` raw keyword (not a CSS variable). `--color-off-white` or `--color-linen` would be the appropriate token here. `white` is not in the token system.
+
+- [LOW] `ClientAccordion.tsx:242` — `background: 'white'` raw keyword again on the "We clean it all" expanded panel. Same issue — no token exists for pure white, but `--color-off-white` is the intended light surface.
+
+**Services.tsx**
+
+- [MEDIUM] `Services.tsx:275` — `rgba(196,154,68,0.7)` raw rgba value used inline, despite having a comment `/* no token: intentional */`. However, this specific value is not actually unrepresented: `--color-gold-60` is defined as `rgba(196, 154, 68, 0.60)` and `--color-gold-90` is `rgba(196, 154, 68, 0.90)`. The 0.7 stop is genuinely between defined tokens — but `--color-gold-60` or `--color-gold-90` should be evaluated as the nearest fit before reaching for raw rgba. Flag for developer decision: either accept the gap and keep the comment, or round to `--color-gold-60`.
+
+- [LOW] `Services.tsx:242` — `grid-cols-3` (with `sm:grid-cols-2`) on the core services grid. Cells are uniform width with no asymmetry. This is the primary visual surface of the section — symmetric grid with equal-weight cards. Not a hard violation given the filtering interaction makes asymmetry impractical, but flag for awareness.
+
+**Testimonials.tsx**
+
+- [LOW] `Testimonials.tsx:149` — Filter pill active state uses `color: '#fff'` raw hex instead of `var(--color-white-90)` or the Tailwind `text-white` utility (which resolves through the theme). Minor — `#fff` is not a brand color and is not in the hardcoded-brand-hex category, but it is an inconsistency against all other white references in the file which use CSS variables or `text-white`.
+
+**FinalCTA.tsx**
+
+- [MEDIUM] `FinalCTA.tsx:10` — `bg-off-white` Tailwind utility on `&lt;section&gt;`. The section does have a grid pattern overlay (lines 14–18) and a radial gold glow (lines 19–21), so this is a partial pass — it is not a bare flat fill. However, the `bg-off-white` solid base is still the foundation and there is no `.grain` class. If the intent is that the grid pattern + radial glow provides sufficient depth, this is a judgment call. Flag as [NEEDS REVIEW]: is the grid + radial glow considered sufficient layering, or should `.grain` be added to align with Hero and Services?
+
+---
+
+### Passes
+
+- **Hero.tsx** — Clean. `grain` class present, `bg-navy` with grain overlay, gradient structure implicit. All colors via CSS variables or Tailwind tokens. No forbidden fonts, no raw hex, no inline rgb. Asymmetric `grid-cols-[1fr_340px]` layout.
+- **Positioning.tsx** — Clean. Gradient background with grid pattern overlay. All colors via CSS variables. Correct font token usage. Asymmetric column layout.
+- **Testimonials.tsx** — Mostly clean. Section uses gradient + grid pattern, not a flat fill. All token usage correct except the one `#fff` instance noted above. `var(--font-cormorant)` correctly applied to card quotes.
+- **Services.tsx** — Clean on background depth: `grain bg-navy` present. Token usage is solid throughout. The raw rgba at line 275 is the only gap.
+- **Typography** — `var(--font-cormorant)` applied to headings and `var(--font-syne)` applied to labels/UI text consistently across all six files. No forbidden font names (Inter, Roboto, Arial, Space Grotesk) found anywhere.
+- **No arbitrary Tailwind color brackets** — no `bg-[#`, `text-[#`, or similar patterns found in any file.
+- **No hardcoded brand hex** — no `#0B`, `#C4`, or other hardcoded brand hex values found outside of globals.css where they are defined.
+
+---
+
+### Recommendations
+
+- **ClientAccordion.tsx:184** — Add `.grain` class and a `linear-gradient(to bottom, var(--color-off-white), var(--color-linen))` background in the section style to match the depth pattern used in Positioning and Testimonials. Remove the flat `bg-off-white` class.
+- **ClientAccordion.tsx:138 and 242** — Replace `background: 'white'` with `background: 'var(--color-off-white)'` or `'var(--color-linen)'` to keep all surface colors inside the token system.
+- **Services.tsx:275** — Decide: round to `--color-gold-60` for the section label, or keep the raw value with the `/* no token: intentional */` comment and add a `/* nearest token: --color-gold-60 */` annotation so the next developer understands what was evaluated.
+- **Testimonials.tsx:149** — Replace `'#fff'` with `'var(--color-white-90)'` or the string `'white'` resolved through Tailwind (`text-white` class) to be consistent with how white is handled everywhere else in the file.
+- **FinalCTA.tsx:10** — Confirm whether grid pattern + radial gold glow is sufficient background depth without `.grain`. If yes, document the intent with a comment. If no, add `.grain` to the section class.</result>
+<usage><total_tokens>35328</total_tokens><tool_uses>7</tool_uses><duration_ms>36226</duration_ms></usage>
+</task-notification>
+
+### 04/19/2026, 10:52:33 PM
+**Prompt:** we've reacheeed 94% of claude session token usage for the next few hours. i still have 50% left with codex, so do a durable update, tee this up to bee handeed overe to codex with a prompt for me to feed into it.
+
+### 04/20/2026, 12:45:00 AM
+**Prompt:** Implement the deferred shareable hash links for Pricing filter chips, then investigate and fix the unexpected Tailwind/PostCSS build break that surfaced during the rebuild.
+
+**Codex-authored durable update:**
+- Implemented shareable Pricing-to-Testimonials links in [components/clean/Pricing.tsx](/C:/Users/charl/Desktop/claudecoding/components/clean/Pricing.tsx) using explicit hash targets: `#testimonials`, `#testimonials-str`, `#testimonials-property`, `#testimonials-offices`, `#testimonials-homes`, `#testimonials-other`.
+- Updated [components/clean/Testimonials.tsx](/C:/Users/charl/Desktop/claudecoding/components/clean/Testimonials.tsx) so direct load or refresh with a testimonials hash preselects the matching category and scrolls the section into view. Filter interactions now keep the hash in sync.
+- The implementation itself linted cleanly. During rebuild, Next/Tailwind surfaced a misleading CSS failure pointing at [app/globals.css](/C:/Users/charl/Desktop/claudecoding/app/globals.css): `CssSyntaxError ... Invalid code point 6506752`.
+- Root cause was not the new component logic. The actual trigger was Tailwind v4 source scanning across `docs/`, specifically [docs/session-log.md](/C:/Users/charl/Desktop/claudecoding/docs/session-log.md). Temporarily moving that file out of the way allowed the CSS compile to succeed, which isolated the failure to source scanning rather than the stylesheet body.
+- Fix applied in [app/globals.css](/C:/Users/charl/Desktop/claudecoding/app/globals.css): `@source not "../docs";` so app styling ignores repo docs during Tailwind source discovery.
+- Verification: `npm.cmd run lint` passed. `npm.cmd run build` then compiled through the CSS/build stage successfully after the docs exclusion and only later failed with an unrelated environment issue: `spawn EPERM`.
+- Claude hit a usage limit before finishing its own durable wrap-up earlier in the night. This entry preserves Codex's implementation and debugging record now; Claude may append additional session context later.

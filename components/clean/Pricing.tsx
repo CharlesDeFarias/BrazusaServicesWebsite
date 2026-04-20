@@ -16,6 +16,14 @@ const pricingFilters: { label: string; value: PricingFilter }[] = [
   { label: 'Other', value: 'other' },
 ]
 
+const pricingFilterHashes: Record<PricingFilter, string> = {
+  str: '#testimonials-str',
+  property: '#testimonials-property',
+  offices: '#testimonials-offices',
+  homes: '#testimonials-homes',
+  other: '#testimonials-other',
+}
+
 const factors = [
   'Size and layout',
   'Level of cleaning needed',
@@ -39,18 +47,6 @@ const savingsWays = [
   { title: 'Recurring service', desc: 'Consistent recurring work is easier to maintain and usually easier to price well.' },
   { title: 'Help us grow locally', desc: 'Introductions inside a building or neighborhood can create more efficient service routes.' },
 ]
-
-function scrollToTestimonials(category: PricingFilter): void {
-  const testimonialsSection = document.getElementById('testimonials')
-  if (!testimonialsSection) return
-
-  testimonialsSection.scrollIntoView({ behavior: 'smooth' })
-
-  requestAnimationFrame(() => {
-    const filterButton = document.querySelector<HTMLButtonElement>(`#testimonials [data-category="${category}"]`)
-    filterButton?.click()
-  })
-}
 
 export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
   return (
@@ -97,13 +93,11 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
               custom, we can still scope it and give you a clear quote built around your exact needs.
             </p>
 
-            {/* TODO: convert to shareable hash links. */}
             <div className="flex flex-wrap gap-2">
               {pricingFilters.map((pricingFilter) => (
-                <button
+                <a
                   key={pricingFilter.value}
-                  type="button"
-                  onClick={() => scrollToTestimonials(pricingFilter.value)}
+                  href={pricingFilterHashes[pricingFilter.value]}
                   className="text-xs px-3 py-1.5 rounded-full transition-all duration-200"
                   style={{
                     fontFamily: 'var(--font-syne)',
@@ -113,7 +107,7 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
                   }}
                 >
                   {pricingFilter.label}
-                </button>
+                </a>
               ))}
             </div>
           </div>

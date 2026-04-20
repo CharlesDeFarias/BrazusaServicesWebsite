@@ -52,7 +52,9 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** Static ranges create anchoring pressure and don't reflect Brazusa's custom/flexible pricing model.
 **Constraints:** Pricing section focuses on how pricing is calculated. Actual examples live in Testimonials as case studies.
 
-**Decision:** Pricing section links to Testimonials via 5 client-type filter chips (STR / Property / Offices / Apartments / Other). In-page scroll for now; hash links deferred.
+**Decision:** Pricing section links to Testimonials via 5 client-type filter chips (STR / Property / Offices / Apartments / Other) using shareable hash fragments.
+**Why:** The earlier in-page scroll behavior worked for exploration but was not shareable. The current single-page `/clean` architecture can support direct-link state cleanly with hash fragments like `#testimonials-str` without widening scope into route changes.
+**Constraints:** Pricing chips should point to explicit hash states (`#testimonials`, `#testimonials-str`, `#testimonials-property`, `#testimonials-offices`, `#testimonials-homes`, `#testimonials-other`). Direct page load and refresh with those hashes should preselect the matching Testimonials filter. Keep this as a single-page hash-state pattern until there is an explicit decision to move to multi-page segment routes.
 
 ---
 
@@ -67,6 +69,10 @@ When a decision is made, add it here before the session ends. Format:
 ---
 
 ## AI Operating System
+
+**Decision:** Tailwind v4 source scanning must exclude the repo `docs/` directory.
+**Why:** A rebuild triggered by the Pricing-to-Testimonials hash-link implementation surfaced a Tailwind/PostCSS failure that appeared to blame `app/globals.css`, but the actual trigger was Tailwind source scanning over `docs/session-log.md`. Temporarily moving that file out of the way allowed the CSS compile to succeed, confirming the docs scan as the cause. The fix is `@source not "../docs";` in `app/globals.css`.
+**Constraints:** Keep `docs/` out of Tailwind source scanning unless there is an explicit future need to style-render documentation content through the app. When Tailwind/PostCSS errors point at `app/globals.css` unexpectedly, verify whether the source scanner is pulling in non-app files before assuming the stylesheet itself is broken.
 
 **Decision:** In this Windows PowerShell environment, shell-displayed mojibake alone is not evidence of file corruption.
 **Why:** `Get-Content` and similar shell-display paths can mis-render valid UTF-8 punctuation in this environment. We confirmed this by comparing shell output against raw-byte reads with explicit UTF-8 decode: the shell showed mojibake like `â€”`, while the same file bytes decoded correctly to `—`. The shell state is also mixed (`chcp 437`, `$OutputEncoding` US-ASCII, console output UTF-8, console input IBM437), which makes false positives more likely.
@@ -110,7 +116,6 @@ When a decision is made, add it here before the session ends. Format:
 - ChatGPT refinement of per-client service copy (Services.tsx — next copy pass after design review)
 - QuoteDrawer file uploads — temporary Phase 1 should be email-first, with file metadata saved to the existing integrations. Charles wants broad file-type support for now, especially images, videos, and PDFs, but Gmail's documented direct attachment limit is about 25 MB total, so a 1 GB pure-email upload flow is not viable. When files exceed the email-safe limit, the UI should recommend sending them by WhatsApp to the default Brazusa contact number: 781-686-7189. Revisit later with a proper storage-backed upload system.
 - Accordion image file replacements (Charles to re-export)
-- Shareable hash links for Pricing filter chips
 - Create agent for clean code / Charles's code preferences (naming, structure, TS standards, etc.)
 - ~~Create agent for LLM / Claude optimization engineering~~ — completed 2026-04-19 as `optimize-and-plan` personal skill
 - Turn the evolving ChatGPT copy-handoff workflow into a first-class reusable tool: update Claude's existing copy-prep/review flow and add the Codex-side equivalent skill/guidance so blueprint rewrite -> repo-aware review -> targeted section prompts becomes repeatable.

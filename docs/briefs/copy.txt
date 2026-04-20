@@ -45,7 +45,7 @@ Secondary messages:
 
 Supporting messages:
 
-* Stable, trained workforce with low turnover [VERIFY]
+* Stable, trained workforce with low turnover
 * Documented and accountable operations
 * Ability to adapt to client systems and tools
 * Local responsiveness
@@ -237,7 +237,7 @@ Brazusa:
 1. Work is completed and confirmed
 2. Issues are flagged early
 3. Communication is consistent
-4. Workforce is stable and documented [VERIFY]
+4. Workforce is stable, insured, and tax-compliant
 5. Systems are used consistently
 
 ---

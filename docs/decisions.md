@@ -108,7 +108,6 @@ When a decision is made, add it here before the session ends. Format:
 - Testimonials pricing context (awaiting real data from Charles)
 - ~~Token migration pass 2~~ — completed 2026-04-18
 - ChatGPT refinement of per-client service copy (Services.tsx — next copy pass after design review)
-- STR accordion body [VERIFY] items: same-day confirmations, linen processing, inventory tracking — confirm with Vitor which are currently live operational capabilities before treating as factual claims
 - QuoteDrawer file uploads — temporary Phase 1 should be email-first, with file metadata saved to the existing integrations. Charles wants broad file-type support for now, especially images, videos, and PDFs, but Gmail's documented direct attachment limit is about 25 MB total, so a 1 GB pure-email upload flow is not viable. When files exceed the email-safe limit, the UI should recommend sending them by WhatsApp to the default Brazusa contact number: 781-686-7189. Revisit later with a proper storage-backed upload system.
 - Accordion image file replacements (Charles to re-export)
 - Shareable hash links for Pricing filter chips

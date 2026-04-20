@@ -68,6 +68,14 @@ When a decision is made, add it here before the session ends. Format:
 
 ## AI Operating System
 
+**Decision:** In this Windows PowerShell environment, shell-displayed mojibake alone is not evidence of file corruption.
+**Why:** `Get-Content` and similar shell-display paths can mis-render valid UTF-8 punctuation in this environment. We confirmed this by comparing shell output against raw-byte reads with explicit UTF-8 decode: the shell showed mojibake like `â€”`, while the same file bytes decoded correctly to `—`. The shell state is also mixed (`chcp 437`, `$OutputEncoding` US-ASCII, console output UTF-8, console input IBM437), which makes false positives more likely.
+**Constraints:** Do not treat shell mojibake alone as proof of corruption. Verify with raw-byte read + explicit UTF-8 decode, editor rendering, or rendered app output before concluding a file is damaged. Prefer `rg` for text discovery. When Unicode correctness matters, prefer raw-byte UTF-8 verification over `Get-Content`. Trying UTF-8 shell settings first (`chcp 65001`, `[Console]::InputEncoding = [System.Text.Encoding]::UTF8`, `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8`, `$OutputEncoding = [System.Text.Encoding]::UTF8`) is reasonable, but trust should still come from verification, not assumption. In AI-owned config/instruction files, ASCII punctuation is still safer when Unicode punctuation is not needed.
+
+**Decision:** For the current Brazusa copy overhaul, ChatGPT should rewrite `docs/briefs/copy.txt` first, not the live component copy.
+**Why:** The current need is strategic messaging refinement before layout-fit refinement. `copy.txt` is the blueprint layer, so ChatGPT can use its stronger Brazusa voice and business context without being prematurely constrained by section lengths. After that, Claude/Codex can map the revised blueprint back onto the current repo structure and only then request tightly constrained section-level rewrites where needed.
+**Constraints:** Do not ask ChatGPT for an end-to-end rewrite of the currently rendered site copy yet. The workflow for this phase is: rewrite `copy.txt` -> review against current repo structure and locked decisions -> generate targeted section prompts only where additional copy passes are needed.
+
 **Decision:** Authorship notation convention for dual-tool sessions.
 **Why:** Both Claude and Codex now have authorship notation rules, but no shared convention. Without one, session log entries will accumulate inconsistent formats.
 **Constraints:** Use exactly three labels — `Claude-authored`, `Codex-authored`, `Joint decision`. No other variants. Apply at the artifact level (each decision, implementation block, or reasoning artifact), not at the session level.
@@ -88,3 +96,4 @@ When a decision is made, add it here before the session ends. Format:
 - Shareable hash links for Pricing filter chips
 - Create agent for clean code / Charles's code preferences (naming, structure, TS standards, etc.)
 - Create agent for LLM / Claude optimization engineering (prompt design, context management, token efficiency)
+- Turn the evolving ChatGPT copy-handoff workflow into a first-class reusable tool: update Claude's existing copy-prep/review flow and add the Codex-side equivalent skill/guidance so blueprint rewrite -> repo-aware review -> targeted section prompts becomes repeatable.

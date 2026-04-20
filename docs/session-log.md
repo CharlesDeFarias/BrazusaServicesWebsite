@@ -3156,3 +3156,34 @@ That modified `docs/session-log.md` was already present and was not part of this
 
 - Claude should do a session update the next time it is used after session reset so its own log/history reflects that its previous run ended on a usage-limit boundary and that Codex completed the remaining documentation/export pass.
 - README still has broader content drift and mojibake issues unrelated to this export pass. That is separate cleanup, not a blocker for returning to product work.
+
+---
+
+## Session: 2026-04-19 (Codex shell-encoding verification)
+
+### Decisions made this session
+
+- In this Windows PowerShell environment, shell-displayed mojibake alone is not proof of file corruption. Future sessions should verify suspicious Unicode with raw-byte UTF-8 decode, editor rendering, or rendered app output before concluding a file is damaged.
+
+### Session record
+
+- **Codex-authored:** Reproduced the issue directly on `README.md`, `components/StickyNav.tsx`, and `CODEX.md`.
+- `Get-Content` displayed mojibake like `â€”` and `2Ã—2`, while raw-byte reads with explicit UTF-8 decode showed the correct characters `—` and `2×2`.
+- Shell encoding state during verification was mixed:
+  - `chcp`: 437
+  - `$OutputEncoding`: US-ASCII
+  - `[Console]::OutputEncoding`: UTF-8
+  - `[Console]::InputEncoding`: IBM437
+- Tried the normal UTF-8 shell settings (`chcp 65001` plus UTF-8 input/output encodings). The shell display path was still not reliable enough to treat as proof of file corruption.
+- Added the durable rule to repo docs and Codex durable guidance so future sessions do not go down unnecessary encoding-fix rabbit holes based on shell output alone.
+
+### Follow-up items
+
+- If a future session sees mojibake in shell output, verify with raw-byte UTF-8 decode before changing files.
+- Prefer ASCII punctuation in AI-owned config/instruction files when Unicode punctuation is not needed, but do not rewrite working repo files purely because shell output looks wrong.
+
+### 04/19/2026, 08:05:25 PM
+**Prompt:** is this an actual new session of claude or am i just continuing an existing session? context wise
+
+### 04/19/2026, 08:06:11 PM
+**Prompt:** wait, i mean specifically in terms of claude and its context window per actual claude session, not our usage of the term session

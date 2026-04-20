@@ -162,6 +162,7 @@ These are not all equal. Some are immediate and blockers for clean product work.
 ### Actionable now
 
 - **Commit the current governance changes.** Four files are currently modified and uncommitted: `AGENTS.md`, `CODEX.md`, `docs/decisions.md`, `docs/session-log.md`. These represent the completed Claude/Codex alignment pass and should be committed as one unit before any product work starts.
+- **Run the copy blueprint workflow on `docs/briefs/copy.txt`.** Use ChatGPT for the broad rewrite first, then bring the result back to Claude/Codex for repo-aware critique and mapping before requesting any section-level final copy.
 - **Inline style cleanup.** Many components in `components/clean/` use `style={{ color: 'var(--color-...)' }}` where a Tailwind utility should be used instead. Tailwind v4 exposes all `@theme` tokens automatically. Static values only - dynamic/conditional inline styles need a separate decision.
 - **QuoteDrawer email/phone split.** The contact field is currently a single field. The decision to split it into separate email and phone fields (both optional, at least one required) has been made. Implementation is blocked on running the integration-safety agent first to produce a manifest across Resend, Airtable, and Google Sheets.
 - **Accordion image replacements.** Charles to re-export the accordion images.
@@ -178,6 +179,7 @@ These are not all equal. Some are immediate and blockers for clean product work.
 - **QuoteDrawer file uploads.** Phase 1 should be email-first, with a WhatsApp fallback for files that exceed Gmail's attachment limit (~25MB). A proper storage-backed system is Phase 2.
 - **Periodic governance audit workflow.** As the project grows and more sessions happen, the governance files will drift. A scheduled audit pass - reading all operating files and checking for inconsistencies - would catch problems earlier. This could eventually become a dedicated agent or skill.
 - **Formal versioning of the operating system.** Right now there is no version marker on CLAUDE.md or the Codex preferences. If a major architecture change is made, there is no easy way to know whether a given session was running the old or new version. Low priority now; matters more if the system becomes complex enough to have breaking changes.
+- **Formalize the ChatGPT copy workflow as reusable tooling.** The emerging pattern - ChatGPT for blueprint rewrite, Claude/Codex for repo-aware review and mapping, then targeted follow-up prompts - should eventually become a dedicated workflow update on the Claude side plus a Codex-side skill or equivalent reusable guide.
 
 ---
 
@@ -198,6 +200,16 @@ During a governance alignment pass where both Claude and Codex were working on t
 **Current status:** No mojibake found in any repo markdown file as of the final verification pass. Considered resolved.
 
 **Lesson:** When one tool finds a file-level anomaly that the other does not, do not dismiss either report. Verify at the character/codepoint level before changing files. Do not do broad re-encoding - a surgical content fix on the specific lines is correct. And when encoding issues appear in AI-owned config files, prefer ASCII characters over Unicode punctuation going forward.
+
+### Shell-display mojibake in Windows PowerShell
+
+Later, a different encoding problem showed up: not corrupted file content, but misleading shell output.
+
+In this environment, `Get-Content` could display valid UTF-8 files incorrectly. We confirmed this on `README.md`, `components/StickyNav.tsx`, and `CODEX.md` by comparing normal shell output against a raw-byte read with explicit UTF-8 decode. The shell path showed mojibake like `â€”` and `2Ã—2`, while the raw-byte UTF-8 decode showed the correct characters `—` and `2×2`.
+
+The shell state was mixed at the time of verification: `chcp` was `437`, `$OutputEncoding` was US-ASCII, console output was UTF-8, and console input was IBM437. Even after trying the normal UTF-8 shell settings (`chcp 65001` plus UTF-8 input/output encodings), the display path was still not trustworthy enough to use as the sole source of truth.
+
+The important distinction is this: not every mojibake-looking shell read means the file is damaged. In this environment, shell display alone is not evidence. The safer workflow is: use `rg` for discovery, verify suspicious text with raw-byte read plus explicit UTF-8 decode, and trust editor rendering or rendered app output over misleading shell output until verified.
 
 ### Multi-tool write conflict gap
 

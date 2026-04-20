@@ -14,3 +14,9 @@ Use this file to track durable lessons about how Charles uses Codex across proje
 - Implementation quality also deserves its own reusable layer so Charles's naming, structure, dependency, typing, and test preferences do not stay trapped in general prose.
 - Session wrap-up also needs a reusable layer so decisions, learning, follow-up items, and workflow lessons are preserved in the right durable place instead of staying trapped in chat.
 - The highest-value project-specific Codex preservation layer starts with live integration safety, because that is where silent drift would be most damaging.
+
+## 2026-04-19
+- In this Windows PowerShell environment, shell-displayed mojibake is not enough to prove file corruption.
+- `Get-Content` can mis-render valid UTF-8 punctuation while raw-byte reads with explicit UTF-8 decode still show correct text.
+- When Unicode correctness matters, prefer verification by raw-byte UTF-8 decode, editor rendering, or rendered app output before changing files.
+- Trying UTF-8 shell settings first is reasonable, but trust should come from verification rather than assuming the shell display path is fixed.

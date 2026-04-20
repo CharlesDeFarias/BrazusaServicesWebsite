@@ -54,3 +54,19 @@ When Charles asks for Codex optimization, do not just rewrite the prompt. Explai
 Changes to AGENTS.md, CODEX.md, Codex preferences, and Codex skills are workflow-governance changes, not ordinary repo edits. They affect Codex behavior across sessions and projects. Flag and confirm with Charles before changing them.
 
 The same discipline applies to Claude's operating files: .claude/agents/, CLAUDE.md, and ~/.claude/ memory files are Claude's operating layer. Do not modify them without confirming with Charles first.
+
+## Windows Shell Encoding Verification
+
+In this Windows PowerShell environment, shell output alone is not reliable proof of Unicode corruption.
+
+- `Get-Content` and similar shell-display paths can show mojibake even when file bytes decode correctly as UTF-8.
+- Do not treat shell mojibake alone as proof that a file is damaged.
+- When Unicode correctness matters, verify with raw-byte read plus explicit UTF-8 decode, editor rendering, or rendered app output before changing files.
+- Prefer `rg` for text discovery; use raw-byte UTF-8 verification for suspicious punctuation or symbols.
+- Trying UTF-8 shell settings first is reasonable:
+  - `chcp 65001`
+  - `[Console]::InputEncoding = [System.Text.Encoding]::UTF8`
+  - `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8`
+  - `$OutputEncoding = [System.Text.Encoding]::UTF8`
+- But trust should come from verification, not from assuming those settings fully solved the display problem.
+- In AI-owned config and instruction files, prefer ASCII punctuation when Unicode punctuation is not needed.

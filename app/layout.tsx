@@ -17,6 +17,7 @@ const syne = Syne({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://brazusa.com'),
   title: 'Brazusa Cleaning',
   description: 'Reliable, high-detail cleaning for apartments, short-term rentals, and managed properties across Greater Boston.',
   openGraph: {

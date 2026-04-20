@@ -3427,3 +3427,320 @@ a suggested minimal version vs stronger version so you can choose how forceful t
 - Answered: one merged prompt (expert-weighted), full rationale in plan mode, superpowers location
 - Reviewed Codex's usage-discipline analysis
 - Agreed on 4-step implementation plan and executed it
+
+### 04/19/2026, 08:52:55 PM
+**Prompt:** alright, let's use that skill now to decide the best way to to make use of the recent copy.txt and marketresearch.txt i added. i'm also worried about how much of the design i'll have to change now that i've got so much more data from marketresearch and the copy is changing so much. and i'm worried about going about the implementation in the right way/order and with the right usage of all the subtools we've set up recently
+
+### 04/19/2026, 09:04:22 PM
+**Prompt:** - what's the marketresearch's reasoning for using pages instead of a one-page app that just acts like pages using the section links?
+
+### 04/19/2026, 09:07:19 PM
+**Prompt:** yes let's begin
+
+### 04/19/2026, 09:10:39 PM
+**Prompt:** ready, proceed
+
+### 04/19/2026, 09:17:39 PM
+**Prompt:** run copy-review, here's the response from chatgpt:
+Using your brief as the governing spec 
+
+---
+
+## HERO
+
+**Greater Boston · Since 1994**
+
+**Cleaning you do not have to manage**
+
+You get a team that shows up, does the work, and lets you know it’s done.
+No chasing. No guessing.
+
+Not a cheap crew you have to manage.
+Not a large vendor you can’t reach.
+
+Work is handled, confirmed, and communicated clearly.
+We adapt to how your operation already runs.
+
+**Differentiators**
+
+* Work completed and clearly confirmed
+* Issues flagged before they become problems
+* Communication you do not have to chase
+* Works with your tools, apps, or systems
+* Stable team that learns your space
+* Flexible scope without losing structure
+* Can support beyond cleaning when defined
+
+**Microcopy**
+Not sure if this fits? Reach out and we’ll tell you honestly.
+
+---
+
+## TRUST STRIP
+
+* Work completed and confirmed
+* Issues flagged early
+* Structured communication
+* Fully insured
+* Stable, consistent team
+* Boston-based, locally run
+
+---
+
+## POSITIONING SECTION
+
+**Built for operators, not oversight**
+
+Most cleaning services fall into two categories.
+
+Small independent teams are affordable, but inconsistent.
+You end up managing them more than you should.
+
+Large vendors have structure, but little flexibility.
+You become just another account.
+
+Brazusa sits between those two.
+
+You get a consistent team that understands your space.
+You also get structure, communication, and accountability.
+
+The result is simple:
+the work gets done, and you don’t have to manage it.
+
+**WHAT THIS MEANS FOR YOU**
+
+* You don’t have to check if things were done
+* You hear about issues before they escalate
+* You spend less time managing vendors
+* Your spaces stay consistent over time
+* You get flexibility without losing control
+
+---
+
+## HOW IT WORKS
+
+**How it works**
+
+**01 — Reach out**
+Tell us about your space and needs
+
+**02 — We respond**
+We ask the right questions and clarify scope
+
+**03 — Clear plan**
+You get a defined scope and pricing
+
+**04 — Work begins**
+Service starts on the agreed schedule
+
+**05 — Work is confirmed**
+You’re told when things are completed
+
+**06 — Issues are handled**
+Anything off is flagged and addressed
+
+**Note**
+No surprises. Scope and expectations are clear upfront.
+If something changes, it’s discussed before it becomes a problem.
+
+---
+
+## ABOUT
+
+**Built through real work, not theory**
+
+Brazusa was built in Boston by Brazilian immigrants doing the work themselves.
+That foundation still shapes how the company operates.
+
+Decades of hands-on experience created a clear understanding of what actually matters.
+Consistency, communication, and follow-through.
+
+Over time, structure was added on top of that.
+Better coordination, clearer communication, and more accountability.
+
+Today, the company runs with both layers in place.
+Strong execution on the ground, with systems to support it.
+
+For the client, that means less involvement.
+The work is handled, and you don’t have to manage it.
+
+**Serving Boston since 1994**
+
+---
+
+## HOMES / APARTMENTS ACCORDION (body only)
+
+You get a consistent team that understands your home and how you like things done. Not a rotating group that needs to relearn everything each visit.
+
+Scope stays flexible. You can adjust what gets done, how often, and how detailed it is, without turning it into a complicated process.
+
+Communication stays simple and clear. If something needs attention, you’ll know. Otherwise, the work is handled without you having to think about it.
+
+
+### 04/19/2026, 09:19:33 PM
+**Prompt:** i want to make them in chatgpt, give me the text to pastee einto chatgpt
+
+### 04/19/2026, 09:22:35 PM
+**Prompt:** whilei work on that, i want you to see this interaction i had with codex and tell me what you think and how much/where you agree or dont.
+
+for my own personal knowledge, what should i know about what codex does better than claude and vice versa? since we just speent time having both of you set up to tell me to alternate sometimes
+9:19 PM
+
+
+
+The simplest useful mental model is:
+
+Claude is better when the job is judgment-heavy.
+Codex is better when the job is execution-heavy.
+
+More specifically:
+
+Claude tends to be better at
+architectural reasoning
+design judgment
+copy review and tone judgment
+critiquing prompts, plans, and workflows
+synthesizing messy context into a clearer strategy
+acting as a safety/governance reviewer
+noticing conceptual drift, ambiguity, or weak structure
+helping you decide what should be done
+Claude is strongest when the work benefits from:
+
+taste
+prioritization
+nuanced tradeoffs
+reviewing something another tool produced
+long-form reasoning with more interpretation
+Codex tends to be better at
+bounded implementation
+reading a repo and making targeted file changes
+structured mechanical edits
+carrying out a clearly defined plan
+durable file maintenance
+keeping changes scoped
+verification-oriented work
+turning accepted decisions into actual repo changes
+Codex is strongest when the work benefits from:
+
+precision
+file manipulation
+repeatable workflows
+working step-by-step through a defined task
+actually doing the implementation cleanly
+A good practical split
+Use Claude first when:
+you’re unsure what the right move is
+you need a better plan
+you want copy/design/governance review
+you want to pressure-test a prompt, architecture, or workflow
+the task has lots of ambiguity or taste involved
+Use Codex first when:
+you already know what you want changed
+the task is repo-local and concrete
+you want implementation, edits, or cleanup done
+the work can be bounded clearly
+you want a durable update or structured follow-through
+Best handoff pattern
+The highest-value loop is usually:
+
+Claude decides / critiques / frames
+Codex implements / edits / verifies
+Claude reviews if judgment-heavy polish is still needed
+That’s why the alternation rule is useful. It’s not about “use both every time.” It’s about:
+
+don’t waste Claude on mechanical execution
+don’t waste Codex on taste-heavy or ambiguity-heavy thinking
+Easy shorthand
+Ask yourself:
+
+“Do I need help deciding?” → Claude
+“Do I need help doing?” → Codex
+“Do I need review/taste/governance?” → Claude
+“Do I need scoped repo execution?” → Codex
+One important caveat
+Neither is absolutely better in all cases.
+The real difference is usually:
+
+Claude: better at interpreting
+Codex: better at operationalizing
+That’s the main thing to remember.
+
+### 04/19/2026, 09:24:59 PM
+**Prompt:** with that taken into consideration, use the llm expert skill we set up to review whether this consensus between you two should be addeed somehow to the existing framework to help decide when to make recommeendations when to use which tool, like you just did to use chatgpt for the prompts
+
+### 04/19/2026, 09:27:40 PM
+**Prompt:** make the changes but not the one for codex's workflow.md, instead produce the prompt i should give to codex to make the change itself
+
+### 04/19/2026, 09:28:35 PM
+**Prompt:** now back to the chatgpt promps. heree's chatgpt's response.
+## HERO SUBHEAD — lines 2 and 3
+
+You get a responsive, structured team that fits into how your operation already runs.
+
+---
+
+## POSITIONING BODY — revised sentence
+
+The work gets done, confirmed, and communicated without requiring your oversight.
+
+---
+
+## POSITIONING KEY POINTS — revised
+
+* Completion is confirmed without follow-up
+* Issues are flagged before they escalate
+* Less time spent managing day-to-day details
+* Standards are applied consistently across visits
+* Scope adapts without losing structure
+
+---
+
+## ABOUT — revised experience sentence
+
+Since 1994, hands-on experience created a clear understanding of what actually matters.
+
+---
+
+## ABOUT — values sentence (replaced)
+
+Work is completed, confirmed, and clearly communicated so nothing depends on guesswork.
+
+
+### 04/19/2026, 09:29:46 PM
+**Prompt:** give me the prompt to put into chatgpt
+
+### 04/19/2026, 09:31:25 PM
+**Prompt:** ## POSITIONING KEY POINT — item 3
+
+Status is communicated without needing to ask or follow up
+
+---
+
+## ABOUT — revised experience sentence
+
+Since 1994, hands-on experience built a system where work is completed, confirmed, and clearly communicated
+
+
+### 04/19/2026, 09:33:52 PM
+**Prompt:** - status geets communicated based on what the client wants. it can range from an old school phone call to using an app to using whatsapp or something else. 
+- 30 years means expertise for quality of service and maintaining of standards through training, and deep understanding of what our clients want and need.
+
+### 04/19/2026, 09:35:13 PM
+**Prompt:** ## POSITIONING KEY POINT — item 3
+
+Status shared via your tools, apps, or preferred method
+
+---
+
+## ABOUT — revised experience sentence
+
+Since 1994, hands-on experience built strong training, consistent standards, and a clear understanding of what clients need
+
+
+### 04/19/2026, 09:36:23 PM
+**Prompt:** yes, proceed
+
+### 04/19/2026, 10:05:00 PM
+- `Codex-authored:` Applied the approved copy repositioning pass across `components/clean/Hero.tsx`, `components/clean/TrustStrip.tsx`, `components/clean/Positioning.tsx`, `components/clean/HowItWorks.tsx`, `components/clean/About.tsx`, and the `homes` body in `app/clean/page.tsx`.
+- `Codex-authored:` Verified the pass with `npx.cmd tsc --noEmit` and committed it as `ab6b924` (`feat: apply approved copy repositioning across Hero, TrustStrip, Positioning, HowItWorks, About, and Homes accordion`).
+- `Joint decision:` Claude should review this copy implementation next, with special attention to the Hero subhead repetition around "your operation already runs" and the unchanged Homes teaser copy that was intentionally left out of the approved pass.

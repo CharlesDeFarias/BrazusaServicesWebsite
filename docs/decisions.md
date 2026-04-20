@@ -80,6 +80,14 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** Both Claude and Codex now have authorship notation rules, but no shared convention. Without one, session log entries will accumulate inconsistent formats.
 **Constraints:** Use exactly three labels — `Claude-authored`, `Codex-authored`, `Joint decision`. No other variants. Apply at the artifact level (each decision, implementation block, or reasoning artifact), not at the session level.
 
+**Decision:** `optimize-and-plan` personal skill created at `~/.claude/skills/optimize-and-plan/SKILL.md`.
+**Why:** Charles repeatedly needs to (1) turn raw intent into an optimized Claude/Codex prompt and (2) get an expert-reviewed implementation plan with tool routing for a task list. Doing this ad hoc was inconsistent and didn't reliably apply LLM expert perspective.
+**Constraints:** Two modes — prompt optimizer and task sequencer. Expert lens always outweighs generic Claude defaults. Triggered automatically by CLAUDE.md when Charles asks to turn context into a prompt or plan a task list. Codex-side wording provided for `charles-llm-workflow.md` — Claude must not touch that file directly.
+
+**Decision:** Usage discipline and parallel-work protocol added as a durable rule.
+**Why:** Claude and Codex both have usage limits. Without explicit routing discipline, the wrong tool silently takes the wrong task, tokens get wasted on repeated work, and parallelization opportunities are missed.
+**Constraints:** Claude conserves reasoning tokens for judgment-heavy work. Repeated chat patterns should become skills/agents/files. Parallel splits only when write surfaces are disjoint. At usage-limit boundaries, Claude produces a structured Codex-ready handoff prompt. Full detail in `memory/feedback_usage_discipline.md` and `CLAUDE.md`.
+
 ---
 
 ## Deferred Items (not decisions — pending)
@@ -95,5 +103,5 @@ When a decision is made, add it here before the session ends. Format:
 - Accordion image file replacements (Charles to re-export)
 - Shareable hash links for Pricing filter chips
 - Create agent for clean code / Charles's code preferences (naming, structure, TS standards, etc.)
-- Create agent for LLM / Claude optimization engineering (prompt design, context management, token efficiency)
+- ~~Create agent for LLM / Claude optimization engineering~~ — completed 2026-04-19 as `optimize-and-plan` personal skill
 - Turn the evolving ChatGPT copy-handoff workflow into a first-class reusable tool: update Claude's existing copy-prep/review flow and add the Codex-side equivalent skill/guidance so blueprint rewrite -> repo-aware review -> targeted section prompts becomes repeatable.

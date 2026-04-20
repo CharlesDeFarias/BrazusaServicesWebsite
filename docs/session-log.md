@@ -3393,3 +3393,37 @@ a suggested minimal version vs stronger version so you can choose how forceful t
 
 - **Claude-authored:** added the Claude-side usage-discipline and tool-routing rule in `CLAUDE.md`.
 - **Codex-authored:** added the matching Codex-side durable rule in `charles-llm-workflow.md`, mirrored it into the repo export copy, and added a thin pointer in `CODEX.md`.
+
+### 04/19/2026, 08:49:50 PM
+**Prompt:** do a durable update first and then commit and push
+
+---
+
+## Session: 2026-04-19 (AI workflow tooling — optimize-and-plan skill)
+
+### Decisions made this session
+- `optimize-and-plan` personal skill created (two-mode: prompt optimizer + task sequencer)
+- Usage discipline and parallel-work protocol formalized as a durable rule
+- Both promoted to `decisions.md`
+
+### Session record
+
+**Claude-authored:**
+- Reviewed Codex's usage-discipline analysis; added expert perspective on handoff artifacts, context window as a separate resource from token count, and the inverse of expensive reasoning
+- Created `~/.claude/skills/optimize-and-plan/SKILL.md` — personal cross-project skill with two modes
+- Added usage discipline rule to `CLAUDE.md` (brief, 4 lines)
+- Added `optimize-and-plan` trigger to `CLAUDE.md`
+- Wrote `memory/feedback_usage_discipline.md`
+- Updated `memory/MEMORY.md` index
+- Updated `docs/decisions.md` with both new decisions and struck the resolved deferred item
+
+**Codex to handle (wording provided):**
+- Add usage-discipline section to `charles-llm-workflow.md`
+- Add thin pointer in `CODEX.md`
+
+### Prompt log
+- Session start + review of Codex changes since usage-limit interruption
+- Discussed formalizing the prompt-optimization and task-sequencing workflow into a skill
+- Answered: one merged prompt (expert-weighted), full rationale in plan mode, superpowers location
+- Reviewed Codex's usage-discipline analysis
+- Agreed on 4-step implementation plan and executed it

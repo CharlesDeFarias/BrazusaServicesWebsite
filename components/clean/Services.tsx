@@ -272,7 +272,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
         <div className="mt-8 mb-6">
           <p
             className="text-xs uppercase mb-4"
-            style={{ color: 'rgba(196,154,68,0.7)' /* no token: intentional */, letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+            style={{ color: 'var(--color-gold-60)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
           >
             We can also help with
           </p>

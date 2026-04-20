@@ -3744,3 +3744,47 @@ Since 1994, hands-on experience built strong training, consistent standards, and
 - `Codex-authored:` Applied the approved copy repositioning pass across `components/clean/Hero.tsx`, `components/clean/TrustStrip.tsx`, `components/clean/Positioning.tsx`, `components/clean/HowItWorks.tsx`, `components/clean/About.tsx`, and the `homes` body in `app/clean/page.tsx`.
 - `Codex-authored:` Verified the pass with `npx.cmd tsc --noEmit` and committed it as `ab6b924` (`feat: apply approved copy repositioning across Hero, TrustStrip, Positioning, HowItWorks, About, and Homes accordion`).
 - `Joint decision:` Claude should review this copy implementation next, with special attention to the Hero subhead repetition around "your operation already runs" and the unchanged Homes teaser copy that was intentionally left out of the approved pass.
+
+### 04/19/2026, 09:48:57 PM
+**Prompt:** review the changes codex just made. it made me nervous by mentioning it completely recreated some files. ensure nothing important was lost.
+
+### 04/19/2026, 09:52:36 PM
+**Prompt:** do a durable update, make sure to highlight the part that got delegated to codex due to claude's decision it'd be better suited, and then push
+
+---
+
+## Session: 2026-04-19 (Copy repositioning — blueprint to components)
+
+### Decisions made this session
+- Brazusa site stays single-page for current phase; multi-page is long-term target
+- Navy/gold design system confirmed aligned with marketresearch direction; no color changes
+- Copy.txt blueprint-first workflow completed for Phase 1 (see decisions.md for status)
+- All three promoted to decisions.md
+
+### Session record
+
+**Claude-authored:**
+- Full session start including review of all Codex changes since previous usage-limit interruption
+- Assessed marketresearch.txt IA recommendation (separate pages vs single-page); recommended staying single-page and explained why SEO benefit is a longer-game concern
+- Conducted full design audit against marketresearch.txt: confirmed navy/gold system is already aligned, identified 5 sections needing copy rewrites (Hero, TrustStrip, Positioning, HowItWorks, About) plus Homes accordion
+- Produced consolidated ChatGPT brief covering all 6 sections with character limits, language rules, claim safety constraints, and exact data structure mapping
+- Ran 3 copy-review passes on ChatGPT's output and corrections; produced correction prompts for each flagged violation
+- Gathered missing operational detail from Charles (communication method, what 30 years produces) and incorporated into final correction brief
+- Confirmed all copy approved before any file was touched
+
+**Codex-authored (delegated by Claude — judgment rationale below):**
+- Implemented approved copy changes across 6 files: `Hero.tsx`, `TrustStrip.tsx`, `Positioning.tsx`, `HowItWorks.tsx`, `About.tsx`, `app/clean/page.tsx`
+- Commit: `ab6b924`
+
+**Delegation rationale (Claude → Codex):**
+The implementation step was explicitly routed to Codex because: (1) all copy was fully approved before any file was touched — no judgment calls remained; (2) the task was purely bounded file changes against known data structures; (3) Codex's repo-aware execution is better suited to this than Claude's reasoning tokens. This is the handoff pattern the usage discipline rule was designed for. Claude reviewed the result against all 6 files and confirmed nothing was lost.
+
+### Prompt log
+- Session start + Codex change review
+- IA decision: single-page vs multi-page reasoning
+- Design audit
+- ChatGPT brief production (optimize-and-plan skill applied)
+- 3 copy-review passes + correction prompts
+- Operational detail gathered from Charles for final two items
+- Codex implementation delegated and reviewed
+- Durable update + push

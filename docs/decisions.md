@@ -75,6 +75,15 @@ When a decision is made, add it here before the session ends. Format:
 **Decision:** For the current Brazusa copy overhaul, ChatGPT should rewrite `docs/briefs/copy.txt` first, not the live component copy.
 **Why:** The current need is strategic messaging refinement before layout-fit refinement. `copy.txt` is the blueprint layer, so ChatGPT can use its stronger Brazusa voice and business context without being prematurely constrained by section lengths. After that, Claude/Codex can map the revised blueprint back onto the current repo structure and only then request tightly constrained section-level rewrites where needed.
 **Constraints:** Do not ask ChatGPT for an end-to-end rewrite of the currently rendered site copy yet. The workflow for this phase is: rewrite `copy.txt` -> review against current repo structure and locked decisions -> generate targeted section prompts only where additional copy passes are needed.
+**Status:** Phase 1 complete as of 2026-04-19. `copy.txt` rewritten (brand positioning layer). Design audit completed. Section-level ChatGPT brief produced, 3 copy-review passes run, copy approved. Implementation delegated to Codex. Next: ChatGPT refinement of per-client accordion copy (STR, Property, Offices) and Homes teaser line.
+
+**Decision:** Brazusa site remains single-page (`/clean`) for the current phase. Multi-page architecture (separate `/clean/str`, `/clean/office`, `/clean/clinic`, `/clean/property` routes) is the correct long-term target but not the right move now.
+**Why:** The main benefit of separate pages is SEO indexability per service segment — a longer-game benefit that isn't a bottleneck until there is traffic to route. The existing single-page segment routing (accordion + services filter) achieves the trust-building and self-identification goals just as well for now. Building full per-segment content depth first is the right prerequisite.
+**Constraints:** Do not add new routes or restructure navigation for segment pages without an explicit decision to begin Phase 3. When per-segment content is deep enough to justify it, migration to separate routes is straightforward in Next.js.
+
+**Decision:** Navy/gold design system confirmed as aligned with `marketresearch.txt` direction. No color changes needed.
+**Why:** Full design audit conducted 2026-04-19. Gold (`#C49A44`) is used only as a restrained functional accent — step numbers, thin divider lines, arrow markers, one CTA button. It never appears as a decorative fill or dominant visual element. The "avoid luxury golds" note in marketresearch refers to warm lifestyle usage, not functional accent usage. Navy is correctly dominant.
+**Constraints:** Gold usage must stay restrained and functional. Any future use of gold as a background wash or decorative element should be flagged against this decision.
 
 **Decision:** Authorship notation convention for dual-tool sessions.
 **Why:** Both Claude and Codex now have authorship notation rules, but no shared convention. Without one, session log entries will accumulate inconsistent formats.

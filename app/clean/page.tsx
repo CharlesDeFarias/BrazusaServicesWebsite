@@ -1,6 +1,7 @@
 'use client'
 
 import { type JSX, useState, useRef, useEffect } from 'react'
+import { getCopy, isValidSegment, type Segment } from '@/lib/copy/brazusa-cleaning'
 import StickyNav        from '@/components/clean/StickyNav'
 import Hero             from '@/components/clean/Hero'
 import TrustStrip       from '@/components/clean/TrustStrip'
@@ -94,7 +95,11 @@ const clientItems: ClientItem[] = [
 export default function CleanPage(): JSX.Element {
   const [drawerOpen, setDrawerOpen]           = useState(false)
   const [drawerSpaceType, setDrawerSpaceType] = useState('')
-  const [activeClient, setActiveClient]       = useState<string | null>(null)
+  const [activeClient, setActiveClient] = useState<Segment | null>(() => {
+    if (typeof window === 'undefined') return null
+    const param = new URLSearchParams(window.location.search).get('for')
+    return param && isValidSegment(param) ? param : null
+  })
   const [showServicesHint, setShowServicesHint] = useState(false)
   const heroRef      = useRef<HTMLElement>(null)
   const servicesHintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -113,7 +118,7 @@ export default function CleanPage(): JSX.Element {
   }
 
   const handleActiveClientChange = (clientId: string | null): void => {
-    setActiveClient(clientId)
+    setActiveClient(clientId && isValidSegment(clientId) ? clientId : null)
 
     if (!clientId) {
       setShowServicesHint(false)
@@ -137,7 +142,7 @@ export default function CleanPage(): JSX.Element {
         setActiveClient={handleActiveClientChange}
         onOtherClick={() => openDrawer('other')}
       />
-      <Hero heroRef={heroRef} onQuoteClick={() => openDrawer()} />
+      <Hero heroRef={heroRef} onQuoteClick={() => openDrawer()} heroCopy={getCopy(activeClient).hero} />
       <TrustStrip />
       <Positioning />
       <ClientAccordion

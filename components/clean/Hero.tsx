@@ -2,28 +2,17 @@
 
 import type { JSX, RefObject } from 'react'
 import Image from 'next/image'
+import type { HeroCopy } from '@/lib/copy/brazusa-cleaning'
 
 interface HeroProps {
   heroRef: RefObject<HTMLElement | null>
   onQuoteClick: () => void
+  heroCopy: HeroCopy
 }
 
 const blurDataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
-const differentiators = [
-  { n: '01', text: 'Work completed and clearly confirmed' },
-  { n: '02', text: 'Issues flagged before they become problems' },
-  { n: '03', text: 'Communication you do not have to chase' },
-  { n: '04', text: 'Works with your tools, apps, or systems' },
-  { n: '05', text: 'Consistent team that learns your space' },
-  { n: '06', text: 'Flexible scope without losing structure' },
-  { n: '07', text: 'Handles inventory, linen, and basic property tasks' },
-  { n: '08', text: '24/7 virtual communication when needed' },
-  { n: '09', text: 'Scope and pricing structured around your volume' },
-  { n: '10', text: 'Scales with occupancy, volume, or activity' },
-]
-
-export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element {
+export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JSX.Element {
   return (
     <section
       ref={heroRef}
@@ -45,20 +34,20 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
             className="fade-up-1 italic leading-none mb-6"
             style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)', fontWeight: 300, letterSpacing: '-0.01em' }}
           >
-            Cleaning built for rentals, offices, and multi-unit operations.
+            {heroCopy.h1}
           </h1>
 
           <div className="fade-up-1 w-12 h-px bg-brand-gold mb-6" />
 
           <div className="fade-up-2 text-base md:text-lg leading-relaxed mb-6 text-white-55">
             <p>
-              Work is completed and confirmed through your preferred channel, and when something is off it is flagged with context so it can be handled before it affects guests, staff, or schedules.
+              {heroCopy.body}
             </p>
           </div>
 
           {/* Differentiators 2-column grid */}
           <div className="fade-up-2 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 mb-8">
-            {differentiators.map((d) => (
+            {heroCopy.differentiators.map((d) => (
               <div key={d.n} className="flex items-start gap-2">
                 <span
                   className="text-xs font-semibold flex-shrink-0 tabular-nums mt-0.5 text-brand-gold"
@@ -91,7 +80,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
           </div>
 
           <p className="fade-up-3 text-xs text-white-30">
-            Tell us how your space runs and we will say if it fits or not.
+            {heroCopy.microcopy}
           </p>
 
           {/* Mobile image — full-bleed, shown below CTAs on small screens */}

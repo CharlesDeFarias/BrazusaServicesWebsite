@@ -7,27 +7,27 @@ type Category = 'all' | 'str' | 'property' | 'offices' | 'homes' | 'other'
 const cases: { category: Category; title: string; result: string; detail: string }[] = [
   {
     category: 'str',
-    title: 'Thatch - multi-building STR operation',
+    title: 'Thatch — multi-building STR operation',
     result: 'Turnover coordination across multiple units, no dropped handoffs.',
-    detail: 'Managing several short-term rentals across different buildings meant scheduling was constantly changing. We built a system around their calendar - same-day confirmations, consistent checklists, and a direct line so nothing fell through between guests.',
+    detail: 'Managing several short-term rentals across different buildings meant scheduling was constantly changing. We built a system around their calendar — same-day confirmations, consistent checklists, and a direct line so nothing fell through between guests.',
   },
   {
     category: 'str',
-    title: 'Michelle & Wendy - independent STR hosts',
+    title: 'Michelle & Wendy — independent STR hosts',
     result: 'Review scores improved. They stopped thinking about cleaning.',
-    detail: 'Two separate hosts who each had issues with their previous cleaners - inconsistency, missed items, bad communication. We took over both and standardized the process. They now text us the booking; we handle the rest.',
+    detail: 'Two separate hosts who each had issues with their previous cleaners — inconsistency, missed items, bad communication. We took over both and standardized the process. They now text us the booking; we handle the rest.',
   },
   {
     category: 'property',
-    title: 'Diana - corporate housing (Capital One)',
+    title: 'Diana — corporate housing (Capital One)',
     result: 'Reliable turnovers for furnished units housing traveling employees.',
-    detail: 'Corporate housing runs on tight schedules - employees check out, new ones check in within hours. Diana needed someone who could work on short notice, document the condition of units, and communicate clearly. We\'ve been handling these ever since.',
+    detail: 'Corporate housing runs on tight schedules — employees check out, new ones check in within hours. Diana needed someone who could work on short notice, document the condition of units, and communicate clearly. We\'ve been handling these ever since.',
   },
   {
     category: 'homes',
-    title: 'Roommates - partial apartment cleaning',
+    title: 'Roommates — partial apartment cleaning',
     result: 'Cleaned one bedroom and shared areas only. No pressure for more.',
-    detail: 'One roommate wanted regular cleaning; the others didn\'t want to pay for rooms they\'d handle themselves. We set up a custom plan covering just the shared spaces and one bedroom - fair, straightforward, and exactly what they asked for.',
+    detail: 'One roommate wanted regular cleaning; the others didn\'t want to pay for rooms they\'d handle themselves. We set up a custom plan covering just the shared spaces and one bedroom — fair, straightforward, and exactly what they asked for.',
   },
   {
     category: 'str',
@@ -307,7 +307,7 @@ export default function Testimonials(): JSX.Element {
                 style={{ width: `${CARD_W}px`, maxWidth: '80vw', border: '1px dashed var(--color-light-gray)' }}
               >
                 <p className="text-sm text-center" style={{ color: 'var(--color-warm-gray-light)' }}>
-                  No examples for this category yet - reach out directly.
+                  No examples for this category yet — reach out directly.
                 </p>
               </div>
             )}

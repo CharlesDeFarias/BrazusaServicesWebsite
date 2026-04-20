@@ -83,9 +83,9 @@ const clientItems: ClientItem[] = [
     spaceType: 'apartment',
     body: (
       <>
-        <p>We&apos;ve been cleaning homes since 1994. The people doing your cleaning are the same people who built this business — not a rotating crew working off a checklist.</p>
-        <p>We&apos;re flexible on scope. Don&apos;t need the whole apartment cleaned? That&apos;s fine. Need specific rooms, certain tasks, or a one-time deep clean before an event? We work around what you actually need, not what a package requires.</p>
-        <p>We&apos;re also honest — if we think something will take longer than expected, we&apos;ll say so before we start.</p>
+        <p>You get a consistent team that understands your home and how you like things done. Not a rotating group that needs to relearn everything each visit.</p>
+        <p>Scope stays flexible. You can adjust what gets done, how often, and how detailed it is, without turning it into a complicated process.</p>
+        <p>Communication stays simple and clear. If something needs attention, you&apos;ll know. Otherwise, the work is handled without you having to think about it.</p>
       </>
     ),
   },

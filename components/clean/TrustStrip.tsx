@@ -1,12 +1,12 @@
 import type { JSX } from 'react'
 
 const badges = [
+  'Work completed and confirmed',
+  'Issues flagged early',
+  'Structured communication',
   'Fully insured',
-  'Family-owned & operated',
-  'Serving Greater Boston since 1994',
-  'Residential + commercial',
-  'No surprises, ever',
-  'Fast, flexible communication',
+  'Stable, consistent team',
+  'Boston-based, locally run',
 ]
 
 export default function TrustStrip(): JSX.Element {

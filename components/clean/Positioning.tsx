@@ -1,11 +1,11 @@
 import type { JSX } from 'react'
 
 const keyPoints = [
-  'A consistent team that knows your space',
-  'Clear communication, fast responses, and real follow-through',
-  'Systems for quality, not just good intentions',
-  'Flexible enough to adapt to different types of clients and situations',
-  'Built to scale without losing control',
+  'Completion is confirmed without follow-up',
+  'Issues are flagged before they escalate',
+  'Status shared via your tools, apps, or preferred method',
+  'Standards are applied consistently across visits',
+  'Scope adapts without losing structure',
 ]
 
 export default function Positioning(): JSX.Element {
@@ -26,25 +26,15 @@ export default function Positioning(): JSX.Element {
             className="italic text-3xl md:text-4xl text-navy mb-6 leading-snug"
             style={{ fontWeight: 300 }}
           >
-            A different kind of cleaning company
+            Built for operators, not oversight
           </h2>
           <div className="space-y-4 text-sm leading-relaxed" style={{ color: 'var(--color-warm-gray-darker)' }}>
-            <p>Most cleaning companies fall into one of two categories.</p>
-            <p>
-              You either get a big company that&apos;s structured but hard to deal with,
-              or a small team that does good work but breaks down once things get busy.
-            </p>
-            <p>We built something in between.</p>
-            <p>
-              We&apos;re still a family business. The same people have been doing this for decades.
-              But we&apos;ve layered systems, communication, and structure on top of that experience.
-            </p>
-            <p>
-              So you don&apos;t have to chase us for updates, repeat instructions, or fix the same problems over and over.
-            </p>
-            <p className="font-medium" style={{ color: 'var(--color-navy)' }}>
-              We handle our side properly.
-            </p>
+            <p>Most cleaning services fall into two categories.</p>
+            <p>Small independent teams are affordable, but inconsistent. You end up managing them more than you should.</p>
+            <p>Large vendors have structure, but little flexibility. You become just another account.</p>
+            <p>Brazusa sits between those two.</p>
+            <p>You get a consistent team that understands your space. You also get structure, communication, and accountability.</p>
+            <p>The work gets done, confirmed, and communicated without requiring your oversight.</p>
           </div>
         </div>
 

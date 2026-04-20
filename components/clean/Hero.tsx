@@ -11,13 +11,13 @@ interface HeroProps {
 const blurDataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='
 
 const differentiators = [
-  { n: '01', text: 'Real people managing your space, not a rotating crew' },
-  { n: '02', text: '24/7 communication through our virtual team' },
-  { n: '03', text: 'We can use whatever tools, apps, or systems you already have' },
-  { n: '04', text: 'Highly customized cleaning plans and pricing' },
-  { n: '05', text: 'We scale up or down depending on your needs' },
-  { n: '06', text: 'We track details so things don\'t fall through the cracks' },
-  { n: '07', text: 'We can handle more than just cleaning if needed' },
+  { n: '01', text: 'Work completed and clearly confirmed' },
+  { n: '02', text: 'Issues flagged before they become problems' },
+  { n: '03', text: 'Communication you do not have to chase' },
+  { n: '04', text: 'Works with your tools, apps, or systems' },
+  { n: '05', text: 'Stable team that learns your space' },
+  { n: '06', text: 'Flexible scope without losing structure' },
+  { n: '07', text: 'Can support beyond cleaning when defined' },
 ]
 
 export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element {
@@ -49,16 +49,15 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
 
           <div className="fade-up-2 space-y-3 text-base md:text-lg leading-relaxed mb-6" style={{ color: 'var(--color-white-55)' }}>
             <p>
-              We&apos;re a family business that&apos;s been doing this since 1994.
-              But we&apos;re not stuck in 1994.
+              You get a team that shows up, does the work, and lets you know it&apos;s done. No chasing. No
+              guessing.
             </p>
             <p>
-              You get the care and consistency of a small, experienced team,
-              with the communication, structure, and flexibility most companies struggle to offer.
+              You get a responsive, structured team that fits into how your operation already runs.
             </p>
             <p>
-              We work with homeowners, short-term rentals, and multi-building operations.
-              We can keep it simple, or we can build systems around your space.
+              Work is handled, confirmed, and communicated clearly. We adapt to how your operation already
+              runs.
             </p>
           </div>
 
@@ -97,7 +96,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
           </div>
 
           <p className="fade-up-3 text-xs" style={{ color: 'var(--color-white-30)' }}>
-            Not sure if we&apos;re the right fit? Reach out anyway. We&apos;ll point you in the right direction.
+            Not sure if this fits? Reach out and we&apos;ll tell you honestly.
           </p>
 
           {/* Mobile image — full-bleed, shown below CTAs on small screens */}

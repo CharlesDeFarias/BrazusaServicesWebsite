@@ -18,25 +18,14 @@ export default function About(): JSX.Element {
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center relative">
         <div>
           <h2 className="italic text-3xl md:text-4xl text-navy mb-5 leading-snug" style={{ fontWeight: 300 }}>
-            A family business,<br />rebuilt for today
+            Built through real work, not theory
           </h2>
           <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--color-warm-gray-darker)' }}>
-            <p>
-              Brazusa started in 1994 when our mother began cleaning homes.
-            </p>
-            <p>
-              Over time, it grew into a full business when our father joined after being laid off during the housing crisis.
-            </p>
-            <p>
-              Since then, we&apos;ve worked across homes, apartments, offices, and large property operations.
-            </p>
-            <p>
-              The difference now is structure.
-            </p>
-            <p>
-              The next generation is building systems around that experience — so the quality stays the same,
-              but everything around it works better.
-            </p>
+            <p>Brazusa was built in Boston by Brazilian immigrants doing the work themselves. That foundation still shapes how the company operates.</p>
+            <p>Since 1994, hands-on experience built strong training, consistent standards, and a clear understanding of what clients need.</p>
+            <p>Over time, structure was added on top of that. Work is completed, confirmed, and clearly communicated so nothing depends on guesswork.</p>
+            <p>Today, the company runs with both layers in place. Strong execution on the ground, with systems to support it.</p>
+            <p>For the client, that means less involvement. The work is handled, and you don&apos;t have to manage it.</p>
           </div>
           <div className="mt-7 flex items-center gap-4">
             <div className="w-8 h-px" style={{ background: 'var(--color-brand-gold)' }} />

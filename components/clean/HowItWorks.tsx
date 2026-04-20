@@ -1,26 +1,12 @@
 import type { JSX } from 'react'
 
 const steps = [
-  {
-    n: '01',
-    label: 'You reach out',
-    detail: 'Simple message or full breakdown — either works.',
-  },
-  {
-    n: '02',
-    label: 'We respond quickly',
-    detail: 'Usually same day, often within hours.',
-  },
-  {
-    n: '03',
-    label: 'Quote or a few quick questions',
-    detail: "We'll price it or ask what we need to get it right.",
-  },
-  {
-    n: '04',
-    label: 'We schedule and get started',
-    detail: 'Straightforward from here.',
-  },
+  { n: '01', label: 'Reach out', detail: 'Tell us about your space and needs' },
+  { n: '02', label: 'We respond', detail: 'We ask the right questions and clarify scope' },
+  { n: '03', label: 'Clear plan', detail: 'You get a defined scope and pricing' },
+  { n: '04', label: 'Work begins', detail: 'Service starts on the agreed schedule' },
+  { n: '05', label: 'Work is confirmed', detail: 'You\'re told when things are completed' },
+  { n: '06', label: 'Issues are handled', detail: 'Anything off is flagged and addressed' },
 ]
 
 export default function HowItWorks(): JSX.Element {
@@ -42,7 +28,7 @@ export default function HowItWorks(): JSX.Element {
           How it works
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
           {steps.map((step) => (
             <div key={step.n} className="flex flex-col gap-3">
               <span
@@ -66,8 +52,8 @@ export default function HowItWorks(): JSX.Element {
         >
           <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-brand-gold)' }}>→</span>
           <p style={{ color: 'var(--color-warm-gray-darker)' }}>
-            If something is different from what we expected, we&apos;ll tell you before starting.{' '}
-            <span className="font-medium text-navy">No surprises.</span>
+            No surprises. Scope and expectations are clear upfront. If something changes, it&apos;s discussed
+            before it becomes a problem.
           </p>
         </div>
       </div>

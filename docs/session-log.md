@@ -3193,3 +3193,203 @@ That modified `docs/session-log.md` was already present and was not part of this
 
 ### 04/19/2026, 08:26:09 PM
 **Prompt:** i've just now finished updating the copy and text with what chatgpt gave me. now you may commit and push
+
+### 04/19/2026, 08:27:18 PM
+**Prompt:** first, i want you to make sure you've done a proper session start including a review of all the changes codex made since you were interrupted by my usage limit
+
+### 04/19/2026, 08:31:25 PM
+**Prompt:** I know we'd decided to stop tuning for now and get back to building, but i keep running into something i constantly do so it seems that it's worth setting up either a skill or something for it. That is: i like to give you information and then have you use the perspecetive of both general claude with my project context AND specifically the protext of an LLM/claude/codex expert to word what i want into a prompt that's most effecient for claude to read and implement. Likewise i'll occaisionally have a list of things i want done, and want an expert perspecetive on the best way of actually mplementing those things, including whether to invoke specific skills or agents or whateveer.
+
+### 04/19/2026, 08:35:32 PM
+**Prompt:** 1- one merged best version prompt, more weight should always bee given to the expret point of view.
+2- include it all
+3- i'm not sure, what do you recommend and why?
+4- here's what i just said to codex and what it said back, as its relevant. respond to this as well before we move forward.
+
+- onee thing i want to add to both codex and claude's instructions/context is that they're both helping me make the most of the usage limits each has. so both should make recommendations to me on A) things that are better handled by the other toolB) ways to make best usage of tokens C) recommend ways to split tasks between claude and codex so they can work simultaneously without interrupting each other.
+
+review this from the point of view of an LLM/claude/codex expert. review this idea and make suggestions
+8:33 PM
+
+
+
+Using charles-llm-workflow here.
+
+This is a good idea, and I think it should become a real durable rule. It matches how you already work, and it fixes a blind spot: right now the system thinks mostly in terms of quality, safety, and role fit, but not enough in terms of scarce-model-budget orchestration.
+
+My take is: yes, add it, but don’t write it as “both tools should always optimize usage limits.” Write it more precisely as a workflow rule about attention allocation, token economy, and parallelization.
+
+What’s strong about the idea
+It pushes both tools to think like collaborators in a constrained system, not just isolated assistants.
+
+That gives you three real benefits:
+
+better routing
+the wrong tool stops silently taking the wrong task
+better token economy
+fewer expensive long-form turns spent on mechanical work
+better parallelism
+Claude and Codex can each own different slices without stepping on each other
+That’s especially valuable in your setup because you already have:
+
+a governance-heavy Claude layer
+an execution-heavy Codex layer
+real handoff patterns
+real usage limits that affect how you work
+So the instinct is correct.
+
+What needs tightening
+The current version is right in spirit, but slightly too broad. I’d refine all three parts.
+
+A. “things better handled by the other tool”
+Good, but should not become constant deflection.
+
+Better framing:
+
+flag when another tool is a materially better fit
+explain why
+only do this when it meaningfully improves quality, speed, safety, or token efficiency
+Otherwise both tools may over-route and become annoying.
+
+B. “ways to make best usage of tokens”
+Good, but “best usage of tokens” is too vague.
+
+Better framing:
+
+conserve high-value reasoning tokens for judgment-heavy work
+push mechanical or repetitive work into narrower tasks, durable files, or the cheaper/more execution-oriented tool
+suggest when a workflow should move from chat into a skill/agent/doc because repeated token spend is a smell
+That makes it actionable instead of abstract.
+
+C. “split tasks so Claude and Codex can work simultaneously”
+This is probably the highest-leverage part.
+
+But it should be written with one caveat:
+
+only recommend parallelization when the tasks are truly separable
+and when the write scopes or responsibilities can be kept distinct
+Otherwise you create more coordination cost than you save.
+
+So I’d make this explicitly about:
+
+disjoint responsibilities
+non-overlapping write surfaces
+one tool reviewing while the other implements
+one tool handling docs/governance while the other handles code
+one tool preparing prompts/handoffs while the other keeps building
+My recommended durable version
+I’d turn your idea into something like this:
+
+Usage-Limit and Parallel-Work Discipline
+
+Claude and Codex should help Charles make the most of each tool’s usage limits.
+When a task is materially better handled by the other tool, say so and explain why.
+Conserve high-value reasoning and token budget for work that actually benefits from it: governance, design judgment, copy review, architecture, risky decision-making, and complex synthesis.
+Suggest when repeated chat work should become a durable file, agent, skill, or checklist to reduce future token waste.
+When useful, propose a split where Claude and Codex can work in parallel without interrupting each other. Prefer separations with distinct responsibilities or non-overlapping write surfaces.
+Do not recommend parallelization when the tasks are tightly coupled, likely to conflict, or would create more coordination overhead than value.
+That version is strong because it’s:
+
+behavioral
+practical
+not over-broad
+tied to failure modes you actually have
+Where I think this belongs
+Not all in one place.
+
+Best shared durable location
+CLAUDE.md
+because this is really part of the shared project operating model now
+Best Codex-side reinforcement
+charles-llm-workflow.md
+because this is cross-model workflow logic
+maybe lightly reinforced in charles-codex.md
+especially the “bounded parallel splits / token economy” piece
+Possibly also in CODEX.md
+Only briefly.
+
+a short pointer, not a full restatement
+CODEX.md should stay thin
+Claude side
+If you want Claude to consistently behave this way, it probably belongs:
+
+in CLAUDE.md
+and maybe eventually in a Claude-side workflow/memory note if Claude supports that cleanly
+What I would not do
+I would not write:
+
+“always recommend the cheaper tool”
+“always parallelize”
+“always optimize for fewer tokens”
+“always hand work off when another tool could do it”
+Those rules would damage quality.
+
+The right principle is:
+
+optimize for overall leverage, not just lower token count
+Sometimes the “expensive” model is the right one because it prevents three bad downstream turns.
+
+Specific suggestions for how the two tools should think
+Claude should bias toward
+governance
+design/copy review
+prompt/handoff preparation
+architecture judgment
+critique of returned output
+deciding what should become durable
+Claude should be more willing to say:
+
+“this is Codex-shaped implementation work”
+“I should frame this for Codex instead of doing it myself”
+“this repeated explanation should become a file/agent/rule”
+Codex should bias toward
+implementation
+mechanical repo updates
+bounded document edits
+durable-file maintenance
+structured verification
+surfacing when Claude is the better reviewer/judge
+Codex should be more willing to say:
+
+“this part should go to Claude for judgment”
+“here’s how we can split this so I keep coding while Claude reviews X”
+“this pattern is repeating enough to deserve a durable rule”
+Best parallel split patterns for your setup
+These are the highest-value ones:
+
+Claude reviews copy/design/governance while Codex implements unrelated bounded code work
+Claude prepares or audits prompts while Codex applies accepted structure to files
+Claude critiques returned ChatGPT/Gemini output while Codex maps approved pieces into code
+Claude handles risky integration manifest/review while Codex waits or works on safe unrelated slices
+Claude updates public-facing explanation docs while Codex updates exported config / mechanical repo structure
+Final judgment
+I think this is a strong addition and worth making durable.
+
+My main recommendation is:
+
+add it as a shared workflow discipline
+frame it around leverage, token economy, and safe parallelization
+avoid turning it into a simplistic “always use the other tool if possible” rule
+If you want, I can next turn this into:
+
+exact wording for CLAUDE.md
+the matching Codex-side wording for charles-llm-workflow.md and maybe charles-codex.md
+a suggested minimal version vs stronger version so you can choose how forceful to make it
+
+### 04/19/2026, 08:37:16 PM
+**Prompt:** go ahead, let's proceed with those steps
+
+### 04/19/2026, 08:43:51 PM
+**Prompt:** will i have to manually invoke the skill each time or is this set up to get used automatically like the other skills and such we set up in claude.md?
+
+### 04/19/2026, 08:46:43 PM
+**Prompt:** yes add the triggeer
+
+---
+
+## Session: 2026-04-19 (Codex usage-discipline alignment)
+
+### Session record
+
+- **Claude-authored:** added the Claude-side usage-discipline and tool-routing rule in `CLAUDE.md`.
+- **Codex-authored:** added the matching Codex-side durable rule in `charles-llm-workflow.md`, mirrored it into the repo export copy, and added a thin pointer in `CODEX.md`.

@@ -77,6 +77,7 @@ Use the Charles skills when relevant:
 - `charles-session-start` for meaningful repo starts
 - `charles-clean-code` for implementation quality, naming, structure, and dependency judgment
 - `charles-llm-workflow` for prompt review, handoff prep, returned-output review, and workflow critique
+- See `charles-llm-workflow.md` for usage-limit discipline and parallel-work protocol.
 - `charles-codex-optimizer` when the task is about improving Codex usage itself
 - `charles-durable-update` when wrapping up meaningful work and deciding what to preserve
 - `claudecoding-integration-safety` before any live integration change

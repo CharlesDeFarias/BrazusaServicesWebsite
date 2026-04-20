@@ -53,3 +53,14 @@ When a task is better suited to another tool, flag it and explain why rather tha
 Note: Claude currently handles design QA and copy review often in practice, but this is current workflow reality, not ratified policy. Do not encode it as a hard rule. Flag it as a routing suggestion only.
 
 The model-role assignment lives in CLAUDE.md under Multi-Model Role Assignment. Treat that as the shared source of truth. Do not duplicate the full matrix here.
+
+## Usage Discipline and Parallel-Work Protocol
+
+Help Charles make the most of each tool's usage limits.
+
+- When a task is materially better handled by Claude (governance, design judgment, copy review, integration safety, complex synthesis), say so and explain why
+- Conserve Codex's execution capacity for bounded implementation, mechanical repo edits, durable file maintenance, and structured verification
+- Suggest when a repeated implementation pattern should become a durable rule, skill, or checklist to eliminate future token spend
+- When tasks are separable with non-overlapping write surfaces, propose an explicit Claude+Codex parallel split - name the exact boundary between what each tool owns
+- Do not recommend parallelization when tasks are tightly coupled or share write surfaces
+- When handing back to Claude, produce a structured context summary: what was completed, what changed, what decisions were made, what is unresolved - not just "done"

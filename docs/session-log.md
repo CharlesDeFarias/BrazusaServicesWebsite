@@ -6704,3 +6704,122 @@ Session covered a full pre-work audit by Codex, governance decisions on QuoteDra
 - Accordion image file replacements (Charles to re-export)
 - Testimonials operational assurance: trust hierarchy says operational proof belongs above social proof -- carousel currently has no layer above it (design review HIGH gap still open)
 - Operational claim verification (see brand-rules.md claim safety list -- Charles needs to confirm which claims are operationally true before per-segment pages can be written)
+
+### 04/20/2026, 02:55:30 PM
+**Prompt:** do a durable update if not done already and push
+
+### 04/20/2026, 02:58:47 PM
+**Prompt:** - add todo list that there's a problem with the favicon showig up on firefox. 
+Also review all of these notes that i took long ago before we made many of the changes we've made so far. I want you to organize them so we can save them appropriately, while also removing what isn't needed and improving these notes. ask me the questions you need to do so:
+Very later:
+Alternate logo file and wordmark - Ask your designer (or use Photoshop/Canva/remove.bg) to export a second version — either logo-white.png (white text, transparent bg) or logo-reversed.png. Then swap by state
+The Google Places API (New) can return your actual rating, review count, and up to 5 recent review snippets. You'd call it server-side (Next.js route handler) so the API key isn't exposed. This lets you display exactly what the task description asks for — live star rating, real review count, actual reviewer quotes — and it stays accurate without manual updates.  Requires: a Google Cloud project + billing enabled (but there's a generous free tier — $200/month credit covers ~40k Place Details calls).
+The images are severely oversized and need compression before deployment.                                                                                                                                                                str.png is 7.4 MB; the others range from 2–2.7 MB. Next.js will convert them to WebP at serve time, but the source file sizes still affect build performance and cold-start delivery. Run all images in public/images/ through a tool like Squoosh or Sharp and resize them to a max width of 1800px before the next deployment. str.png in particular needs to be under 500KB.                       
+Add local business schema markup to the page.: For a location-based service business in Greater Boston, LocalBusiness JSON-LD schema is one of the highest-ROI SEO additions possible. Add it to app/clean/page.tsx or app/layout.tsx with name, address, phone, url, geo coordinates, and areaServed. This directly improves how the business appears in Google local results and Maps.
+Add social media links to the footer if any accounts exist. The footer has no social presence. Even placeholder links to Instagram and Facebook (or wherever Brazusa has accounts) should be there — a cleaning company with a good Instagram (before/after photos, team shots) can be a meaningful trust signal and referral source. Add icon links to the footer's left column next to the contact details.
+Create much more tailored versions of the entire site, not just the services section, for when a client chooses their space/client type, and also for specific url redirects like bostonofficeclean.com. Much more detail relevant to each particular client.
+The footer should be made more attractive and have information about the larger Brazusa services platform, as well as functional links to the subpages
+Add options for whatsapp and wechat and social media contact instead of just phone and email.
+Set up ai chatbot
+*claude note: change the claude.md to A) offer suggestions on how to maximize usage of chatgpt, codex and gemini to minimize token usage. B) periodically review plans, interactions and work from point of view of an LLM expert, claude especially, and provide input onhow to improve.
+
+
+Later:
+I need to add some family/staff photos when I can
+Set up basic landing pages for primo and ze jr
+actionable
+I need to add a photo of the greater boston area range
+
+Copy specific:
+ALL text needs to be tweaked to sound less like AI. Less hyphens, and more natural speaking patterns, leaning more towards familiar rather than professional/formal.
+The hero should be better, something about how we’re the best of both worlds and serve any client.
+The hero caption should be better as well.
+The bullet points beelow the caption in the hero should not be numbered, just normal bullets instead as they dont have any reason to be ordered that way. Also add more important bullet points like 24/7 virtual communication, ability to use any tech/tool clients may need, ability to offer highly customized cleans and prices. 
+Each one of the client types and services need more details added into them. Here’s some notes:
+Short term rental clients will care about these things. Property managers would care about many of these too.
+We have 24/7 robust virtual management and communication, so even if all the cleaners dont speak english, management will always have a way to communicate with them.
+Likewise we have excellent data tracking and tool usage for companies like Thatch that want us to use an app to track cleanings or invoicing or product usage or whatever.
+We care deeply about quality and create systems to maintain quality long term and with low stress
+We’re extremeely flexible and can help companies do far more than just clean their units, including maintenance, property management and operational tasks.
+We can scale to grow and shrink as needed depending on occupancy/activity.
+We’re careful to to track and maintain any rules/data/information clients need, including things like any parking or building rules.
+We offer flexible, discounted pricing that depends on the work and that can change depending on how much business they’re bringing us or how flexible the arrangements can be. 
+We offer the option of tiered cleanings so spaces aren’t just getting basic maintenance cleans but also deep cleans and everything inbeetween, without waiting for it to be a problem that requires a lot of money to pay for
+For apartments and homes:
+We’re extremely flexible with scheduling and what we do in each persons home
+We’re careeful to record and relay any important rules and information that clients want to make sure their cleaners will always remember.
+Our team does not change often and is staffed with trusted employees we’ve worked with for yars. Nobody enters a private residence without significant time working with us and being trained to the point of being trustworthy
+24/7 virtual communication including translating, so they never have to worry about miscommunication with the cleaners
+Likewise I want the services section to receive similar boosts of details from the above lists
+In the real clients, real situations:
+Add a case study of thatch, including some price examples and the many things we do for them
+Add a case study combining Michelle/Wendy
+Another case study for Diana style units
+Case study for roommates
+Case study for labor day move ins/move outs
+Case study for post construction cleanings
+
+
+
+
+
+### 04/20/2026, 03:03:47 PM
+**Prompt:** 1- it does not have any of these yet, but i'll need to make them for sure and we may as well set up the stubs for them in the meantime.
+2- it actively uses whatsapp now, and will eventually use wechat
+3- Primo is the owner of a construction business and Ze jr of a tiling/ceramic business. both will be getting landing pages as seperate businesses in the brazusa serviecs umbrella.
+4- multipage expansion of the same concept, where different businesses get their own one-page app in the brazusa umbrella. the bostonofficeclean.com idea is more an example of  using domain relays to serve different versions of any given business page to targetted clients.
+5- placeholder but not for that much later, as it turns out its not at all that difficult to set up. but i want to get everything eelse functional first, veeery much not needed for MVP.
+6- this was already covereed probably and is just an old note.
+7- on firefox i'm just seeing a white triangle for favicon
+
+### 04/20/2026, 03:13:23 PM
+**Prompt:** ok do a durable update, we're going to have to stop for now. make sure we're all up to date and pushed
+
+---
+
+## Session: 2026-04-20 (continuation 5 -- backlog organization, deferred items)
+
+### Summary
+
+Short session. Resumed from context-limit continuation. Wrapped previous session log, pushed all pending commits, then organized Charles's long-running notes pile into durable artifacts.
+
+**What happened (Claude-authored):**
+
+1. **Session log committed and pushed** -- Previous session's wrap entry was staged but not committed. Committed as 588466c, then pushed. All 9 previously local commits pushed to origin.
+
+2. **Firefox favicon task logged** -- Firefox shows a white triangle instead of the favicon. Root cause: only PNG files exist (`public/favicons/`), no `favicon.ico` at root. Tracked as task #1.
+
+3. **Notes review and organization** -- Charles provided a large pile of accumulated notes from before many of the recent changes. Reviewed against current repo state and organized:
+
+   - **Discarded (already done or covered):**
+     - CLAUDE.md meta-note (multi-model routing and LLM governance already in CLAUDE.md)
+     - Hero numbered bullets (already unnumbered)
+     - Most case studies (Thatch, Michelle, Diana, roommates, Labor Day, post-construction, clinic all in Testimonials.tsx)
+
+   - **Created `docs/backlog.md`** -- canonical feature backlog, tiered:
+     - Deployment blockers: image compression (str.png 7.4 MB, others 2-2.7 MB)
+     - Pre-launch: favicon fix, WhatsApp contact, JSON-LD schema, logo reversed/white
+     - Copy work: hero refresh, STR/homes accordion expansion, services section, full site audit
+     - Post-MVP: Google Places API live reviews, Boston area photo, staff photos, WeChat
+     - Later: AI chatbot, Primo page, Ze Jr page, platform footer
+     - Much later: per-client-type sub-pages, domain relay routing, platform hub
+
+   - **Added to `decisions.md`:**
+     - Brazusa Services umbrella architecture: Primo (construction) and Ze Jr (tiling) as future one-page apps in the same multi-client platform
+     - Domain relay pattern: separate domains (bostonofficeclean.com etc.) as a DNS/marketing layer, not a codebase change
+     - WhatsApp deferred item: business actively uses it (781-686-7189), add to QuickContact + footer + QuoteDrawer
+
+**Context gathered from Charles:**
+- Brazusa has no social media accounts yet -- stubs should be added to footer now
+- WhatsApp actively used now; WeChat future
+- Primo = owner of construction business; Ze Jr = tiling/ceramics business -- both will be separate clients in the platform
+- Multi-page per-client-type is an expansion of the single-page concept, not a conflict with it
+- AI chatbot: post-MVP, not as far off as originally thought, but wait until core is stable
+- CLAUDE.md meta-note: already covered
+
+**Open deferred items entering next session (unchanged from previous):**
+- QuoteDrawer email/phone split (blocked on integration-safety agent run)
+- Testimonials operational assurance (HIGH design review gap -- no proof layer above carousel)
+- Accordion image replacements (Charles to re-export)
+- Operational claim verification (brand-rules.md claim safety list)
+- All items in docs/backlog.md

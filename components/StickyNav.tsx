@@ -218,7 +218,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               letterSpacing: '0.05em',
             }}
           >
-            Free Quote
+            Get a Quote
           </button>
 
           {/* Hamburger — mobile only */}
@@ -318,7 +318,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
             className="mt-4 w-full text-sm font-medium text-white transition-all duration-200"
             style={{ background: 'var(--color-brand-blue)', borderLeft: '2px solid rgba(255,255,255,0.3)', minHeight: '44px' }}
           >
-            Free Quote
+            Get a Quote
           </button>
         </div>
       </div>

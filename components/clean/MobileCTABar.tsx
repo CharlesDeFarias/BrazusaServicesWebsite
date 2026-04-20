@@ -21,7 +21,7 @@ export default function MobileCTABar({ onQuoteClick, drawerOpen }: MobileCTABarP
         className="py-4 text-sm font-medium text-white transition-colors active:opacity-80"
         style={{ background: 'var(--color-navy)', borderRight: '1px solid var(--color-white-10)' }}
       >
-        Get a Free Quote
+        Get a Quote
       </button>
       <a
         href="tel:7816867189"

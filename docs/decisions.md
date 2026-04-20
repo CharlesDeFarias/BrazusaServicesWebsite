@@ -12,6 +12,16 @@ When a decision is made, add it here before the session ends. Format:
 
 ## UI Architecture
 
+**Decision:** `StickyNav` lives in `components/clean/`, not at root `components/` level.
+**Why:** StickyNav is Brazusa-specific. Its `clientTypes` array, "Clean my..." dropdown, props, and logo are all tied to the Brazusa page. Root-level placement implies cross-client reuse that does not exist.
+**Constraints:** If a shared nav abstraction is needed for future clients, design it as a new component. Do not reuse this one.
+
+**Decision:** `QuoteDrawer` stays monolithic until the email/phone contact field split is implemented and stable.
+**Why:** The component exceeds the 250-line threshold, but splitting a form while its core state shape is actively changing stacks structural churn on top of a live integration change.
+**Constraints:** When the split is eventually scheduled, proposed boundaries are: `QuoteDrawer` (main shell + state), `QuoteDrawerContactFields`, `QuoteDrawerDetailFields`, `QuoteDrawerSchedulingFields`. Do not combine the contact field change and the component split into a single commit.
+
+---
+
 **Decision:** `ClientAccordion` and `Services` are separate full-width sections, in that order (accordion first, services second).
 **Why:** Users should select their client type first, which then influences what they see in Services. Side-by-side layout was broken at all screen sizes.
 **Constraints:** Never put them back in a shared horizontal container. Never reverse the order without discussion.
@@ -109,6 +119,18 @@ When a decision is made, add it here before the session ends. Format:
 
 ---
 
+## Brand & Positioning
+
+**Decision:** Trust proof on the Brazusa site must be layered across multiple formats, in this priority order: (1) operational proof -- visible process, how service is checked, how issues are handled; (2) workforce credibility -- legal/documented/insured team; (3) accountability proof -- single point of contact, response expectations; (4) segment relevance proof -- STR, office, clinic-specific language; (5) deliverable proof -- checklists, service examples; (6) social proof -- testimonials, reviews; (7) identity proof -- local/immigrant-owned.
+**Why:** The design review flagged that Testimonials currently delivers only social proof (item 6 of 7). Identity proof is the weakest form and must not carry the full trust burden.
+**Constraints:** Do not position identity proof as a primary trust signal. Operational assurance content belongs above or alongside the Testimonials carousel, not below it. See `docs/briefs/brand-rules.md` for the full trust hierarchy and copy rules.
+
+**Decision:** The following operational claims require factual verification before appearing in production copy or design: inspections on every service, verified completion/photo proof, defined response-time commitments, dedicated account manager, backup coverage, same-day issue handling, low turnover, consistently used checklists, clinic-specific protocols, turnover-specific guarantees, supply/linen/reset handling, direct-hire staffing.
+**Why:** These are common claims in the cleaning market that would strengthen positioning but are meaningless or damaging if not operationally true.
+**Constraints:** If a section depends on one of these claims to work, tag it [VERIFY] and do not ship it unverified. Full claim safety list is in `docs/briefs/brand-rules.md`.
+
+---
+
 ## Deferred Items (not decisions — pending)
 
 - No protocol exists for multi-tool write conflicts — what happens when Claude and Codex both attempt to write to the same durable file in the same session. Not a current problem (sessions are sequential). Revisit when concurrent usage becomes real.
@@ -119,7 +141,9 @@ When a decision is made, add it here before the session ends. Format:
 - ~~ChatGPT refinement of per-client service copy~~ — completed 2026-04-20, mechanism-based language pass committed 078bc43
 - QuoteDrawer file uploads — temporary Phase 1 should be email-first, with file metadata saved to the existing integrations. Charles wants broad file-type support for now, especially images, videos, and PDFs, but Gmail's documented direct attachment limit is about 25 MB total, so a 1 GB pure-email upload flow is not viable. When files exceed the email-safe limit, the UI should recommend sending them by WhatsApp to the default Brazusa contact number: 781-686-7189. Revisit later with a proper storage-backed upload system.
 - Accordion image file replacements (Charles to re-export)
+- Refresh `README.md` and `docs/ai-case-study.md` to match the current repo/site/workflow state. README drift to fix: Pricing section description, QuoteDrawer behavior, screenshot and CTA references, and Out of Scope list. AI case study drift to fix: stale "Actionable now" / pending-state items that are already complete.
 - Create agent for clean code / Charles's code preferences (naming, structure, TS standards, etc.)
+- Operational claim verification (required before per-segment page copy can be finalized): Are inspections formalized or informal? What workforce/documentation claims are precisely true and safe for the site? Is there a documented proof-of-completion workflow? What is the real response-time expectation? Is there a true single point of contact per account? Are service checklists or reports showable on-site? What clinic-specific claims are operationally safe? What STR workflow elements are currently real? Does Brazusa use direct employees, subcontractors, or a hybrid?
 
 ---
 

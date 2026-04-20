@@ -13,9 +13,21 @@ const cases: { category: Category; title: string; result: string; detail: string
   },
   {
     category: 'str',
-    title: 'Michelle & Wendy \u2014 independent STR hosts',
-    result: 'Review scores improved. They stopped thinking about cleaning.',
-    detail: 'Two separate hosts who each had issues with their previous cleaners \u2014 inconsistency, missed items, bad communication. We took over both and standardized the process. They now text us the booking; we handle the rest.',
+    title: 'Michelle \u2014 Bed and Breakfast Boston',
+    result: 'Units run without oversight while she is away most of the year.',
+    detail: 'Michelle runs multiple Boston units but is away most of the year. We handle turnovers, guest issues, small repairs, and day-to-day coordination. She texts bookings when needed; the units stay ready without her being present.',
+  },
+  {
+    category: 'str',
+    title: 'BREC \u2014 two new STR buildings',
+    result: 'Buildings prepared for first guests without delays or rework.',
+    detail: 'Two newly built STR buildings needed full post-construction cleaning before opening. We handled dust, debris, and final prep across both sites so units were ready for guests without staggered delays or repeated work.',
+  },
+  {
+    category: 'str',
+    title: 'Labor Day semester turnover',
+    result: 'Six units cleaned over a weekend. Everyone moved in on time.',
+    detail: 'A property with student tenants needed a full turnover between semesters. Short window, multiple units, different conditions in each. We scheduled back-to-back cleans across the weekend and finished before the new tenants arrived.',
   },
   {
     category: 'property',
@@ -30,10 +42,22 @@ const cases: { category: Category; title: string; result: string; detail: string
     detail: 'One roommate wanted regular cleaning; the others didn\'t want to pay for rooms they\'d handle themselves. We set up a custom plan covering just the shared spaces and one bedroom \u2014 fair, straightforward, and exactly what they asked for.',
   },
   {
-    category: 'str',
-    title: 'Labor Day semester turnover',
-    result: 'Six units cleaned over a weekend. Everyone moved in on time.',
-    detail: 'A property with student tenants needed a full turnover between semesters. Short window, multiple units, different conditions in each. We scheduled back-to-back cleans across the weekend and finished before the new tenants arrived.',
+    category: 'offices',
+    title: 'New Horizons \u2014 office operations',
+    result: 'Cleaning runs on schedule without follow-ups or oversight.',
+    detail: 'New Horizons needed a fixed cleaning schedule without having to manage the vendor themselves. We keep the same team, work the same days, and complete each visit without reminders needed. The schedule holds, and they haven\'t had to redirect us.',
+  },
+  {
+    category: 'offices',
+    title: 'Dr. Jeffrey E. Silver \u2014 clinic',
+    result: 'Same team, same routine. No disruption to staff or patients.',
+    detail: 'This clinic required recurring cleaning that would not interrupt staff or patients. We maintain the same team, follow set routines, and work around their schedule so the space meets the same standard each visit without added coordination.',
+  },
+  {
+    category: 'other',
+    title: 'Five Guys \u2014 post-construction',
+    result: 'Restaurant opened on time after full construction cleanup.',
+    detail: 'After construction, the space needed a full cleanup before it could open for business. We cleared floors, equipment surfaces, and construction debris on a tight timeline and handed it back ready to open on schedule.',
   },
   {
     category: 'other',

@@ -49,14 +49,10 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
 
           <div className="fade-up-2 space-y-3 text-base md:text-lg leading-relaxed mb-6" style={{ color: 'var(--color-white-55)' }}>
             <p>
-              You get a team that shows up, does the work, and lets you know it&apos;s done. No chasing. No
-              guessing.
+              Work is completed on schedule, confirmed, and communicated clearly through your tools or preferred method.
             </p>
             <p>
-              You get a responsive, structured team that fits into how your operation already runs.
-            </p>
-            <p>
-              Work is handled, confirmed, and communicated clearly. You don&apos;t have to follow up to know it happened.
+              Your operation keeps running &mdash; no check-ins, no last-minute calls, no cleaning becoming something you have to manage.
             </p>
           </div>
 

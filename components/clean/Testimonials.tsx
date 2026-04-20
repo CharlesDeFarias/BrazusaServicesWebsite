@@ -199,7 +199,7 @@ export default function Testimonials(): JSX.Element {
                   style={{
                     fontFamily: 'var(--font-syne)',
                     background: active === f.value ? 'var(--color-navy)' : 'transparent',
-                    color: active === f.value ? '#fff' : 'var(--color-warm-gray)',
+                    color: active === f.value ? 'var(--color-white-90)' : 'var(--color-warm-gray)',
                     border: active === f.value ? '1px solid var(--color-navy)' : '1px solid var(--color-light-gray)',
                   }}
                 >

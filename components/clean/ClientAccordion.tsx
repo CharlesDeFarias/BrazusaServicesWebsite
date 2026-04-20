@@ -133,7 +133,7 @@ function AccordionItem({
                     style={{
                       border: '1px solid var(--color-light-gray)',
                       color: 'var(--color-warm-gray-darkest)',
-                      background: 'white',
+                      background: 'var(--color-off-white)',
                       fontFamily: 'var(--font-syne)',
                     }}
                   >
@@ -248,7 +248,7 @@ export default function ClientAccordion({
             <div style={{ minHeight: 0, overflow: 'hidden' }}>
               <div
                 className="mt-3 px-5 py-4 rounded-xl"
-                style={{ border: '1px solid var(--color-light-gray)', background: 'white' }}
+                style={{ border: '1px solid var(--color-light-gray)', background: 'var(--color-off-white)' }}
               >
                 <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--color-warm-gray-darker)' }}>
                   <p>

@@ -74,6 +74,10 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** A rebuild triggered by the Pricing-to-Testimonials hash-link implementation surfaced a Tailwind/PostCSS failure that appeared to blame `app/globals.css`, but the actual trigger was Tailwind source scanning over `docs/session-log.md`. Temporarily moving that file out of the way allowed the CSS compile to succeed, confirming the docs scan as the cause. The fix is `@source not "../docs";` in `app/globals.css`.
 **Constraints:** Keep `docs/` out of Tailwind source scanning unless there is an explicit future need to style-render documentation content through the app. When Tailwind/PostCSS errors point at `app/globals.css` unexpectedly, verify whether the source scanner is pulling in non-app files before assuming the stylesheet itself is broken.
 
+**Decision:** Em dashes in JS/TS source files must use `\u2014` Unicode escape, not the literal `—` character.
+**Why:** Windows PowerShell (`chcp 437` / UTF-8 mismatch) silently corrupts literal em dashes when Codex reads and rewrites files. `\u2014` is pure ASCII in source and immune to this. Confirmed working on live site 2026-04-20.
+**Constraints:** Applies to JS/TS string literals, `setError` calls, and JSX prop strings. JSX text nodes are lower risk but `\u2014` preferred for consistency. Code comments may use hyphens freely. Rule added to `AGENTS.md` so Codex follows it going forward.
+
 **Decision:** In this Windows PowerShell environment, shell-displayed mojibake alone is not evidence of file corruption.
 **Why:** `Get-Content` and similar shell-display paths can mis-render valid UTF-8 punctuation in this environment. We confirmed this by comparing shell output against raw-byte reads with explicit UTF-8 decode: the shell showed mojibake like `â€”`, while the same file bytes decoded correctly to `—`. The shell state is also mixed (`chcp 437`, `$OutputEncoding` US-ASCII, console output UTF-8, console input IBM437), which makes false positives more likely.
 **Constraints:** Do not treat shell mojibake alone as proof of corruption. Verify with raw-byte read + explicit UTF-8 decode, editor rendering, or rendered app output before concluding a file is damaged. Prefer `rg` for text discovery. When Unicode correctness matters, prefer raw-byte UTF-8 verification over `Get-Content`. Trying UTF-8 shell settings first (`chcp 65001`, `[Console]::InputEncoding = [System.Text.Encoding]::UTF8`, `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8`, `$OutputEncoding = [System.Text.Encoding]::UTF8`) is reasonable, but trust should still come from verification, not assumption. In AI-owned config/instruction files, ASCII punctuation is still safer when Unicode punctuation is not needed.
@@ -81,7 +85,7 @@ When a decision is made, add it here before the session ends. Format:
 **Decision:** For the current Brazusa copy overhaul, ChatGPT should rewrite `docs/briefs/copy.txt` first, not the live component copy.
 **Why:** The current need is strategic messaging refinement before layout-fit refinement. `copy.txt` is the blueprint layer, so ChatGPT can use its stronger Brazusa voice and business context without being prematurely constrained by section lengths. After that, Claude/Codex can map the revised blueprint back onto the current repo structure and only then request tightly constrained section-level rewrites where needed.
 **Constraints:** Do not ask ChatGPT for an end-to-end rewrite of the currently rendered site copy yet. The workflow for this phase is: rewrite `copy.txt` -> review against current repo structure and locked decisions -> generate targeted section prompts only where additional copy passes are needed.
-**Status:** Phase 2 complete as of 2026-04-19. `copy.txt` rewritten (brand positioning layer). Design audit completed. Section-level ChatGPT brief produced, 3 copy-review passes run, copy approved. Implementation delegated to Codex. Accordion copy (all 4 segments) refined via 4-pass ChatGPT cycle and implemented by Claude — committed 7a8beab, pushed. Post-implementation deep review pass found and fixed 3 issues (2 live dev notes in Services.tsx, Hero P2/P3 duplicate ending) — committed d79419b, pushed. Next: design review pass (prompt generated, ready for new session) and ChatGPT refinement of Services section copy.
+**Status:** Phase 3 in progress as of 2026-04-20. `copy.txt` rewritten (brand positioning layer). Design audit completed (both strategic + standards passes run 2026-04-20). Accordion copy (all 4 segments) refined, implemented, committed. Post-implementation fixes committed. Design review complete — strategic gaps and standards violations documented in decisions.md below. Next: Codex implements the standards fixes; Claude handles Services copy pass with ChatGPT when tokens reset.
 
 **Decision:** Brazusa site remains single-page (`/clean`) for the current phase. Multi-page architecture (separate `/clean/str`, `/clean/office`, `/clean/clinic`, `/clean/property` routes) is the correct long-term target but not the right move now.
 **Why:** The main benefit of separate pages is SEO indexability per service segment — a longer-game benefit that isn't a bottleneck until there is traffic to route. The existing single-page segment routing (accordion + services filter) achieves the trust-building and self-identification goals just as well for now. Building full per-segment content depth first is the right prerequisite.
@@ -117,5 +121,46 @@ When a decision is made, add it here before the session ends. Format:
 - QuoteDrawer file uploads — temporary Phase 1 should be email-first, with file metadata saved to the existing integrations. Charles wants broad file-type support for now, especially images, videos, and PDFs, but Gmail's documented direct attachment limit is about 25 MB total, so a 1 GB pure-email upload flow is not viable. When files exceed the email-safe limit, the UI should recommend sending them by WhatsApp to the default Brazusa contact number: 781-686-7189. Revisit later with a proper storage-backed upload system.
 - Accordion image file replacements (Charles to re-export)
 - Create agent for clean code / Charles's code preferences (naming, structure, TS standards, etc.)
+
+---
+
+## Design Review — 2026-04-20 (Claude-authored)
+
+Full strategic + standards audit run against Hero, Positioning, ClientAccordion, Services, Testimonials, FinalCTA.
+
+### Standards violations (from design-review agent)
+
+**[MEDIUM] ClientAccordion.tsx:184** — flat `bg-off-white` with no texture layer. No `.grain`, no gradient, no grid overlay. Fix: remove `bg-off-white` class, add `.grain` and `linear-gradient(to bottom, var(--color-off-white), var(--color-linen))` inline style to match Treatment A used in Positioning and Testimonials.
+
+**[MEDIUM] FinalCTA.tsx:10** — `bg-off-white` base with grid overlay + radial gold glow, but no `.grain` class. Judgment call needed: is grid + radial glow sufficient layering, or should `.grain` be added? Document the decision with a comment either way.
+
+**[MEDIUM] Services.tsx:275** — `rgba(196,154,68,0.7)` raw value. `/* no token: intentional */` comment is correct form. Nearest tokens are `--color-gold-60` (0.60) and `--color-gold-90` (0.90). Decision: round to `--color-gold-60`, or keep raw value and add `/* nearest token: --color-gold-60 */` annotation.
+
+**[LOW] ClientAccordion.tsx:138 and 242** — `background: 'white'` raw keyword. Replace with `var(--color-off-white)` or `var(--color-linen)`.
+
+**[LOW] Testimonials.tsx:149** — `#fff` raw hex on active filter pill. Replace with `var(--color-white-90)` or `text-white` Tailwind class.
+
+### Strategic gaps (from Claude judgment)
+
+**[HIGH] CTA language: "Get a Free Quote" appears in FinalCTA and AccordionItem** — "Free" is commodity framing. Market research explicitly flags this. Fix: FinalCTA → "Request a Walkthrough"; AccordionItem → "Get a Quote".
+
+**[HIGH] Testimonials: zero Office cases** — Offices is a named primary audience. Empty chip reads as "we haven't done this." Add at least one credible office case.
+
+**[HIGH] Hero body: three paragraphs all restate the same point** — P1/P2/P3 all say "work done, confirmed, no follow-up." Repetition reads as anxiety. Distill to one statement; use recovered space for mechanism detail (HOW confirmation happens, WHAT triggers on an issue).
+
+**[MEDIUM] ClientAccordion headline: "What kind of space?"** — Consumer/lifestyle question after strong operator positioning. Replace with operator vocabulary: "Which operation do you manage?" or similar.
+
+**[MEDIUM] Testimonials: single proof modality** — Market research says proof should be layered (visible process + workforce/insurance signals + social proof). Testimonials section delivers social proof only. Consider 2–3 compact operational assurance items above or beside the carousel.
+
+**[LOW] Accordion expanded images** — If these are generic stock, they conflict with marketresearch.txt direction. Audit whether real Brazusa imagery is available. If not, lean on structure over stock.
+
+### Confirmed working — do not change
+- Navy/gold token system — no violations
+- Cormorant + Syne typography — consistent and correct
+- Hero structure (type-led, asymmetric grid, portrait right column)
+- Services filter + opacity-dim interaction pattern
+- Testimonials case format (result + operational detail, not star ratings)
+- Gold as functional accent only across all reviewed components
+- "Not sure if this fits? Reach out and we'll tell you honestly." — keep verbatim
 - ~~Create agent for LLM / Claude optimization engineering~~ — completed 2026-04-19 as `optimize-and-plan` personal skill
 - Turn the evolving ChatGPT copy-handoff workflow into a first-class reusable tool: update Claude's existing copy-prep/review flow and add the Codex-side equivalent skill/guidance so blueprint rewrite -> repo-aware review -> targeted section prompts becomes repeatable.

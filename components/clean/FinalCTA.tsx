@@ -36,7 +36,7 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
             className="text-sm font-medium px-7 py-3.5 min-h-[44px] transition-all duration-200 hover:opacity-90"
             style={{ background: 'var(--color-brand-gold)', color: 'var(--color-navy)' }}
           >
-            Get a Free Quote
+            Request a Walkthrough
           </button>
           <a
             href="tel:7816867189"

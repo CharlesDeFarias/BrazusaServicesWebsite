@@ -148,7 +148,7 @@ function AccordionItem({
               className="text-sm font-medium px-5 py-2.5 text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
               style={{ background: 'var(--color-navy)', borderLeft: '2px solid var(--color-brand-gold)' }}
             >
-              Get a Free Quote
+              Get a Quote
             </button>
           </div>
         </div>

@@ -4095,3 +4095,770 @@ session start
 - Fix applied in [app/globals.css](/C:/Users/charl/Desktop/claudecoding/app/globals.css): `@source not "../docs";` so app styling ignores repo docs during Tailwind source discovery.
 - Verification: `npm.cmd run lint` passed. `npm.cmd run build` then compiled through the CSS/build stage successfully after the docs exclusion and only later failed with an unrelated environment issue: `spawn EPERM`.
 - Claude hit a usage limit before finishing its own durable wrap-up earlier in the night. This entry preserves Codex's implementation and debugging record now; Claude may append additional session context later.
+
+### 04/20/2026, 09:15:18 AM
+**Prompt:** are you back and are we in the same session?
+
+### 04/20/2026, 11:45:00 AM
+**Prompt:**    review codex's changes
+
+### 04/20/2026, 11:51:38 AM
+**Prompt:** why does this em dash /mojibake issue keep happening and how can we prevent it?
+
+### 04/20/2026, 11:54:44 AM
+**Prompt:** create a prompt for me to feed into codex for it to do it instead
+
+### 04/20/2026, 11:55:23 AM
+**Prompt:** wheree's an easy example i can check on the built site to see if the emdashes are converting properly for the end user
+
+### 04/20/2026, 11:56:48 AM
+**Prompt:** working properly, make a durable edit and push
+
+### 04/20/2026, 12:20:00 PM
+**Prompt:** add the em dash encoding rule to AGENTS.md, then make the durable record match it
+
+**Codex-authored durable update:**
+- Added an `Encoding` section to [AGENTS.md](/C:/Users/charl/Desktop/claudecoding/AGENTS.md) with a repo-specific rule: never use a literal em dash in JavaScript or TypeScript string literals, `setError` calls, or JSX prop strings; use `\u2014` instead.
+- Claude has now promoted the same rule into [docs/decisions.md](/C:/Users/charl/Desktop/claudecoding/docs/decisions.md) under `AI Operating System`, so the AGENTS instruction and the durable repo decision are aligned.
+- Reason for the rule: this Windows PowerShell environment has a confirmed UTF-8 mismatch that can silently corrupt literal Unicode punctuation when shell tools read and rewrite JS/TS source. `\u2014` keeps the source ASCII-safe while still rendering correctly on the site.
+
+### 04/20/2026, 12:03:28 PM
+**Prompt:** alright, now i'm feeling a little paralyzed. what's next on our todo list
+
+### 04/20/2026, 12:11:51 PM
+**Prompt:** - Let's do all the copy items in one pass with chatgpt then. I have two office testimonials to add, new horizons and Dr Jeffrey E. Silver. Also one testimonial that's both STR and Other, which is a post construction cleaning of two new buildings by the company BREC. also another Other entry for a post-construction cleaning at a Five Guys location, let's call the Manager michael. Also want to remove wendy from the testimonial, keeping just michelle and speecifying that she's with  Bed and Breakfast Boston and that we help her not just clean but also maintain several units in boston while she's away for most of the year, including doing tasks like assisting guests and doing repair work.
+
+### 04/20/2026, 12:16:39 PM
+**Prompt:** Using your brief constraints 
+
+---
+
+## TASK 1 — Michelle testimonial
+
+```
+{
+  category: 'str',
+  title: 'Michelle — Bed and Breakfast Boston',
+  result: 'Units run without oversight while she is away most of the year.',
+  detail: 'Michelle runs multiple Boston units but is away most of the year. We handle turnovers, guest issues, small repairs, and day-to-day coordination. She texts bookings when needed; the units stay ready and operational without her being present.',
+},
+```
+
+---
+
+## TASK 2 — New testimonial cases
+
+### Entry A — New Horizons
+
+```
+{
+  category: 'offices',
+  title: 'New Horizons \u2014 office operations',
+  result: 'Cleaning runs on schedule without follow-ups or oversight.',
+  detail: 'New Horizons needed consistent office cleaning without managing a vendor. We set a fixed schedule, keep the same team, and complete each visit without needing reminders. Work is done, and they do not have to check or follow up.',
+},
+```
+
+---
+
+### Entry B — Dr. Jeffrey E. Silver
+
+```
+{
+  category: 'offices',
+  title: 'Dr. Jeffrey E. Silver \u2014 clinic',
+  result: 'Consistent service without disrupting staff or daily flow.',
+  detail: 'This clinic required disciplined, recurring cleaning that would not interrupt staff or patients. We maintain the same team, follow set routines, and work around their schedule so the space stays consistent without added coordination.',
+},
+```
+
+---
+
+### Entry C — BREC
+
+```
+{
+  category: 'str',
+  title: 'BREC \u2014 new STR buildings',
+  result: 'Buildings prepared for first guests without delays or rework.',
+  detail: 'Two newly built STR buildings needed full post-construction cleaning before opening. We handled dust, debris, and final prep across both sites so units were ready for guests without staggered delays or repeated work.',
+},
+```
+
+---
+
+### Entry D — Five Guys
+
+```
+{
+  category: 'other',
+  title: 'Five Guys \u2014 post-construction',
+  result: 'Restaurant opened on time after full construction cleanup.',
+  detail: 'After construction, the space required a full cleanup before opening. We handled floors, surfaces, and leftover debris under a tight timeline so the location was ready for operations without delaying opening.',
+},
+```
+
+---
+
+### Entry E — Post-construction deep clean (unchanged)
+
+```
+{
+  category: 'other',
+  title: 'Post-construction deep clean',
+  result: 'Construction dust gone. The space was move-in ready the same week.',
+  detail: 'After a significant renovation, the unit had drywall dust in every corner, adhesive residue on floors, and debris in the HVAC vents. We handled the full post-construction detail — surfaces, fixtures, floors — and the client moved in three days later.',
+},
+```
+
+---
+
+## TASK 3 — Hero body rewrite
+
+P1:
+Work is completed on schedule, confirmed, and communicated clearly through your tools or preferred method.
+
+P2:
+Units and spaces stay ready without follow-ups, checks, or last-minute coordination on your end.
+
+
+### 04/20/2026, 12:22:58 PM
+**Prompt:** good for now, i dont have much time/focus to dig into them further
+
+### 04/20/2026, 12:25:52 PM
+**Prompt:** i'm ready
+
+### 04/20/2026, 12:29:01 PM
+**Prompt:** paste the rest of what?
+
+### 04/20/2026, 12:29:42 PM
+**Prompt:** i'm not finding it, give me the full thing instead
+
+### 04/20/2026, 12:30:59 PM
+**Prompt:** was it supposed to end with that CTA button text? looks a bit cut off. heree's what you gave me:
+I'm revising copy for the Services section of the Brazusa Cleaning website.
+                                                                                                                                                          What I need: Revise all copy to sharpen the brand positioning. The current copy uses words like "reliable", "consistent", and "steady" — generic      
+  quality claims that every cleaning vendor makes. Replace these with mechanism-based language: what Brazusa actually does, what it prevents, what the  
+  operator doesn't have to deal with. Each description should be specific to the space type — STR language should feel different from offices language.
+  Read all the current descriptions before writing anything, so the revision feels like one coherent voice across the section, not a field-by-field
+  rewrite. Keep the section headline ("What we actually do") unless you have something genuinely sharper within the character limit. Return all fields  
+  in the exact format shown.
+
+  Brand voice rules:
+  - Sounds like a real person describing a business they actually know
+  - No "this isn't X — it's Y" constructions
+  - No vague phrases: "peace of mind", "seamless experience", "effortless", "you deserve"
+  - No AI buzzwords: "leverage", "robust", "streamlined", "cutting-edge"
+  - Copy that couldn't have been written for a different cleaning company without changing more than the name
+
+  Return format: Organized by section name exactly as listed below. One block per section. No commentary between sections.
+
+  Constraints:
+
+  Section headline — current: 18 chars — revise within ±20% (14–22 chars)
+  Subhead unfiltered — current: 65 chars — revise within ±20% (52–78 chars)
+  Subhead filtered — current: 53 chars — revise within ±20% (42–64 chars)
+
+  serviceDefinitions[Routine Cleaning].descriptions.property — current: 81 chars — revise within ±20% (65–97 chars)
+  serviceDefinitions[Routine Cleaning].descriptions.offices — current: 84 chars — revise within ±20% (67–101 chars)
+  serviceDefinitions[Routine Cleaning].descriptions.apartment — current: 79 chars — revise within ±20% (63–95 chars)
+  serviceDefinitions[Routine Cleaning].descriptions.str — current: 91 chars — revise within ±20% (73–109 chars)
+
+  serviceDefinitions[Deep Cleaning].descriptions.str — current: 75 chars — revise within ±20% (60–90 chars)
+  serviceDefinitions[Deep Cleaning].descriptions.property — current: 97 chars — revise within ±20% (78–116 chars)
+  serviceDefinitions[Deep Cleaning].descriptions.offices — current: 88 chars — revise within ±20% (70–106 chars)
+  serviceDefinitions[Deep Cleaning].descriptions.apartment — current: 75 chars — revise within ±20% (60–90 chars)
+
+  serviceDefinitions[Move-in / Move-out].descriptions.str — current: 79 chars — revise within ±20% (63–95 chars)
+  serviceDefinitions[Move-in / Move-out].descriptions.property — current: 86 chars — revise within ±20% (69–103 chars)
+  serviceDefinitions[Move-in / Move-out].descriptions.offices — current: 80 chars — revise within ±20% (64–96 chars)
+  serviceDefinitions[Move-in / Move-out].descriptions.apartment — current: 83 chars — revise within ±20% (66–100 chars)
+
+  serviceDefinitions[STR Turnover].descriptions.str — current: 77 chars — revise within ±20% (62–92 chars)
+  serviceDefinitions[STR Turnover].descriptions.property — current: 86 chars — revise within ±20% (69–103 chars)
+  serviceDefinitions[STR Turnover].descriptions.offices — current: 91 chars — revise within ±20% (73–109 chars)
+  serviceDefinitions[STR Turnover].descriptions.apartment — current: 80 chars — revise within ±20% (64–96 chars)
+
+  serviceDefinitions[Post-construction].descriptions.str — current: 77 chars — revise within ±20% (62–92 chars)
+  serviceDefinitions[Post-construction].descriptions.property — current: 90 chars — revise within ±20% (72–108 chars)
+  serviceDefinitions[Post-construction].descriptions.offices — current: 83 chars — revise within ±20% (66–100 chars)
+  serviceDefinitions[Post-construction].descriptions.apartment — current: 80 chars — revise within ±20% (64–96 chars)
+
+  extendedServiceDefinitions[Linen processing].descriptions.str — current: 58 chars — revise within ±20% (46–70 chars)
+  extendedServiceDefinitions[Linen processing].descriptions.property — current: 66 chars — revise within ±20% (53–79 chars)
+  extendedServiceDefinitions[Linen processing].defaultDescription — current: 63 chars — revise within ±20% (50–76 chars)
+
+  extendedServiceDefinitions[Inventory tracking].descriptions.str — current: 71 chars — revise within ±20% (57–85 chars)
+  extendedServiceDefinitions[Inventory tracking].descriptions.property — current: 75 chars — revise within ±20% (60–90 chars)
+  extendedServiceDefinitions[Inventory tracking].defaultDescription — current: 80 chars — revise within ±20% (64–96 chars)
+
+  extendedServiceDefinitions[Closet & storage organization].descriptions.str — current: 72 chars — revise within ±20% (58–86 chars)
+  extendedServiceDefinitions[Closet & storage organization].descriptions.property — current: 55 chars — revise within ±20% (44–66 chars)
+  extendedServiceDefinitions[Closet & storage organization].descriptions.apartment — current: 81 chars — revise within ±20% (65–97 chars)
+  extendedServiceDefinitions[Closet & storage organization].defaultDescription — current: 71 chars — revise within ±20% (57–85 chars)
+
+  extendedServiceDefinitions[Maintenance coordination].descriptions.str — current: 75 chars — revise within ±20% (60–90 chars)
+  extendedServiceDefinitions[Maintenance coordination].descriptions.property — current: 75 chars — revise within ±20% (60–90 chars)
+  extendedServiceDefinitions[Maintenance coordination].descriptions.offices — current: 74 chars — revise within ±20% (59–89 chars)
+  extendedServiceDefinitions[Maintenance coordination].defaultDescription — current: 71 chars — revise within ±20% (57–85 chars)
+
+  extendedServiceDefinitions[Minor task handling].descriptions.str — current: 70 chars — revise within ±20% (56–84 chars)
+  extendedServiceDefinitions[Minor task handling].descriptions.property — current: 65 chars — revise within ±20% (52–78 chars)
+  extendedServiceDefinitions[Minor task handling].descriptions.offices — current: 73 chars — revise within ±20% (58–88 chars)
+  extendedServiceDefinitions[Minor task handling].descriptions.apartment — current: 71 chars — revise within ±20% (57–85 chars)
+  extendedServiceDefinitions[Minor task handling].defaultDescription — current: 68 chars — revise within ±20% (54–82 chars)
+
+  extendedServiceDefinitions[Guest support tasks].descriptions.str — current: 88 chars — revise within ±20% (70–106 chars)
+  extendedServiceDefinitions[Guest support tasks].defaultDescription — current: 80 chars — revise within ±20% (64–96 chars)
+
+  extendedServiceDefinitions[Key & access management].descriptions.str — current: 70 chars — revise within ±20% (56–84 chars)
+  extendedServiceDefinitions[Key & access management].descriptions.property — current: 64 chars — revise within ±20% (51–77 chars)
+  extendedServiceDefinitions[Key & access management].descriptions.offices — current: 64 chars — revise within ±20% (51–77 chars)
+  extendedServiceDefinitions[Key & access management].defaultDescription — current: 61 chars — revise within ±20% (49–73 chars)
+
+  Footer note — current: 102 chars — revise within ±20% (82–122 chars)
+  CTA button — current: 52 chars — revise within ±20% (42–62 chars)
+
+  Current copy:
+
+  Section headline:
+  What we actually do
+
+  Subhead unfiltered:
+  Choose a space type below to see the work that usually fits best.
+
+  Subhead filtered:
+  Services relevant to your space type are highlighted.
+
+  serviceDefinitions[Routine Cleaning].descriptions.property:
+  Reliable recurring cleaning across units, common areas, and shared building needs.
+
+  serviceDefinitions[Routine Cleaning].descriptions.offices:
+  Consistent scheduled cleaning that keeps workspaces ready without constant follow-up.
+
+  serviceDefinitions[Routine Cleaning].descriptions.apartment:
+  Steady upkeep for homes and apartments on the schedule that makes sense for you.
+
+  serviceDefinitions[Routine Cleaning].descriptions.str:
+  Routine maintenance between heavier resets when a short-term rental needs baseline support.
+
+  serviceDefinitions[Deep Cleaning].descriptions.str:
+  Full reset work before listings, after guest wear, or when standards slipped.
+
+  serviceDefinitions[Deep Cleaning].descriptions.property:
+  Top-to-bottom detail work for units, turnovers, and problem spaces that need more than maintenance.
+
+  serviceDefinitions[Deep Cleaning].descriptions.offices:
+  Detail-focused cleaning for offices, clinics, and shared spaces that need a full refresh.
+
+  serviceDefinitions[Deep Cleaning].descriptions.apartment:
+  A thorough reset for homes and apartments when regular cleaning is not enough.
+
+  serviceDefinitions[Move-in / Move-out].descriptions.str:
+  Listing-ready resets between guest cycles, owner stays, or seasonal transitions.
+
+  serviceDefinitions[Move-in / Move-out].descriptions.property:
+  Move-in ready, move-out documented cleaning for landlords, buildings, and managed units.
+
+  serviceDefinitions[Move-in / Move-out].descriptions.offices:
+  Transition cleaning for office suites, small relocations, and handoff situations.
+
+  serviceDefinitions[Move-in / Move-out].descriptions.apartment:
+  Fresh starts and clean exits for apartments, homes, and roommate turnover situations.
+
+  serviceDefinitions[STR Turnover].descriptions.str:
+  Fast, reliable between-guest turnovers with the consistency reviews depend on.
+
+  serviceDefinitions[STR Turnover].descriptions.property:
+  Turnover-style coordination when furnished building units need hospitality-level timing.
+
+  serviceDefinitions[STR Turnover].descriptions.offices:
+  Quick reset support when commercial spaces need fast turnaround between occupants or events.
+
+  serviceDefinitions[STR Turnover].descriptions.apartment:
+  High-speed reset work when a furnished unit needs to be guest-ready again quickly.
+
+  serviceDefinitions[Post-construction].descriptions.str:
+  Detailed cleanup after renovation work before a unit can safely go back online.
+
+  serviceDefinitions[Post-construction].descriptions.property:
+  Dust, debris, and detail work after building projects, renovations, and contractor handoff.
+
+  serviceDefinitions[Post-construction].descriptions.offices:
+  Construction cleanup for offices, clinics, and tenant improvements before reopening.
+
+  serviceDefinitions[Post-construction].descriptions.apartment:
+  Post-renovation cleanup when a home or apartment needs to feel livable again fast.
+
+  extendedServiceDefinitions[Linen processing].descriptions.str:
+  Wash, dry, fold, and stage linens so turnovers stay smooth.
+
+  extendedServiceDefinitions[Linen processing].descriptions.property:
+  Coordinate linen flow across furnished units or repeated turnovers.
+
+  extendedServiceDefinitions[Linen processing].defaultDescription:
+  Linen handling when the operation needs more than cleaning alone.
+
+  extendedServiceDefinitions[Inventory tracking].descriptions.str:
+  Track supplies, amenities, and restocking issues before guests feel them.
+
+  extendedServiceDefinitions[Inventory tracking].descriptions.property:
+  Monitor supplies across units so managers are not discovering shortages late.
+
+  extendedServiceDefinitions[Inventory tracking].defaultDescription:
+  Supply visibility and restocking support where it meaningfully reduces oversight.
+
+  extendedServiceDefinitions[Closet & storage organization].descriptions.str:
+  Keep owner closets, supply storage, and backstock organized between stays.
+
+  extendedServiceDefinitions[Closet & storage organization].descriptions.property:
+  Standardize storage across units and shared supply areas.
+
+  extendedServiceDefinitions[Closet & storage organization].descriptions.apartment:
+  One-time or periodic organization for homes and apartments that need order restored.
+
+  extendedServiceDefinitions[Closet & storage organization].defaultDescription:
+  Storage organization when clutter or inconsistency is getting in the way.
+
+  extendedServiceDefinitions[Maintenance coordination].descriptions.str:
+  Flag issues fast and coordinate the small fixes that protect guest experience.
+
+  extendedServiceDefinitions[Maintenance coordination].descriptions.property:
+  Spot problems early and coordinate with building vendors before they compound.
+
+  extendedServiceDefinitions[Maintenance coordination].descriptions.offices:
+  Surface issues clearly so commercial spaces stay functional without surprises.
+
+  extendedServiceDefinitions[Maintenance coordination].defaultDescription:
+  Issue spotting and coordination support when cleaning alone is not enough.
+
+  extendedServiceDefinitions[Minor task handling].descriptions.str:
+  Handle the small things that would otherwise break a guest-ready setup.
+
+  extendedServiceDefinitions[Minor task handling].descriptions.property:
+  Take care of light tasks that tend to fall through between vendors.
+
+  extendedServiceDefinitions[Minor task handling].descriptions.offices:
+  Resolve small facility issues before they become another management thread.
+
+  extendedServiceDefinitions[Minor task handling].descriptions.apartment:
+  Help with small practical tasks that are easier to bundle into the visit.
+
+  extendedServiceDefinitions[Minor task handling].defaultDescription:
+  Light practical tasks that fit naturally into a broader service visit.
+
+  extendedServiceDefinitions[Guest support tasks].descriptions.str:
+  Support the guest-facing details that make a short-term rental operation feel controlled.
+
+  extendedServiceDefinitions[Guest support tasks].defaultDescription:
+  Operational support for spaces that need more coordination than standard cleaning.
+
+  extendedServiceDefinitions[Key & access management].descriptions.str:
+  Coordinate keys, lockboxes, and access so turnovers do not bottleneck.
+
+  extendedServiceDefinitions[Key & access management].descriptions.property:
+  Keep access logistics documented across units, staff, and vendors.
+
+  extendedServiceDefinitions[Key & access management].descriptions.offices:
+  Support after-hours entry, keys, and access documentation cleanly.
+
+  extendedServiceDefinitions[Key & access management].defaultDescription:
+  Access coordination when timing and handoff reliability matter.
+
+  Footer note:
+  These are add-ons, not assumptions. The mix depends on how much of the operation you want us to handle.
+
+  CTA button:
+  Not sure which service fits? Tell us what you need →
+
+### 04/20/2026, 12:31:51 PM
+**Prompt:** provide the prompt i should give codex, along with the pasted response from chatgpt. so i can make better usage of tokens as we're already approaching our limit
+
+### 04/20/2026, 12:32:28 PM
+**Prompt:** Using your constraints and voice rules 
+
+---
+
+## Section headline
+
+What we handle daily
+
+---
+
+## Subhead unfiltered
+
+Pick a space type to see how the work is usually handled there.
+
+---
+
+## Subhead filtered
+
+We highlight the services that tend to apply to your space.
+
+---
+
+## serviceDefinitions[Routine Cleaning]
+
+property:
+Recurring cleaning across units and common areas with issues flagged as they come up.
+
+offices:
+Scheduled cleaning that runs without reminders and is confirmed after each visit.
+
+apartment:
+Recurring upkeep handled on your schedule, with clear confirmation after each visit.
+
+str:
+Baseline maintenance between turnovers so listings do not drift or fall behind.
+
+---
+
+## serviceDefinitions[Deep Cleaning]
+
+str:
+Full reset when guest wear builds up or before putting a unit back online.
+
+property:
+Detail work across units and shared spaces when standard cleaning no longer holds.
+
+offices:
+Detailed reset for offices and clinics when routine cleaning stops being enough.
+
+apartment:
+Full reset when buildup reaches a point routine cleaning cannot keep up with.
+
+---
+
+## serviceDefinitions[Move-in / Move-out]
+
+str:
+Reset units between stays or seasons so they are ready to go back online.
+
+property:
+Move-out documented and move-in ready across units and managed properties.
+
+offices:
+Office transition cleaning handled during relocations and tenant handoffs.
+
+apartment:
+Move-in and move-out cleaning so spaces are ready without extra coordination.
+
+---
+
+## serviceDefinitions[STR Turnover]
+
+str:
+Between-guest cleaning with completion confirmed so units are ready on time.
+
+property:
+Turnover coordination for furnished units that follow hospitality timelines.
+
+offices:
+Fast reset support when spaces turn over between short-term use or events.
+
+apartment:
+Quick resets for furnished units that need to be ready again the same day.
+
+---
+
+## serviceDefinitions[Post-construction]
+
+str:
+Post-renovation cleanup so units can be listed again without delays.
+
+property:
+Cleanup after projects, handling dust, debris, and contractor handoff issues.
+
+offices:
+Construction cleanup for offices and clinics before reopening to staff.
+
+apartment:
+Post-renovation cleanup so the space is usable again without extra work.
+
+---
+
+## extendedServiceDefinitions[Linen processing]
+
+str:
+Wash, sort, and stage linens so turnovers do not slow down.
+
+property:
+Manage linen flow across units so shortages do not disrupt operations.
+
+defaultDescription:
+Linen handling when volume or turnover makes it part of the workflow.
+
+---
+
+## extendedServiceDefinitions[Inventory tracking]
+
+str:
+Track supplies and flag shortages before they affect guest stays.
+
+property:
+Monitor inventory across units so gaps are seen before they cause delays.
+
+defaultDescription:
+Track supplies and surface gaps before they turn into problems.
+
+---
+
+## extendedServiceDefinitions[Closet & storage organization]
+
+str:
+Keep closets organized so supplies are visible and easy to restock.
+
+property:
+Set storage standards so teams know where items go across units.
+
+apartment:
+Organize storage so items are easy to find and stay that way.
+
+defaultDescription:
+Organize storage so items are visible, consistent, and usable.
+
+---
+
+## extendedServiceDefinitions[Maintenance coordination]
+
+str:
+Flag issues during cleans and coordinate fixes before guests notice.
+
+property:
+Surface problems early and coordinate with vendors before they grow.
+
+offices:
+Identify issues during service so they are handled before disruption.
+
+defaultDescription:
+Identify issues early and coordinate fixes when cleaning reveals them.
+
+---
+
+## extendedServiceDefinitions[Minor task handling]
+
+str:
+Handle small setup issues so units stay guest-ready without extra visits.
+
+property:
+Take care of small tasks that would otherwise require another vendor.
+
+offices:
+Resolve minor issues during service so they do not become larger tasks.
+
+apartment:
+Handle small tasks during visits so they do not pile up.
+
+defaultDescription:
+Take care of small tasks during service so they do not escalate.
+
+---
+
+## extendedServiceDefinitions[Guest support tasks]
+
+str:
+Assist with guest-facing needs so hosts are not pulled into small issues.
+
+defaultDescription:
+Handle operational tasks that sit between cleaning and management.
+
+---
+
+## extendedServiceDefinitions[Key & access management]
+
+str:
+Manage keys and access so turnovers do not get delayed or blocked.
+
+property:
+Keep access organized across units so staff and vendors can enter.
+
+offices:
+Coordinate access for after-hours work without needing supervision.
+
+defaultDescription:
+Handle access so entry and handoffs do not slow down the work.
+
+---
+
+## Footer note
+
+These are optional layers. Scope depends on how much of the operation you want handled.
+
+---
+
+## CTA button
+
+Not sure what fits? Tell us how your space runs →
+
+
+### 04/20/2026, 12:38:55 PM
+**Prompt:** done, here's the codex handoff. what's next? keep in mind you're approaching token limit. currently at 71% used 
+
+Codex handoff for Claude
+
+Current repo state:
+- Main work is already implemented and committed.
+- Do not spend tokens rediscovering what changed unless you want to spot-check specific files.
+- No pushes were done after these commits unless you do them yourself now.
+
+Recent Codex commits:
+- `078bc43` `feat: update Services section copy — mechanism-based language pass`
+- `dbfe3c8` `chore: add em dash encoding rule to AGENTS.md`
+- `3e6f2c9` `fix: add grain layer to FinalCTA`
+- `be6826f` `fix: replace raw gold tint in Services`
+- `133e908` `fix: use tokenized white in testimonial filter pills`
+- `3e88021` `fix: replace raw white surfaces in ClientAccordion`
+- `4697f65` `fix: add Treatment A background to ClientAccordion`
+- `063dec6` `fix: add shareable pricing testimonial links`
+
+What those commits did:
+1. Pricing/Testimonial behavior
+- `components/clean/Pricing.tsx`
+- `components/clean/Testimonials.tsx`
+- Pricing chips now use shareable hash links:
+  - `#testimonials`
+  - `#testimonials-str`
+  - `#testimonials-property`
+  - `#testimonials-offices`
+  - `#testimonials-homes`
+  - `#testimonials-other`
+- Direct load/refresh with those hashes preselects the right testimonial category.
+
+2. Tailwind/docs scan fix
+- `app/globals.css`
+- Added `@source not "../docs";`
+- This was required because Tailwind v4 source scanning across `docs/session-log.md` caused the misleading `globals.css` invalid code point build error.
+
+3. Design-review standards fixes
+- `components/clean/ClientAccordion.tsx`
+  - added Treatment A background
+  - added `.grain`
+  - added grid overlay
+  - replaced two raw `white` backgrounds with `var(--color-off-white)`
+- `components/clean/Testimonials.tsx`
+  - active filter pill now uses tokenized white
+- `components/clean/Services.tsx`
+  - raw gold rgba replaced with `var(--color-gold-60)`
+- `components/clean/FinalCTA.tsx`
+  - added `.grain`
+
+4. Services copy pass
+- `components/clean/Services.tsx`
+- Only copy changed:
+  - section headline
+  - filtered/unfiltered subheads
+  - all `serviceDefinitions` descriptions
+  - all `extendedServiceDefinitions` descriptions/defaultDescription values
+  - footer note
+  - CTA text
+- No structure, logic, types, or styling changes in that copy pass.
+
+Encoding / mojibake durable state:
+- `AGENTS.md` now has an Encoding rule:
+  - in JS/TS source, do not use literal em dash in string literals / setError / JSX prop strings
+  - use `\u2014` instead
+- `docs/decisions.md` already has the matching durable decision under `AI Operating System`
+- This is because of the confirmed Windows PowerShell UTF-8 mismatch
+
+Verification already run by Codex:
+- `npm.cmd run lint` passed after the implementation/copy changes
+- Earlier `npm.cmd run build` got past the CSS failure after the `@source not "../docs";` fix and then hit unrelated `spawn EPERM`
+
+Durable docs state:
+- `docs/decisions.md` already includes:
+  - pricing hash-link decision
+  - Tailwind `docs/` exclusion decision
+  - em dash encoding decision
+  - design review section
+- `docs/session-log.md` has Codex-authored entries for:
+  - pricing hash-link + Tailwind fix
+  - AGENTS encoding rule durable note
+
+Current worktree state to expect:
+- Last time checked after the AGENTS durable follow-up, the only dirty file was `docs/session-log.md`
+- Recheck before acting, but there should not be surprise app-code edits outside the committed changes above
+
+Best next Claude focus:
+- Do not re-audit the standards fixes unless you specifically want QA
+- Best use of tokens is probably:
+  1. review the new Services copy in-place
+  2. handle the remaining strategic/copy judgment items from `docs/decisions.md`
+  3. decide whether to push / add any final durable wrap-up
+
+
+### 04/20/2026, 12:39:31 PM
+**Prompt:** yes
+
+### 04/20/2026, 12:40:49 PM
+**Prompt:** codex completed its task, continue
+
+### 04/20/2026, 12:42:28 PM
+**Prompt:** provide the prompt i should give to codex for the inline style cleanup and the prompt to give to chatgpt for the service area town list
+
+### 04/20/2026, 12:45:25 PM
+**Prompt:** here's the chatgpt response. codex is working on its task in the meantime, bee careful not to get in its way.
+
+Back Bay, Beacon Hill, South End, North End, Downtown, Chinatown, Seaport, Fenway, Kenmore, Mission Hill, Roxbury, Dorchester, South Boston, East Boston, Charlestown, Jamaica Plain, West Roxbury, Roslindale, Hyde Park, Brighton, Allston, Brookline, Cambridge, Somerville, Medford, Malden, Everett, Chelsea, Revere, Winthrop, Quincy, Milton, Braintree, Weymouth, Dedham, Newton, Watertown, Waltham, Belmont, Arlington, Lexington, Woburn, Burlington, Winchester, Needham, Wellesley, Natick, Framingham, Norwood, Westwood, Canton, Randolph
+
+### 04/20/2026, 12:48:29 PM
+**Prompt:** once codex is done with that, what's next
+
+### 04/20/2026, 12:49:39 PM
+**Prompt:** give me an easy to answer list of questions for pricing
+
+### 04/20/2026, 12:58:32 PM
+**Prompt:** 1- it's really hard to say, it depends entirely on the details of the unit and whats included per clean. our current client thatch, we charge between 25-45$ per clean, depending on the building and unit type. It's MUCH cheaper than we'd charge for the same cleaning if it were a regular apartment clean in the same space with the same tasks, and it comes with the additional operational tasks and assistance we usually offer. For Michelle, we clean her units once a month or more as the guests are longre term, so we charge around $125 baseline for cleaning + line items for maintenance and operational tasks as she has no maintenance department like thatch does.
+2- Office cleans will depend predominantly on their frequency. New horizons we clean 6 days a week and charge $30/clean, and its a clinic with higher standards/requirements of cleaning. Dr silver we clean three times a week at $50.cleaen but its also a clinic and requires special considerations. both we clean while the office is completely empty.
+3- this can depend so much that's it not worth giving a range or an attempt, other than to say it's usually 50%-100% additional price added on to the typical cleaning. it entirely depends on what the client wants and how bad the situation is.
+4- we charge generally by the job, but we can make different arrangements depending on clients preference.
+5- no minimum job size or charge, so long as we're able to make a profit.the lower the profit/amount, the more we need the client work with us on flexilible scheduling and nailing down the exact details of the job.
+6- yes absolutely, this will impact price considerably.
+
+### 04/20/2026, 1:15:00 PM
+**Prompt:** complete the static inline color cleanup across `components/clean/`, then update the ServiceArea town list with the approved Greater Boston coverage list
+
+**Codex-authored durable update:**
+- Completed the deferred static inline color cleanup in `components/clean/` and committed it as `90d698d` (`refactor: replace static inline color styles with Tailwind utilities across components/clean/`).
+- Scope stayed inside the recorded rule: only static inline `color: 'var(--color-...)'` cases were converted to Tailwind utilities. Dynamic or state-dependent color styles were intentionally left inline. `npm.cmd run lint` passed before commit.
+- Updated [components/clean/ServiceArea.tsx](/C:/Users/charl/Desktop/claudecoding/components/clean/ServiceArea.tsx) with the approved full Greater Boston coverage list and committed it as `0f99376` (`content: update service area town list — full Greater Boston coverage`).
+- This closes two previously deferred implementation tasks. Remaining content follow-up of note is still the testimonials pricing context, which now has rough source data from Charles in this session log and can be turned into a safer prompt or implementation pass later.
+
+### 04/20/2026, 01:03:20 PM
+**Prompt:** do a durable update and commit/push
+
+---
+
+## Session: 2026-04-20 (continuation 2 -- post-context-limit)
+
+### Summary
+
+Session picked up after context-limit compaction mid-Codex-task. Codex had just completed two tasks (inline style cleanup + service area town list). This session closed the remaining open items from the design review and copy passes.
+
+**What happened (Claude-authored):**
+
+1. **Reviewed Codex inline style cleanup (90d698d)** -- 16 files, 135 deletions, all static `style={{ color: 'var(--color-...)' }}` calls replaced with Tailwind utilities. Dynamic/conditional styles left inline as intended. Clean.
+
+2. **Reviewed Codex service area update (0f99376)** -- Full Greater Boston town list implemented: all Boston neighborhoods + 35 surrounding towns across metro area.
+
+3. **Fixed QuoteDrawer panel header (dc81303)** -- "Get a Free Quote" at line 191 was missed in the earlier CTA pass. Fixed to "Get a Quote". This was the last remaining instance of the commodity framing across the site.
+
+4. **Added pricing context to Testimonials cases (6524f9f)** -- Real per-engagement pricing added to 4 cards:
+   - Thatch: "At volume, turnovers ran $25--45 each."
+   - Michelle: "Recurring at roughly $125/month."
+   - New Horizons: "Six visits per week at $30 each."
+   - Dr. Silver: "Three visits per week at $50 each."
+   Framed as case-study data, not price sheet. Closes the Testimonials pricing context deferred item.
+
+5. **decisions.md cleanup** -- Marked three deferred items complete: inline style cleanup, service area, pricing context.
+
+**Commits this session:**
+- dc81303 fix: remove Free from QuoteDrawer panel header CTA
+- 6524f9f content: add real pricing context to Testimonials case studies
+- 3637832 docs: mark inline styles, service area, and pricing context as complete
+
+**Open deferred items (from decisions.md):**
+- QuoteDrawer file uploads Phase 1 (requires integration-safety run first)
+- Accordion image file replacements (Charles to re-export)
+- Create agent for Charles's code preferences
+
+**Last unresolved design review gap:** Testimonials operational assurance -- only social proof modality, no workforce/insurance signals. Still open.

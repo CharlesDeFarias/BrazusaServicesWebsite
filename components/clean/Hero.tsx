@@ -56,8 +56,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
               You get a responsive, structured team that fits into how your operation already runs.
             </p>
             <p>
-              Work is handled, confirmed, and communicated clearly. We adapt to how your operation already
-              runs.
+              Work is handled, confirmed, and communicated clearly. You don&apos;t have to follow up to know it happened.
             </p>
           </div>
 

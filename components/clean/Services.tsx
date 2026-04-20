@@ -210,7 +210,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
               style={{ color: hasFilter ? 'var(--color-gold-90)' : 'var(--color-white-35)', fontFamily: hasFilter ? 'var(--font-syne)' : 'var(--font-cormorant)', fontSize: hasFilter ? '0.75rem' : '0.9rem' }}
             >
               {hasFilter
-                ? 'Service copy per client type is derived from the current service mapping.'
+                ? 'Services relevant to your space type are highlighted.'
                 : 'Choose a space type below to see the work that usually fits best.'}
             </p>
           </div>
@@ -298,10 +298,6 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
             These are add-ons, not assumptions. The mix depends on how much of the operation you want us to handle.
           </p>
         </div>
-
-        <p className="text-xs mb-8" style={{ color: 'var(--color-white-30)' }}>
-          Minor wording in this section is derived from the current client-service mapping. A deeper ChatGPT refinement pass is still planned.
-        </p>
 
         <button
           onClick={onQuoteClick}

@@ -6823,3 +6823,113 @@ Short session. Resumed from context-limit continuation. Wrapped previous session
 - Accordion image replacements (Charles to re-export)
 - Operational claim verification (brand-rules.md claim safety list)
 - All items in docs/backlog.md
+
+### 04/20/2026, 03:19:24 PM
+**Prompt:** how do i control this from my phone?
+
+### 04/20/2026, 03:20:09 PM
+**Prompt:** install the remote control skill
+
+### 04/20/2026, 03:21:16 PM
+**Prompt:** it's not needed, I'm interacting with you from my phone now. so it's working
+
+### 04/20/2026, 05:10:23 PM
+**Prompt:** ok let's get back to it. im mobile so limited to using just chatgpt for assistance and token optimization. no codex for now. what's our next best step
+
+### 04/20/2026, 05:36:34 PM
+**Prompt:** proceed
+
+### 04/20/2026, 05:43:48 PM
+**Prompt:** ## h1
+
+Cleaning built for rentals, offices, and multi-unit operations.
+
+---
+
+## body
+
+Work is completed and confirmed through your preferred channel, and when something is off it is flagged with context so it can be handled before it affects guests, staff, or schedules.
+
+---
+
+## differentiators
+
+* Work completed and clearly confirmed
+* Issues flagged before they become problems
+* Communication you do not have to chase
+* Works with your tools, apps, or systems
+* Consistent team that learns your space
+* Flexible scope without losing structure
+* Can support beyond cleaning when defined
+* 24/7 virtual communication when needed [VERIFY]
+* Adapts to whatever tools or systems you use
+* Cleans and pricing shaped around your setup
+* Scales with occupancy, volume, or activity
+
+---
+
+## microcopy
+
+Tell us how your space runs and we will say if it fits or not
+
+
+### 04/20/2026, 05:47:18 PM
+**Prompt:** - drop tools, keep apps and systems
+- agreed on pricing and scope text change
+- mention it. it's anything client needs, including inventory and linen management simple property maintenance and more.
+- yes it's true
+- 
+
+### 04/20/2026, 05:48:53 PM
+**Prompt:** continue 
+
+### 04/20/2026, 05:51:43 PM
+**Prompt:** before we continue, I want to brainstorm an idea. I'm confident that I want to highly targeted changing of the website copy for different clients. everything about the structure of the site would change, but the words would be different depending on the client type. this could be triggered either by them being directed to by any particular URL, or by their clicking on something that indicates their type. 
+even if we're not ready to do that now it seems wise to set up the structure and start saving some of the different versions of copy that have already started popping up.
+
+### 04/20/2026, 06:31:06 PM
+**Prompt:** yes let's do before chatgpt. I'm ok with making it state run for now and foreseeable future, SEO won't be a problem for a while and I can make permanent versions of any subpage that needs it.
+
+### 04/20/2026, 06:40:29 PM
+**Prompt:** durable update
+
+---
+
+## Session: 2026-04-20 (continuation 6 -- hero copy, segment copy layer)
+
+### Summary
+
+Mobile session (Charles on phone, ChatGPT only, no Codex). Hero copy updated via chatgpt-prep/copy-review workflow. Segment copy layer scaffolded and Hero wired to it.
+
+**What happened (Claude-authored):**
+
+1. **Hero copy updated** -- chatgpt-prep run on Hero.tsx, brief sent to ChatGPT, copy returned and reviewed via copy-review agent. Fixes applied before implementing: duplicate differentiator dropped, pricing line rewritten to mechanism language, "beyond cleaning" made concrete (inventory/linen/property tasks), [VERIFY] removed from 24/7 comms (confirmed true). Committed: 4525695.
+   - h1: "Cleaning built for rentals, offices, and multi-unit operations."
+   - Body: collapsed two repetitive paragraphs into one mechanism-specific sentence
+   - Differentiators: 7 -> 10 items, renumbered 01-10
+   - Microcopy: "Tell us how your space runs and we will say if it fits or not."
+
+2. **Segment copy layer scaffolded** -- Charles confirmed intent for state-driven per-segment copy variation (triggered by accordion click or ?for= URL param). Designed and built:
+   - `lib/copy/brazusa-cleaning/types.ts` -- Segment type, HeroCopy, SegmentCopy interfaces
+   - `lib/copy/brazusa-cleaning/base.ts` -- current hero copy as default
+   - `lib/copy/brazusa-cleaning/segments/str|offices|property|homes.ts` -- stubs, spread base
+   - `lib/copy/brazusa-cleaning/index.ts` -- getCopy(segment) resolver
+   - Hero.tsx -- heroCopy prop replaces hardcoded strings
+   - page.tsx -- ?for= URL param reader (window.location.search lazy-init, same pattern as Testimonials hash), getCopy(activeClient).hero passed to Hero
+   - Committed: dd35064. TypeScript clean.
+
+3. **Accordion copy brief prepared** -- chatgpt-prep run on ClientAccordion.tsx + page.tsx. Full brief with character constraints for all 4 segments + section headline + "We clean it all" panel sent to ChatGPT. Return pending.
+
+4. **Backlog and decisions updated** -- feature backlog created (docs/backlog.md), umbrella architecture locked (Primo + Ze Jr), domain relay locked, WhatsApp deferred item added.
+
+**Key decisions locked this session (see decisions.md):**
+- Segment copy in lib/copy/brazusa-cleaning/, resolved at render time via getCopy()
+- ?for= URL param drives initial segment (window-based lazy-init, no useSearchParams)
+- Components receive copy as props -- no direct copy imports in components
+- Segment stubs spread base until real copy is approved
+
+**Open entering next session:**
+- Accordion copy: paste ChatGPT return here for copy-review, then implement + fill segment stubs
+- QuoteDrawer email/phone split (still blocked on integration-safety)
+- Testimonials operational assurance (HIGH design review gap)
+- Segment stub hero copy: fill str/offices/property/homes once accordion pass delivers segment-specific angles

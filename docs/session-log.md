@@ -4969,3 +4969,39 @@ Reason: it keeps the intent a little more tool-focused and a little less syntact
   - [docs/forVitor/replicate-ai-setup.md](/C:/Users/charl/Desktop/claudecoding/docs/forVitor/replicate-ai-setup.md)
 - The Vitor setup guide now includes the practical Windows/PowerShell handling rule: do not treat `Get-Content` mojibake alone as evidence of corruption; verify with raw bytes + explicit UTF-8 decode, editor view, or rendered output first.
 - No new decision was added here because the locked rule already lives in `docs/decisions.md`; this pass was documentation propagation and handoff hardening, not a new policy change.
+
+### 04/20/2026, 02:18:24 PM
+**Prompt:** your usage ended before you could do a durable update, do that now and review everything thats changed
+
+---
+
+## Session: 2026-04-20 (continuation 3 -- encoding rule broadening + AI docs update)
+
+### Summary
+
+Session covered a policy evaluation on the Unicode encoding rule, formal adoption of the broadened rule, and updating all AI tracking documents to reflect current state.
+
+**What happened (Claude-authored):**
+
+1. **Unicode encoding rule policy evaluation** -- Charles asked whether the current em-dash-only rule should be broadened to cover all non-ASCII punctuation. Claude evaluated the full surface area (string literals, JSX props, JSX text nodes, docs, config files) and recommended adopting the broader rule with one framing correction: the instruction should be "use Unicode escapes for non-ASCII punctuation" not "prefer ASCII punctuation" -- those are different things. The first preserves copy quality in rendered output; the second degrades it.
+
+2. **Charles's refinement** -- "In .ts/.tsx source, represent non-ASCII punctuation in JSX text nodes in a shell-safe way; default to Unicode escapes." Correct framing -- tool-focused, not syntactically rigid. Adopted verbatim.
+
+3. **Formal rule adoption (c905a0a)** -- `AGENTS.md` and `docs/decisions.md` updated. Old em-dash-only rule replaced with a rule covering all non-ASCII punctuation: `\u2014`, `\u2013`, `\u2026`, `\u2019`, `\u201C`/`\u201D`, etc. Scope: always in JS/TS string literals and JSX prop strings; default to Unicode escapes in JSX text nodes; plain ASCII in config/instruction files; literal Unicode fine in markdown/docs.
+
+4. **AI tracking documents updated** -- Five files updated to reflect current state:
+   - `docs/ai-case-study.md` -- "Actionable now" list pruned to 2 remaining items; completed items (inline styles, service area, pricing context, hash links, ChatGPT copy, copy workflow) moved to a "Completed" section.
+   - `docs/forVitor/ai-case-study.md` -- Same updates in Portuguese.
+   - `docs/forVitor/README.md` -- Six "Get a Free Quote" references corrected to "Get a Quote".
+   - `docs/forVitor/replicate-ai-setup.md` -- Shell/encoding section updated to explicitly name Unicode escapes as the mechanism, with all five common escape codes listed.
+
+**Commits this session:**
+- c905a0a docs: broaden Unicode punctuation encoding rule to cover all non-ASCII punctuation
+- (this session wrap + AI docs update -- pending commit)
+
+**Remaining open deferred items:**
+- QuoteDrawer email/phone split (integration-safety required first)
+- QuoteDrawer file uploads Phase 1
+- Accordion image file replacements (Charles to re-export)
+- Create agent for Charles's code preferences
+- Testimonials operational assurance (single proof modality -- design review gap still open)

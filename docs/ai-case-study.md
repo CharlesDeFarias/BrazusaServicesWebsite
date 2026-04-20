@@ -165,25 +165,28 @@ These are not all equal. Some are immediate and blockers for clean product work.
 
 ### Actionable now
 
-- **Commit the current governance changes.** Four files are currently modified and uncommitted: `AGENTS.md`, `CODEX.md`, `docs/decisions.md`, `docs/session-log.md`. These represent the completed Claude/Codex alignment pass and should be committed as one unit before any product work starts.
-- **Run the copy blueprint workflow on `docs/briefs/copy.txt`.** Use ChatGPT for the broad rewrite first, then bring the result back to Claude/Codex for repo-aware critique and mapping before requesting any section-level final copy.
-- **Inline style cleanup.** Many components in `components/clean/` use `style={{ color: 'var(--color-...)' }}` where a Tailwind utility should be used instead. Tailwind v4 exposes all `@theme` tokens automatically. Static values only - dynamic/conditional inline styles need a separate decision.
 - **QuoteDrawer email/phone split.** The contact field is currently a single field. The decision to split it into separate email and phone fields (both optional, at least one required) has been made. Implementation is blocked on running the integration-safety agent first to produce a manifest across Resend, Airtable, and Google Sheets.
 - **Accordion image replacements.** Charles to re-export the accordion images.
-- **Service area town list.** Awaiting a ChatGPT audit pass.
-- **Testimonials pricing context.** Awaiting real data from Charles.
 
 ### Longer-term and aspirational
 
 - **Multi-tool write conflict protocol.** No protocol currently exists for what happens when Claude and Codex both attempt to write to the same durable file in the same session. Sessions are sequential now, so this is not a real problem yet. It will need a solution when concurrent or overlapping usage becomes real.
 - **Create a clean code agent.** A dedicated Claude agent for implementation quality review - naming conventions, component structure, TypeScript standards, helper organization. Currently this guidance lives in CLAUDE.md as text; an agent would enforce it at review time.
 - **Create an LLM optimization agent.** A dedicated agent for reviewing prompt design, context management, and token efficiency. The charles-codex-optimizer skill covers part of this for Codex; a Claude-side equivalent would complete the picture.
-- **Shareable hash links for Pricing filter chips.** Currently in-page scroll only; deferred.
-- **ChatGPT refinement of per-client service copy.** The per-client service descriptions have not had a full copy pass.
 - **QuoteDrawer file uploads.** Phase 1 should be email-first, with a WhatsApp fallback for files that exceed Gmail's attachment limit (~25MB). A proper storage-backed system is Phase 2.
 - **Periodic governance audit workflow.** As the project grows and more sessions happen, the governance files will drift. A scheduled audit pass - reading all operating files and checking for inconsistencies - would catch problems earlier. This could eventually become a dedicated agent or skill.
 - **Formal versioning of the operating system.** Right now there is no version marker on CLAUDE.md or the Codex preferences. If a major architecture change is made, there is no easy way to know whether a given session was running the old or new version. Low priority now; matters more if the system becomes complex enough to have breaking changes.
-- **Formalize the ChatGPT copy workflow as reusable tooling.** The emerging pattern - ChatGPT for blueprint rewrite, Claude/Codex for repo-aware review and mapping, then targeted follow-up prompts - should eventually become a dedicated workflow update on the Claude side plus a Codex-side skill or equivalent reusable guide.
+
+### Completed
+
+- ~~Commit the current governance changes~~ - done, all governance files committed and pushed.
+- ~~Run the copy blueprint workflow on `docs/briefs/copy.txt`~~ - done. ChatGPT rewrote the blueprint; Claude/Codex mapped it back to components with a mechanism-based language pass.
+- ~~Inline style cleanup~~ - done (Codex, commit 90d698d). All static `style={{ color: 'var(--color-...)' }}` calls across `components/clean/` replaced with Tailwind utilities.
+- ~~Service area town list~~ - done (Codex, commit 0f99376). Full Greater Boston coverage implemented.
+- ~~Testimonials pricing context~~ - done (commit 6524f9f). Real per-engagement numbers added to Thatch, Michelle, New Horizons, and Dr. Silver cases.
+- ~~Shareable hash links for Pricing filter chips~~ - done. Hash fragment state (`#testimonials-str` etc.) implemented in Testimonials; Pricing chips link directly.
+- ~~ChatGPT refinement of per-client service copy~~ - done (commit 078bc43). Full mechanism-based language pass across all service definitions.
+- ~~Formalize the ChatGPT copy workflow as reusable tooling~~ - done. `chatgpt-prep` and `copy-review` agents handle the handoff loop; chatgpt-prep generates character-counted briefs, copy-review enforces violations before anything enters the codebase.
 
 ---
 

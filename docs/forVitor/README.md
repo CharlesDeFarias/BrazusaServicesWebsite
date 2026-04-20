@@ -23,7 +23,7 @@ Abre em [http://localhost:3000/clean](http://localhost:3000/clean).
 Pra adicionar screenshots, tira elas em `localhost:3000/clean` e salva em `screenshots/`. Sugestões do que capturar:
 
 ### Hero (scroll: 0px)
-> Hero navy de 82vh com headline, grid 2x2 de diferenciais, CTA "Get a Free Quote" e botão de telefone.
+> Hero navy de 82vh com headline, grid 2x2 de diferenciais, CTA "Get a Quote" e botão de telefone.
 
 <!-- Substitui esse comentário por: ![Hero](screenshots/01-hero.png) -->
 
@@ -48,12 +48,12 @@ Pra adicionar screenshots, tira elas em `localhost:3000/clean` e salva em `scree
 <!-- Substitui esse comentário por: ![Quick Contact](screenshots/05-contact.png) -->
 
 ### Mobile — menu hamburger aberto
-> Menu hamburger expandido: tipos de cliente "Clean my…", links de nav, e botão "Free Quote".
+> Menu hamburger expandido: tipos de cliente "Clean my…", links de nav, e botão "Get a Quote".
 
 <!-- Substitui esse comentário por: ![Mobile Nav](screenshots/06-mobile-nav.png) -->
 
 ### Mobile — barra CTA fixada
-> Barra fixa no rodapé com "Get a Free Quote" (abre o drawer) e "Call Now" (link de telefone).
+> Barra fixa no rodapé com "Get a Quote" (abre o drawer) e "Call Now" (link de telefone).
 
 <!-- Substitui esse comentário por: ![Mobile CTA Bar](screenshots/07-mobile-cta-bar.png) -->
 
@@ -98,8 +98,8 @@ Todos os componentes ficam em `components/clean/`. O ponto de entrada da página
 - Fixada no topo, sempre visível (sem intersection observer)
 - **Estado escuro** (sem scroll): background navy com blur, texto branco, logo em pill branco
 - **Estado claro** (após rolar 80px): background off-white, texto escuro, logo normal
-- **Desktop:** dropdown "Clean my…" com quatro tipos de cliente + "Something else"; links de nav padrão; botão CTA "Free Quote"
-- **Mobile:** hamburger (animado pra ×); painel dropdown mostra tipos de cliente, links de nav e botão "Free Quote"
+- **Desktop:** dropdown "Clean my…" com quatro tipos de cliente + "Something else"; links de nav padrão; botão CTA "Get a Quote"
+- **Mobile:** hamburger (animado pra ×); painel dropdown mostra tipos de cliente, links de nav e botão "Get a Quote"
 
 ---
 
@@ -109,7 +109,7 @@ Todos os componentes ficam em `components/clean/`. O ponto de entrada da página
 - **Card "Add details":** Expansível — quartos, banheiros, nível de limpeza, frequência, áreas de foco
 - **Upload de arquivo:** Inline abaixo da área de notas
 - **Lembrete de orçamento aproximado:** Selecionar "I'd like a rough quote" mostra um lembrete de detalhes
-- **Pré-preenchimento do tipo de espaço:** "Get a Free Quote" em qualquer linha do accordion ou no dropdown da nav já preenche o tipo de espaço
+- **Pré-preenchimento do tipo de espaço:** "Get a Quote" em qualquer linha do accordion ou no dropdown da nav já preenche o tipo de espaço
 - **Tipo "Other":** Inclui uma nota sobre adaptabilidade; ativado pela opção "Something else" da nav e pela linha "We clean it all!" do accordion
 
 ---

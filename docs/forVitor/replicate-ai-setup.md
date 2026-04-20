@@ -118,10 +118,10 @@ Pode usar como base, mas não como "cola e pronto", porque ele tem caminhos abso
 No Windows PowerShell desse projeto existe um detalhe importante: o shell pode mostrar pontuação UTF-8 válida como mojibake mesmo quando o arquivo no disco está correto.
 
 Regra prática:
-- arquivos de config e instrução de IA ficam ASCII-safe
-- se pontuação não ASCII precisar aparecer em source JS/TS, representa de forma shell-safe
-- não trata output estranho de `Get-Content` sozinho como prova de corrupção
-- confirma com leitura de bytes brutos + decode UTF-8 explícito, no editor, ou no output renderizado do app
+- arquivos de config e instrução de IA (AGENTS.md, CLAUDE.md, CODEX.md) ficam com pontuação ASCII pura -- sem em dash, aspas curvas, ou similares
+- pontuação não ASCII em source JS/TS usa Unicode escape por padrão: `\u2014` (em dash), `\u2013` (en dash), `\u2026` (reticencias), `\u2019` (apostrofe curvo), `\u201C`/`\u201D` (aspas inglesas) -- aplica em string literals, JSX props, e text nodes em arquivos .ts/.tsx
+- não trata output estranho de `Get-Content` sozinho como prova de corrupcao
+- confirma com leitura de bytes brutos + decode UTF-8 explicito, no editor, ou no output renderizado do app
 
 ### Qualquer coisa muito pessoal do session log
 

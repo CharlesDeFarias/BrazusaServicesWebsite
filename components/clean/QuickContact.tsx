@@ -17,7 +17,7 @@ export default function QuickContact(): JSX.Element {
           Reach us directly
         </h2>
         <p className="text-sm mb-10 text-warm-gray">
-          We respond quickly — usually same day.
+          {'We respond quickly \u2014 usually same day.'}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-5 flex-wrap">

@@ -55,7 +55,7 @@ export default function NewsletterCTA(): JSX.Element {
           className="flex-shrink-0 px-4 py-2 text-xs font-medium text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy disabled:opacity-50"
           style={{ background: 'var(--color-brand-blue)', borderLeft: '2px solid var(--color-white-25)', whiteSpace: 'nowrap' }}
         >
-          {loading ? 'Sending…' : 'Subscribe'}
+          {loading ? 'Sending\u2026' : 'Subscribe'}
         </button>
       </div>
       <input

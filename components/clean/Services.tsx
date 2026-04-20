@@ -287,7 +287,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
                     <span className="text-xs font-medium text-white">{extendedServiceDefinition.name}</span>
                     <span className="text-xs text-white-40">
                       {' '}
-                      — {getExtendedDescription(extendedServiceDefinition, selectedFilter)}
+                      {'\u2014'} {getExtendedDescription(extendedServiceDefinition, selectedFilter)}
                     </span>
                   </div>
                 </div>

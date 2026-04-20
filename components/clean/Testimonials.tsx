@@ -331,7 +331,7 @@ export default function Testimonials(): JSX.Element {
                 style={{ width: `${CARD_W}px`, maxWidth: '80vw', border: '1px dashed var(--color-light-gray)' }}
               >
                 <p className="text-sm text-center text-warm-gray-light">
-                  No examples for this category yet — reach out directly.
+                  {'No examples for this category yet \u2014 reach out directly.'}
                 </p>
               </div>
             )}

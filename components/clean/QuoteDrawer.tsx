@@ -370,7 +370,9 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                     <option value="str" style={{ background: 'var(--color-navy)' }}>Short-Term Rental</option>
                     <option value="office" style={{ background: 'var(--color-navy)' }}>Office / Clinic</option>
                     <option value="property" style={{ background: 'var(--color-navy)' }}>Property / Building</option>
-                    <option value="other" style={{ background: 'var(--color-navy)' }}>Other — we&apos;ll figure it out</option>
+                    <option value="other" style={{ background: 'var(--color-navy)' }}>
+                      {"Other \u2014 we'll figure it out"}
+                    </option>
                   </select>
                   {spaceType === 'other' && (
                     <p className="text-xs mt-2 leading-relaxed text-white-40">
@@ -384,7 +386,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                   <label className={`${labelCls} text-white-45`}>Notes or questions</label>
                   <textarea value={notes} onChange={(e) => setNotes(e.target.value)}
                     className={`${inputCls} resize-none`} rows={3}
-                    placeholder="Anything relevant — no detail too small"
+                    placeholder={'Anything relevant \u2014 no detail too small'}
                     style={getInputStyle('notes')}
                     onFocus={() => setFocusedField('notes')}
                     onBlur={() => setFocusedField(null)}
@@ -475,7 +477,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
                 className="w-full py-3.5 font-medium text-sm mt-6 text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy disabled:opacity-50"
                 style={{ background: 'var(--color-brand-blue)', borderLeft: '2px solid var(--color-white-25)' }}
               >
-                {loading ? 'Sending…' : 'Submit Free Request'}
+                {loading ? 'Sending\u2026' : 'Submit Free Request'}
               </button>
 
               <p className="text-xs text-center mt-2.5 text-white-40">

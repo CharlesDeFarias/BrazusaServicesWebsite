@@ -47,7 +47,7 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
             Greater Boston &amp;<br />surrounding areas
           </h2>
           <p className="text-sm leading-relaxed mb-6 text-warm-gray-dark">
-            We serve apartments, high-rises, offices, and multi-unit properties across the metro area. Not sure if you&apos;re in range? Just ask — we&apos;re flexible.
+            {"We serve apartments, high-rises, offices, and multi-unit properties across the metro area. Not sure if you're in range? Just ask \u2014 we're flexible."}
           </p>
           <button
             onClick={onQuoteClick}

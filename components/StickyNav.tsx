@@ -143,7 +143,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-100"
               style={{ color: linkClr, letterSpacing: '0.06em' }}
             >
-              Clean my…
+              Clean my{'\u2026'}
               <svg
                 width="10" height="10" viewBox="0 0 10 10" fill="none"
                 className="transition-transform duration-200"
@@ -188,7 +188,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
                   onMouseEnter={e => (e.currentTarget.style.background = scrolled ? 'rgba(11,29,46,0.06)' : 'rgba(255,255,255,0.06)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                 >
-                  Something else…
+                  Something else{'\u2026'}
                 </button>
               </div>
             )}
@@ -259,7 +259,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
             className="text-xs font-medium py-2 mb-1"
             style={{ color: 'var(--color-brand-gold)', letterSpacing: '0.1em' }}
           >
-            CLEAN MY…
+            CLEAN MY{'\u2026'}
           </div>
           {clientTypes.map((ct) => (
             <button
@@ -288,7 +288,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               alignItems: 'center',
             }}
           >
-            Something else…
+            Something else{'\u2026'}
           </button>
 
           {/* Divider */}

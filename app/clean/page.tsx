@@ -67,7 +67,7 @@ const clientItems: ClientItem[] = [
     body: (
       <>
         <p>Office cleaning works best when you don&apos;t have to think about it. We schedule around your hours, show up when we say we will, and keep the same team so the space stays consistent.</p>
-        <p>We work with small offices, coworking spaces, and medical and clinical environments — keeping a consistent team, following set routines, and working around your hours.</p>
+        <p>{'We work with small offices, coworking spaces, and medical and clinical environments \u2014 keeping a consistent team, following set routines, and working around your hours.'}</p>
         <p>Simple communication, consistent service. No reminders, no follow-ups needed on your end.</p>
       </>
     ),

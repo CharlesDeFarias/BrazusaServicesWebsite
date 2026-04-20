@@ -26,7 +26,7 @@ export default function Footer(): JSX.Element {
           <div className="flex-shrink-0">
             <p className="text-sm font-medium text-white mb-0.5">For hosts &amp; managers</p>
             <p className="text-xs leading-relaxed text-white-40">
-              Occasional tips for homes, STR hosts &amp; property managers — plus promo windows when we have availability.
+              {'Occasional tips for homes, STR hosts & property managers \u2014 plus promo windows when we have availability.'}
             </p>
           </div>
           <div className="flex-1 min-w-0">

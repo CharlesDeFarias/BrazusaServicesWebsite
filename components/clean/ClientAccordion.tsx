@@ -228,7 +228,7 @@ export default function ClientAccordion({
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-navy text-sm leading-none mb-1">We clean it all</p>
               <p className="text-xs text-warm-gray">
-                Not sure where your space fits? That&apos;s normal — we adapt to more setups than the main categories can show.
+                {"Not sure where your space fits? That's normal \u2014 we adapt to more setups than the main categories can show."}
               </p>
             </div>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0 transition-transform duration-300" style={{ transform: otherOpen ? 'rotate(180deg)' : 'none' }}>

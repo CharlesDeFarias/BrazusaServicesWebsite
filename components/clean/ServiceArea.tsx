@@ -6,20 +6,22 @@ interface ServiceAreaProps {
 
 const bostonNeighborhoods = [
   'Back Bay', 'Beacon Hill', 'South End', 'North End',
-  'Seaport / Innovation District', 'Downtown / Financial District',
-  'Charlestown', 'East Boston', 'South Boston',
-  'Dorchester', 'Roxbury', 'Jamaica Plain',
-  'Fenway / Kenmore', 'Allston / Brighton',
-  'West Roxbury', 'Roslindale', 'Hyde Park',
-  'Mission Hill', 'Mattapan',
+  'Downtown', 'Chinatown', 'Seaport', 'Fenway',
+  'Kenmore', 'Mission Hill', 'Roxbury', 'Dorchester',
+  'South Boston', 'East Boston', 'Charlestown', 'Jamaica Plain',
+  'West Roxbury', 'Roslindale', 'Hyde Park', 'Brighton',
+  'Allston',
 ]
 
 const greaterBostonTowns = [
-  'Cambridge', 'Somerville', 'Brookline', 'Newton',
-  'Waltham', 'Watertown', 'Arlington', 'Belmont',
-  'Lexington', 'Medford', 'Malden', 'Quincy',
-  'Dedham', 'Needham', 'Wellesley', 'Natick',
-  'Weston', 'Milton', 'Norwood',
+  'Brookline', 'Cambridge', 'Somerville', 'Medford',
+  'Malden', 'Everett', 'Chelsea', 'Revere',
+  'Winthrop', 'Quincy', 'Milton', 'Braintree',
+  'Weymouth', 'Dedham', 'Newton', 'Watertown',
+  'Waltham', 'Belmont', 'Arlington', 'Lexington',
+  'Woburn', 'Burlington', 'Winchester', 'Needham',
+  'Wellesley', 'Natick', 'Framingham', 'Norwood',
+  'Westwood', 'Canton', 'Randolph',
 ]
 
 const chipStyle = {

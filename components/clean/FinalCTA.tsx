@@ -7,7 +7,7 @@ interface FinalCTAProps {
 export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
   return (
     <section
-      className="bg-off-white py-20 px-6 relative overflow-hidden"
+      className="grain bg-off-white py-20 px-6 relative overflow-hidden"
       style={{ borderTop: '1px solid var(--color-light-gray)' }}
     >
       {/* Subtle grid pattern */}

@@ -188,7 +188,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
               className="text-xl text-white italic"
               style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 400 }}
             >
-              {submitted ? 'Thanks!' : 'Get a Free Quote'}
+              {submitted ? 'Thanks!' : 'Get a Quote'}
             </h3>
             <button
               onClick={handleClose}

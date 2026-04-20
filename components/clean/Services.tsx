@@ -34,50 +34,50 @@ export const serviceDefinitions: ServiceDefinition[] = [
     name: 'Routine Cleaning',
     clients: ['property', 'offices', 'apartment'],
     descriptions: {
-      property: 'Reliable recurring cleaning across units, common areas, and shared building needs.',
-      offices: 'Consistent scheduled cleaning that keeps workspaces ready without constant follow-up.',
-      apartment: 'Steady upkeep for homes and apartments on the schedule that makes sense for you.',
-      str: 'Routine maintenance between heavier resets when a short-term rental needs baseline support.',
+      property: 'Recurring cleaning across units and common areas with issues flagged as they come up.',
+      offices: 'Scheduled cleaning that runs without reminders and is confirmed after each visit.',
+      apartment: 'Recurring upkeep handled on your schedule, with clear confirmation after each visit.',
+      str: 'Baseline maintenance between turnovers so listings do not drift or fall behind.',
     },
   },
   {
     name: 'Deep Cleaning',
     clients: ['str', 'property', 'offices', 'apartment'],
     descriptions: {
-      str: 'Full reset work before listings, after guest wear, or when standards slipped.',
-      property: 'Top-to-bottom detail work for units, turnovers, and problem spaces that need more than maintenance.',
-      offices: 'Detail-focused cleaning for offices, clinics, and shared spaces that need a full refresh.',
-      apartment: 'A thorough reset for homes and apartments when regular cleaning is not enough.',
+      str: 'Full reset when guest wear builds up or before putting a unit back online.',
+      property: 'Detail work across units and shared spaces when standard cleaning no longer holds.',
+      offices: 'Detailed reset for offices and clinics when routine cleaning stops being enough.',
+      apartment: 'Full reset when buildup reaches a point routine cleaning cannot keep up with.',
     },
   },
   {
     name: 'Move-in / Move-out',
     clients: ['str', 'property', 'apartment'],
     descriptions: {
-      str: 'Listing-ready resets between guest cycles, owner stays, or seasonal transitions.',
-      property: 'Move-in ready, move-out documented cleaning for landlords, buildings, and managed units.',
-      offices: 'Transition cleaning for office suites, small relocations, and handoff situations.',
-      apartment: 'Fresh starts and clean exits for apartments, homes, and roommate turnover situations.',
+      str: 'Reset units between stays or seasons so they are ready to go back online.',
+      property: 'Move-out documented and move-in ready across units and managed properties.',
+      offices: 'Office transition cleaning handled during relocations and tenant handoffs.',
+      apartment: 'Move-in and move-out cleaning handled and confirmed so the space is ready when it needs to be.',
     },
   },
   {
     name: 'STR Turnover',
     clients: ['str'],
     descriptions: {
-      str: 'Fast, reliable between-guest turnovers with the consistency reviews depend on.',
-      property: 'Turnover-style coordination when furnished building units need hospitality-level timing.',
-      offices: 'Quick reset support when commercial spaces need fast turnaround between occupants or events.',
-      apartment: 'High-speed reset work when a furnished unit needs to be guest-ready again quickly.',
+      str: 'Between-guest cleaning with completion confirmed so units are ready on time.',
+      property: 'Turnover coordination for furnished units that follow hospitality timelines.',
+      offices: 'Fast reset support when spaces turn over between short-term use or events.',
+      apartment: 'Quick resets for furnished units that need to be ready again the same day.',
     },
   },
   {
     name: 'Post-construction',
     clients: ['property', 'offices'],
     descriptions: {
-      str: 'Detailed cleanup after renovation work before a unit can safely go back online.',
-      property: 'Dust, debris, and detail work after building projects, renovations, and contractor handoff.',
-      offices: 'Construction cleanup for offices, clinics, and tenant improvements before reopening.',
-      apartment: 'Post-renovation cleanup when a home or apartment needs to feel livable again fast.',
+      str: 'Post-renovation cleanup so units can be listed again without delays.',
+      property: 'Cleanup after projects, handling dust, debris, and contractor handoff issues.',
+      offices: 'Construction cleanup for offices and clinics before reopening to staff.',
+      apartment: 'Post-renovation cleanup handled until the space is genuinely livable again.',
     },
   },
 ]
@@ -87,68 +87,68 @@ const extendedServiceDefinitions: ExtendedServiceDefinition[] = [
     name: 'Linen processing',
     clients: ['str', 'property'],
     descriptions: {
-      str: 'Wash, dry, fold, and stage linens so turnovers stay smooth.',
-      property: 'Coordinate linen flow across furnished units or repeated turnovers.',
+      str: 'Wash, sort, and stage linens so turnovers do not slow down.',
+      property: 'Manage linen flow across units so shortages do not disrupt operations.',
     },
-    defaultDescription: 'Linen handling when the operation needs more than cleaning alone.',
+    defaultDescription: 'Linen handling when volume or turnover makes it part of the workflow.',
   },
   {
     name: 'Inventory tracking',
     clients: ['str', 'property'],
     descriptions: {
-      str: 'Track supplies, amenities, and restocking issues before guests feel them.',
-      property: 'Monitor supplies across units so managers are not discovering shortages late.',
+      str: 'Track supplies and flag shortages before they affect guest stays.',
+      property: 'Monitor inventory across units so gaps are seen before they cause delays.',
     },
-    defaultDescription: 'Supply visibility and restocking support where it meaningfully reduces oversight.',
+    defaultDescription: 'Track supplies and flag shortages before they affect the next visit.',
   },
   {
     name: 'Closet & storage organization',
     clients: ['str', 'property', 'apartment'],
     descriptions: {
-      str: 'Keep owner closets, supply storage, and backstock organized between stays.',
-      property: 'Standardize storage across units and shared supply areas.',
-      apartment: 'One-time or periodic organization for homes and apartments that need order restored.',
+      str: 'Keep closets organized so supplies are visible and easy to restock.',
+      property: 'Set storage standards so teams know where items go across units.',
+      apartment: 'Organize storage so items have a clear place and are easy to find each time.',
     },
-    defaultDescription: 'Storage organization when clutter or inconsistency is getting in the way.',
+    defaultDescription: 'Organize storage so items are in the right place and easy to access.',
   },
   {
     name: 'Maintenance coordination',
     clients: ['str', 'property', 'offices'],
     descriptions: {
-      str: 'Flag issues fast and coordinate the small fixes that protect guest experience.',
-      property: 'Spot problems early and coordinate with building vendors before they compound.',
-      offices: 'Surface issues clearly so commercial spaces stay functional without surprises.',
+      str: 'Flag issues during cleans and coordinate fixes before guests notice.',
+      property: 'Surface problems early and coordinate with vendors before they grow.',
+      offices: 'Identify issues during service so they are handled before disruption.',
     },
-    defaultDescription: 'Issue spotting and coordination support when cleaning alone is not enough.',
+    defaultDescription: 'Identify issues early and coordinate fixes when cleaning reveals them.',
   },
   {
     name: 'Minor task handling',
     clients: ['str', 'property', 'offices', 'apartment'],
     descriptions: {
-      str: 'Handle the small things that would otherwise break a guest-ready setup.',
-      property: 'Take care of light tasks that tend to fall through between vendors.',
-      offices: 'Resolve small facility issues before they become another management thread.',
-      apartment: 'Help with small practical tasks that are easier to bundle into the visit.',
+      str: 'Handle small issues during service so the unit stays guest-ready between turnovers.',
+      property: 'Take care of small tasks that would otherwise require another vendor.',
+      offices: 'Resolve minor issues during service so they do not become larger tasks.',
+      apartment: 'Handle small tasks during visits so they do not pile up.',
     },
-    defaultDescription: 'Light practical tasks that fit naturally into a broader service visit.',
+    defaultDescription: 'Take care of small tasks during service so they do not escalate.',
   },
   {
     name: 'Guest support tasks',
     clients: ['str'],
     descriptions: {
-      str: 'Support the guest-facing details that make a short-term rental operation feel controlled.',
+      str: 'Assist with guest-facing needs so hosts are not pulled into small issues.',
     },
-    defaultDescription: 'Operational support for spaces that need more coordination than standard cleaning.',
+    defaultDescription: 'Cover the in-between tasks that do not fit cleaning but need to be handled.',
   },
   {
     name: 'Key & access management',
     clients: ['str', 'property', 'offices'],
     descriptions: {
-      str: 'Coordinate keys, lockboxes, and access so turnovers do not bottleneck.',
-      property: 'Keep access logistics documented across units, staff, and vendors.',
-      offices: 'Support after-hours entry, keys, and access documentation cleanly.',
+      str: 'Manage keys and access so turnovers do not get delayed or blocked.',
+      property: 'Keep access organized across units so staff and vendors can enter.',
+      offices: 'Coordinate access for after-hours work without needing supervision.',
     },
-    defaultDescription: 'Access coordination when timing and handoff reliability matter.',
+    defaultDescription: 'Handle access so entry and handoffs do not slow down the work.',
   },
 ]
 
@@ -203,15 +203,15 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
           <div>
             <h2 className="italic text-3xl md:text-4xl text-white leading-none" style={{ fontWeight: 300 }}>
-              What we actually do
+              What we handle daily
             </h2>
             <p
               className="text-xs mt-2"
               style={{ color: hasFilter ? 'var(--color-gold-90)' : 'var(--color-white-35)', fontFamily: hasFilter ? 'var(--font-syne)' : 'var(--font-cormorant)', fontSize: hasFilter ? '0.75rem' : '0.9rem' }}
             >
               {hasFilter
-                ? 'Services relevant to your space type are highlighted.'
-                : 'Choose a space type below to see the work that usually fits best.'}
+                ? 'We highlight the services that tend to apply to your space.'
+                : 'Pick a space type to see how the work is usually handled there.'}
             </p>
           </div>
 
@@ -295,7 +295,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
             })}
           </div>
           <p className="text-xs mt-4" style={{ color: 'var(--color-white-30)' }}>
-            These are add-ons, not assumptions. The mix depends on how much of the operation you want us to handle.
+            These are optional layers. Scope depends on how much of the operation you want handled.
           </p>
         </div>
 
@@ -304,7 +304,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
           className="text-sm font-medium px-6 py-3.5 min-h-[44px] text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
           style={{ background: 'var(--color-white-10)', borderLeft: '2px solid var(--color-brand-gold)' }}
         >
-          Not sure which service fits? Tell us what you need →
+          Not sure what fits? Tell us how your space runs →
         </button>
       </div>
     </section>

@@ -66,7 +66,7 @@ The tools were used to improve each other's governance - not just to write code.
 
 The sequence went roughly like this: Claude reviewed the Codex customization system (preferences, skills, CODEX.md) and identified gaps and inconsistencies. Codex reviewed Claude's recommendations and pushed back where it disagreed. Both tools' startup workflows were then aligned through shared durable files. Claude agents and Codex skills were updated based on what the other tool found.
 
-One concrete example: Claude recommended using a clean em dash when fixing an encoding artifact in a Codex-owned skill file. Codex pushed back, arguing that em dashes written by LLMs are fragile and get corrupted - ASCII hyphens are more robust in AI-owned config files. That argument was correct. Claude updated its recommendation. The resulting convention (ASCII hyphens in AI-owned files) is now in the project contract.
+One concrete example started as a narrow em dash disagreement and turned into a broader source-representation rule. Claude recommended using a clean em dash when fixing an encoding artifact in a Codex-owned skill file. Codex pushed back, arguing that the real rule should be wider: AI-owned config and instruction files should stay ASCII-safe, and non-ASCII punctuation in JS/TS source should be represented in a shell-safe way rather than as literal characters. That argument was correct. Claude updated its recommendation. The resulting convention is now in the project contract.
 
 Another: Codex added a step to its durable-update skill for authorship notation in mixed sessions. Claude reviewed it, found the line had actually introduced a mojibake encoding artifact, and fed a corrected prompt back to Codex.
 
@@ -123,6 +123,8 @@ This was not designed all at once. It evolved.
 
 **Encoding fragility.** LLM-generated text sometimes contains UTF-8 em dashes that get written into config files as corrupted bytes - `â€"` instead of `—`. Finding and diagnosing this the first time takes longer than it should. The fix is straightforward (ASCII hyphens in AI-owned files), but the issue is subtle enough that it can survive several rounds of inspection before getting caught. See the Known Problems section for a specific incident.
 
+What the project learned later is that the em dash symptom was narrower than the real rule. The true risk surface was non-ASCII punctuation more broadly during AI read-modify-write cycles in this Windows PowerShell environment. The durable fix ended up being two rules, not one: keep AI-owned config and instruction files ASCII-safe, and represent non-ASCII punctuation in JS/TS source in a shell-safe way rather than as literal characters.
+
 **Instruction drift.** Rules written in one file do not automatically propagate to other files. CLAUDE.md, CODEX.md, AGENTS.md, and the Codex preferences can drift apart if changes are not applied symmetrically. This happened multiple times and required audit passes to catch. The thin-adapter principle (keep CODEX.md short, keep CLAUDE.md authoritative) helps, but does not eliminate the problem.
 
 **Over-optimization risk.** It is easy to spend a full session tuning the workflow instead of building the product. There is a real tension between "the operating system is not good enough yet" and "stop and ship something." The current setup has a deferred items list partly to create a forcing function: if something is deferred, it stays deferred until the product work justifies returning to it.
@@ -144,6 +146,8 @@ Start with one durable contract file. Get your primary tool reading it reliably 
 Separate decisions from session logs early. If your architectural decisions live in chat history, they are already invisible to future sessions.
 
 Write absolute rules as absolute rules. "Prefer X" gets ignored under pressure. "Never do X without Y" does not. The distinction matters most for safety-critical workflows.
+
+Be precise about source representation versus rendered output. The right fix for the punctuation issue was not "downgrade the copy to plain ASCII everywhere." It was "store risky punctuation safely in source, and verify shell output before calling something corrupted." That framing preserves both correctness and copy quality.
 
 Encode safety gates in tooling, not conversation. A dedicated agent that stops you from editing live integration files until you confirm a manifest is worth more than a rule you have to remember.
 
@@ -199,7 +203,7 @@ During a governance alignment pass where both Claude and Codex were working on t
 
 **Current status:** No mojibake found in any repo markdown file as of the final verification pass. Considered resolved.
 
-**Lesson:** When one tool finds a file-level anomaly that the other does not, do not dismiss either report. Verify at the character/codepoint level before changing files. Do not do broad re-encoding - a surgical content fix on the specific lines is correct. And when encoding issues appear in AI-owned config files, prefer ASCII characters over Unicode punctuation going forward.
+**Lesson:** When one tool finds a file-level anomaly that the other does not, do not dismiss either report. Verify at the character/codepoint level before changing files. Do not do broad re-encoding - a surgical content fix on the specific lines is correct. And treat this as a source-representation rule, not a copy-quality downgrade: AI-owned config files stay ASCII-safe, while JS/TS source represents non-ASCII punctuation in a shell-safe way.
 
 ### Shell-display mojibake in Windows PowerShell
 
@@ -210,6 +214,8 @@ In this environment, `Get-Content` could display valid UTF-8 files incorrectly. 
 The shell state was mixed at the time of verification: `chcp` was `437`, `$OutputEncoding` was US-ASCII, console output was UTF-8, and console input was IBM437. Even after trying the normal UTF-8 shell settings (`chcp 65001` plus UTF-8 input/output encodings), the display path was still not trustworthy enough to use as the sole source of truth.
 
 The important distinction is this: not every mojibake-looking shell read means the file is damaged. In this environment, shell display alone is not evidence. The safer workflow is: use `rg` for discovery, verify suspicious text with raw-byte read plus explicit UTF-8 decode, and trust editor rendering or rendered app output over misleading shell output until verified.
+
+This incident also clarified the policy boundary. Verification is one rule: shell display can lie, so confirm before treating mojibake as corruption. Source representation is a separate rule: AI-owned config and instruction files stay ASCII-safe, while non-ASCII punctuation in JS/TS source is represented in a shell-safe way when exact rendering matters.
 
 ### Multi-tool write conflict gap
 

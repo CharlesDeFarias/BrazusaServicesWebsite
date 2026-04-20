@@ -4862,3 +4862,110 @@ Session picked up after context-limit compaction mid-Codex-task. Codex had just 
 - Create agent for Charles's code preferences
 
 **Last unresolved design review gap:** Testimonials operational assurance -- only social proof modality, no workforce/insurance signals. Still open.
+
+### 04/20/2026, 01:05:58 PM
+**Prompt:** I want you to evaluate a repo/workflow rule change before we adopt it.
+
+Context:
+In `claudecoding`, we confirmed a Windows PowerShell UTF-8/codepage mismatch issue that can cause mojibake or exact-match failures when AI tools read, print, or patch files containing literal Unicode punctuation. We originally added a narrow rule specifically for em dashes in JS/TS source strings (`\u2014` instead of literal `—`).
+
+I now want you to review whether that rule should be broadened.
+
+Question:
+Should we keep the current em-dash-only rule, or replace it with a broader rule like:
+- in JS/TS source string literals, `setError` calls, and JSX prop strings, prefer ASCII-safe punctuation by default
+- when special punctuation is needed, use Unicode escapes instead of literal non-ASCII punctuation
+- JSX text nodes and docs are lower risk, but still should be treated more cautiously when likely to be patched again
+
+What I want from you:
+1. Evaluate whether this broader rule is actually better than the current em-dash-only rule
+2. Identify tradeoffs, edge cases, and any overreach risk
+3. Say whether the rule should apply to:
+   - JS/TS string literals
+   - JSX prop strings
+   - JSX text nodes
+   - Markdown/docs
+   - config/instruction files
+4. Recommend the cleanest durable wording for:
+   - `AGENTS.md`
+   - `docs/decisions.md`
+5. If you think my proposed broader rule is wrong, say so and propose the better alternative
+6. Keep this as a policy/design judgment task only — do not edit files yet
+
+Important:
+- Be opinionated, not polite
+- Optimize for a rule that is easy for Claude/Codex to follow consistently
+- Take into account that the real problem is shell/toolchain mismatch, not necessarily file corruption
+- Prefer a durable rule that reduces future patch failures without becoming annoying or overbroad
+
+
+### 04/20/2026, 01:17:38 PM
+**Prompt:** take codex's reply to your reply, and give me an updated prompt to feed back into you to act on to permanently resolve this entire issue.
+
+If I were refining his wording slightly, I’d only tighten one thing:
+
+instead of saying “any non-ASCII punctuation in JSX text nodes must be written as a Unicode escape,” I’d say:
+“In .ts/.tsx source, represent non-ASCII punctuation in a shell-safe way; default to Unicode escapes.”
+Reason: it keeps the intent a little more tool-focused and a little less syntactically rigid.
+
+### 04/20/2026, 01:18:19 PM
+**Prompt:**   Task: broaden the Unicode punctuation encoding rule in AGENTS.md and docs/decisions.md.
+                                                                                                                                                        
+  Background: We confirmed a Windows PowerShell codepage mismatch (chcp 437) that corrupts literal non-ASCII characters during AI tool read-modify-write
+   cycles. The current rule in both files covers em dashes only (\u2014). This is too narrow — the same failure mode applies to all non-ASCII             punctuation. Replace the em-dash-only rule with the broader rule below.                                                                                                                                                                                                                                       
+  In AGENTS.md — find the existing em dash encoding rule and replace it with:
+
+  ## Unicode Punctuation in Source Files
+
+  Any non-ASCII punctuation in a JS/TS string literal or JSX prop string must be written
+  as a Unicode escape — not a literal character. In .ts/.tsx source, represent non-ASCII
+  punctuation in JSX text nodes in a shell-safe way; default to Unicode escapes.
+
+    em dash          \u2014   (was: —)
+    en dash          \u2013   (was: –)
+    ellipsis         \u2026   (was: …)
+    right apostrophe \u2019   (was: ')
+    curly quotes     \u201C / \u201D   (was: " ")
+
+  Why: Windows PowerShell codepage mismatch (chcp 437) corrupts literal non-ASCII bytes
+  during read-modify-write cycles. Unicode escapes are pure ASCII in source and immune to this.
+
+  Scope:
+    - JS/TS string literals: always
+    - JSX prop strings (title=, alt=, aria-label=, etc.): always
+    - JSX text nodes in .ts/.tsx files: default to Unicode escapes
+    - Config/instruction files (AGENTS.md, CLAUDE.md, CODEX.md): use plain ASCII
+      punctuation throughout — no fancy characters, no escapes needed
+    - Markdown/docs: literal Unicode is acceptable
+
+  In docs/decisions.md — find the existing em dash encoding decision and replace it with:
+
+  **Decision:** Any non-ASCII punctuation in JS/TS string literals or JSX prop strings must
+  be written as a Unicode escape (`\u2014`, `\u2013`, `\u2026`, `\u2019`, `\u201C`/`\u201D`,
+  etc.), not as a literal character. In .ts/.tsx source, represent non-ASCII punctuation in
+  JSX text nodes in a shell-safe way; default to Unicode escapes.
+  **Why:** Windows PowerShell codepage mismatch (chcp 437) corrupts literal non-ASCII bytes
+  during AI tool read-modify-write cycles. Confirmed for em dashes; applies equally to all
+  non-ASCII punctuation in the same file positions.
+  **Constraints:** Applies to .ts/.tsx source files. Config/instruction files use plain ASCII
+  punctuation throughout. Markdown/docs may use literal Unicode. "Use Unicode escapes" means
+  represent the character correctly in source — do not substitute inferior ASCII punctuation
+  in rendered output.
+
+  After editing both files, commit with:
+  docs: broaden Unicode punctuation encoding rule to cover all non-ASCII punctuation
+
+
+### 04/20/2026, 01:19:42 PM
+**Prompt:** now update the relevant AI documents that are tracking how i use this project, (cant recall if its the reaedme as well or just the ai case study folder), and including the vitor translated files, to include this development
+
+**Codex-authored durable update:**
+- Updated the AI-workflow documentation surface to reflect the broadened Unicode punctuation / shell-verification lesson after Claude finalized the durable rule in `AGENTS.md` and `docs/decisions.md`.
+- Updated [README.md](/C:/Users/charl/Desktop/claudecoding/README.md) to mention the later governance hardening pass: AI-owned config/instruction files stay ASCII-safe, non-ASCII punctuation in JS/TS source is represented in a shell-safe way, and shell mojibake must be verified before being treated as corruption.
+- Updated [docs/ai-case-study.md](/C:/Users/charl/Desktop/claudecoding/docs/ai-case-study.md) to record the fuller lesson: the original em dash issue was only the narrow symptom; the real durable fix is a broader source-representation rule plus a separate shell-verification rule.
+- Updated the translated Vitor-facing docs to match:
+  - [docs/forVitor/README.md](/C:/Users/charl/Desktop/claudecoding/docs/forVitor/README.md)
+  - [docs/forVitor/ai-case-study.md](/C:/Users/charl/Desktop/claudecoding/docs/forVitor/ai-case-study.md)
+  - [docs/forVitor/replicate-ai-setup.md](/C:/Users/charl/Desktop/claudecoding/docs/forVitor/replicate-ai-setup.md)
+- The Vitor setup guide now includes the practical Windows/PowerShell handling rule: do not treat `Get-Content` mojibake alone as evidence of corruption; verify with raw bytes + explicit UTF-8 decode, editor view, or rendered output first.
+- No new decision was added here because the locked rule already lives in `docs/decisions.md`; this pass was documentation propagation and handoff hardening, not a new policy change.

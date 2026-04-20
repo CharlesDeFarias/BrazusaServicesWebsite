@@ -113,6 +113,16 @@ Esse é o principal.
 
 Pode usar como base, mas não como "cola e pronto", porque ele tem caminhos absolutos.
 
+### Shell / encoding
+
+No Windows PowerShell desse projeto existe um detalhe importante: o shell pode mostrar pontuação UTF-8 válida como mojibake mesmo quando o arquivo no disco está correto.
+
+Regra prática:
+- arquivos de config e instrução de IA ficam ASCII-safe
+- se pontuação não ASCII precisar aparecer em source JS/TS, representa de forma shell-safe
+- não trata output estranho de `Get-Content` sozinho como prova de corrupção
+- confirma com leitura de bytes brutos + decode UTF-8 explícito, no editor, ou no output renderizado do app
+
 ### Qualquer coisa muito pessoal do session log
 
 O repo inclui `docs/session-log.md` por reprodutibilidade e histórico, mas isso não significa que tudo ali precisa ser reaproveitado como parte do teu fluxo.
@@ -130,6 +140,7 @@ Checklist rápido:
 - seu `~/.codex/skills/` agora tem os skills `charles-*` e `claudecoding-integration-safety`
 - seu `~/.codex/meta/` tem `codex-usage-log.md`
 - seu `~/.codex/config.toml` aponta pro caminho real do repo na sua máquina
+- se o shell mostrar mojibake, você sabe verificar antes de sair regravando arquivo
 
 Se isso estiver certo, o setup principal já está no lugar.
 

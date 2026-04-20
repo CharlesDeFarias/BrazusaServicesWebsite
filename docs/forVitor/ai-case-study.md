@@ -66,7 +66,7 @@ Os tools foram usados pra melhorar a governança um do outro - não só pra escr
 
 A sequência foi mais ou menos assim: o Claude revisou o sistema de customização do Codex (preferências, skills, adapter CODEX.md) e identificou gaps e inconsistências. O Codex revisou as recomendações do Claude e questionou onde discordava. Os workflows de startup dos dois foram então alinhados através de arquivos duráveis compartilhados. Agentes do Claude e skills do Codex foram atualizados com base no que o outro tool encontrou.
 
-Um exemplo concreto: o Claude recomendou usar um em dash limpo ao corrigir um artefato de encoding num skill file do Codex. O Codex questionou, argumentando que em dashes escritos por LLMs são frágeis e ficam corrompidos - hífens ASCII são mais robustos em arquivos de config de IA. Esse argumento estava certo. O Claude atualizou sua recomendação. A convenção resultante (hífens ASCII em arquivos de IA) agora está no contrato do projeto.
+Um exemplo concreto começou como uma discordância estreita sobre em dash e virou uma regra mais ampla de representação no source. O Claude recomendou usar um em dash limpo ao corrigir um artefato de encoding num skill file do Codex. O Codex questionou, argumentando que a regra real precisava ser mais ampla: arquivos de config e instrução de IA devem ficar ASCII-safe, e pontuação não ASCII em source JS/TS deve ser representada de forma shell-safe em vez de como caractere literal. Esse argumento estava certo. O Claude atualizou sua recomendação. A convenção resultante agora está no contrato do projeto.
 
 Outro: o Codex adicionou um passo ao seu skill de durable-update pra notação de autoria em sessões mistas. O Claude revisou, encontrou que a linha tinha introduzido um artefato de encoding mojibake, e enviou um prompt corrigido de volta pro Codex.
 
@@ -122,6 +122,8 @@ Não foi projetado tudo de uma vez. Evoluiu.
 ## O que foi difícil
 
 **Fragilidade de encoding.** Texto gerado por LLM às vezes contém em dashes UTF-8 que são escritos em arquivos de config como bytes corrompidos - `â€"` em vez de `—`. Encontrar e diagnosticar isso pela primeira vez leva mais tempo do que deveria. A correção é simples (hífens ASCII em arquivos de IA), mas o problema é sutil o suficiente pra sobreviver a várias rodadas de inspeção antes de ser pego. Tem um incidente específico documentado na seção de Problemas Conhecidos.
+
+O que o projeto aprendeu depois é que o sintoma do em dash era mais estreito do que a regra real. A superfície de risco era pontuação não ASCII de forma mais ampla durante ciclos de read-modify-write de IA nesse ambiente Windows PowerShell. A correção durável acabou virando duas regras: arquivos de config e instrução de IA ficam ASCII-safe, e pontuação não ASCII em source JS/TS é representada de forma shell-safe em vez de como caractere literal.
 
 **Drift de instruções.** Regras escritas num arquivo não se propagam automaticamente pros outros. CLAUDE.md, CODEX.md, AGENTS.md e as preferências do Codex podem divergir se as mudanças não forem aplicadas simetricamente. Isso aconteceu várias vezes e precisou de rodadas de auditoria pra pegar. O princípio do adapter fino (manter CODEX.md curto, manter CLAUDE.md como autoridade) ajuda, mas não elimina o problema.
 
@@ -197,7 +199,17 @@ Durante um pass de alinhamento de governança onde Claude e Codex estavam trabal
 
 **Status atual:** Nenhum mojibake encontrado em nenhum arquivo markdown do repo no pass de verificação final. Considerado resolvido.
 
-**Lição:** Quando um tool encontra uma anomalia em nível de arquivo que o outro não encontra, não descarta nenhum dos dois relatórios. Verifica no nível de caractere/codepoint antes de mudar arquivos. Não faz re-encoding amplo - uma correção cirúrgica de conteúdo nas linhas específicas é o certo. E quando problemas de encoding aparecem em arquivos de config de IA, prefere caracteres ASCII a pontuação Unicode daqui pra frente.
+**Lição:** Quando um tool encontra uma anomalia em nível de arquivo que o outro não encontra, não descarta nenhum dos dois relatórios. Verifica no nível de caractere/codepoint antes de mudar arquivos. Não faz re-encoding amplo - uma correção cirúrgica de conteúdo nas linhas específicas é o certo. E trata isso como regra de representação no source, não como downgrade de copy: arquivos de config de IA ficam ASCII-safe, enquanto source JS/TS representa pontuação não ASCII de forma shell-safe.
+
+### Shell-display mojibake no Windows PowerShell
+
+Depois apareceu um segundo problema de encoding, diferente do primeiro: não era conteúdo corrompido no arquivo, e sim output enganoso do shell.
+
+Nesse ambiente, `Get-Content` podia mostrar arquivos UTF-8 válidos de forma errada. Isso foi confirmado em `README.md`, `components/StickyNav.tsx` e `CODEX.md` comparando output normal do shell com leitura de bytes brutos seguida de decode explícito em UTF-8. O caminho via shell mostrava mojibake, enquanto a leitura por bytes mostrava os caracteres corretos.
+
+O estado do shell estava misturado no momento da verificação: `chcp` em `437`, `$OutputEncoding` em US-ASCII, output do console em UTF-8, e input do console em IBM437. Mesmo tentando os ajustes normais de UTF-8, o display path continuou pouco confiável pra ser tratado como fonte única de verdade.
+
+A distinção importante é: shell mojibake sozinho não prova que o arquivo está danificado. Nesse ambiente, a regra segura é usar `rg` pra descoberta, verificar texto suspeito com leitura de bytes brutos e decode UTF-8 explícito, e confiar mais no editor ou no output renderizado do app do que no shell até confirmar.
 
 ### Gap de conflito de escrita entre ferramentas
 

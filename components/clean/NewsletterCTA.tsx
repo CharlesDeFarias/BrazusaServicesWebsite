@@ -31,7 +31,7 @@ export default function NewsletterCTA(): JSX.Element {
 
   if (submitted) {
     return (
-      <p className="text-sm" style={{ color: 'var(--color-white-50)' }}>
+      <p className="text-sm text-white-50">
         You&apos;re on the list. ✓
       </p>
     )
@@ -66,7 +66,7 @@ export default function NewsletterCTA(): JSX.Element {
         className="w-full px-3 py-2 text-sm focus:outline-none text-white placeholder:text-white/25"
         style={{ background: 'var(--color-white-5)', border: '1px solid var(--color-white-10)' }}
       />
-      {error && <p className="text-xs" style={{ color: 'var(--color-error)' }}>{error}</p>}
+      {error && <p className="text-xs text-error">{error}</p>}
     </div>
   )
 }

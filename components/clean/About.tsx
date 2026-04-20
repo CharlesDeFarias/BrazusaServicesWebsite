@@ -20,7 +20,7 @@ export default function About(): JSX.Element {
           <h2 className="italic text-3xl md:text-4xl text-navy mb-5 leading-snug" style={{ fontWeight: 300 }}>
             Built through real work, not theory
           </h2>
-          <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--color-warm-gray-darker)' }}>
+          <div className="space-y-3 text-sm leading-relaxed text-warm-gray-darker">
             <p>Brazusa was built in Boston by Brazilian immigrants doing the work themselves. That foundation still shapes how the company operates.</p>
             <p>Since 1994, hands-on experience built strong training, consistent standards, and a clear understanding of what clients need.</p>
             <p>Over time, structure was added on top of that. Work is completed, confirmed, and clearly communicated so nothing depends on guesswork.</p>
@@ -29,7 +29,7 @@ export default function About(): JSX.Element {
           </div>
           <div className="mt-7 flex items-center gap-4">
             <div className="w-8 h-px" style={{ background: 'var(--color-brand-gold)' }} />
-            <span className="text-xs uppercase" style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.14em' }}>Serving Boston since 1994</span>
+            <span className="text-xs uppercase text-warm-gray-light" style={{ letterSpacing: '0.14em' }}>Serving Boston since 1994</span>
           </div>
         </div>
         <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-[4/5]">

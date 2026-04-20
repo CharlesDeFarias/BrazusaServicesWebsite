@@ -32,14 +32,14 @@ export default function HowItWorks(): JSX.Element {
           {steps.map((step) => (
             <div key={step.n} className="flex flex-col gap-3">
               <span
-                className="text-xs font-semibold tabular-nums"
-                style={{ color: 'var(--color-brand-gold)', fontFamily: 'var(--font-syne)' }}
+                className="text-xs font-semibold tabular-nums text-brand-gold"
+                style={{ fontFamily: 'var(--font-syne)' }}
               >
                 {step.n}
               </span>
               <div className="w-5 h-px" style={{ background: 'var(--color-brand-gold)' }} />
               <p className="font-medium text-navy text-sm">{step.label}</p>
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--color-warm-gray)' }}>
+              <p className="text-xs leading-relaxed text-warm-gray">
                 {step.detail}
               </p>
             </div>
@@ -50,8 +50,8 @@ export default function HowItWorks(): JSX.Element {
           className="flex items-start gap-3 px-5 py-4 text-sm"
           style={{ background: 'var(--color-linen)', border: '1px solid var(--color-linen-dark)' }}
         >
-          <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-brand-gold)' }}>→</span>
-          <p style={{ color: 'var(--color-warm-gray-darker)' }}>
+          <span className="flex-shrink-0 mt-0.5 text-brand-gold">→</span>
+          <p className="text-warm-gray-darker">
             No surprises. Scope and expectations are clear upfront. If something changes, it&apos;s discussed
             before it becomes a problem.
           </p>

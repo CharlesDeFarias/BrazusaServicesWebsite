@@ -72,8 +72,8 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 mb-8">
           <div>
             <p
-              className="text-xs uppercase mb-4"
-              style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+              className="text-xs uppercase mb-4 text-warm-gray-light"
+              style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
             >
               Pricing approach
             </p>
@@ -83,12 +83,12 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
             >
               Real examples, real clients.
             </h2>
-            <p className="text-sm leading-relaxed mb-4 max-w-2xl" style={{ color: 'var(--color-warm-gray-dark)' }}>
+            <p className="text-sm leading-relaxed mb-4 max-w-2xl text-warm-gray-dark">
               We do not price from a generic chart because the real work rarely fits one. A straightforward cleaning visit is one kind of
               scope. Ongoing operational support like inventory, linens, coordination, checklists, and reporting is another. We price
               around what the work actually requires, then walk you through it clearly before anything starts.
             </p>
-            <p className="text-sm leading-relaxed mb-5 max-w-2xl" style={{ color: 'var(--color-warm-gray)' }}>
+            <p className="text-sm leading-relaxed mb-5 max-w-2xl text-warm-gray">
               If you want to see the kinds of situations we already handle, jump to the testimonial examples below. If your setup is more
               custom, we can still scope it and give you a clear quote built around your exact needs.
             </p>
@@ -98,13 +98,12 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
                 <a
                   key={pricingFilter.value}
                   href={pricingFilterHashes[pricingFilter.value]}
-                  className="text-xs px-3 py-1.5 rounded-full transition-all duration-200"
-                  style={{
-                    fontFamily: 'var(--font-syne)',
-                    background: 'transparent',
-                    color: 'var(--color-navy)',
-                    border: '1px solid var(--color-light-gray)',
-                  }}
+                    className="text-xs px-3 py-1.5 rounded-full transition-all duration-200 text-navy"
+                    style={{
+                      fontFamily: 'var(--font-syne)',
+                      background: 'transparent',
+                      border: '1px solid var(--color-light-gray)',
+                    }}
                 >
                   {pricingFilter.label}
                 </a>
@@ -114,14 +113,14 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
 
           <div>
             <p
-              className="text-xs uppercase mb-4"
-              style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+              className="text-xs uppercase mb-4 text-warm-gray-light"
+              style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
             >
               What affects your quote
             </p>
             <ul className="space-y-2.5 mb-5">
               {factors.map((factor) => (
-                <li key={factor} className="flex items-center gap-2.5 text-sm" style={{ color: 'var(--color-warm-gray-darker)' }}>
+                <li key={factor} className="flex items-center gap-2.5 text-sm text-warm-gray-darker">
                   <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--color-brand-gold)' }} />
                   {factor}
                 </li>
@@ -129,11 +128,11 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
             </ul>
             <div className="rounded-xl p-4" style={{ border: '1px solid var(--color-light-gray)', background: 'rgba(255,255,255,0.82)' }}>
               <p className="text-sm font-medium text-navy mb-2">How we build a custom quote</p>
-              <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--color-warm-gray)' }}>
+              <p className="text-xs leading-relaxed mb-3 text-warm-gray">
                 Basic cleaning, deeper resets, and operational support are scoped differently because they take different levels of time,
                 coordination, and responsibility.
               </p>
-              <p className="text-xs leading-relaxed mb-4" style={{ color: 'var(--color-warm-gray)' }}>
+              <p className="text-xs leading-relaxed mb-4 text-warm-gray">
                 Once we understand the space, expectations, and handoff details, we can recommend the cleanest scope and price it
                 accordingly.
               </p>
@@ -165,15 +164,15 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
                 Flexible scope
               </span>
             </div>
-            <p className="text-xs leading-relaxed mb-4" style={{ color: 'var(--color-warm-gray)' }}>
+            <p className="text-xs leading-relaxed mb-4 text-warm-gray">
               We can quote only the parts of the job that actually need doing.
             </p>
             <div className="h-px w-6 mb-4" style={{ background: 'var(--color-brand-gold)' }} />
             <p className="text-sm font-medium text-navy mb-3">Cleaning does not have to be all-or-nothing:</p>
             <ul className="space-y-2">
               {customExamples.map((customExample) => (
-                <li key={customExample} className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--color-warm-gray-darker)' }}>
-                  <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-brand-gold)' }}>
+                <li key={customExample} className="flex items-start gap-2.5 text-sm text-warm-gray-darker">
+                  <span className="flex-shrink-0 mt-0.5 text-brand-gold">
                     &rarr;
                   </span>
                   {customExample}
@@ -197,15 +196,15 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
                 Efficiency wins
               </span>
             </div>
-            <p className="text-xs leading-relaxed mb-4" style={{ color: 'var(--color-warm-gray)' }}>
+            <p className="text-xs leading-relaxed mb-4 text-warm-gray">
               If the work is easier to run well, we can usually structure it more efficiently.
             </p>
             <div className="h-px w-6 mb-4" style={{ background: 'var(--color-brand-gold)' }} />
             <p className="text-sm font-medium text-navy mb-3">Help us operate efficiently and we pass that on where we can:</p>
             <ul className="space-y-3">
               {savingsWays.map((savingsWay) => (
-                <li key={savingsWay.title} className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--color-warm-gray-darker)' }}>
-                  <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-brand-gold)' }}>
+                <li key={savingsWay.title} className="flex items-start gap-2.5 text-sm text-warm-gray-darker">
+                  <span className="flex-shrink-0 mt-0.5 text-brand-gold">
                     &rarr;
                   </span>
                   <span>

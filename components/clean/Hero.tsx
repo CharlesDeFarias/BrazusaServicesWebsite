@@ -33,7 +33,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
         <div>
           <div className="fade-up flex items-center gap-3 mb-8">
             <div className="w-8 h-px bg-brand-gold" />
-            <span className="text-xs uppercase tracking-[0.22em]" style={{ color: 'var(--color-white-40)' }}>
+            <span className="text-xs uppercase tracking-[0.22em] text-white-40">
               Greater Boston · Since 1994
             </span>
           </div>
@@ -47,7 +47,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
 
           <div className="fade-up-1 w-12 h-px bg-brand-gold mb-6" />
 
-          <div className="fade-up-2 space-y-3 text-base md:text-lg leading-relaxed mb-6" style={{ color: 'var(--color-white-55)' }}>
+          <div className="fade-up-2 space-y-3 text-base md:text-lg leading-relaxed mb-6 text-white-55">
             <p>
               Work is completed on schedule, confirmed, and communicated clearly through your tools or preferred method.
             </p>
@@ -61,12 +61,12 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
             {differentiators.map((d) => (
               <div key={d.n} className="flex items-start gap-2">
                 <span
-                  className="text-xs font-semibold flex-shrink-0 tabular-nums mt-0.5"
-                  style={{ color: 'var(--color-brand-gold)', fontFamily: 'var(--font-syne)' }}
+                  className="text-xs font-semibold flex-shrink-0 tabular-nums mt-0.5 text-brand-gold"
+                  style={{ fontFamily: 'var(--font-syne)' }}
                 >
                   {d.n}
                 </span>
-                <span className="text-xs leading-relaxed" style={{ color: 'var(--color-white-40)' }}>
+                <span className="text-xs leading-relaxed text-white-40">
                   {d.text}
                 </span>
               </div>
@@ -76,8 +76,8 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
           <div className="fade-up-2 flex flex-col sm:flex-row gap-3 mb-8">
             <button
               onClick={onQuoteClick}
-              className="w-full sm:w-auto text-sm font-medium px-10 py-4 min-h-[52px] min-w-[180px] transition-all duration-200 hover:opacity-90"
-              style={{ background: 'var(--color-brand-gold)', color: 'var(--color-navy)' }}
+              className="w-full sm:w-auto text-sm font-medium px-10 py-4 min-h-[52px] min-w-[180px] transition-all duration-200 hover:opacity-90 text-navy"
+              style={{ background: 'var(--color-brand-gold)' }}
             >
               Get a Quote
             </button>
@@ -90,7 +90,7 @@ export default function Hero({ heroRef, onQuoteClick }: HeroProps): JSX.Element 
             </a>
           </div>
 
-          <p className="fade-up-3 text-xs" style={{ color: 'var(--color-white-30)' }}>
+          <p className="fade-up-3 text-xs text-white-30">
             Not sure if this fits? Reach out and we&apos;ll tell you honestly.
           </p>
 

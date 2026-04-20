@@ -25,8 +25,8 @@ export default function MobileCTABar({ onQuoteClick, drawerOpen }: MobileCTABarP
       </button>
       <a
         href="tel:7816867189"
-        className="py-4 text-sm font-medium text-center transition-colors active:opacity-80"
-        style={{ background: 'var(--color-off-white)', color: 'var(--color-navy)' }}
+        className="py-4 text-sm font-medium text-center transition-colors active:opacity-80 text-navy"
+        style={{ background: 'var(--color-off-white)' }}
       >
         Call Now
       </a>

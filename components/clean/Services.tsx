@@ -262,7 +262,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
                     style={{ background: 'var(--color-brand-gold)', opacity: isRelevant ? 1 : 0.5 }}
                   />
                   <p className="font-medium text-white text-sm mb-1.5">{serviceDefinition.name}</p>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--color-white-70)' }}>{description}</p>
+                  <p className="text-xs leading-relaxed text-white-70">{description}</p>
                 </div>
               )
             })}
@@ -271,8 +271,8 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
 
         <div className="mt-8 mb-6">
           <p
-            className="text-xs uppercase mb-4"
-            style={{ color: 'var(--color-gold-60)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+            className="text-xs uppercase mb-4 text-gold-60"
+            style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
           >
             We can also help with
           </p>
@@ -282,10 +282,10 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
 
               return (
                 <div key={extendedServiceDefinition.name} className="flex items-start gap-2.5" style={{ opacity: isRelevant ? 1 : 0.3 }}>
-                  <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: 'var(--color-brand-gold)' }}>→</span>
+                  <span className="flex-shrink-0 mt-0.5 text-xs text-brand-gold">→</span>
                   <div>
                     <span className="text-xs font-medium text-white">{extendedServiceDefinition.name}</span>
-                    <span className="text-xs" style={{ color: 'var(--color-white-40)' }}>
+                    <span className="text-xs text-white-40">
                       {' '}
                       — {getExtendedDescription(extendedServiceDefinition, selectedFilter)}
                     </span>
@@ -294,7 +294,7 @@ export default function Services({ onQuoteClick, activeClientId }: ServicesProps
               )
             })}
           </div>
-          <p className="text-xs mt-4" style={{ color: 'var(--color-white-30)' }}>
+          <p className="text-xs mt-4 text-white-30">
             These are optional layers. Scope depends on how much of the operation you want handled.
           </p>
         </div>

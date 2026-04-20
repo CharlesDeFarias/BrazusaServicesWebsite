@@ -202,7 +202,7 @@ export default function Testimonials(): JSX.Element {
             <h2 className="italic text-3xl md:text-4xl text-navy mb-1.5" style={{ fontWeight: 300 }}>
               Real clients, real situations
             </h2>
-            <p className="text-sm" style={{ color: 'var(--color-warm-gray)' }}>
+            <p className="text-sm text-warm-gray">
               A few examples of the work we do and how we approach it.
             </p>
           </div>
@@ -305,11 +305,11 @@ export default function Testimonials(): JSX.Element {
                 >
                   {c.result}
                 </p>
-                <p className="text-xs leading-relaxed mt-auto" style={{ color: 'var(--color-warm-gray)' }}>
+                <p className="text-xs leading-relaxed mt-auto text-warm-gray">
                   {c.detail}
                 </p>
                 <div className="pt-3 flex items-center justify-between" style={{ borderTop: '1px solid var(--color-light-gray)' }}>
-                  <span className="text-xs font-medium" style={{ color: 'var(--color-warm-gray-light)' }}>{c.title}</span>
+                  <span className="text-xs font-medium text-warm-gray-light">{c.title}</span>
                   <span
                     className="text-xs px-2 py-0.5 rounded-full"
                     style={{
@@ -330,7 +330,7 @@ export default function Testimonials(): JSX.Element {
                 className="flex-shrink-0 rounded-xl p-8 flex items-center justify-center"
                 style={{ width: `${CARD_W}px`, maxWidth: '80vw', border: '1px dashed var(--color-light-gray)' }}
               >
-                <p className="text-sm text-center" style={{ color: 'var(--color-warm-gray-light)' }}>
+                <p className="text-sm text-center text-warm-gray-light">
                   No examples for this category yet — reach out directly.
                 </p>
               </div>

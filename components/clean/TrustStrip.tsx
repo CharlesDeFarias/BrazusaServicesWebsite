@@ -19,8 +19,8 @@ export default function TrustStrip(): JSX.Element {
         {[...badges, ...badges].map((b, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-2.5 mx-8 text-xs font-medium flex-shrink-0"
-            style={{ color: 'var(--color-navy)', letterSpacing: '0.04em' }}
+            className="inline-flex items-center gap-2.5 mx-8 text-xs font-medium flex-shrink-0 text-navy"
+            style={{ letterSpacing: '0.04em' }}
           >
             <span
               className="w-1 h-1 rounded-full flex-shrink-0"

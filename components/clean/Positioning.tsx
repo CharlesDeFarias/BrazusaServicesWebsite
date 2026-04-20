@@ -28,7 +28,7 @@ export default function Positioning(): JSX.Element {
           >
             Built for operators, not oversight
           </h2>
-          <div className="space-y-4 text-sm leading-relaxed" style={{ color: 'var(--color-warm-gray-darker)' }}>
+          <div className="space-y-4 text-sm leading-relaxed text-warm-gray-darker">
             <p>Most cleaning services fall into two categories.</p>
             <p>Small independent teams are affordable, but inconsistent. You end up managing them more than you should.</p>
             <p>Large vendors have structure, but little flexibility. You become just another account.</p>
@@ -40,15 +40,15 @@ export default function Positioning(): JSX.Element {
 
         <div className="lg:pt-2">
           <p
-            className="text-xs uppercase mb-5"
-            style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+            className="text-xs uppercase mb-5 text-warm-gray-light"
+            style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
           >
             What this means for you
           </p>
           <ul className="space-y-3">
             {keyPoints.map((point) => (
-              <li key={point} className="flex items-start gap-3 text-sm" style={{ color: 'var(--color-warm-gray-darker)' }}>
-                <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-brand-gold)' }}>→</span>
+              <li key={point} className="flex items-start gap-3 text-sm text-warm-gray-darker">
+                <span className="flex-shrink-0 mt-0.5 text-brand-gold">→</span>
                 {point}
               </li>
             ))}

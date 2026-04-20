@@ -27,14 +27,14 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
         >
           Tell us what you need.
         </h2>
-        <p className="text-base mb-8 max-w-sm mx-auto leading-relaxed" style={{ color: 'var(--color-navy-50)' }}>
+        <p className="text-base mb-8 max-w-sm mx-auto leading-relaxed text-navy-50">
           You can send a quick message or a detailed breakdown. Either way, we&apos;ll figure it out with you.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
           <button
             onClick={onQuoteClick}
-            className="text-sm font-medium px-7 py-3.5 min-h-[44px] transition-all duration-200 hover:opacity-90"
-            style={{ background: 'var(--color-brand-gold)', color: 'var(--color-navy)' }}
+            className="text-sm font-medium px-7 py-3.5 min-h-[44px] transition-all duration-200 hover:opacity-90 text-navy"
+            style={{ background: 'var(--color-brand-gold)' }}
           >
             Request a Walkthrough
           </button>
@@ -46,7 +46,7 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
             Call / Text: 781-686-7189
           </a>
         </div>
-        <p className="text-xs" style={{ color: 'var(--color-navy-30)' }}>
+        <p className="text-xs text-navy-30">
           Even if we&apos;re not the right fit, we&apos;ll help you find someone who is.
         </p>
       </div>

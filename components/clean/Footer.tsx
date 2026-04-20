@@ -25,7 +25,7 @@ export default function Footer(): JSX.Element {
         <div className="flex flex-col sm:flex-row sm:items-start gap-5">
           <div className="flex-shrink-0">
             <p className="text-sm font-medium text-white mb-0.5">For hosts &amp; managers</p>
-            <p className="text-xs leading-relaxed" style={{ color: 'var(--color-white-40)' }}>
+            <p className="text-xs leading-relaxed text-white-40">
               Occasional tips for homes, STR hosts &amp; property managers — plus promo windows when we have availability.
             </p>
           </div>
@@ -52,20 +52,18 @@ export default function Footer(): JSX.Element {
                 style={{ display: 'block' }}
               />
             </div>
-            <p className="text-sm mb-1" style={{ color: 'var(--color-white-40)' }}>
+            <p className="text-sm mb-1 text-white-40">
               Greater Boston &amp; surrounding areas
             </p>
             <a
               href="tel:7816867189"
-              className="text-sm block mt-1.5 hover:text-white transition-colors"
-              style={{ color: 'var(--color-white-40)' }}
+              className="text-sm block mt-1.5 text-white-40 hover:text-white transition-colors"
             >
               781-686-7189
             </a>
             <a
               href="mailto:info@brazusa.com"
-              className="text-sm block mt-1 hover:text-white transition-colors"
-              style={{ color: 'var(--color-white-40)' }}
+              className="text-sm block mt-1 text-white-40 hover:text-white transition-colors"
             >
               info@brazusa.com
             </a>
@@ -73,9 +71,8 @@ export default function Footer(): JSX.Element {
 
           <div>
             <p
-              className="text-xs uppercase mb-5"
+              className="text-xs uppercase mb-5 text-white-20"
               style={{
-                color: 'var(--color-white-20)',
                 letterSpacing: '0.14em',
                 fontFamily: 'var(--font-syne)',
               }}
@@ -87,8 +84,7 @@ export default function Footer(): JSX.Element {
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    className="text-sm hover:text-white transition-colors"
-                    style={{ color: 'var(--color-white-40)' }}
+                    className="text-sm text-white-40 hover:text-white transition-colors"
                   >
                     {l.label}
                   </a>
@@ -99,10 +95,9 @@ export default function Footer(): JSX.Element {
         </div>
 
         <p
-          className="text-xs pt-6"
+          className="text-xs pt-6 text-white-20"
           style={{
             borderTop: '1px solid var(--color-white-5)',
-            color: 'var(--color-white-20)',
           }}
         >
           © {new Date().getFullYear()} Brazusa Cleaning. All rights reserved.

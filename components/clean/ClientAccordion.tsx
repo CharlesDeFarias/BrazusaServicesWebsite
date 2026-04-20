@@ -62,15 +62,15 @@ function AccordionItem({
       >
         <div className="flex items-center gap-5 flex-1 min-w-0">
           <span
-            className="text-xs font-semibold tabular-nums flex-shrink-0"
-            style={{ color: 'var(--color-brand-gold)', fontFamily: 'var(--font-syne)' }}
+            className="text-xs font-semibold tabular-nums flex-shrink-0 text-brand-gold"
+            style={{ fontFamily: 'var(--font-syne)' }}
           >
             {item.n}
           </span>
           <div className="min-w-0">
             <p className="font-semibold text-navy text-base leading-none">{item.label}</p>
             {!isOpen && (
-              <p className="text-xs mt-1.5 truncate" style={{ color: 'var(--color-warm-gray)' }}>
+              <p className="text-xs mt-1.5 truncate text-warm-gray">
                 {item.teaser}
               </p>
             )}
@@ -114,14 +114,14 @@ function AccordionItem({
             >
               {item.headline}
             </h2>
-            <div className="space-y-3 mb-6 text-sm leading-relaxed" style={{ color: 'var(--color-warm-gray-darker)' }}>
+            <div className="space-y-3 mb-6 text-sm leading-relaxed text-warm-gray-darker">
               {item.body}
             </div>
 
             <div className="mb-6">
               <p
-                className="text-xs uppercase mb-3"
-                style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+                className="text-xs uppercase mb-3 text-warm-gray-light"
+                style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
               >
                 Typical services for this type
               </p>
@@ -129,10 +129,9 @@ function AccordionItem({
                 {relatedServices.map((relatedService) => (
                   <span
                     key={relatedService}
-                    className="text-xs px-3 py-1.5 rounded-full"
+                    className="text-xs px-3 py-1.5 rounded-full text-warm-gray-darkest"
                     style={{
                       border: '1px solid var(--color-light-gray)',
-                      color: 'var(--color-warm-gray-darkest)',
                       background: 'var(--color-off-white)',
                       fontFamily: 'var(--font-syne)',
                     }}
@@ -221,14 +220,14 @@ export default function ClientAccordion({
             style={{ border: '1.5px solid var(--color-brand-gold)', borderRadius: '10px', background: 'var(--color-gold-5)' }}
           >
             <span
-              className="text-xs font-semibold flex-shrink-0 tabular-nums"
-              style={{ color: 'var(--color-brand-gold)', fontFamily: 'var(--font-syne)' }}
+              className="text-xs font-semibold flex-shrink-0 tabular-nums text-brand-gold"
+              style={{ fontFamily: 'var(--font-syne)' }}
             >
               ✦
             </span>
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-navy text-sm leading-none mb-1">We clean it all</p>
-              <p className="text-xs" style={{ color: 'var(--color-warm-gray)' }}>
+              <p className="text-xs text-warm-gray">
                 Not sure where your space fits? That&apos;s normal — we adapt to more setups than the main categories can show.
               </p>
             </div>
@@ -250,7 +249,7 @@ export default function ClientAccordion({
                 className="mt-3 px-5 py-4 rounded-xl"
                 style={{ border: '1px solid var(--color-light-gray)', background: 'var(--color-off-white)' }}
               >
-                <div className="space-y-3 text-sm leading-relaxed" style={{ color: 'var(--color-warm-gray-darker)' }}>
+                <div className="space-y-3 text-sm leading-relaxed text-warm-gray-darker">
                   <p>
                     Brazusa works across homes, short-term rentals, offices, buildings, and the spaces that fall between those labels.
                   </p>

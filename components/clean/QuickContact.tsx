@@ -16,7 +16,7 @@ export default function QuickContact(): JSX.Element {
         <h2 className="italic text-3xl md:text-4xl text-navy mb-2 leading-snug" style={{ fontWeight: 300 }}>
           Reach us directly
         </h2>
-        <p className="text-sm mb-10" style={{ color: 'var(--color-warm-gray)' }}>
+        <p className="text-sm mb-10 text-warm-gray">
           We respond quickly — usually same day.
         </p>
 
@@ -35,7 +35,7 @@ export default function QuickContact(): JSX.Element {
               </svg>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--color-warm-gray-light)' }}>Call or Text</p>
+              <p className="text-xs uppercase tracking-wider mb-0.5 text-warm-gray-light">Call or Text</p>
               <p className="font-medium text-navy group-hover:underline underline-offset-2" style={{ fontFamily: 'var(--font-syne)' }}>
                 781-686-7189
               </p>
@@ -56,7 +56,7 @@ export default function QuickContact(): JSX.Element {
               </svg>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--color-warm-gray-light)' }}>Email</p>
+              <p className="text-xs uppercase tracking-wider mb-0.5 text-warm-gray-light">Email</p>
               <p className="font-medium text-navy group-hover:underline underline-offset-2" style={{ fontFamily: 'var(--font-syne)' }}>
                 info@brazusa.com
               </p>
@@ -80,7 +80,7 @@ export default function QuickContact(): JSX.Element {
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--color-warm-gray-light)' }}>Google Business</p>
+              <p className="text-xs uppercase tracking-wider mb-0.5 text-warm-gray-light">Google Business</p>
               <p className="font-medium text-navy text-sm" style={{ fontFamily: 'var(--font-syne)' }}>
                 View our profile &amp; reviews
               </p>

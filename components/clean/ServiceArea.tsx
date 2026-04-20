@@ -24,7 +24,6 @@ const greaterBostonTowns = [
 
 const chipStyle = {
   border: '1px solid var(--color-light-gray)',
-  color: 'var(--color-warm-gray-darkest)',
   background: 'var(--color-off-white)',
   fontFamily: 'var(--font-syne)',
 }
@@ -45,7 +44,7 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
           <h2 className="italic text-3xl md:text-4xl text-navy mb-4 leading-snug" style={{ fontWeight: 300 }}>
             Greater Boston &amp;<br />surrounding areas
           </h2>
-          <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--color-warm-gray-dark)' }}>
+          <p className="text-sm leading-relaxed mb-6 text-warm-gray-dark">
             We serve apartments, high-rises, offices, and multi-unit properties across the metro area. Not sure if you&apos;re in range? Just ask — we&apos;re flexible.
           </p>
           <button
@@ -61,20 +60,20 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
           {/* Greater Boston towns */}
           <div>
             <p
-              className="text-xs uppercase mb-3"
-              style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+              className="text-xs uppercase mb-3 text-warm-gray-light"
+              style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
             >
               Greater Boston towns
             </p>
             <div className="flex flex-wrap gap-2">
               {greaterBostonTowns.map((t) => (
-                <span key={t} className="text-xs px-3 py-1.5 rounded-full" style={chipStyle}>
+                <span key={t} className="text-xs px-3 py-1.5 rounded-full text-warm-gray-darkest" style={chipStyle}>
                   {t}
                 </span>
               ))}
               <span
-                className="text-xs px-3 py-1.5 rounded-full"
-                style={{ border: '1px dashed var(--color-light-gray)', color: 'var(--color-warm-gray-light)', fontFamily: 'var(--font-syne)' }}
+                className="text-xs px-3 py-1.5 rounded-full text-warm-gray-light"
+                style={{ border: '1px dashed var(--color-light-gray)', fontFamily: 'var(--font-syne)' }}
               >
                 + more
               </span>
@@ -87,20 +86,20 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
           {/* Boston neighborhoods */}
           <div>
             <p
-              className="text-xs uppercase mb-3"
-              style={{ color: 'var(--color-warm-gray-light)', letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+              className="text-xs uppercase mb-3 text-warm-gray-light"
+              style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
             >
               Boston neighborhoods
             </p>
             <div className="flex flex-wrap gap-2">
               {bostonNeighborhoods.map((n) => (
-                <span key={n} className="text-xs px-3 py-1.5 rounded-full" style={chipStyle}>
+                <span key={n} className="text-xs px-3 py-1.5 rounded-full text-warm-gray-darkest" style={chipStyle}>
                   {n}
                 </span>
               ))}
               <span
-                className="text-xs px-3 py-1.5 rounded-full"
-                style={{ border: '1px dashed var(--color-light-gray)', color: 'var(--color-warm-gray-light)', fontFamily: 'var(--font-syne)' }}
+                className="text-xs px-3 py-1.5 rounded-full text-warm-gray-light"
+                style={{ border: '1px dashed var(--color-light-gray)', fontFamily: 'var(--font-syne)' }}
               >
                 + more
               </span>

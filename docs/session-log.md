@@ -3788,3 +3788,143 @@ The implementation step was explicitly routed to Codex because: (1) all copy was
 - Operational detail gathered from Charles for final two items
 - Codex implementation delegated and reviewed
 - Durable update + push
+
+### 04/19/2026, 09:54:19 PM
+**Prompt:** continue with chatgpt copy work
+
+### 04/19/2026, 09:56:46 PM
+**Prompt:** Using your brief as constraint 
+
+---
+
+## STR — SHORT-TERM RENTALS
+
+P1:
+STR hosts often deal with coordination gaps between checkout and check-in. Linens, supplies, and small issues go untracked unless someone is actively managing them.
+
+P2: [KEEP]
+We build a repeatable system around your units. Consistent checklists, direct communication, same-day confirmations [VERIFY] when you need them. We can also handle linen processing [VERIFY], inventory tracking [VERIFY], and small operational tasks so you're not managing the details yourself.
+
+P3: [KEEP]
+
+Teaser line:
+Turnovers handled, confirmed, and ready for check-in
+
+---
+
+## PROPERTY MANAGERS & BUILDINGS
+
+P1: [KEEP]
+
+P2:
+We document condition, communicate clearly before and after every job, and flag issues before they become problems. Move-in ready, move-out documented, common areas handled, and we adapt to your buildings and your process.
+
+P3: [KEEP]
+
+Teaser line: [KEEP]
+
+---
+
+## OFFICES & CLINICS
+
+P1: [KEEP]
+
+P2:
+We keep a consistent team, follow set routines, and work around your schedule. Spaces are handled carefully, with clear communication and minimal disruption to staff or patients.
+
+P3: [KEEP]
+
+Teaser line:
+Cleaning handled without needing follow-up
+
+---
+
+## HOMES / APARTMENTS — teaser line only
+
+Consistent team, flexible scope, simple communication
+
+
+### 04/19/2026, 09:58:33 PM
+**Prompt:** ## STR P1
+
+Most STR hosts run into coordination problems between turnovers. Things fall through the gap between checkout and check-in: linens not restocked, supplies running low, something broken that nobody flagged.
+
+---
+
+## OFFICES P2
+
+We work with small offices, coworking spaces, and medical and clinical environments. We keep a consistent team, follow set routines, and handle spaces carefully with minimal disruption.
+
+
+### 04/19/2026, 10:00:29 PM
+**Prompt:** ## OFFICES P2
+
+We work with small offices, cowork
+
+
+### 04/19/2026, 10:01:19 PM
+**Prompt:** ## OFFICES P2
+
+We work with small offices, coworking spaces, and medical and clinical environments. We keep a consistent team, follow set routines, and work around your hours or after-hours schedules.
+
+
+### 04/19/2026, 10:02:05 PM
+**Prompt:** implement
+
+### 04/19/2026, 10:03:53 PM
+**Prompt:** excellent, go ahead and push
+
+### 04/19/2026, 10:08:50 PM
+**Prompt:** go deeper before i pivot to design
+
+### 04/19/2026, 10:10:12 PM
+**Prompt:** yes, continue
+
+### 04/19/2026, 10:12:17 PM
+**Prompt:** i want to use the llm optimizing skill we set up to create a prompt, invoking the appropriate tools, to do a complete review of the site design, using both market reesearch and the changes that came from the copy changes, to help decide what changes to make to the design of the website. generate teh prompt and/or instructions i need to move forward
+
+### 04/19/2026, 10:38:15 PM
+**Prompt:** durable update to end this session
+
+---
+
+## Session: 2026-04-19 (continuation — post-context-limit)
+
+### Summary
+
+This session continued after a context-limit interruption mid-accordion-copy-work. The prior session had committed accordion copy refinements (7a8beab) but not yet pushed. This session picked up from that point.
+
+**What happened (Claude-authored):**
+
+1. **Pushed 7a8beab** — accordion copy refinements across all 4 client segments (STR, Property, Offices, Homes). This was the pending push from the previous session.
+
+2. **Deep review pass** — Full code read of all repositioned components (Hero, TrustStrip, Positioning, HowItWorks, About, ClientAccordion bodies, Services, Testimonials, Pricing, FinalCTA). Found 3 issues:
+   - `Services.tsx` subtitle when filter active was showing a developer note to live users: "Service copy per client type is derived from the current service mapping."
+   - `Services.tsx` footer had a developer paragraph visible to live users: "Minor wording in this section is derived from the current client-service mapping. A deeper ChatGPT refinement pass is still planned."
+   - `Hero.tsx` P2 and P3 both ended with "your operation already runs" — identical closing phrase in consecutive paragraphs.
+
+3. **Fixed all 3** — committed d79419b, pushed. Hero P3 fix: "You don't have to follow up to know it happened." Services subtitle when filtered: "Services relevant to your space type are highlighted." Dev note paragraph removed entirely.
+
+4. **Design review prompt generated** using `optimize-and-plan` skill (Prompt mode). Prompt is ready to paste into a new Claude session. It instructs Claude to read `docs/briefs/marketresearch.txt`, key component files, and `docs/decisions.md`, invoke the design-review agent for standards audit in parallel, and return two outputs: strategic design gaps (max 8, specific to components) and confirmed-working elements to leave alone. Color and font changes are locked out of scope.
+
+**Commits this session:**
+- `7a8beab` — feat: apply approved accordion copy refinements across all four client segments (pushed)
+- `d79419b` — fix: remove live developer notes from Services and fix Hero subhead repetition (pushed)
+
+**Pending (carry to next session):**
+- Run the design review prompt in a fresh Claude session
+- ChatGPT refinement of Services section copy
+- STR [VERIFY] items with Vitor (same-day confirmations, linen processing, inventory tracking)
+- Testimonials: no Offices cases yet — note when adding real clients
+
+### Prompt log
+
+- "go deeper before i pivot to design"
+- "yes, continue" [after issues were listed]
+- "i want to use the llm optimizing skill we set up to create a prompt, invoking the appropriate tools, to do a complete review of the site design, using both market research and the changes that came from the copy changes, to help decide what changes to make to the design of the website. generate the prompt and/or instructions i need to move forward"
+- "durable update to end this session"
+
+---
+
+### 04/19/2026 (end of session)
+**Prompt:** durable update to end this session

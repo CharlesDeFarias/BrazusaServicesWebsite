@@ -75,7 +75,7 @@ When a decision is made, add it here before the session ends. Format:
 **Decision:** For the current Brazusa copy overhaul, ChatGPT should rewrite `docs/briefs/copy.txt` first, not the live component copy.
 **Why:** The current need is strategic messaging refinement before layout-fit refinement. `copy.txt` is the blueprint layer, so ChatGPT can use its stronger Brazusa voice and business context without being prematurely constrained by section lengths. After that, Claude/Codex can map the revised blueprint back onto the current repo structure and only then request tightly constrained section-level rewrites where needed.
 **Constraints:** Do not ask ChatGPT for an end-to-end rewrite of the currently rendered site copy yet. The workflow for this phase is: rewrite `copy.txt` -> review against current repo structure and locked decisions -> generate targeted section prompts only where additional copy passes are needed.
-**Status:** Phase 1 complete as of 2026-04-19. `copy.txt` rewritten (brand positioning layer). Design audit completed. Section-level ChatGPT brief produced, 3 copy-review passes run, copy approved. Implementation delegated to Codex. Next: ChatGPT refinement of per-client accordion copy (STR, Property, Offices) and Homes teaser line.
+**Status:** Phase 2 complete as of 2026-04-19. `copy.txt` rewritten (brand positioning layer). Design audit completed. Section-level ChatGPT brief produced, 3 copy-review passes run, copy approved. Implementation delegated to Codex. Accordion copy (all 4 segments) refined via 4-pass ChatGPT cycle and implemented by Claude — committed 7a8beab, pushed. Post-implementation deep review pass found and fixed 3 issues (2 live dev notes in Services.tsx, Hero P2/P3 duplicate ending) — committed d79419b, pushed. Next: design review pass (prompt generated, ready for new session) and ChatGPT refinement of Services section copy.
 
 **Decision:** Brazusa site remains single-page (`/clean`) for the current phase. Multi-page architecture (separate `/clean/str`, `/clean/office`, `/clean/clinic`, `/clean/property` routes) is the correct long-term target but not the right move now.
 **Why:** The main benefit of separate pages is SEO indexability per service segment — a longer-game benefit that isn't a bottleneck until there is traffic to route. The existing single-page segment routing (accordion + services filter) achieves the trust-building and self-identification goals just as well for now. Building full per-segment content depth first is the right prerequisite.
@@ -107,7 +107,8 @@ When a decision is made, add it here before the session ends. Format:
 - Service area town list (awaiting ChatGPT audit)
 - Testimonials pricing context (awaiting real data from Charles)
 - ~~Token migration pass 2~~ — completed 2026-04-18
-- ChatGPT refinement of per-client service copy
+- ChatGPT refinement of per-client service copy (Services.tsx — next copy pass after design review)
+- STR accordion body [VERIFY] items: same-day confirmations, linen processing, inventory tracking — confirm with Vitor which are currently live operational capabilities before treating as factual claims
 - QuoteDrawer file uploads — temporary Phase 1 should be email-first, with file metadata saved to the existing integrations. Charles wants broad file-type support for now, especially images, videos, and PDFs, but Gmail's documented direct attachment limit is about 25 MB total, so a 1 GB pure-email upload flow is not viable. When files exceed the email-safe limit, the UI should recommend sending them by WhatsApp to the default Brazusa contact number: 781-686-7189. Revisit later with a proper storage-backed upload system.
 - Accordion image file replacements (Charles to re-export)
 - Shareable hash links for Pricing filter chips

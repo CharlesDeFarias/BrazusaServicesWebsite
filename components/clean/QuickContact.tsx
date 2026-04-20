@@ -69,14 +69,14 @@ export default function QuickContact(): JSX.Element {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 p-4 group transition-all duration-200 hover:shadow-md flex-1 min-w-[220px]"
-            style={{ border: '1px solid var(--color-light-gray)', background: 'white' }}
+            style={{ border: '1px solid var(--color-light-gray)', background: 'var(--color-off-white)' }}
           >
-            <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 rounded-lg" style={{ background: '#F8F4EE' }}>
+            <div className="w-10 h-10 flex items-center justify-center flex-shrink-0 rounded-lg" style={{ background: 'var(--color-off-white)' }}>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M19.6 10.23c0-.68-.06-1.36-.18-2H10v3.79h5.38a4.6 4.6 0 0 1-2 3.02v2.5h3.24c1.9-1.75 3-4.33 3-7.31z" fill="#4285F4"/>
-                <path d="M10 20c2.7 0 4.96-.89 6.62-2.42l-3.24-2.51c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.75-5.59-4.12H1.08v2.6A10 10 0 0 0 10 20z" fill="#34A853"/>
-                <path d="M4.41 11.91A6 6 0 0 1 4.1 10c0-.67.11-1.32.31-1.91V5.5H1.08A10.01 10.01 0 0 0 0 10c0 1.61.39 3.14 1.08 4.5l3.33-2.59z" fill="#FBBC05"/>
-                <path d="M10 3.97c1.47 0 2.79.5 3.83 1.5l2.87-2.87C14.96.89 12.7 0 10 0A10 10 0 0 0 1.08 5.5l3.33 2.58C5.2 5.72 7.4 3.97 10 3.97z" fill="#EA4335"/>
+                <path d="M19.6 10.23c0-.68-.06-1.36-.18-2H10v3.79h5.38a4.6 4.6 0 0 1-2 3.02v2.5h3.24c1.9-1.75 3-4.33 3-7.31z" fill="#4285F4" /* no token: intentional Google brand color */ />
+                <path d="M10 20c2.7 0 4.96-.89 6.62-2.42l-3.24-2.51c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.75-5.59-4.12H1.08v2.6A10 10 0 0 0 10 20z" fill="#34A853" /* no token: intentional Google brand color */ />
+                <path d="M4.41 11.91A6 6 0 0 1 4.1 10c0-.67.11-1.32.31-1.91V5.5H1.08A10.01 10.01 0 0 0 0 10c0 1.61.39 3.14 1.08 4.5l3.33-2.59z" fill="#FBBC05" /* no token: intentional Google brand color */ />
+                <path d="M10 3.97c1.47 0 2.79.5 3.83 1.5l2.87-2.87C14.96.89 12.7 0 10 0A10 10 0 0 0 1.08 5.5l3.33 2.58C5.2 5.72 7.4 3.97 10 3.97z" fill="#EA4335" /* no token: intentional Google brand color */ />
               </svg>
             </div>
             <div className="flex-1 min-w-0">

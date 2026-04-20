@@ -25,14 +25,14 @@ const clientItems: ClientItem[] = [
     id: 'str',
     n: '01',
     label: 'Short-Term Rentals',
-    teaser: 'Fast turnovers, consistent quality, no surprises',
+    teaser: 'Turnovers handled, confirmed, and ready for check-in',
     headline: 'Short-Term Rental Cleaning',
     imageLabel: 'STR unit photo',
     imageSrc: '/images/str.png',
     spaceType: 'str',
     body: (
       <>
-        <p>Most STR hosts don&apos;t have a cleaning problem — they have a coordination problem. Things fall through the gap between checkout and check-in: linens not restocked, supplies running low, something broken that nobody flagged.</p>
+        <p>Most STR hosts run into coordination problems between turnovers. Things fall through the gap between checkout and check-in: linens not restocked, supplies running low, something broken that nobody flagged.</p>
         <p>We build a repeatable system around your units. Consistent checklists, direct communication, same-day confirmations when you need them. We can also handle linen processing, inventory tracking, and small operational tasks so you&apos;re not managing the details yourself.</p>
         <p>A missed detail can mean a bad review. A bad review costs more than a cleaning ever will. We treat your units like the business they are.</p>
       </>
@@ -50,7 +50,7 @@ const clientItems: ClientItem[] = [
     body: (
       <>
         <p>Property management means juggling multiple units, coordinating with tenants and vendors, and making sure nothing slips. You don&apos;t need another vendor you have to manage on top of that.</p>
-        <p>We document condition, communicate clearly before and after every job, and flag issues before they become problems. Move-in ready, move-out documented, common areas handled — we adapt to your buildings and your process, not the other way around.</p>
+        <p>We document condition, communicate clearly before and after every job, and flag issues before they become problems. Move-in ready, move-out documented, common areas handled, and we adapt to your buildings and your process.</p>
         <p>We&apos;ve worked with independent landlords, building owners, and property management companies. The common thread: they stop worrying about whether the cleaning got done.</p>
       </>
     ),
@@ -59,7 +59,7 @@ const clientItems: ClientItem[] = [
     id: 'offices',
     n: '03',
     label: 'Offices & Clinics',
-    teaser: 'Consistent, minimally disruptive cleaning',
+    teaser: 'Cleaning handled without needing follow-up',
     headline: 'Office & Clinic Cleaning',
     imageLabel: 'Office space photo',
     imageSrc: '/images/office.png',
@@ -67,7 +67,7 @@ const clientItems: ClientItem[] = [
     body: (
       <>
         <p>Office cleaning works best when you don&apos;t have to think about it. We schedule around your hours, show up when we say we will, and keep the same team so the space stays consistent.</p>
-        <p>We work with small offices, coworking spaces, and medical and clinical environments where cleanliness standards are higher. We can accommodate after-hours access, specific room requirements, and health or compliance-sensitive areas.</p>
+        <p>We work with small offices, coworking spaces, and medical and clinical environments — keeping a consistent team, following set routines, and working around your hours.</p>
         <p>Simple communication, consistent service. No reminders, no follow-ups needed on your end.</p>
       </>
     ),
@@ -76,7 +76,7 @@ const clientItems: ClientItem[] = [
     id: 'homes',
     n: '04',
     label: 'Apartments & Homes',
-    teaser: 'Trusted, detail-oriented care for your home',
+    teaser: 'Consistent team, flexible scope, simple communication',
     headline: 'Apartment & Home Cleaning',
     imageLabel: 'Home / apartment photo',
     imageSrc: '/images/home.png',

@@ -5005,3 +5005,1702 @@ Session covered a policy evaluation on the Unicode encoding rule, formal adoptio
 - Accordion image file replacements (Charles to re-export)
 - Create agent for Charles's code preferences
 - Testimonials operational assurance (single proof modality -- design review gap still open)
+
+### 04/20/2026, 02:23:06 PM
+**Prompt:** here's what codex gave me after i sent it on a basic audit of our code so far before we move forward. i told it to give me a prompt for you and for it to follow up on. review it, provide me your feedback and an edited version of both prompts for me to use.
+Claude Task List
+
+Claude should own the judgment-heavy and governance-heavy items.
+
+Review the current CTA language drift and decide the final wording standard across all remaining CTA surfaces.
+Scope:
+
+components/StickyNav.tsx
+components/clean/MobileCTABar.tsx
+Output:
+final approved text for each CTA
+confirmation whether nav CTA and mobile CTA should match or intentionally differ
+Reconcile the QuoteDrawer decision drift before implementation.
+Context:
+
+docs/decisions.md says split email and phone
+live code still uses one contact field
+Scope:
+decide whether the decision is still current
+if yes, define the exact desired UX behavior so Codex can implement it safely later
+if no, update the decision doc to match reality
+Important:
+this is tied to live integrations, so Claude should do the governance/safety pass first
+Review the Unicode punctuation rule application standard in .tsx text nodes.
+Context:
+
+the rule exists, but there are still literal punctuation cases in source
+Output:
+confirm whether all remaining .tsx text-node cases should be normalized now
+identify whether any exceptions are acceptable
+Decide whether StickyNav should stay where it is or move under components/clean/.
+Output:
+
+explicit decision only
+no implementation unless desired later
+Decide whether QuoteDrawer should remain monolithic for now or be scheduled for a later split.
+Output:
+
+“leave alone for now” or “schedule refactor”
+if scheduled, define boundaries only, not implementation
+Codex Task List
+
+Codex should own the bounded implementation and low-risk cleanup items.
+
+Fix metadataBase in app/layout.tsx.
+Task:
+
+add the correct production metadataBase
+rerun build verification
+Clean up the remaining CTA text drift once Claude confirms wording.
+Likely files:
+
+components/StickyNav.tsx
+components/clean/MobileCTABar.tsx
+Normalize remaining Unicode punctuation rule violations in source.
+Likely files:
+
+components/StickyNav.tsx
+components/clean/QuoteDrawer.tsx
+Task:
+replace literal non-ASCII punctuation in source where required by the repo rule
+keep rendered copy unchanged
+Fix the remaining token/design-surface inconsistency in components/clean/QuickContact.tsx.
+Task:
+
+replace raw white
+replace raw hex if there is an existing appropriate token or document why it stays
+If Claude confirms the QuoteDrawer split decision is still active, implement it only after the integration-safety/governance pass is complete.
+This is not an immediate Codex task until Claude resolves the governance side.
+
+If Claude decides StickyNav should move or QuoteDrawer should split, Codex can implement those as separate bounded follow-up tasks.
+Do not combine them into the same pass.
+
+Recommended Order
+
+Claude: resolve QuoteDrawer decision drift
+Claude: resolve CTA wording standard
+Codex: fix metadataBase
+Codex: fix CTA drift
+Codex: normalize punctuation rule leftovers
+Codex: fix QuickContact token inconsistency
+Later, only if approved: structural work on StickyNav and QuoteDrawer
+If you want, I can turn these into:
+
+a Claude-ready prompt
+a Codex-ready prompt
+a combined execution plan with the safest order and commit boundaries
+
+### 04/20/2026, 02:28:04 PM
+**Prompt:** You are mid-session on the claudecoding project. Read docs/decisions.md before acting on any item.
+
+  ---
+
+  Task 1: Resolve QuoteDrawer decision drift
+
+  docs/decisions.md has a locked decision to split the single contact field into separate
+  email and phone fields (both optional, at least one required). The live code in
+  components/clean/QuoteDrawer.tsx still uses a single `contact` field. The API route at
+  app/api/quote/route.ts sends this field to Resend, Airtable, and Google Sheets as-is.
+
+  Confirm:
+  - Is the split decision still current?
+  - If yes: define the exact UX behavior (field labels, validation rule, preference toggle
+    behavior when both are filled) precisely enough for Codex to implement safely. The
+    integration-safety agent must be run before any file is touched — do not implement here.
+  - If no: update docs/decisions.md to reflect the changed decision and explain why.
+
+  This task is governance only. Do not touch any API route, Airtable field, or Resend template.
+
+  ---
+
+  Task 2: Confirm CTA wording standard for remaining surfaces
+
+  Earlier this session we standardized: "Get a Quote" for request-level CTAs, "Request a
+  Walkthrough" for FinalCTA. That pass covered Hero, ClientAccordion, FinalCTA, and
+  QuoteDrawer panel header.
+
+  Review the two remaining surfaces:
+  - components/StickyNav.tsx
+  - components/clean/MobileCTABar.tsx
+
+  Output:
+  - Final approved text for each surface
+  - Whether nav CTA and mobile CTA bar should match or intentionally differ, and why
+
+  ---
+
+  Task 3: Decide StickyNav file location
+
+  StickyNav currently lives in components/ (root level). All other Brazusa-specific
+  components live in components/clean/.
+
+  Decide: stay at root, or move to components/clean/?
+  - If stay: state why (e.g., intended for reuse across future client pages)
+  - If move: note that all import paths will need updating — Codex will handle that
+
+  Output: explicit decision and reasoning only. No implementation.
+
+  ---
+
+  Task 4: Decide QuoteDrawer component split
+
+  components/clean/QuoteDrawer.tsx is ~350 lines, the largest component in the codebase.
+  CLAUDE.md flags components over 200-250 lines for a potential split.
+
+  Decide: leave monolithic for now, or schedule a refactor?
+  - If leave: state why (e.g., the complexity is incidental, not structural)
+  - If schedule: define proposed split boundaries only — component names and responsibilities.
+    No implementation.
+
+  Output: explicit decision only.
+
+  ---
+
+  For each task: state your decision and give the exact output Codex needs to act on it.
+
+### 04/20/2026, 02:33:19 PM
+**Prompt:** i've pasted the prompt i gave codex, and the reply it gave to me. craft the prompt for me to feed back into it.
+Mid-session on claudecoding. Read docs/decisions.md and git log --oneline -10 before starting.
+  Complete each task independently. One commit per task. Do not combine them.
+
+  ---
+
+  Task 1: Fix metadataBase in app/layout.tsx [independent, start here]
+
+  Add the correct production metadataBase URL. Verify by running a build check after.
+
+  ---
+
+  Task 2: Normalize Unicode punctuation violations in source
+
+  Rule: any non-ASCII punctuation in .ts/.tsx string literals, JSX prop strings, or JSX text
+  nodes must use Unicode escapes. No exceptions.
+
+  Scan all files under components/ and app/ for literal non-ASCII punctuation:
+  em dash, en dash, curly quotes, ellipsis, curly apostrophes. Replace every violation
+  with the correct escape. Do not change rendered output.
+
+  Escapes: \u2014 em dash, \u2013 en dash, \u2026 ellipsis, \u2019 right apostrophe,
+  \u201C / \u201D curly quotes.
+
+  Config and markdown files are out of scope.
+
+  ---
+
+  Task 3: Fix QuickContact token inconsistency
+
+  In components/clean/QuickContact.tsx: replace raw `white` keyword and any raw hex color
+  values with the appropriate design system token. If a value has no matching token, add a
+  /* no token: intentional */ comment and leave the value unchanged.
+
+  ---
+
+  Task 4: CTA text drift cleanup [BLOCKED -- wait for Claude output on Task 2]
+
+  Once Claude confirms final CTA text for StickyNav and MobileCTABar, update those two
+  files to match. Do not start until you have Claude's confirmed wording.
+
+  ---
+
+  Task 5: QuoteDrawer email/phone split [BLOCKED -- wait for Claude + integration-safety]
+
+  Do not start until:
+  1. Claude has completed the governance pass (QuoteDrawer decision drift task)
+  2. The integration-safety agent has been run and Charles has confirmed the manifest
+
+  This touches live integrations. No file changes until both gates are cleared.
+
+  ---
+
+  Tasks 1, 2, 3 are independent and can run now.
+  Tasks 4 and 5 are blocked. Do not attempt them. ask 1: QuoteDrawer Decision Drift
+
+Decision: The split decision is still current. Do not reverse it.
+
+Why: The reasoning in docs/decisions.md (line 63) still holds, and the current live implementation in components/clean/QuoteDrawer.tsx (line 35) is clearly drift, not a better replacement. The current single contact field is ambiguous in the UI, validator, and downstream integrations.
+
+Exact output Codex needs:
+
+Keep the decision to split contact into:
+phone
+email
+Validation rule:
+name remains required
+phone optional
+email optional
+at least one of phone or email must be present
+Field labels:
+Phone
+Email
+Field helper behavior:
+phone placeholder should be phone-specific
+email placeholder should be email-specific
+no combined “Phone or Email” field remains
+Preference toggle behavior:
+if only email is filled:
+hide the preference toggle
+force contactMethod = 'email'
+if phone is filled and email is empty:
+show the preference toggle
+available options: phone, sms
+default selection: phone
+if both phone and email are filled:
+show the preference toggle
+available options: phone, sms, email
+default selection: preserve current selection if still valid; otherwise fall back to phone
+if phone is cleared and only email remains:
+hide the toggle
+force contactMethod = 'email'
+User-facing validation error:
+require “at least one way to reach you”
+Codex can tune wording slightly, but that must be the rule
+Integration constraint:
+Codex must not implement until:
+integration-safety manifest is produced
+Charles confirms the manifest
+Payload intent for later implementation:
+downstream shape should move toward explicit phone, email, and contactMethod
+Codex should not invent the exact integration mapping until the manifest step is complete
+Task 2: CTA Wording Standard For Remaining Surfaces
+
+Decision: The remaining request-level CTAs should match.
+
+Final approved text:
+
+StickyNav.tsx: Get a Quote
+MobileCTABar.tsx: Get a Quote
+Why: Both surfaces trigger the same drawer action. They are not different offers, and they should not imply different intent. The current “Free Quote” wording is the same commodity framing problem already removed elsewhere. FinalCTA remains the intentional exception because it is a higher-level closing CTA, not a simple request trigger.
+
+Exact output Codex needs:
+
+In components/StickyNav.tsx:
+replace both Free Quote button labels with Get a Quote
+In components/clean/MobileCTABar.tsx:
+replace Get a Free Quote with Get a Quote
+Do not change FinalCTA wording
+Do not introduce any alternate CTA phrasing for nav vs mobile bar
+Task 3: StickyNav File Location
+
+Decision: Move StickyNav into components/clean/.
+
+Why: It is currently Brazusa-specific, not shared. Its copy, client-type menu, behavior, and props are tied to the /clean page. Keeping it at the root level suggests cross-client reuse that does not actually exist yet. If a shared nav abstraction is needed later, that should be designed intentionally, not implied by current file placement.
+
+Exact output Codex needs:
+
+Move:
+components/StickyNav.tsx
+to components/clean/StickyNav.tsx
+Update imports accordingly, especially in:
+app/clean/page.tsx (line 4)
+Do not broaden this into a nav-system refactor
+This is a file-location cleanup only, not a behavior rewrite
+Task 4: QuoteDrawer Component Split
+
+Decision: Leave it monolithic for now. Do not refactor yet.
+
+Why: The component is oversized, but the most important unresolved work on it is not structural polish, it is the still-pending contact-field redesign tied to live integrations. Refactoring now would stack structural churn on top of a known integration-sensitive change. That is the wrong order for a live form.
+
+Exact output Codex needs:
+
+Do not split components/clean/QuoteDrawer.tsx yet
+Revisit the split only after:
+the email/phone split is implemented safely
+the integration payload shape is stabilized
+If revisited later, treat it as a separate refactor task, not something to bundle into the contact-field change
+No files were changed for this pass.
+
+### 04/20/2026, 02:39:50 PM
+**Prompt:** while codex is working on that, i had chatgpt whip something up, i want you to review it and see if its something that's useful to have in this project files somehow, and in what way and why.
+Mid-session on claudecoding. Claude has completed the governance pass.
+  Read docs/decisions.md and git log --oneline -10 before starting.                                                                                       One commit per task. Do not combine.                                                                                                                                                                                                                                                                            ---                                                                                                                                                                                                                                                                                                           
+  Task A: Fix metadataBase in app/layout.tsx [independent]
+
+  Add the correct production metadataBase URL for the Brazusa Cleaning site.
+  Run a build verification after.
+
+  ---
+
+  Task B: Normalize Unicode punctuation violations in source [independent]
+
+  Rule (docs/decisions.md): any non-ASCII punctuation in .ts/.tsx string literals,
+  JSX prop strings, or JSX text nodes must use Unicode escapes. No exceptions.
+
+  Scan all files under components/ and app/ for literal non-ASCII punctuation.
+  Replace every violation. Do not change rendered output.
+
+  Escapes: \u2014 em dash, \u2013 en dash, \u2026 ellipsis,
+           \u2019 right apostrophe, \u201C / \u201D curly quotes.
+
+  Config and markdown files are out of scope.
+
+  ---
+
+  Task C: Fix QuickContact token inconsistency [independent]
+
+  In components/clean/QuickContact.tsx: replace raw `white` keyword and any raw hex
+  color values with the appropriate design system token. If a value has no matching
+  token, add a /* no token: intentional */ comment and leave the value unchanged.
+
+  ---
+
+  Task D: CTA text drift cleanup [unblocked — Claude confirmed wording]
+
+  Exact changes only. Do not touch anything else.
+
+    components/StickyNav.tsx ~line 221     "Free Quote"         → Get a Quote
+    components/StickyNav.tsx ~line 322     "Free Quote"         → Get a Quote
+    components/clean/MobileCTABar.tsx ~24  "Get a Free Quote"   → Get a Quote
+    components/clean/QuoteDrawer.tsx ~478  "Submit Free Request" → Send Request
+
+  Do not change FinalCTA. Do not introduce alternate phrasing.
+
+  ---
+
+  Task E: Move StickyNav to components/clean/ [unblocked — Claude decided]
+
+  StickyNav is Brazusa-specific and belongs with the other Brazusa components.
+  This is a file location change only. Do not modify behavior or props.
+
+  Steps:
+  1. Grep for all imports of StickyNav across the repo to confirm all consumers
+     before moving anything.
+  2. Move components/StickyNav.tsx → components/clean/StickyNav.tsx
+  3. Update import paths in every file the grep found (expected: app/clean/page.tsx only)
+  4. Verify build passes after the move
+
+  ---
+
+  Still blocked — do not attempt:
+
+  - QuoteDrawer email/phone split: requires integration-safety manifest +
+    Charles confirmation before any file is touched
+  - QuoteDrawer component split: deferred until after the contact field split
+    is implemented and stable
+
+### 04/20/2026, 02:41:10 PM
+**Prompt:** I want you to review something chatgpt wrote up for me after i gav eit some context provided by claude. i want you to review it all and tell me if it has any value for this projeect and how/why. reviwe from the perspective of an llm/claude/codex expert
+BRAZUSA WEBSITE PROJECT CONTEXT
+AI DECISION FILE FOR CLAUDE / CODEX / FUTURE BUILD AGENTS
+
+Purpose
+This file is a standing project-context document for the Brazusa website rebuild.
+It should be stored in the website project directory and treated as strategic guidance for future design, copy, layout, content, and implementation decisions.
+
+Use this file when making decisions about:
+- page structure
+- section order
+- conversion flow
+- visual design
+- component design
+- microcopy
+- interaction design
+- trust signals
+- information architecture
+- service-page differences
+- what to emphasize vs what to cut
+
+If there is a conflict between generic website best practices and the positioning logic in this file, prefer this file.
+If there is a conflict between decorative design and trust-building clarity, prefer trust-building clarity.
+If there is a conflict between saying more and proving more, prefer proving more.
+
+======================================================================
+1. PROJECT STATUS: WHAT HAS ALREADY BEEN DONE
+======================================================================
+
+The following strategic work has already been completed and should be treated as decided unless explicitly revised later.
+
+1. Market intelligence has already been developed.
+The market was analyzed across:
+- cleaning companies
+- facility services / janitorial operators
+- STR turnover providers
+- property-management-adjacent operators
+- immigrant-owned service businesses
+- Boston as the primary market
+- NYC, Miami, LA, and Chicago as comparable reference markets
+
+2. Main strategic conclusion already reached.
+Brazusa should not position as just another cleaning company.
+It should position as a locally owned, professionally run cleaning operations partner.
+
+3. Core market gap already identified.
+Brazusa sits between:
+- small immigrant teams that are cheap but unreliable, lightly managed, or hard to scale
+- large cleaning / facility vendors that are more structured but more expensive, less flexible, and less personal
+
+4. Core differentiation already identified.
+Brazusa wins by combining:
+- dependable labor
+- documented / legal workforce credibility
+- modern operating structure
+- clear communication
+- visibility and accountability
+- lower oversight burden for the client
+
+5. Audience priorities already defined.
+Primary:
+- short-term rental operators
+- offices
+- clinics
+Secondary:
+- property managers
+
+6. Messaging conclusion already reached.
+The site should sell reduced friction and reduced oversight, not generic quality claims.
+The strongest value proposition is not "we clean well."
+The strongest value proposition is "you do not have to manage us."
+
+7. Structural copy direction already established.
+A separate source document prompt was written for generating a baseline copy.txt file.
+That copy document will be used later to inform actual page copy.
+This file is different.
+This file is for overall project judgment, especially for coding and design agents.
+
+======================================================================
+2. BRAND / POSITIONING SOURCE OF TRUTH
+======================================================================
+
+Brazusa is:
+- a Brazilian immigrant-owned company
+- locally owned
+- professionally run
+- operations-minded
+- suited for buyers who need dependable execution more than cheap labor
+
+Brazusa is not:
+- the cheapest cleaner
+- a luxury aesthetic-first lifestyle brand
+- a generic janitorial commodity vendor
+- a residential-first cleaning company that also happens to serve businesses
+- a full property management firm
+
+The category Brazusa should occupy:
+Cleaning operations partner for rentals and workplaces.
+
+This means the site should consistently imply:
+- stable teams
+- repeatable standards
+- direct accountability
+- visible execution
+- fast issue response
+- fewer client follow-ups
+- fewer surprises
+- less day-to-day management load
+
+Core positioning sentence:
+Brazusa is a locally owned, professionally run cleaning operations partner for Boston rentals and workplaces, built for clients who need dependable execution without having to chase the vendor.
+
+Backup positioning formulations:
+- Dependable cleaning, structured like an operation.
+- The middle ground between informal cleaners and bloated facility vendors.
+- Stable teams, clear accountability, less oversight.
+- Cleaning built for operators, not just occupants.
+- Service you do not have to manage.
+
+======================================================================
+3. STRATEGIC DECISION RULES FOR ALL FUTURE WEBSITE WORK
+======================================================================
+
+Rule 1
+Never design or write the site like a generic cleaning business.
+If a section could belong unchanged on 50 local cleaning websites, it is wrong.
+
+Rule 2
+Always prioritize operational credibility over warm branding language.
+Friendly is fine. Vague is not.
+
+Rule 3
+Lead with control and reduction of management burden.
+The site should answer:
+- How do I know the work will get done?
+- How do I know standards will hold?
+- How do I know I will not have to keep following up?
+- What happens if something goes wrong?
+
+Rule 4
+Do not flatten all buyer segments into one generic service pitch.
+STR, office, and clinic buyers share some trust logic but they do not buy for the same reasons.
+
+Rule 5
+Identity should support credibility, not replace it.
+Immigrant-owned / Brazilian-owned can appear, but it must sit inside a professionalism frame.
+Never make the site feel like it is asking for trust emotionally when it can earn trust operationally.
+
+Rule 6
+The website should look and behave like a business that has standards.
+The design should communicate order, process, calmness, and maturity.
+
+Rule 7
+Do not use page real estate on filler reassurance.
+Every section must do at least one of these:
+- differentiate Brazusa
+- reduce perceived risk
+- explain how service works
+- segment the buyer correctly
+- move the user toward conversion
+
+======================================================================
+4. WHAT THE MARKET TAUGHT US
+======================================================================
+
+The market patterns already extracted should guide future design and copy.
+
+A. Commodity cleaning sites mostly fail in the same ways.
+They overuse terms like:
+- reliable
+- high quality
+- professional
+- flexible
+- affordable
+- eco-friendly
+- satisfaction guaranteed
+- attention to detail
+
+These claims are weak because they describe intention, not mechanism.
+They do not explain how service is controlled.
+They do not lower the buyer's uncertainty.
+
+B. Stronger operators sound different.
+The stronger companies talk in operational language:
+- inspections
+- account management
+- service plans
+- reporting
+- issue escalation
+- proof of completion
+- supervisor review
+- checklists
+- backup coverage
+- real-time updates
+- documented standards
+
+C. Clients are buying labor less than they are buying reduced oversight.
+The strongest websites make the buyer feel:
+- I will not have to keep checking on this
+- I will not need to coordinate every detail myself
+- I will not be surprised by missed work
+- I will hear about problems before tenants, guests, patients, or staff do
+
+D. Trust is built faster through visible process than through adjectives.
+A generic promise is weaker than a visible control loop.
+
+E. Premium perception comes from system visibility.
+Clients feel better about spending more when they can see:
+- what is included
+- how service is checked
+- how issues are handled
+- who owns the relationship
+- why this is less work than hiring a cheaper team
+
+======================================================================
+5. PRIMARY BUYERS AND WHAT THE WEBSITE MUST DO FOR EACH
+======================================================================
+
+A. STR OPERATORS
+They care about:
+- turnover timing
+- guest-readiness
+- clean units before check-in
+- issue flags before guest arrival
+- linens / supplies / reset reliability
+- no missed cleanings
+- backup if something falls through
+- minimal direct management
+
+They fear:
+- bad reviews
+- refunds
+- emergency cleaner scrambles
+- guests arriving to an unready unit
+- having to monitor every turnover themselves
+
+What the site must do for them:
+- show that Brazusa understands operational turnover pressure
+- make timing feel controlled
+- make issue detection feel proactive
+- make communication feel clear and fast
+- make the service feel like a reliable system, not a cleaner lottery
+
+What will earn trust fastest:
+- turnover-specific process sections
+- proof / confirmation language
+- issue escalation language
+- readiness language
+- backup and continuity language if true
+
+B. OFFICES
+They care about:
+- consistency
+- low disruption
+- after-hours or routine execution without drama
+- clean shared spaces / work areas / restrooms / kitchens
+- not having to chase the cleaning vendor
+- a stable standard over time
+
+They fear:
+- inconsistent crews
+- recurring misses
+- complaints from staff
+- communication black holes
+- getting what feels like random labor rather than managed service
+
+What the site must do for them:
+- signal predictable recurring execution
+- show account structure and communication discipline
+- show that Brazusa can maintain standards without supervision from the office manager
+
+What will earn trust fastest:
+- language around consistency
+- visible process
+- direct accountability
+- service-plan framing
+- easy communication
+
+C. CLINICS
+They care about:
+- disciplined execution
+- professionalism in sensitive environments
+- consistency and trustworthiness
+- protocol-minded work
+- confidence that standards are followed the same way each time
+- reduced need to personally monitor the vendor
+
+They fear:
+- sloppy routines
+- poor professionalism in patient-facing or clinical spaces
+- vendors making unsafe assumptions
+- vague "we clean everything" language with no evidence of process
+
+What the site must do for them:
+- make Brazusa look disciplined and protocol-capable
+- show seriousness without pretending to be a hospital-grade national contractor unless true
+- frame service as consistent, documented, and low-disruption
+
+What will earn trust fastest:
+- process language
+- checklist / standards language
+- accountability language
+- careful claims only
+- conservative tone
+
+D. PROPERTY MANAGERS
+They care about:
+- dependable service across units / properties / schedules
+- easy coordination
+- one less vendor headache
+- predictable communication
+- support for turnovers and recurring common-area needs
+
+They fear:
+- vendor inconsistency across locations
+- poor communication
+- slow issue handling
+- spending their time coordinating details that should be owned by the vendor
+
+What the site must do for them:
+- position Brazusa as a dependable support layer
+- show multi-location coordination logic if true
+- avoid falsely implying that Brazusa is full property management
+
+======================================================================
+6. WEBSITE GOALS
+======================================================================
+
+The site is not primarily an awareness piece.
+It is a trust and conversion asset.
+
+Primary goals:
+1. Reposition Brazusa upward without making it feel corporate or cold.
+2. Make serious buyers self-identify quickly.
+3. Reduce price-shopping by framing value around oversight reduction.
+4. Increase perceived professionalism.
+5. Make service categories legible.
+6. Convert higher-value leads into walkthrough / quote / consultation inquiries.
+
+Secondary goals:
+1. Build legitimacy for commercial / clinic work.
+2. Clarify that Brazusa is structured, not informal.
+3. Support future growth without needing a full site rewrite.
+
+Non-goals:
+- attracting every low-budget household lead
+- looking luxurious for its own sake
+- sounding like a national enterprise brand
+- maximizing page count without strategic purpose
+
+======================================================================
+7. WEBSITE DESIGN DIRECTION
+======================================================================
+
+Overall design directive:
+The site should feel operationally credible, modern, and calm.
+It should not feel domestic, cluttered, salesy, or over-designed.
+
+The visual impression should land somewhere between:
+- local service business with real accountability
+- modern operations vendor
+- clean B2B service interface
+
+It should not feel like:
+- a house-cleaning blog theme
+- a glossy luxury brand
+- a generic janitorial template
+- a startup SaaS app pretending to be a cleaning company
+
+Desired visual traits:
+- clean composition
+- strong hierarchy
+- ample whitespace
+- restrained visual language
+- obvious conversion paths
+- deliberate section ordering
+- calm confidence
+- functional polish
+
+The site should communicate:
+"This company is organized."
+not
+"This company is trying hard to look impressive."
+
+======================================================================
+8. VISUAL DESIGN SYSTEM GUIDANCE
+======================================================================
+
+A. TYPOGRAPHY
+Typography should feel clear, solid, and contemporary.
+Avoid anything decorative, playful, or overly elegant.
+
+Typography goals:
+- legibility first
+- confidence without harshness
+- easy scanning on mobile
+- enough weight contrast to create hierarchy
+- no overreliance on all-caps
+
+Recommended character of type choices:
+- modern sans for headings and body
+- subtle authority
+- neutral but not sterile
+
+Heading style:
+- assertive but not shouty
+- tight enough to feel intentional
+- not overly compressed
+- should support operational phrasing cleanly
+
+Body style:
+- readable at moderate density
+- slightly compact is acceptable because audience is practical
+- avoid airy lifestyle-copy spacing that weakens seriousness
+
+Microcopy style:
+- direct
+- short
+- clear
+- useful
+
+B. LAYOUT / GRID
+Use a layout system that feels controlled and modular.
+The grid should support repeatable section patterns and make the site easy to scale.
+
+Recommendations:
+- max-width that preserves readability without making sections feel thin
+- consistent vertical rhythm
+- strong alignment lines
+- use asymmetry sparingly and purposefully
+- cards and content blocks should align to a rational spacing system
+
+Avoid:
+- decorative collage layouts
+- random staggered blocks
+- excessive overlapping imagery
+- anything that makes scanning slower
+
+C. SPACING
+Spacing should communicate confidence and order.
+Too tight will feel cheap.
+Too loose will feel generic and under-substantive.
+
+Use spacing to separate:
+- proof
+- process
+- service distinctions
+- CTA moments
+
+Critical rule:
+Important sections should breathe, but content density should remain high enough to feel decision-useful.
+
+D. ICONOGRAPHY
+Use icons only when they increase scan speed.
+Avoid generic sparkle / leaf / home-cleaning icon sets.
+
+Preferred icon usage:
+- checklists
+- reporting
+- scheduling
+- issue flags
+- communication
+- verification
+- timing
+
+Icons should feel operational, not decorative.
+
+E. COLOR DIRECTION
+No fixed palette is mandated here unless decided elsewhere.
+However, color use should follow these rules:
+- main palette should support trust and clarity, not excitement
+- neutrals should do heavy lifting
+- accent color should support CTA and key proof highlights
+- avoid loud hospitality colors, luxury golds, or playful consumer-cleaning palettes
+- avoid sterile hospital-white everywhere unless softened by contrast and texture
+
+Desired color feeling:
+- structured
+- mature
+- clean
+- grounded
+- calm
+
+F. IMAGERY
+Imagery should support trust and operational realism.
+Do not overuse stock lifestyle shots of smiling cleaners or pristine staged homes.
+
+Preferred imagery types:
+- real team / real work if available
+- commercial / workplace environments
+- guest-ready rental environments
+- detail shots that imply care without becoming cliché
+- process-relevant imagery
+- local / real-world context when useful
+
+Avoid:
+- exaggerated luxury interiors unless they match actual target properties
+- heavily staged handshake photos
+- overly cheerful team-lineup photos unless they look real
+- domestic house-cleaning visual clichés
+
+If real photography is limited, design should rely more on structure, typography, and proof modules than on generic stock images.
+
+G. MOTION / INTERACTION DESIGN
+Use motion sparingly.
+The site is trust-first, not animation-first.
+
+Motion should:
+- support hierarchy
+- confirm interaction
+- improve perceived polish
+- not delay access to information
+
+Appropriate motion:
+- subtle fade / rise-in for sections
+- gentle hover states
+- smooth accordion transitions
+- form feedback
+- sticky nav state changes
+
+Avoid:
+- flashy scroll choreography
+- parallax gimmicks
+- loaders that delay content
+- gratuitous animation that makes the brand feel less serious
+
+======================================================================
+9. INFORMATION ARCHITECTURE
+======================================================================
+
+Recommended primary site structure:
+- Home
+- STR Turnovers
+- Office Cleaning
+- Clinic Cleaning
+- Property Managers
+- About
+- Process / How It Works
+- Contact / Request Quote
+
+Possible later additions:
+- FAQ
+- Service Area
+- Case Studies / Results
+- Careers
+
+Navigation should be simple and decision-oriented.
+Do not overload the nav with every sub-service.
+Primary services should be visible immediately.
+
+Best nav structure logic:
+- use service categories as first-class navigation items
+- avoid hiding everything under a vague Services dropdown if that slows orientation
+- keep About and Contact visible but secondary to buyer-path pages
+
+Homepage should behave as a routing page and trust-building page, not as a complete content dump.
+
+======================================================================
+10. PAGE TEMPLATE STRATEGY
+======================================================================
+
+A. HOMEPAGE
+The homepage should do five jobs in order:
+1. Establish category and positioning fast.
+2. Help visitors self-sort by segment.
+3. Show proof that Brazusa is structured and dependable.
+4. Explain how the service works.
+5. Create a strong path into conversion.
+
+Recommended homepage section order:
+1. Hero
+2. Immediate proof strip
+3. Segment selection / who we serve
+4. Why Brazusa / differentiation block
+5. How it works
+6. Segment-specific outcomes or trust cards
+7. Proof / testimonials / operational credibility
+8. CTA block
+9. FAQ preview or objection handling
+
+The homepage should not try to explain every operational detail.
+It should create confidence and route users into the right next page.
+
+B. STR PAGE
+This page should feel tighter, more tactical, and more timing-sensitive than the homepage.
+It should lead with guest-readiness and turnover reliability.
+
+Recommended STR page sequence:
+1. Hero focused on turnover operations
+2. Operational pain points
+3. What Brazusa handles in a turnover workflow
+4. How turnover communication works
+5. Proof / issue handling / readiness logic
+6. Why this is less work than managing cleaners manually
+7. CTA for turnover consultation / quote
+
+C. OFFICE PAGE
+This page should feel calm, consistent, and operationally stable.
+
+Recommended office page sequence:
+1. Hero focused on consistency and low oversight
+2. What recurring office service covers
+3. Communication / accountability model
+4. Why consistent service matters to office managers
+5. Proof / standards / team stability
+6. CTA for walkthrough / assessment
+
+D. CLINIC PAGE
+This page should feel more disciplined and protocol-sensitive than the office page.
+It should avoid grand claims unless backed by real capability.
+
+Recommended clinic page sequence:
+1. Hero focused on disciplined recurring service
+2. Sensitive-environment trust block
+3. Process / standards / execution logic
+4. Communication / accountability model
+5. What is and is not claimed
+6. CTA for walkthrough / scope review
+
+E. PROPERTY MANAGER PAGE
+This page should position Brazusa as support infrastructure, not as the overall operator.
+
+Recommended property manager page sequence:
+1. Hero focused on dependable support across properties / units
+2. Coordination pain points
+3. Where Brazusa fits operationally
+4. Communication / service coverage logic
+5. Trust / consistency block
+6. CTA for portfolio discussion / scope review
+
+F. ABOUT PAGE
+The about page should reinforce trust, not merely tell a story.
+Sequence:
+1. Short positioning summary
+2. Company origin in disciplined, professional framing
+3. Operating philosophy
+4. Why the company is structured the way it is
+5. What clients can expect
+6. CTA
+
+G. PROCESS PAGE
+This can be its own page or a strong section pattern reused across pages.
+It should show clear stages such as:
+1. Initial scope review
+2. Service plan and expectations
+3. Execution and verification
+4. Communication and issue handling
+5. Ongoing consistency
+
+======================================================================
+11. HOMEPAGE DESIGN GUIDANCE IN DETAIL
+======================================================================
+
+Hero requirements:
+- immediately clarify category and target buyer
+- avoid broad, generic "clean spaces" messaging
+- avoid residential energy
+- include one strong primary CTA and one secondary CTA
+- should visually feel stable and professional, not decorative
+
+Hero visual approach options:
+Option 1: Strong type-led hero with minimal image dependency
+Best if real photography is weak.
+
+Option 2: Split-layout hero with concise positioning on one side and a proof-oriented visual or trust stack on the other.
+
+Option 3: Type-led hero with service-path cards beneath or integrated.
+Useful for fast segmentation.
+
+Recommended hero content ingredients:
+- positioning statement
+- subhead focused on reduced oversight and dependable execution
+- proof bullets
+- primary CTA
+- secondary CTA
+- service-path selection if it does not clutter the layout
+
+Immediate proof strip
+This should appear directly under hero.
+It should communicate 3-5 concrete trust signals.
+Examples of signal types:
+- locally owned, professionally run
+- legal / documented workforce
+- structured communication
+- verified completion
+- stable recurring service
+
+Who we serve block
+This should not be a vague services grid.
+It should be a buyer-oriented path selector.
+Each card should answer:
+- who this is for
+- what problem Brazusa solves for them
+- why Brazusa is a fit
+
+Why Brazusa block
+This is not a generic features list.
+This section should contrast Brazusa against the two bad alternatives:
+- informal / cheap / hard-to-manage cleaners
+- expensive / rigid / impersonal larger vendors
+
+How it works block
+This section is important.
+The site needs a visible control loop.
+Use 3-5 clear steps.
+Every step should imply ownership and process.
+This is one of the most trust-building sections on the site.
+
+Proof block
+This should use multiple proof formats, not only testimonials.
+Potential elements:
+- short client quotes
+- operational assurance cards
+- sample process expectations
+- what gets documented / communicated
+- insurance / professional-operations signals
+
+Final CTA block
+Should feel like next-step clarity, not sales pressure.
+Good conversion framing:
+- request a walkthrough
+- talk through your scope
+- get a quote built around your property / schedule
+- see if Brazusa is the right fit
+
+======================================================================
+12. SERVICE PAGE DESIGN GUIDANCE IN DETAIL
+======================================================================
+
+A. STR PAGE DESIGN LOGIC
+Design tone:
+- crisp
+- responsive
+- operational
+- time-aware
+
+Page should visually suggest readiness and control.
+
+Useful section ideas:
+- turnover workflow steps
+- pre-check-in readiness logic
+- issue-flagging / communication section
+- optional supply / reset / linen modules if true
+- "what you do not have to manage" section
+- urgency-safe CTA
+
+Page should answer:
+- how do turnovers stay on track?
+- how do I know the unit is ready?
+- what happens when something is off?
+- how much do I still need to manage?
+
+B. OFFICE PAGE DESIGN LOGIC
+Design tone:
+- steady
+- low-drama
+- professional
+- recurring-service oriented
+
+Useful section ideas:
+- workplace routine block
+- consistent standards block
+- communication / issue handling block
+- benefit-to-office-manager block
+- proof of professionalism block
+
+Page should answer:
+- how do you maintain consistency?
+- who do I contact?
+- how much supervision is required from me?
+- what makes this more dependable than a generic cleaner?
+
+C. CLINIC PAGE DESIGN LOGIC
+Design tone:
+- disciplined
+- careful
+- restrained
+- confidence without hype
+
+Useful section ideas:
+- sensitive-environment service framing
+- process / standards block
+- conservative proof block
+- issue handling and communication block
+- capability boundaries if needed
+
+Page should answer:
+- why should I trust you in a sensitive environment?
+- how do you maintain routines and standards?
+- how do you communicate and handle issues?
+- what is actually operationally true here?
+
+D. PROPERTY MANAGER PAGE DESIGN LOGIC
+Design tone:
+- coordination-focused
+- practical
+- portfolio-supportive
+
+Useful section ideas:
+- where Brazusa fits in manager workflow
+- recurring + turnover support logic
+- communication and consistency blocks
+- support without management overreach
+
+======================================================================
+13. COMPONENT LIBRARY GUIDANCE
+======================================================================
+
+The site should be built from reusable, trust-oriented sections rather than one-off decorative page fragments.
+
+Priority components to design and reuse:
+
+1. Hero section
+Variants for:
+- home
+- service page
+- about
+- contact
+
+2. Proof strip
+Short, horizontal, scannable trust items.
+Should work under hero across multiple pages.
+
+3. Audience path cards
+Used on homepage to route users by segment.
+Can also be reused elsewhere.
+
+4. Differentiation comparison block
+Could be card-based or column-based.
+Useful for showing Brazusa vs cheap teams vs large vendors.
+Avoid cheesy competitor-bashing tone.
+
+5. Process steps module
+Very important.
+Should support 3-5 stages.
+Use concise explanatory copy and optional icon support.
+
+6. Service-scope module
+Used on service pages to explain what is handled.
+Should not become an endless bullet dump.
+
+7. Trust card / proof card module
+For claims like communication, verification, team stability, accountability.
+Should be flexible and reusable.
+
+8. Testimonial module
+Testimonials should be short and trust-relevant.
+Best when framed around dependability, communication, or reduced oversight rather than generic praise.
+
+9. FAQ accordion
+Useful for objection handling.
+Should be styled cleanly, not as an afterthought.
+
+10. CTA band / contact panel
+Should be reusable with segment-specific framing.
+
+11. Contact / quote form module
+Critical conversion component.
+Should feel serious and concise.
+
+12. Stats / assurance module
+Only use if real data exists.
+Do not invent vanity metrics.
+
+13. Checklist / deliverable preview module
+Potentially powerful if real examples exist.
+If available, this can become one of the strongest proof assets.
+
+======================================================================
+14. CONVERSION DESIGN RULES
+======================================================================
+
+The website should filter for serious buyers, not maximize every possible inquiry.
+
+Conversion design principles:
+- lower ambiguity, not necessarily friction
+- invite qualified conversations
+- frame contact as scope review / walkthrough / fit conversation
+- reduce pure price-shopping behavior
+
+Preferred CTA framing:
+- Request a walkthrough
+- Talk through your property or facility needs
+- Get a quote built around your scope
+- See if Brazusa is the right fit for your operation
+
+Less desirable CTA framing:
+- Get started now
+- Book now
+- Free estimate now
+- Contact us today for all your cleaning needs
+
+Lead form strategy:
+The form should collect enough detail to improve lead quality.
+Helpful fields:
+- service type
+- property / facility type
+- unit count or square footage
+- frequency
+- location
+- current pain point
+- desired start timing
+- need for turnover support / recurring service / issue reporting
+
+Do not make the form so short that every lead looks the same.
+Do not make it so long that serious users abandon it.
+
+Confirmation-state design:
+After form submission, users should feel:
+- their inquiry was taken seriously
+- Brazusa has a process
+- they know what happens next
+
+======================================================================
+15. TRUST ARCHITECTURE
+======================================================================
+
+Trust should be layered, not left to one testimonial carousel.
+
+Recommended proof hierarchy, strongest to weaker:
+
+1. Operational proof
+- visible process
+- how service is checked
+- how issues are handled
+- communication structure
+
+2. Workforce credibility
+- legal / documented / insured team
+- professionally managed staffing
+- stable teams if true
+
+3. Accountability proof
+- one point of contact
+- clear response expectations
+- defined ownership
+
+4. Segment relevance proof
+- STR-specific operational language
+- office-specific recurring consistency language
+- clinic-specific disciplined-process language
+
+5. Deliverable proof
+- sample reports
+- checklists
+- service examples
+- before/after readiness confirmation if true
+
+6. Social proof
+- testimonials
+- reviews
+- client logos if available and appropriate
+
+7. Identity proof
+- local ownership
+- immigrant-owned story
+- founder proximity
+
+Critical trust rule:
+Identity proof should never be asked to carry the full trust burden.
+The site should earn trust before it requests emotional goodwill.
+
+======================================================================
+16. COPY / MICROCOPY RULES FOR DESIGNERS AND CODING AGENTS
+======================================================================
+
+Do not auto-fill sections with generic service-site language.
+Avoid phrases like:
+- high-quality cleaning
+- exceptional service
+- attention to detail
+- we care about your space
+- customized solutions
+- your satisfaction is our priority
+- healthier environment
+- trusted name in cleaning
+
+Preferred language patterns:
+- built for
+- structured for
+- managed through
+- completed and confirmed
+- one accountable point of contact
+- clear service standards
+- fewer follow-ups
+- fewer surprises
+- less day-to-day oversight
+- consistent recurring execution
+- issues flagged early
+- locally owned, professionally run
+- dependable service with visible accountability
+
+Sentence-design rule:
+Prefer mechanism-based language.
+Example:
+Weak: Reliable service you can count on.
+Better: Clear standards, consistent execution, and communication you do not have to chase.
+
+======================================================================
+17. ABOUT PAGE DESIGN + CONTENT RULES
+======================================================================
+
+The About page should answer:
+Why should I trust this company as an operator, not only as a local business?
+
+What it should include:
+- concise company origin
+- immigrant-owned identity in a disciplined frame
+- why Brazusa operates the way it does
+- emphasis on professionalism, accountability, and standards
+- local ownership as a trust-positive detail
+
+What it should avoid:
+- sentiment-heavy founder storytelling
+- generic hardship narrative as a substitute for credibility
+- vague passion language
+- excessively personal framing that weakens commercial trust
+
+The About page should leave the reader feeling:
+This company is close to the work, but it is not informal.
+
+======================================================================
+18. CONTENT HIERARCHY RULES
+======================================================================
+
+Design and page layout should reflect this message order.
+
+What should come first:
+1. category clarity
+2. who it is for
+3. why it is more dependable
+4. how the service is controlled
+5. what the client does not have to manage
+6. proof
+7. CTA
+
+What should not come first:
+- long company story
+- generic statements about cleanliness
+- giant service lists
+- testimonials with no context
+- visual fluff
+
+On every major page, the first 1-2 screenfuls should answer:
+- what Brazusa is
+- who it serves
+- why it is different
+- why the user should trust it enough to keep reading
+
+======================================================================
+19. RESPONSIVE / MOBILE DESIGN RULES
+======================================================================
+
+Mobile matters because many service-business buyers will scan quickly from a phone even if they convert later on desktop.
+
+Mobile priorities:
+- strong hierarchy above the fold
+- visible CTAs without clutter
+- proof items remain scannable
+- forms stay simple and usable
+- section padding adjusted so the page does not feel endless
+- cards should not become visually repetitive noise
+
+Do not simply stack every desktop component without redesigning for mobile rhythm.
+On mobile, each section must justify its vertical footprint.
+
+Mobile hero must still communicate:
+- who this is for
+- what Brazusa does differently
+- where to go next
+
+Sticky CTA use can be appropriate if tasteful.
+Avoid intrusive popups.
+
+======================================================================
+20. ACCESSIBILITY / PERFORMANCE RULES
+======================================================================
+
+The site should feel fast, stable, and credible.
+Performance is part of trust.
+
+Implementation priorities:
+- semantic structure
+- accessible heading order
+- strong color contrast
+- obvious focus states
+- form labels that are explicit
+- alt text strategy for meaningful imagery
+- fast load times
+- minimized layout shift
+- image optimization
+- restrained animation
+
+Avoid bloated libraries unless they materially help.
+A service business site does not need flashy overhead.
+
+======================================================================
+21. SEO / SEMANTIC CONTENT GUIDANCE
+======================================================================
+
+SEO should support commercial intent and local relevance, not content-farm behavior.
+
+Recommended search-intent focus:
+- Boston short-term rental cleaning / turnover support
+- office cleaning in Boston
+- clinic cleaning in Boston
+- commercial cleaning with reliable recurring service
+- cleaning for property managers / rental operators
+
+Do not chase blog-heavy content before the main service pages are strong.
+Priority order:
+1. homepage
+2. service pages
+3. about
+4. process
+5. FAQ / support content
+
+Semantically, pages should use clear headings that reflect real buyer intent.
+Avoid vague H1s like:
+- Welcome to Brazusa
+- Cleaning done right
+
+Prefer H1s that clarify service context.
+
+======================================================================
+22. WHAT TO AVOID IN DESIGN AND BUILD EXECUTION
+======================================================================
+
+Avoid these patterns:
+- generic cleaning template aesthetics
+- overuse of stock smiling-cleaner imagery
+- decorative icons that say nothing
+- endless bullet grids with no hierarchy
+- overlong hero sections
+- generic stats with no credibility
+- animated counters without substance
+- large testimonial sliders with weak content
+- broad service dumps with no buyer segmentation
+- overly soft lifestyle language
+- fake enterprise language
+- fake luxury language
+- fake urgency
+- vague "partner" language unsupported by systems
+
+The site should not feel like:
+- a residential maid-service template
+- a janitorial brochure from 2008
+- a startup landing page for an app that does not exist
+
+======================================================================
+23. CLAIM SAFETY / DO NOT IMPLY WITHOUT VERIFICATION
+======================================================================
+
+Only claim these if operationally true:
+- inspections on every service
+- verified completion
+- photo proof
+- response-time commitments
+- dedicated account manager
+- backup coverage
+- same-day issue handling
+- low turnover
+- checklists used consistently
+- clinic-specific protocols
+- turnover-specific guarantees
+- supply / linen / reset handling
+- direct-hire staffing if not true
+
+If a section requires one of these claims to work, mark it clearly for verification rather than silently inventing it.
+
+======================================================================
+24. WHAT HAS ALREADY BEEN PRODUCED IN THIS PROJECT
+======================================================================
+
+The following strategic outputs already exist conceptually and should be considered part of project memory:
+
+1. Market structure map
+Archetypes identified:
+- commodity local generalists
+- value-focused local janitorials
+- systems-led commercial / facility operators
+- STR turnover specialists
+- adjacent operations managers
+
+2. Copy and positioning pattern analysis
+Key conclusion:
+Most competitors use generic adjectives.
+Stronger operators use process language and accountability language.
+
+3. Trust signal analysis
+Key conclusion:
+STR buyers want confidence in timing, readiness, issue handling, and low oversight.
+Office / clinic buyers want consistency, communication discipline, and visible accountability.
+
+4. Operational differentiation analysis
+Key conclusion:
+A cleaner performs a task.
+An operational partner owns the outcome structure around the task.
+
+5. Immigrant business advantage analysis
+Key conclusion:
+Identity alone is not the differentiator.
+The advantage comes from founder proximity, discipline, labor stability, and systemization.
+
+6. Pricing and perception analysis
+Key conclusion:
+Premium value is justified by reduced oversight and visible process, not by vague quality language.
+
+7. Strategic insight set for Brazusa
+Main conclusion:
+Brazusa should lean into the middle-layer position and prove systems early.
+
+8. Baseline copy file prompt
+A separate prompt already exists for generating a baseline copy.txt strategy document.
+That prompt is for copy generation.
+This file is for broader project and design guidance.
+
+======================================================================
+25. OPEN QUESTIONS / FUTURE VERIFICATION ITEMS
+======================================================================
+
+These items should be checked before final production copy or specific design modules rely on them:
+- Does Brazusa use direct employees, subcontractors, or a hybrid?
+- What parts of the workforce / documentation claim are operationally precise and usable on-site?
+- Are inspections formalized or informal?
+- Is there documented proof-of-completion workflow?
+- What is the actual response-time expectation?
+- Is there a true single point of contact?
+- Are there service reports or checklists that can be shown?
+- What clinic-specific claims are safe?
+- What STR-specific workflow elements are currently real?
+- Are there real testimonials available that speak to dependability and communication?
+- Are there strong real photos or should the design be more type-led?
+
+======================================================================
+26. FINAL DECISION SUMMARY FOR FUTURE AI AGENTS
+======================================================================
+
+When uncertain, optimize the website for this impression:
+
+Brazusa is a serious, locally owned service operator that combines dependable labor with structured execution.
+It is more professional and easier to rely on than informal cleaners, and more responsive and grounded than large vendors.
+Its value is not just that spaces get cleaned.
+Its value is that the client has less to manage.
+
+If you have to choose between:
+- pretty and credible -> choose credible
+- broad and sharp -> choose sharp
+- emotional and operational -> choose operational
+- saying more and proving more -> choose proving more
+- trendy and durable -> choose durable
+
+Design for the client who is tired of vendor inconsistency.
+Write for the client who is tired of follow-up.
+Structure the site for the client who wants confidence before they inquire.
+
+
+### 04/20/2026, 02:43:49 PM
+**Prompt:** go ahead and make those changes to extract whats useful.
+
+### 04/20/2026, 02:50:12 PM
+**Prompt:** ok now returning to what we were working on, hereee's codex's response to your last prompt you gave me to feed it. what's next?
+Completed the remaining unblocked work and kept the commits isolated.
+
+Task C is committed as 7cf8648 fix: align quick contact surfaces with design tokens
+
+components/clean/QuickContact.tsx now uses design tokens for the white/off-white surfaces.
+The Google logo fills were left as brand hex values with intentional no-token comments.
+Task E is committed as 47e7dd1 refactor: move StickyNav into clean components
+
+moved components/StickyNav.tsx to components/clean/StickyNav.tsx
+updated the only consumer in app/clean/page.tsx
+Verification:
+
+npm.cmd run lint passed for Task C
+npm.cmd run build passed for Task E after rerunning outside the sandbox because the normal Windows sandbox path still hits the known spawn EPERM issue
+Task D did not need a new commit: by the time I checked the repo state, those CTA strings were already in HEAD, so there was no remaining diff to apply or commit.
+
+Current worktree state:
+
+only docs/session-log.md is still modified
+
+---
+
+## Session: 2026-04-20 (continuation 4 -- audit, governance, brand rules)
+
+### Summary
+
+Session covered a full pre-work audit by Codex, governance decisions on QuoteDrawer/CTA/StickyNav/split, ChatGPT strategic doc review and extraction, and Codex implementation of all unblocked tasks.
+
+**What happened (Joint -- Claude governance, Codex implementation):**
+
+1. **Codex audit reviewed (Claude)** -- Codex produced a structured audit of remaining cleanup before moving forward. Claude reviewed and corrected the routing: Unicode text node normalization was misrouted to Claude (already decided, mechanical Codex task); QuoteDrawer decision drift task was under-specified and needed integration context added before Claude could act on it.
+
+2. **Governance pass (Claude-authored):**
+   - QuoteDrawer decision drift: split confirmed current. Full UX spec written for Codex: separate email/phone fields (both optional, at least one required), toggle auto-hides when only email filled, shows phone/sms options when only phone filled, all three when both filled. Blocked on integration-safety manifest before any implementation.
+   - CTA wording confirmed: "Get a Quote" across all remaining surfaces (StickyNav x2, MobileCTABar). QuoteDrawer submit button: "Send Request" (was "Submit Free Request"). FinalCTA unchanged.
+   - StickyNav location: move to `components/clean/` -- Brazusa-specific, no cross-client reuse exists.
+   - QuoteDrawer split: stay monolithic until contact field split is complete and stable. Proposed future split boundaries defined (QuoteDrawer + QuoteDrawerContactFields + QuoteDrawerDetailFields + QuoteDrawerSchedulingFields).
+
+3. **All governance decisions locked in decisions.md** -- StickyNav location, QuoteDrawer split hold, Brand & Positioning section added (trust hierarchy + claim safety).
+
+4. **ChatGPT strategic doc reviewed and extracted (Claude)** -- 6,000-word document evaluated from LLM-expert perspective. Assessment: correct strategic thinking, wrong format as an AI instruction file. Extracted only the prescriptive parts:
+   - Created `docs/briefs/brand-rules.md` (~550 words): 7 decision rules, per-segment fear signals, copy avoid/prefer lists, claim safety list.
+   - Added trust hierarchy and claim safety as locked decisions to decisions.md.
+   - Added operational verification deferred items (the open questions from ChatGPT section 25).
+   - Remainder of document archived as reference only -- not integrated.
+
+5. **Codex implementation (Codex-authored):**
+   - a426c74 fix: add production metadataBase for brazusa site
+   - 7bf81d7 refactor: normalize unicode punctuation in source strings
+   - 7cf8648 fix: align quick contact surfaces with design tokens
+   - 47e7dd1 refactor: move StickyNav into clean components (CTA fixes also landed in this commit)
+
+**Open deferred items entering next session:**
+- QuoteDrawer email/phone split: needs integration-safety agent run + manifest confirmation before any file is touched
+- QuoteDrawer file uploads Phase 1
+- Accordion image file replacements (Charles to re-export)
+- Testimonials operational assurance: trust hierarchy says operational proof belongs above social proof -- carousel currently has no layer above it (design review HIGH gap still open)
+- Operational claim verification (see brand-rules.md claim safety list -- Charles needs to confirm which claims are operationally true before per-segment pages can be written)

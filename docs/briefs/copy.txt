@@ -1,503 +1,373 @@
-﻿BRAZUSA CLEANING — HOMEPAGE COPY (V1)
-________________
+﻿# 1. BRAND CORE
 
+Brazusa is a locally owned, professionally run cleaning and operations support company based in Boston.
 
-HERO
-Headline:
- Reliable, high-detail cleaning for apartments, short-term rentals, and managed properties
-Subtext:
- A family-run cleaning company with decades of experience — now built with the speed, structure, and communication of a modern service.
-Primary CTA:
- Request a Quote
-Secondary CTA:
- Call / Text Us
-Microcopy:
- Not sure if we’re the right fit? Call us anyway — we’ll help you find someone who is.
-________________
+It combines two layers that rarely exist together in this category:
 
+* a stable, experienced, largely Brazilian immigrant workforce with strong work ethic and low turnover
+* a structured operational layer for communication, tracking, coordination, and accountability
 
-TRUST STRIP (quick credibility)
-* Fully insured
-* Family-owned and operated
-* Serving Greater Boston since 1994
-* Residential + commercial experience
-________________
+Most providers have one of these. Brazusa is built to deliver both.
 
+Its role is to deliver consistent, verified execution while removing as much operational burden from the client as possible.
 
-CLIENT TYPE SELECTOR
-Header:
- What kind of space do you need help with?
-* Short-Term Rentals
-* Property Management / Buildings
-* Offices & Clinics
-* Apartments / Homes
-________________
+Clients use Brazusa when they want the work handled without having to constantly check, remind, or fix things themselves.
 
+---
 
-WHY BRAZUSA CLEANING
-Header:
- A different kind of cleaning company
-Body:
- Most cleaning companies fall into one of two categories:
-They’re either large, structured companies that feel impersonal…
-or small, high-quality cleaners that are hard to communicate with and unreliable at scale.
-We built something in between.
-Points:
-* A consistent, small team that actually cares about each client
-* Fast, flexible communication, scheduling, and invoicing
-* Fully insured, structured, and professionally managed
-* Decades of real cleaning experience behind everything we do
-Closing:
- We’re a local family business — just one that’s been rebuilt to work properly in today’s world.
-________________
+# 2. POSITIONING FOUNDATION
 
+Primary positioning:
+Cleaning and operational support that is structured, tracked, and handled so the client does not have to manage it day to day
 
-SHORT-TERM RENTALS
-Header:
- Short-Term Rental Cleaning
-Body:
- We know what matters for short-term rentals:
-* fast turnovers
-* consistent quality
-* no surprises
-A missed detail can mean a bad review — and a bad review costs more than a cleaning ever will.
-We build repeatable systems around your units so you can rely on us without thinking about it.
-We can also help with small operational tasks that make managing your units easier.
-CTA:
- Request a Quote
-________________
+Short version:
+Cleaning you do not have to manage
 
+Medium version:
+A locally run cleaning operation that combines a stable workforce with structured communication and accountability so work is completed, confirmed, and handled without constant client involvement
 
-PROPERTY MANAGERS / BUILDINGS
-Header:
- Cleaning for Property Managers & Buildings
-Body:
- Property management requires more than just cleaning.
-It requires:
-* reliability across multiple units
-* consistency across different jobs
-* understanding building rules and systems
-* professionalism with tenants, staff, and vendors
-We’re built to handle that.
-We document, standardize, and communicate clearly so you don’t have to manage the cleaners — we manage ourselves.
-CTA:
- Request a Quote
-________________
+Expanded version:
+Brazusa provides cleaning and operational support through a combination of experienced labor and structured systems. Work is not only completed, but tracked, confirmed, and communicated clearly. Clients rely on Brazusa to maintain standards, prevent issues, and reduce the amount of oversight required to keep their spaces running smoothly.
 
+---
 
-OFFICES & CLINICS
-Header:
- Office & Clinic Cleaning
-Body:
- Most office cleaning happens when no one’s around — and that’s exactly how we like it.
-We focus on:
-* consistent, reliable cleaning
-* simple communication
-* easy billing and scheduling
-No unnecessary complexity. Just dependable service that works.
-CTA:
- Request a Quote
-________________
+# 3. CORE MESSAGE HIERARCHY
 
+Primary message:
+You should not have to manage your cleaning service
 
-APARTMENTS / HOMES
-Header:
- Apartment & Home Cleaning
-Body:
- For residential clients, it comes down to a few things:
-* quality
-* trust
-* affordability
-* communication
-We treat your space with the same level of care we’d expect in our own.
-Whether it’s a one-time clean or something recurring, we’ll adapt to what you actually need.
-CTA:
- Request a Quote
-________________
+Secondary messages:
 
+* Work is completed and confirmed
+* Issues are identified early and communicated clearly
+* Standards are carried out the same way every time
+* Communication is structured and dependable
 
-SERVICES
-Header:
- What we do
-List:
-* Routine cleaning
-* Deep cleaning
-* Move-in / move-out cleaning
-* Short-term rental turnover
-* Custom cleaning requests
-Flexibility Block:
- We don’t believe in one-size-fits-all cleaning.
-We can clean:
-* entire units
-* specific rooms
-* or just the tasks you don’t want to deal with
-If we don’t do something, we’ll help you find someone who does.
-________________
+Supporting messages:
 
+* Stable, trained workforce with low turnover [VERIFY]
+* Documented and accountable operations
+* Ability to adapt to client systems and tools
+* Local responsiveness
 
-HOW IT WORKS
-1. Reach out — quick or detailed
-2. We respond fast
-3. We provide a quote or schedule a visit
-4. Cleaning begins
-Note:
- If something is different from what we expected when quoting, we’ll tell you before starting — no surprises.
-________________
+Proof messages:
 
+* Work is tracked and verified
+* Issues are flagged before they affect guests or operations
+* Communication is consistent and timely
+* Service follows repeatable processes
 
-PRICING (TOP-LEVEL SUMMARY ON HOMEPAGE)
-Header:
- Transparent, flexible pricing
-Body:
- Every space is different, so we don’t use flat, one-size pricing.
-We base pricing on:
-* size and layout
-* level of cleaning needed
+Conversion messages:
+
+* Fewer follow-ups
+* Fewer surprises
+* Less time managing the vendor
+* Clear ownership when something needs to be handled
+
+---
+
+# 4. OPERATIONAL LAYER (WHAT THIS ACTUALLY MEANS)
+
+Brazusa operates on two layers:
+
+## Layer 1 — Execution (Cleaning)
+
+* Turnover cleans, maintenance cleans, deep cleans
+* Consistent standards
+* Stable workforce
+
+## Layer 2 — Operational Support
+
+* Communication and status updates
+* Photo verification and reporting
+* Issue detection and escalation
+* Coordination across units or spaces
+* Light operational tasks when structured (restocks, small fixes, access coordination)
+
+The value is not just the cleaning itself, but that both layers work together.
+
+Without the operational layer, cleaning becomes something the client has to manage.
+
+With it, the service becomes predictable and easier to rely on.
+
+---
+
+# 5. TIERING MODEL (HOW WORK IS STRUCTURED)
+
+Brazusa can operate at different levels depending on client needs.
+
+## Base Tier — Cleaning Only
+
+* Scheduled cleaning
+* Basic communication (confirmation of completion)
+* Limited flexibility
+
+Best for:
+
+* low complexity spaces
+* clients willing to manage details themselves
+
+---
+
+## Managed Tier — Structured Cleaning + Communication
+
+* Cleaning completed and confirmed
+* Consistent communication
+* Issues flagged proactively
+* Basic coordination with client systems
+
+Best for:
+
+* offices
+* small portfolios
+* clients who want reliability without micromanagement
+
+---
+
+## Operational Tier — Cleaning + Integrated Support
+
+* All of the above
+* Real-time or near real-time updates
+* Photo documentation and reporting
+* Inventory and supply visibility support
+* Coordination across multiple units
+* Light operational task handling (when defined)
+
+Best for:
+
+* STR operators
+* multi-unit clients
+* clients who want to reduce daily involvement
+
+---
+
+## Expanded Operational Tier (Optional / Custom)
+
+* Deeper integration into operations
+* Inventory tracking and restocking support
+* Linen handling coordination
+* Vendor coordination (when structured)
+* Customized reporting and workflows
+
+This level requires defined scope and pricing.
+
+---
+
+## Important Constraint
+
+Operational work is not unlimited.
+
+Each engagement should define:
+
+* what is included
+* how much time is allocated
+* what happens when that threshold is exceeded
+
+This keeps the system sustainable and consistent over time.
+
+---
+
+# 6. CUSTOMER / BUYER REALITY
+
+## STR OPERATORS
+
+Care about:
+
+* Units ready before check-in
+* No guest complaints or refunds
+* Clear confirmation of completion
+* Early issue detection
+* Smooth turnover coordination
+
+Fear:
+
+* Cleaners creating guest issues
+* Late turnovers
+* Having to replace vendors
+* Paying for a service that still needs supervision
+
+---
+
+## OFFICES / CLINICS
+
+Care about:
+
+* Consistency
+* Low disruption
+* Predictable service
+* Not managing the vendor
+
+Fear:
+
+* Inconsistent results
+* Having to follow up repeatedly
+* Unreliable scheduling
+
+---
+
+# 7. DIFFERENTIATION FRAMEWORK
+
+## vs small independent teams
+
+* lower cost
+* informal
+* inconsistent systems
+
+Brazusa:
+
+* structured communication
+* system compatibility
+* scalable reliability
+
+## vs large companies
+
+* structured but rigid
+* less personal accountability
+
+Brazusa:
+
+* flexible but controlled
+* stable teams
+* direct accountability
+
+---
+
+# 8. TRUST / PROOF HIERARCHY
+
+1. Work is completed and confirmed
+2. Issues are flagged early
+3. Communication is consistent
+4. Workforce is stable and documented [VERIFY]
+5. Systems are used consistently
+
+---
+
+# 9. STR (EXPANDED MESSAGE BLOCK)
+
+STR operations fail when cleaning is treated as a simple task instead of part of a larger system.
+
+What Brazusa does:
+
+* completes turnovers on time
+* confirms readiness clearly
+* flags issues before guests arrive
+* communicates without being chased
+* adapts to tools and workflows already in place
+
+What this means for the client:
+
+* fewer guest complaints
+* fewer last-minute problems
+* less time checking on units
+* more predictable operations
+
+Typical workflow:
+
+* unit assigned
+* cleaning completed
+* readiness confirmed
+* photos or verification provided (depending on scope)
+* issues flagged immediately
+
+Result:
+The client does not need to guess if a unit is ready.
+
+---
+
+# 10. OFFICE / CLINIC (EXPANDED MESSAGE BLOCK)
+
+Most office cleaning is treated as a black box.
+
+Brazusa is structured to remove that uncertainty.
+
+What Brazusa does:
+
+* maintains consistent cleaning schedules
+* ensures standards are followed every visit
+* communicates clearly when something needs attention
+* operates with minimal disruption
+
+What this means for the client:
+
+* no need to follow up
+* no need to check work
+* consistent environment for staff or patients
+
+For clinics specifically:
+
+* disciplined execution
+* reliable routines
+* professional handling of sensitive spaces
+
+Result:
+The space is maintained without requiring active management.
+
+---
+
+# 11. HOMEPAGE MESSAGE STACK
+
+Hero:
+Cleaning you do not have to manage
+
+Subhead:
+Work is completed, confirmed, and communicated clearly
+
+Proof:
+
+* consistent execution
+* structured communication
+* reduced oversight
+
+---
+
+# 12. PRICING / VALUE LANGUAGE
+
+Pricing reflects:
+
+* scope of work
 * frequency
-* access and logistics
-* any custom requests
-We also offer highly customized pricing — including partial cleanings or task-based work.
-CTA:
- View Pricing Details
-________________
-
-
-PROMOTIONS / COST SAVING
-Header:
- Ways to lower your cost
-Body:
- If you help us operate more efficiently, we pass that savings to you.
-Examples:
-* referrals
-* scheduling with neighbors or nearby clients
-* flexible timing
-* recurring service
-We also offer creative arrangements depending on your situation — just ask.
-________________
-
-
-TESTIMONIALS + CASE EXAMPLES
-Header:
- Real clients, real situations
-Case Example 1:
- Short-term rental with inconsistent cleaners → implemented structured turnover → improved reliability
-Case Example 2:
- Apartment client who only needed partial cleaning → reduced cost while maintaining quality
-Case Example 3:
- Property manager needing flexible support → handled multiple types of jobs with consistent communication
-(Add testimonials when available)
-________________
-
-
-SERVICE AREA
-Serving Greater Boston and surrounding areas
-Apartments, high-rises, offices, and multi-unit properties welcome.
-Not sure if you’re in range? Just ask.
-________________
-
-
-ABOUT
-Header:
- A family business, rebuilt for today
-Body:
- Brazusa Cleaning started in 1994 when our mother began cleaning homes.
-After years of informal work, the business became official in the early 2000s when our father joined after being laid off during the housing crisis.
-Since then, we’ve grown into a team serving both residential and commercial clients — while keeping the same level of care and attention to detail.
-Today, the business is being modernized by the next generation.
-We’re building on that foundation — keeping the quality, while improving everything around it.
-________________
-
-
-FINAL CTA
-Header:
- Tell us what you need
-Body:
- Send us a quick message, or give us as much detail as you want.
-Either way, we’ll take it from there.
-Buttons:
- Request a Quote
-Call / Text Us
-Micro:
- Even if we’re not the right fit, we’ll help you find someone who is.
-________________
-
-
-FOOTER
-* Contact info
-* Email
-* Service area
-* Links to:
-   * Painting
-   * Construction
-   * Roofing
-   * Tiling
-* Link:
-Need more than cleaning?
-PRICING PAGE (FULL VERSION)
-HERO
-Headline:
-How our pricing works
-Subtext:
-We believe in being clear about pricing — even if it’s not the easiest way to sell.
-Every space is different, so instead of hiding behind vague estimates, we’ll show you how we actually think about pricing.
-________________
-
-
-PRICING PHILOSOPHY
-Most cleaning companies either:
-   * give you a flat number with no explanation
-   * or avoid pricing altogether until the last moment
-We don’t like either approach.
-We price based on what the job actually requires — and we’d rather explain that upfront than surprise you later.
-Our goal is simple:
-   * fair pricing
-   * clear expectations
-   * no confusion
-________________
-
+* level of operational responsibility
 
-HOW WE CALCULATE PRICING
-Every job is different, but pricing usually comes down to:
-   * Size and layout of the space
-   * Level of cleaning needed (light vs deep)
-   * Type of service (routine, move-out, turnover, etc.)
-   * Frequency (one-time vs recurring)
-   * Accessibility (parking, building rules, timing)
-   * Custom requests
-We combine all of these to give a price that reflects the actual work involved.
-________________
+Clients are paying for:
 
+* consistent execution
+* reduced oversight
+* fewer operational issues
 
-REAL EXAMPLES
-These are real types of jobs and typical ranges:
-   * Studio apartment (light cleaning): $X – $Y
-   * 1–2 bedroom apartment (moderate): $X – $Y
-   * Deep cleaning (varies heavily): $X – $Y
-   * Short-term rental turnover: $X – $Y
-   * Small office: $X – $Y
-Note:
-Your exact quote may vary depending on details — but this should give you a realistic starting point.
-________________
+Not just labor.
 
+---
 
-CUSTOM CLEANING (IMPORTANT)
-We don’t believe cleaning has to be all-or-nothing.
-We regularly do jobs like:
-   * Cleaning only one roommate’s half of an apartment
-   * Cleaning just kitchens and bathrooms
-   * Doing only the tasks you don’t want to deal with
-   * One-time targeted deep cleans
-If you have something specific in mind, just tell us.
-________________
+# 13. ABOUT PAGE
 
+Brazusa is a Boston-based cleaning operation built by Brazilian immigrants and run with a focus on consistency, accountability, and structured execution.
 
-IF SOMETHING CHANGES
-Sometimes we arrive and the situation is different from what was described.
-If that happens, we’ll:
-   * explain the difference
-   * adjust the price if needed
-   * or work within the original quote as best as possible
-No surprises, no awkward situations.
-________________
-
+The company combines experienced labor with modern communication and tracking systems to ensure work is handled properly and does not require constant oversight.
 
-COST FLEXIBILITY
-We’re flexible — not just in service, but in pricing too.
-If there’s a way to make the job easier or more efficient for us, we’ll usually pass that benefit back to you.
-(Examples on the promotions page)
-________________
+---
 
-
-CTA
-Tell us what you need
-Send a quick message or a detailed request — whatever’s easier.
-Request a Quote
-Call / Text Us
-________________
+# 14. LANGUAGE RULES
 
-
-PROMOTIONS / DISCOUNTS PAGE
-HERO
-Headline:
-Ways to lower your cost
-Subtext:
-We don’t do generic “limited-time deals.”
-Instead, we offer real ways to reduce cost based on how the work is structured.
-________________
+Use:
 
+* handled
+* confirmed
+* tracked
+* managed
 
-HOW IT WORKS
-If you help us operate more efficiently, we pass that savings to you.
-Simple as that.
-________________
+Avoid:
 
+* generic quality claims
+* vague promises
 
-COMMON WAYS TO SAVE
-Referrals
-If you send us a client and we complete a cleaning, you get rewarded.
-________________
+---
 
+# 15. CLAIM SAFETY CHECK
 
-Scheduling with others
-If you and neighbors or nearby clients schedule on the same day, it reduces travel and setup time — which lowers cost.
-________________
+Only include if true:
 
-
-Flexible timing
-If you’re flexible on when we clean, it allows us to optimize our schedule.
-________________
-
-
-Recurring service
-Consistent cleanings are easier to maintain and more efficient.
-________________
-
-
-Helping us grow locally
-Things like:
-   * connecting us with property managers
-   * allowing us to share info in your building
-   * helping us build relationships nearby
-All of these can translate into better pricing.
-________________
-
-
-CUSTOM ARRANGEMENTS
-We’re open to creative setups.
-If there’s a way to make things work better for both sides, we’ll usually find it.
-________________
-
-
-CTA
-Ask us what’s possible
-Request a Quote
-Call / Text Us
-________________
-
-
-QUOTE / CONTACT PAGE
-HERO
-Headline:
-Tell us what you need
-Subtext:
-Send as little or as much information as you want — we’ll take it from there.
-________________
-
-
-FORM INTRO
-You can:
-   * just leave your contact info and we’ll reach out
-   * describe your space and what you need
-   * upload photos for a faster estimate
-Whatever’s easiest.
-________________
-
-
-FORM FIELDS (COPY)
-Basic:
-   * Name
-   * Phone or Email
-   * Preferred contact method
-________________
-
-
-Type of space:
-   * Apartment / Home
-   * Short-term rental
-   * Office / Clinic
-   * Property / Building
-   * Other
-________________
-
-
-Optional details:
-   * Size / number of rooms
-   * Type of cleaning needed
-   * Frequency
-   * Message
-________________
-
-
-Uploads:
-   * Add photos (optional)
-________________
-
-
-Outcome selection:
-   * Please contact me
-   * I’d like a rough quote
-   * I’d like to schedule an estimate
-________________
-
-
-TRUST MICROCOPY
-   * Fully insured
-   * Local, family-run
-   * Fast response
-________________
-
-
-CTA BUTTON
-Submit Request
-________________
-
-
-SECONDARY CTA
-Prefer to talk?
-Call or text us directly
-________________
-
-
-MICROCOPY
-Even if we’re not the right fit, we’ll help you find someone who is.
-________________
-
-
-TESTIMONIALS / CASE STUDIES PAGE
-HERO
-Headline:
-Real clients, real situations
-Subtext:
-A few examples of the kinds of work we do and how we approach it.
-________________
-
-
-CASE 1 — SHORT-TERM RENTAL
-Situation:
-Client had inconsistent cleaning and guest complaints.
-What we did:
-Created a repeatable turnover system with consistent expectations.
-Result:
-More reliable cleanings and fewer issues between guests.
-________________
-
-
-CASE 2 — PARTIAL CLEANING
-Situation:
-Client didn’t need full cleaning and didn’t want to pay for it.
-What we did:
-Built a custom plan focused only on key areas.
-Result:
-Lower cost and better satisfaction.
-________________
-
-
-CASE 3 — PROPERTY MANAGEMENT SUPPORT
-Situation:
-Manager needed flexible help across different units and situations.
-What we did:
-Handled a mix of jobs while maintaining consistent communication.
-Result:
-Less oversight required and smoother operations.
-________________
-
-
-TESTIMONIALS
-(Add real quotes over time)
-________________
-
-
-CTA
-Request a Quote
-Call / Text Us
-________________
+* documented completion
+* fast response
+* low turnover
+* system integration
+* consistent reporting

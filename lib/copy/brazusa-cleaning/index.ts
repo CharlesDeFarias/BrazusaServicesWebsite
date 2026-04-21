@@ -4,6 +4,7 @@ import { strCopy } from './segments/str'
 import { officesCopy } from './segments/offices'
 import { propertyCopy } from './segments/property'
 import { homesCopy } from './segments/homes'
+import { otherCopy } from './segments/other'
 
 export type { Segment, SegmentCopy }
 export { isValidSegment, SEGMENTS } from './types'
@@ -14,7 +15,7 @@ const segmentCopyMap: Record<Segment, SegmentCopy> = {
   offices: officesCopy,
   property: propertyCopy,
   homes: homesCopy,
-  other: baseCopy,
+  other: otherCopy,
 }
 
 export function getCopy(segment: Segment | null): SegmentCopy {

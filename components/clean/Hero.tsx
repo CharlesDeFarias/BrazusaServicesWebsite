@@ -68,7 +68,7 @@ export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JS
               className="w-full sm:w-auto text-sm font-medium px-10 py-4 min-h-[52px] min-w-[180px] transition-all duration-200 hover:opacity-90 text-navy"
               style={{ background: 'var(--color-brand-gold)' }}
             >
-              Get a Quote
+              Start with a free quote
             </button>
             <a
               href="tel:7816867189"

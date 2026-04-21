@@ -197,7 +197,7 @@ export default function ClientAccordion({
           className="italic text-2xl md:text-3xl text-navy mb-5"
           style={{ fontWeight: 300 }}
         >
-          What kind of space?
+          Spaces we&apos;re built for
         </h2>
 
         <div style={{ borderTop: '1px solid var(--color-light-gray)' }}>
@@ -226,9 +226,9 @@ export default function ClientAccordion({
               ✦
             </span>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-navy text-sm leading-none mb-1">We clean it all</p>
+              <p className="font-semibold text-navy text-sm leading-none mb-1">Other spaces too</p>
               <p className="text-xs text-warm-gray">
-                {"Not sure where your space fits? That's normal \u2014 we adapt to more setups than the main categories can show."}
+                {"Some setups do not fit clean categories. We still handle them if the work and expectations can be defined clearly."}
               </p>
             </div>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0 transition-transform duration-300" style={{ transform: otherOpen ? 'rotate(180deg)' : 'none' }}>
@@ -251,10 +251,10 @@ export default function ClientAccordion({
               >
                 <div className="space-y-3 text-sm leading-relaxed text-warm-gray-darker">
                   <p>
-                    Brazusa works across homes, short-term rentals, offices, buildings, and the spaces that fall between those labels.
+                    We work across rentals, homes, offices, buildings, and mixed-use setups where cleaning overlaps with coordination or operational tasks.
                   </p>
                   <p>
-                    If your setup is unusual, partially managed, or blends cleaning with operational help, we can still talk it through and shape the right scope.
+                    If your situation blends cleaning with logistics, access, or ongoing management tasks, we can define a scope that fits instead of forcing it into a preset category.
                   </p>
                 </div>
 

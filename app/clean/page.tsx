@@ -26,16 +26,16 @@ const clientItems: ClientItem[] = [
     id: 'str',
     n: '01',
     label: 'Short-Term Rentals',
-    teaser: 'Turnovers handled, confirmed, and ready for check-in',
-    headline: 'Short-Term Rental Cleaning',
+    teaser: 'Turnovers handled, tracked, and ready for every check-in',
+    headline: 'Short-Term Rental Operations',
     imageLabel: 'STR unit photo',
     imageSrc: '/images/str.png',
     spaceType: 'str',
     body: (
       <>
-        <p>Most STR hosts run into coordination problems between turnovers. Things fall through the gap between checkout and check-in: linens not restocked, supplies running low, something broken that nobody flagged.</p>
-        <p>We build a repeatable system around your units. Consistent checklists, direct communication, same-day confirmations when you need them. We can also handle linen processing, inventory tracking, and small operational tasks so you&apos;re not managing the details yourself.</p>
-        <p>A missed detail can mean a bad review. A bad review costs more than a cleaning ever will. We treat your units like the business they are.</p>
+        <p>Most STR setups break between checkout and check-in. Linens run low, inventory drifts, and small issues go unreported until a guest finds them. These gaps happen when no one owns the full process across units and booking days.</p>
+        <p>We structure your operation so it runs the same way every time. Cleanings are confirmed through your system or ours, inventory and linens are tracked, and issues are flagged with context. We can integrate with your tools, handle communication with translation, and build in tiered cleans so units don&apos;t degrade between bookings.</p>
+        <p>When something is off, you hear about it with context and next steps. You are not chasing updates or finding problems after guests do.</p>
       </>
     ),
   },
@@ -43,16 +43,16 @@ const clientItems: ClientItem[] = [
     id: 'property',
     n: '02',
     label: 'Property Managers & Buildings',
-    teaser: 'Multi-unit coordination, reliability at scale',
-    headline: 'Cleaning for Property Managers & Buildings',
+    teaser: 'Cleaning that holds across buildings and tenants',
+    headline: 'Multi-Unit Cleaning & Coordination',
     imageLabel: 'Building / property photo',
     imageSrc: '/images/property.png',
     spaceType: 'property',
     body: (
       <>
-        <p>Property management means juggling multiple units, coordinating with tenants and vendors, and making sure nothing slips. You don&apos;t need another vendor you have to manage on top of that.</p>
-        <p>We document condition, communicate clearly before and after every job, and flag issues before they become problems. Move-in ready, move-out documented, common areas handled, and we adapt to your buildings and your process.</p>
-        <p>We&apos;ve worked with independent landlords, building owners, and property management companies. The common thread: they stop worrying about whether the cleaning got done.</p>
+        <p>Managing buildings means coordinating units, tenants, and vendors at the same time. Cleaning often becomes another moving piece that needs checking, especially when standards drift across units or teams.</p>
+        <p>We set a consistent structure across your properties. Work is completed and confirmed, building-specific details are tracked, and issues are flagged early. We can align with your systems, support inventory and linen flow, and adjust volume as occupancy changes so service stays consistent across units.</p>
+        <p>You are not checking if things were done or correcting them after. The process is visible, repeatable, and held across every unit we touch.</p>
       </>
     ),
   },
@@ -60,16 +60,16 @@ const clientItems: ClientItem[] = [
     id: 'offices',
     n: '03',
     label: 'Offices & Clinics',
-    teaser: 'Cleaning handled without needing follow-up',
+    teaser: 'Same team, same schedule, no disruption to staff',
     headline: 'Office & Clinic Cleaning',
     imageLabel: 'Office space photo',
     imageSrc: '/images/office.png',
     spaceType: 'office',
     body: (
       <>
-        <p>Office cleaning works best when you don&apos;t have to think about it. We schedule around your hours, show up when we say we will, and keep the same team so the space stays consistent.</p>
-        <p>{'We work with small offices, coworking spaces, and medical and clinical environments \u2014 keeping a consistent team, following set routines, and working around your hours.'}</p>
-        <p>Simple communication, consistent service. No reminders, no follow-ups needed on your end.</p>
+        <p>Office and clinical spaces work best when cleaning follows a fixed routine. We keep the same team, work on a set schedule, and complete service without interrupting staff or patient-facing areas.</p>
+        <p>We operate in offices, coworking spaces, and clinical environments. We keep the same team where possible, follow set routines, and confirm each service completed.</p>
+        <p>If something needs attention, it is flagged. Otherwise, the work is done and confirmed.</p>
       </>
     ),
   },
@@ -84,9 +84,9 @@ const clientItems: ClientItem[] = [
     spaceType: 'apartment',
     body: (
       <>
-        <p>You get a consistent team that understands your home and how you like things done. Not a rotating group that needs to relearn everything each visit.</p>
-        <p>Scope stays flexible. You can adjust what gets done, how often, and how detailed it is, without turning it into a complicated process.</p>
-        <p>Communication stays simple and clear. If something needs attention, you&apos;ll know. Otherwise, the work is handled without you having to think about it.</p>
+        <p>Your home is handled by a consistent team that knows the space. Nobody is sent in without significant time on the team, and care notes are kept so nothing needs to be re-explained.</p>
+        <p>Scheduling adjusts around your life without extra back and forth. Scope can shift, frequency can change, and we keep track of it so you don&apos;t have to.</p>
+        <p>Communication is always available, including translation. If something needs attention, you hear about it. Otherwise, the work is handled and confirmed.</p>
       </>
     ),
   },

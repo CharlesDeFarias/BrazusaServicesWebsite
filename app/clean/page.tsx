@@ -166,6 +166,7 @@ export default function CleanPage(): JSX.Element {
       )}
 
       <Services
+        servicesCopy={getCopy(activeClient).services}
         activeClientId={activeClient}
         onQuoteClick={() => openDrawer()}
       />

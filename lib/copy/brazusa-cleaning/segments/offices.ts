@@ -5,6 +5,8 @@ export const officesCopy: SegmentCopy = {
   ...baseCopy,
   hero: {
     ...baseCopy.hero,
-    // Offices/clinics-specific hero copy goes here once approved
+    h1: 'Cleaning built for fixed routines and working hours',
+    body: 'Service follows a set schedule, with the same team where possible, so staff, clients, or patients do not have to adjust around it. Each visit is completed and confirmed without extra follow-up on your end.',
+    microcopy: "Tell us how your space runs and we'll say if the fit is right.",
   },
 }

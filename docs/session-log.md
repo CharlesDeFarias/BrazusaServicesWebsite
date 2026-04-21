@@ -6933,3 +6933,352 @@ Mobile session (Charles on phone, ChatGPT only, no Codex). Hero copy updated via
 - QuoteDrawer email/phone split (still blocked on integration-safety)
 - Testimonials operational assurance (HIGH design review gap)
 - Segment stub hero copy: fill str/offices/property/homes once accordion pass delivers segment-specific angles
+
+### 04/20/2026, 06:41:55 PM
+**Prompt:** provide me with the updated prompt to give chatgpt 
+
+### 04/20/2026, 06:45:28 PM
+**Prompt:** ## Section headline
+
+1. Spaces we’re built for
+2. Operations we support
+3. Where this fits
+
+---
+
+## str
+
+**label:** Short-Term Rentals
+**teaser:** Turnovers handled, tracked, and ready for every check-in
+**headline:** Short-Term Rental Operations
+
+**p1:**
+Most STR setups break between checkout and check-in. Linens run low, inventory drifts, and small issues go unreported until a guest finds them. These gaps happen when no one owns the full process across units and days.
+
+**p2:**
+We structure your operation so it runs the same way every time. Cleanings are confirmed through your system or ours, inventory and linens are tracked, and issues are flagged with context. We can integrate with your tools, handle communication with translation [VERIFY], and build in tiered cleans so units don’t degrade between bookings.
+
+**p3:**
+When something is off, you hear about it with context and next steps. You are not chasing updates or finding problems after guests do.
+
+---
+
+## property
+
+**label:** Property Managers & Buildings
+**teaser:** Multi-unit cleaning that holds across buildings and tenants
+**headline:** Multi-Unit Cleaning & Coordination
+
+**p1:**
+Managing buildings means coordinating units, tenants, and vendors at the same time. Cleaning often becomes another moving piece that needs checking, especially when standards drift across units or teams.
+
+**p2:**
+We set a consistent structure across your properties. Work is completed and confirmed, building-specific details are tracked, and issues are flagged early. We can align with your systems, support inventory and linen flow, and adjust volume as occupancy changes so service stays consistent across units.
+
+**p3:**
+You are not checking if things were done or correcting them after. The process is visible, repeatable, and held across every unit we touch.
+
+---
+
+## offices
+
+**label:** Offices & Clinics
+**teaser:** Same team, same routine, no disruption to daily operations
+**headline:** Office & Clinic Cleaning
+
+**p1:**
+Office and clinical spaces work best when cleaning follows a fixed routine. We keep the same team, work on a set schedule, and complete service without interrupting staff or patient-facing areas.
+
+**p2:**
+We operate in offices, coworking spaces, and clinical environments. The same team returns each visit, routines stay consistent, and communication happens without follow-up so nothing depends on reminders.
+
+**p3:**
+If something needs attention, it is surfaced. Otherwise, the work is done and confirmed without you having to step in.
+
+---
+
+## homes
+
+**label:** Apartments & Homes
+**teaser:** Same team, flexible scheduling, clear communication
+**headline:** Apartment & Home Cleaning
+
+**p1:**
+Your home is handled by a consistent team that already knows the space. No one is sent in without time on the team [VERIFY], and care details are kept so expectations do not need to be repeated.
+
+**p2:**
+Scheduling adjusts around your life without turning into a production. Scope can change, timing can shift, and the process stays simple instead of becoming something you have to manage.
+
+**p3:**
+Communication is always available, including translation [VERIFY]. If something needs attention, you hear about it. Otherwise, the work is handled and confirmed.
+
+---
+
+## We clean it all
+
+**title:** Other spaces too
+**subtitle:** Some setups do not fit clean categories. We still handle them if the work and expectations can be defined clearly.
+
+**p1:**
+We work across rentals, homes, offices, buildings, and mixed-use setups where cleaning overlaps with coordination or operational tasks.
+
+**p2:**
+If your situation blends cleaning with logistics, access, or ongoing management tasks, we can define a scope that fits instead of forcing it into a preset category.
+
+
+### 04/20/2026, 09:53:20 PM
+**Prompt:** 1- confirmed
+2- true
+3- best effort 
+4- confirm d
+5- documented
+6- agree 
+
+### 04/20/2026, 09:57:37 PM
+**Prompt:** proceed
+
+### 04/20/2026, 10:17:44 PM
+**Prompt:** ## STR
+
+**h1:** Cleaning built for the gap between checkout and check-in
+**body:** Work is completed and confirmed through your system or ours, with linens, inventory, and tiered cleans built into the rotation. If something is off, it is flagged with context before it turns into a guest problem.
+**microcopy:** Tell us how your turnovers run and we’ll tell you where we fit.
+
+## Property
+
+**h1:** Cleaning built to hold standards across multiple buildings
+**body:** We set a repeatable structure across properties so standards do not drift from unit to unit. Building details stay tracked, work is completed and confirmed, and service can expand or contract with occupancy.
+**microcopy:** Tell us how your properties run and we’ll map the right scope.
+
+## Offices
+
+**h1:** Cleaning built for fixed routines and working hours
+**body:** Service follows a set schedule, with the same team where possible [VERIFY], so staff and patient-facing areas do not have to adjust around it. Each visit is completed and confirmed without extra follow-up on your end.
+**microcopy:** Tell us how your space runs and we’ll say if the fit is right.
+
+## Homes
+
+**h1:** Cleaning built for homes that need the same team back
+**body:** Your home is handled by a team that knows the space, works from care notes, and adjusts scheduling without turning it into constant back and forth. Communication stays open, including translation [VERIFY], and the work is completed and confirmed.
+**microcopy:** Tell us how your home runs and we’ll tell you what fits.
+
+
+### 04/20/2026, 10:24:19 PM
+**Prompt:** 1- I feel it's fine to keep context vague. but if not show me more of the sentence so I can help replace the word.
+2- Yes we use checklists and inspections and training and general standards to make this true
+3- remove verify
+4- this is for clinics only if saying patients. safest would be clients and patients.
+5- say something a client would understand.
+6- However a client prefers to communicate, we'll use that to make the flexible schedule 
+
+agreed with decision to switch it up and make it warmer
+
+### 04/20/2026, 10:32:00 PM
+**Prompt:** forward 
+
+### 04/20/2026, 10:35:54 PM
+**Prompt:** ## h2
+
+How the work runs
+
+---
+
+## subheadline[filtered]
+
+Services structured for your space, with clear execution and confirmation.
+
+---
+
+## subheadline[unfiltered]
+
+Select a space type to see how services are structured and carried out.
+
+---
+
+## serviceDefinitions[0]
+
+**property:**
+Recurring cleaning across units with work completed, confirmed, and issues flagged with unit context before they spread.
+
+**offices:**
+Scheduled cleaning on a fixed routine, with each visit completed and confirmed so nothing depends on reminders.
+
+**apartment:**
+Recurring upkeep with a consistent approach, completed and confirmed each visit so nothing needs re-explaining.
+
+**str:**
+Maintenance between stays with work confirmed, inventory checked, and issues flagged before they affect the next guest.
+
+---
+
+## serviceDefinitions[1]
+
+**str:**
+Deeper resets scheduled into rotation so wear is handled before it turns into guest-facing problems.
+
+**property:**
+Detail work across units with standards reset and confirmed so drift does not build across properties.
+
+**offices:**
+Structured resets that bring spaces back to baseline, completed and confirmed without interrupting operations.
+
+**apartment:**
+Full resets completed and confirmed so buildup is cleared before it becomes harder to manage.
+
+---
+
+## serviceDefinitions[2]
+
+**str:**
+Units reset, checked, and confirmed before going live so nothing carries over between stays.
+
+**property:**
+Move-outs documented and move-ins completed and confirmed so each unit starts clean and accounted for.
+
+**offices:**
+Transition cleaning completed and confirmed so spaces are ready without needing follow-up during handoffs.
+
+**apartment:**
+Move-in and move-out cleaning completed, checked, and confirmed so the space is ready without extra coordination.
+
+---
+
+## serviceDefinitions[3]
+
+**str:**
+Turnovers completed and confirmed on schedule, with issues flagged before they affect incoming guests.
+
+**property:**
+Turnovers handled with coordination and confirmation so furnished units stay aligned with booking timelines.
+
+**offices:**
+Short-cycle resets completed and confirmed so spaces can be reused without operational disruption.
+
+**apartment:**
+Quick resets completed and confirmed so furnished units are ready again without delay.
+
+---
+
+## serviceDefinitions[4]
+
+**str:**
+Post-renovation cleanup completed and confirmed so units can go live without last-minute issues.
+
+**property:**
+Project cleanup handled with debris cleared and final condition confirmed before units return to use.
+
+**offices:**
+Construction cleanup completed and confirmed so spaces reopen without leftover disruption.
+
+**apartment:**
+Post-renovation cleanup completed and confirmed until the space is fully usable again.
+
+---
+
+## extendedServiceDefinitions[0]
+
+**str:**
+Linens sorted, counted, and staged so shortages are seen before turnovers.
+
+**property:**
+Linen flow tracked across units with counts and shortages flagged before they disrupt operations.
+
+**defaultDescription:**
+Linens processed, counted, and staged so shortages are visible before they impact service.
+
+---
+
+## extendedServiceDefinitions[1]
+
+**str:**
+Supplies tracked and counted so gaps are flagged before the next guest arrives.
+
+**property:**
+Inventory monitored with counts and gaps flagged early so units are not caught short.
+
+**defaultDescription:**
+Supplies tracked and counted so shortages are flagged before the next service.
+
+---
+
+## extendedServiceDefinitions[2]
+
+**str:**
+Closets structured with set placement so missing items are obvious during daily use.
+
+**property:**
+Storage standardized so teams follow the same layout and gaps are visible across units.
+
+**apartment:**
+Storage organized with fixed placement so items are easy to find and keep consistent.
+
+**defaultDescription:**
+Storage structured so items have set placement and gaps are easy to spot.
+
+---
+
+## extendedServiceDefinitions[3]
+
+**str:**
+Issues identified during cleans and coordinated with context before guests encounter them.
+
+**property:**
+Problems surfaced early with context so vendors can act before issues grow across units.
+
+**offices:**
+Issues identified during service and flagged so they can be handled without disrupting work.
+
+**defaultDescription:**
+Issues identified early with context so fixes can be coordinated before escalation.
+
+---
+
+## extendedServiceDefinitions[4]
+
+**str:**
+Small issues handled during service and confirmed so they do not turn into guest-facing problems.
+
+**property:**
+Minor tasks handled during service so they do not require separate vendor coordination.
+
+**offices:**
+Small issues handled during visits so they do not turn into larger disruptions later.
+
+**apartment:**
+Small tasks handled during visits so nothing piles up.
+
+**defaultDescription:**
+Minor tasks handled during service so they do not escalate into larger issues.
+
+---
+
+## extendedServiceDefinitions[5]
+
+**str:**
+Guest-related tasks handled with updates so hosts are not pulled into day-to-day issues.
+
+**defaultDescription:**
+In-between operational tasks handled with updates so they do not fall through gaps.
+
+---
+
+## extendedServiceDefinitions[6]
+
+**str:**
+Access tracked and managed so entries and turnovers are not delayed or blocked.
+
+**property:**
+Access organized across units so staff and vendors can enter without coordination delays.
+
+**offices:**
+Access coordinated for scheduled service so entry does not require supervision.
+
+**defaultDescription:**
+Access managed and tracked so entry and handoffs do not slow down service.
+
+
+### 04/21/2026, 02:19:59 PM
+**Prompt:** session start, may need to do a durablee update of what was last done as well
+
+### 04/21/2026, 02:30:27 PM
+**Prompt:** yes do the durable update, and this session i'm actually not sure. we'll start with deciding what's the best next course of action

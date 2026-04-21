@@ -146,6 +146,7 @@ export default function CleanPage(): JSX.Element {
       <TrustStrip />
       <Positioning />
       <ClientAccordion
+        headline={getCopy(activeClient).accordion.headline}
         items={clientItems}
         openId={activeClient}
         onOpenChange={handleActiveClientChange}

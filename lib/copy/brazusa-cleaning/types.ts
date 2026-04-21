@@ -18,6 +18,11 @@ export interface HeroCopy {
   microcopy: string
 }
 
+export interface AccordionCopy {
+  headline: string
+}
+
 export interface SegmentCopy {
   hero: HeroCopy
+  accordion: AccordionCopy
 }

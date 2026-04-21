@@ -28,6 +28,7 @@ export interface ClientItem {
 }
 
 interface ClientAccordionProps {
+  headline: string
   items: ClientItem[]
   openId: string | null
   onOpenChange: (id: string | null) => void
@@ -157,6 +158,7 @@ function AccordionItem({
 }
 
 export default function ClientAccordion({
+  headline,
   items,
   openId,
   onOpenChange,
@@ -197,7 +199,7 @@ export default function ClientAccordion({
           className="italic text-2xl md:text-3xl text-navy mb-5"
           style={{ fontWeight: 300 }}
         >
-          Spaces we&apos;re built for
+          {headline}
         </h2>
 
         <div style={{ borderTop: '1px solid var(--color-light-gray)' }}>

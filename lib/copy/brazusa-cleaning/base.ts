@@ -14,4 +14,7 @@ export const baseCopy: SegmentCopy = {
     ],
     microcopy: 'Tell us how your space runs and we will say if it fits or not.',
   },
+  accordion: {
+    headline: 'The kind of work you need',
+  },
 }

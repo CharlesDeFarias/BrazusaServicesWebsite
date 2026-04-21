@@ -7485,3 +7485,42 @@ Codex-authored. Applied all five file changes from the Claude-generated implemen
 Codex-authored. Chose ChatGPT variant #4 ("The kind of work you need"), added `accordion.headline` field to `SegmentCopy` type and `baseCopy`, updated `ClientAccordion.tsx` to receive headline as prop, updated `page.tsx` to pass it. Also added a deferred item: take a Claude Design exploration pass before coding major visual changes in the next design pass.
 
 All items listed as "Pending" in the durable update above are now complete for this session. Outstanding work carried into next session: `serviceDefinitions` wiring, blank beige gap fix, design pass on copy-independent issues, accordion image re-exports, broader operational claim verification.
+
+### Addendum — Codex execution (follow-up continuation)
+
+Additional Codex commits landed after the addendum above:
+
+**f1a8ef6** `feat: move services definitions into copy layer`
+Codex-authored. Added typed Services copy structures to `lib/copy/brazusa-cleaning/types.ts`, moved the approved `serviceDefinitions` and `extendedServiceDefinitions` content into `baseCopy.services`, updated `Services.tsx` to render from `servicesCopy`, and passed `getCopy(activeClient).services` from `app/clean/page.tsx`. This closes the last major copy-layer wiring item that had been called out as still pending in the 04/21 note above.
+
+**554a9b8** `docs: refresh copy decisions after hero and accordion locks`
+Codex-authored. Refreshed `docs/copy-decisions.md` so it no longer contradicted the live repo state after the hero/CTA/headline decisions were implemented. Moved resolved items into a locked section and reduced the open list to Services wiring, design pass, and broader verification.
+
+### Session: 2026-04-21 (later continuation) — Services copy wired, verification clarified
+
+### Decisions made this continuation
+- `serviceDefinitions` and `extendedServiceDefinitions` are now part of the Brazusa copy layer rather than living only inside `Services.tsx`. `baseCopy.services` is the current source of truth until segment-specific Services overrides are added later. (Codex-authored implementation; promoted to `docs/decisions.md` status line)
+- The next design pass should explicitly include one focused Claude Design exploration before coding major visual changes. (Already promoted to `docs/decisions.md`; preserved here as execution context)
+
+### What was verified by Charles in this continuation
+- Inspections are not default on every service, but inspections can be built into service when needed.
+- Proof-of-completion mechanisms that are real today: checklists, photos, direct reports, and client app confirmation.
+- Communication expectation safe for the site: within 24 hours.
+- One accountable point of contact is true for all recurring clients.
+- Clinic-safe framing: Brazusa can follow client-required protocols and after-hours rules, including building trash protocols and sanitary/safety practices when required.
+- Workforce structure should not be mentioned in site copy. Operational truth: cleaners work as subcontractors under Brazusa instruction, coordination, and standards.
+- Current approved Services copy was confirmed as ready to implement.
+
+### What remains open after this continuation
+- Blank beige gap below the moving banner on mobile.
+- Design pass on copy-independent issues and overall visual fit after the recent hero/accordion/services copy changes.
+- Accordion image file replacements (waiting on Charles to re-export).
+- Broader operational claim verification still not complete: inspections/checklists/protocols are now clearer, but stronger workforce/coverage/guarantee-type claims should still stay unspoken unless verified explicitly.
+
+### Prompt log
+- "Evaluate the entire project and the todo list..."
+- "go ahead and clean up copy decisions.md..."
+- "[verification answers: inspections, proof-of-completion, 24-hour response, point of contact, clinic protocol options, subcontractor structure]"
+- "proceed"
+- "commit the copy decisions"
+- "do a durable update"

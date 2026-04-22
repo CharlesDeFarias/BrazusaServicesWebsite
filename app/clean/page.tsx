@@ -29,7 +29,7 @@ const clientItems: ClientItem[] = [
     teaser: 'Turnovers handled, tracked, and ready for every check-in',
     headline: 'Short-Term Rental Operations',
     imageLabel: 'STR unit photo',
-    imageSrc: '/images/str.png',
+    imageSrc: '/images/str.webp',
     spaceType: 'str',
     body: (
       <>
@@ -46,7 +46,7 @@ const clientItems: ClientItem[] = [
     teaser: 'Cleaning that holds across buildings and tenants',
     headline: 'Multi-Unit Cleaning & Coordination',
     imageLabel: 'Building / property photo',
-    imageSrc: '/images/property.png',
+    imageSrc: '/images/property.webp',
     spaceType: 'property',
     body: (
       <>
@@ -63,7 +63,7 @@ const clientItems: ClientItem[] = [
     teaser: 'Same team, same schedule, no disruption to staff',
     headline: 'Office & Clinic Cleaning',
     imageLabel: 'Office space photo',
-    imageSrc: '/images/office.png',
+    imageSrc: '/images/office.webp',
     spaceType: 'office',
     body: (
       <>
@@ -80,7 +80,7 @@ const clientItems: ClientItem[] = [
     teaser: 'Consistent team, flexible scope, simple communication',
     headline: 'Apartment & Home Cleaning',
     imageLabel: 'Home / apartment photo',
-    imageSrc: '/images/home.png',
+    imageSrc: '/images/home.webp',
     spaceType: 'apartment',
     body: (
       <>

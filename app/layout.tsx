@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     title: 'Brazusa Cleaning',
     description: 'Reliable, high-detail cleaning for apartments, short-term rentals, and managed properties across Greater Boston.',
     type: 'website',
-    images: [{ url: '/images/hero.png' }],
+    images: [{ url: '/images/hero.webp' }],
   },
   icons: {
     icon: [

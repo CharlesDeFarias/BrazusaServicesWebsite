@@ -1,5 +1,6 @@
 import { type JSX, useEffect, useState } from 'react'
-import { baseCopy, type ExtendedServiceDefinition, type ServiceClientKey, type ServicesCopy } from '@/lib/copy/brazusa-cleaning'
+import type { ExtendedServiceDefinition, ServiceClientKey, ServicesCopy } from '@/lib/copy/brazusa-cleaning/types'
+import { baseCopy } from '@/lib/copy/brazusa-cleaning/base'
 type ServiceFilterKey = 'all' | ServiceClientKey
 
 interface ServicesProps {

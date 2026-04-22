@@ -180,7 +180,7 @@ When a decision is made, add it here before the session ends. Format:
 - ~~Token migration pass 2~~ — completed 2026-04-18
 - ~~ChatGPT refinement of per-client service copy~~ — completed 2026-04-20, mechanism-based language pass committed 078bc43
 - QuoteDrawer file uploads — temporary Phase 1 should be email-first, with file metadata saved to the existing integrations. Charles wants broad file-type support for now, especially images, videos, and PDFs, but Gmail's documented direct attachment limit is about 25 MB total, so a 1 GB pure-email upload flow is not viable. When files exceed the email-safe limit, the UI should recommend sending them by WhatsApp to the default Brazusa contact number: 781-686-7189. Revisit later with a proper storage-backed upload system.
-- Accordion image file replacements (Charles to re-export)
+- ~~Accordion image file replacements~~ -- completed 2026-04-21, hero/client-type/about photos replaced with compressed `.webp` assets and code references updated
 - WhatsApp contact integration \u2014 the business actively uses WhatsApp (781-686-7189). Add to QuickContact, footer contact block, and QuoteDrawer contact method options. WeChat is a future addition after WhatsApp is live.
 - During the future design pass, take one focused exploration pass in Claude Design before coding major visual changes. Use it for layout/prototype exploration only, not as a source of truth for repo implementation.
 - Refresh `README.md` and `docs/ai-case-study.md` to match the current repo/site/workflow state. README drift to fix: Pricing section description, QuoteDrawer behavior, screenshot and CTA references, and Out of Scope list. AI case study drift to fix: stale "Actionable now" / pending-state items that are already complete.

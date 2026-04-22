@@ -34,7 +34,7 @@ export default function About(): JSX.Element {
         </div>
         <div className="relative rounded-2xl overflow-hidden aspect-video lg:aspect-[4/5]">
           <Image
-            src="/images/team.png"
+            src="/images/team.webp"
             alt="Brazusa Cleaning team"
             fill
             className="object-cover"

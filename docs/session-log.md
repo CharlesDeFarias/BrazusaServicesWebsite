@@ -7524,3 +7524,39 @@ Codex-authored. Refreshed `docs/copy-decisions.md` so it no longer contradicted 
 - "proceed"
 - "commit the copy decisions"
 - "do a durable update"
+
+### Session: 2026-04-21 (later continuation) -- design review asset prep, image swap, and verification pass
+
+### What was accomplished
+- Codex-authored. Created `docs/design-review/desktop/` and `docs/design-review/mobile/` to hold design-review evidence separately from the briefs folder.
+- Codex-authored. Moved existing desktop screenshots/video into the new desktop folder and renamed them to section-based filenames for later Claude review.
+- Codex-authored. Reviewed the newly added phone screenshots/video, then renamed the mobile files to section/issue-based names in `docs/design-review/mobile/`.
+- Charles-authored asset work. Re-exported and compressed the live photo assets for the hero, client accordion, and about/team sections as `.webp`.
+- Codex-authored implementation. Updated live image references from `.png` to `.webp` in `app/layout.tsx`, `components/clean/Hero.tsx`, `app/clean/page.tsx`, and `components/clean/About.tsx`.
+- Codex-authored implementation. Fixed a real production-build bug in `components/clean/Services.tsx` by changing the `baseCopy` import to come from `@/lib/copy/brazusa-cleaning/base` instead of the copy-layer index barrel, which did not export it.
+
+### Verification results
+- `npm.cmd run lint` passed.
+- `npm.cmd run test` initially failed inside the sandbox with the known Windows `spawn EPERM` environment issue, then passed outside the sandbox: 9 test files, 43 tests passed.
+- `npm.cmd run build` initially failed for a real app reason: `Services.tsx` imported `baseCopy` from the wrong module. After the import fix, the in-sandbox build compiled successfully and only then hit the usual Windows `spawn EPERM` restriction during the later TypeScript/build step.
+- An outside-the-sandbox rerun of `npm.cmd run build` was started but deliberately interrupted by Charles after the important app-level issue was already fixed, so a fully unrestricted final build pass was not captured in this session.
+
+### Durable notes from this continuation
+- The deferred image-replacement item is now complete. Live content images are `.webp` assets in `public/images/` (`hero`, `str`, `property`, `office`, `home`, `team`) and code references were updated accordingly.
+- The design-pass evidence set is now organized for future Claude review under `docs/design-review/desktop/` and `docs/design-review/mobile/`.
+- The current remaining uncommitted workspace state after this continuation includes:
+  - code/image swap work (`app/layout.tsx`, `app/clean/page.tsx`, `components/clean/Hero.tsx`, `components/clean/About.tsx`, `components/clean/Services.tsx`, deleted PNGs, added WEBPs)
+  - modified `docs/briefs/marketresearch.txt`
+  - untracked `docs/design-review/`
+  - untracked `docs/briefs/invite.ics`
+
+### What remains open
+- Full unrestricted `npm.cmd run build` confirmation was not captured after the `Services.tsx` import fix because the external rerun was interrupted.
+- The actual design pass is still pending, but the evidence pack is now prepared.
+
+### Prompt log
+- "i've added the screenshots and screen recording from my phone. do the same thing for renaming them properly"
+- "I'm currently working on the task of lowering the size of each of the image files..."
+- "ok i've added the updated, smaller photos..."
+- "run tests and make sure site is working properly"
+- "you fixed the most important thing i needed, that's enough for now. do a durable update as we did quite a few things."

@@ -89,7 +89,7 @@ export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JS
             style={{ aspectRatio: '4/3', position: 'relative', marginLeft: '-1.5rem', marginRight: '-1.5rem' }}
           >
             <Image
-              src="/images/hero.png"
+              src="/images/hero.webp"
               alt="Professional cleaning"
               fill
               className="object-cover"
@@ -107,7 +107,7 @@ export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JS
         <div className="fade-up-1 hidden lg:block">
           <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl" style={{ aspectRatio: '3/4', maxHeight: '453px' }}>
             <Image
-              src="/images/hero.png"
+              src="/images/hero.webp"
               alt="Professional cleaning"
               fill
               className="object-cover"

@@ -49,3 +49,6 @@ out/
 .DS_Store
 *.log
 tsconfig.tsbuildinfo
+
+# Large media files — keep local only
+*.mp4

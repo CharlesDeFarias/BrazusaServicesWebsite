@@ -1,5 +1,10 @@
 # Brazusa Copy Decisions
 
+Working-note status:
+- This file is now an in-flight / historical working artifact, not a source of truth.
+- Locked current-state decisions live in `docs/decisions.md`.
+- This file is useful mainly as a record of the copy-decision phase and the remaining design/verification follow-up.
+
 ## Updated plan
 
 ### Locked now
@@ -17,14 +22,8 @@
   - `Handles inventory, linen, and basic property tasks` = true for STR and property management
 
 ### Still open
-- Wire the approved `serviceDefinitions` and `extendedServiceDefinitions` copy into the copy layer and/or Services component path.
 - Run the next design pass.
 - Broader operational-trust verification for stronger final copy/design claims.
-
-### Mechanical follow-up
-- Wire the approved `serviceDefinitions` and `extendedServiceDefinitions` copy into the copy layer and/or Services component path.
-  Owner: Codex
-  Status: mechanical, now unblocked by the hero / CTA / accordion decisions.
 
 ### Copy-independent follow-up
 - Fix the blank beige gap below the moving banner on mobile.
@@ -40,7 +39,7 @@
 - `lib/copy/brazusa-cleaning/base.ts` and `segments/*.ts` now store shared `hero` copy and the shared `accordion.headline`.
 - The accordion headline is no longer hardcoded in `components/clean/ClientAccordion.tsx`.
 - The hero CTA label is still hardcoded in `components/clean/Hero.tsx`.
-- `serviceDefinitions` and `extendedServiceDefinitions` copy exists in `docs/session-log.md` (04/21), but is not yet wired into the segment copy system.
+- `serviceDefinitions` and `extendedServiceDefinitions` are now wired into the Services copy path.
 
 ## Remaining Verification Questions
 1. Are inspections on every service a real operational claim, or is that too strong?

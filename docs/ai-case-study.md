@@ -159,6 +159,21 @@ If you use two tools together, make them audit each other deliberately. The recu
 
 ---
 
+## Current state snapshot
+
+This document is partly historical and partly a current-state explainer.
+
+As of the latest Brazusa pass:
+- the repo is still a multi-client platform, with Brazusa Cleaning as the first live implementation
+- the Brazusa copy layer now lives in `lib/copy/brazusa-cleaning/`
+- hero, shared accordion headline, and Services copy are wired into that layer
+- design-review evidence is now being collected in a dedicated working area under `docs/working/design-review/`
+- the system has moved beyond "how should we use Claude and Codex?" into "how do we keep the operating system, review inputs, and durable docs from drifting as the repo evolves?"
+
+The sections above explain how the system was built. The sections below should be read as "what is still open now" rather than "what was open at the moment every earlier paragraph was written."
+
+---
+
 ## Things that can still be done
 
 These are not all equal. Some are immediate and blockers for clean product work. Others are longer-term improvements that would strengthen the system but are not urgent.
@@ -166,7 +181,7 @@ These are not all equal. Some are immediate and blockers for clean product work.
 ### Actionable now
 
 - **QuoteDrawer email/phone split.** The contact field is currently a single field. The decision to split it into separate email and phone fields (both optional, at least one required) has been made. Implementation is blocked on running the integration-safety agent first to produce a manifest across Resend, Airtable, and Google Sheets.
-- **Accordion image replacements.** Charles to re-export the accordion images.
+- **Design pass on the live Brazusa page.** The copy-layer migration is far enough along that the next high-value step is a focused design review rather than more copy plumbing. The review packet now includes desktop/mobile screenshots, screen recordings, and a prep checklist under `docs/working/design-review/`.
 
 ### Longer-term and aspirational
 
@@ -187,6 +202,7 @@ These are not all equal. Some are immediate and blockers for clean product work.
 - ~~Shareable hash links for Pricing filter chips~~ - done. Hash fragment state (`#testimonials-str` etc.) implemented in Testimonials; Pricing chips link directly.
 - ~~ChatGPT refinement of per-client service copy~~ - done (commit 078bc43). Full mechanism-based language pass across all service definitions.
 - ~~Formalize the ChatGPT copy workflow as reusable tooling~~ - done. `chatgpt-prep` and `copy-review` agents handle the handoff loop; chatgpt-prep generates character-counted briefs, copy-review enforces violations before anything enters the codebase.
+- ~~Accordion / hero / about image replacements~~ - done. The live content images were re-exported, compressed to `.webp`, and wired into the app. The same pass also produced a dedicated design-review evidence pack for the next Claude review.
 
 ---
 
@@ -234,6 +250,7 @@ There is no protocol for what happens when Claude and Codex both attempt to edit
 - `CODEX.md` - the thin adapter layer for Codex. Short by design.
 - `docs/decisions.md` - locked decisions with rationale and constraints. The AI-facing startup context.
 - `docs/session-log.md` - the human-facing session diary. Not read by AI tools at startup.
+- `docs/working/` - temporary working artifacts and review-prep material that are useful in active phases but are not top-level durable truth.
 - `.claude/agents/` - five subagent files. Each is self-contained: you can read any one cold and understand exactly what it does, what tools it has, and what it produces.
 
 **Codex runtime config and repo export:**

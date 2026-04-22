@@ -7560,3 +7560,35 @@ Codex-authored. Refreshed `docs/copy-decisions.md` so it no longer contradicted 
 - "ok i've added the updated, smaller photos..."
 - "run tests and make sure site is working properly"
 - "you fixed the most important thing i needed, that's enough for now. do a durable update as we did quite a few things."
+
+### Session: 2026-04-21 (later continuation) -- meta-doc cleanup and working-folder reorganization
+
+### What was accomplished
+- Codex-authored. Reviewed the repo as an LLM-operating-system project rather than only an app codebase, with focus on folder usefulness, doc drift, and whether `docs/briefs/` was still earning its keep for Claude/Codex.
+- Codex-authored. Rewrote `README.md` so it now describes the repo as the Brazusa Services multi-client platform with Brazusa Cleaning as the first live implementation, instead of a stale Brazusa-only snapshot.
+- Codex-authored. Updated `docs/backlog.md` to remove stale completed items such as image compression and the old ClientAccordion headline task.
+- Codex-authored. Reframed `docs/ai-case-study.md` so it reads more clearly as both a historical case study and a current-state explainer, including the newer design-review evidence workflow.
+- Codex-authored. Created `docs/working/` as the home for temporary / in-flight docs.
+- Codex-authored. Moved `docs/copy-decisions.md` to `docs/working/copy-decisions.md`.
+- Codex-authored. Moved the full design-review evidence pack from `docs/design-review/` to `docs/working/design-review/`.
+- Codex-authored. Added `docs/working/design-review/review-prep-todo.txt` and then added `docs/working/design-review/marketresearch-distilled.txt`.
+- Codex-authored. Filled `marketresearch-distilled.txt` using ChatGPT-derived material, but tightened it for Claude/Codex design-review use rather than leaving it as a generic strategy summary.
+- Codex-authored. Deleted spent or retired artifacts: `docs/chatgpt-prompts.md`, `docs/briefs/aesthetics.txt`, `docs/briefs/wireframe.txt`, and `docs/briefs/invite.ics`.
+
+### Durable conclusions from this continuation
+- Top-level `docs/` had started flattening too many categories together: durable operating docs, temporary working artifacts, evidence packs, and old prompt-input material. The new `docs/working/` split restores that distinction.
+- `docs/briefs/` is still useful, but only as an active-input folder. The files that still earn their keep there are `copy.txt`, `marketresearch.txt`, and `brand-rules.md`.
+- `copy-decisions.md` is worth keeping for now, but only as a working/historical artifact in `docs/working/`, not as a top-level durable source of truth.
+- `marketresearch.txt` should continue to be treated as active and save-worthy even when already modified; it is still a real input document, not clutter.
+
+### What remains open
+- The modified `docs/briefs/marketresearch.txt` still needs to be committed along with this cleanup set.
+- The actual design pass is still pending, but the prep structure is now much cleaner: evidence in `docs/working/design-review/`, prep checklist in the same folder, and a distilled market-research lens ready for the reviewer.
+
+### Prompt log
+- "Now i want to take a step back and have you review the entirety of the project folder and its contents..."
+- "1- let's update the readme..."
+- "dont ignore marketresearch because it was modified, save it along with the rest..."
+- "[two ChatGPT distilled market-research responses]"
+- "go ahead and fill in the new file you created for the distilled marketresearch..."
+- "do a durable update"

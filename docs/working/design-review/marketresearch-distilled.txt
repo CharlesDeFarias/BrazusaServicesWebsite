@@ -1,0 +1,105 @@
+# Design Review Market Research Extract
+
+Purpose:
+This is a design-review input document, not a copy brief and not a redesign spec.
+It extracts the parts of `docs/briefs/marketresearch.txt` that should shape how Claude or Codex evaluates the current live site.
+
+Use this to review:
+- whether the current design supports the intended positioning
+- whether hierarchy and section rhythm build trust in the right order
+- whether visuals are reinforcing or undermining operational credibility
+- whether the page is helping the right buyer self-identify quickly
+
+Do not use this as:
+- a direct rewrite prompt
+- a generic branding summary
+- a source of unverified operational claims
+
+---
+
+## 1. Core Positioning Signals
+
+- The site should feel like a locally owned, professionally run cleaning operations partner -- not a generic cleaner, not a luxury brand, and not a residential-first maid service.
+- The core buyer psychology is reduced oversight, not cleanliness in the abstract. The design should reinforce: "I will not have to chase this vendor, re-explain standards, or wonder whether the work got done."
+- Brazusa's value is the middle ground between cheap/informal cleaners and larger, rigid vendors. Visually, this should read as organized, mature, grounded, and responsive.
+- The design should communicate order, process, calmness, and maturity. "This company is organized" is the target impression. "This company is trying hard to look impressive" is the wrong one.
+- Premium perception should come from visible system quality: clear process, accountability, what is included, how work is checked, and what happens when something goes wrong.
+- Identity signals like Brazilian-owned / immigrant-owned can support trust, but should not carry the page. Trust should be earned operationally before it is reinforced emotionally.
+- The first one to two screenfuls need to establish category clarity, segment relevance, dependability, control, and proof. Anything delaying those signals weakens the page.
+
+---
+
+## 2. Trust And Credibility Requirements
+
+- The strongest proof is operational proof: visible process, how service is checked, how issues are handled, and how communication works.
+- Workforce credibility matters more than broad praise. If the page implies rigor, stability, or professionalism, the design should support that through structure and proof, not vague confidence.
+- Accountability proof is critical: one point of contact, response expectations, and obvious ownership of the relationship are stronger trust builders than generic praise.
+- Deliverable proof is high-value here: checklists, service examples, reports, readiness confirmation, and proof-of-completion cues can outperform most testimonial content if they are real.
+- Testimonials are secondary proof, not primary proof. They should support operational trust, not substitute for it.
+- Visual trust is strengthened by clean hierarchy, restrained motion, disciplined spacing, strong alignment, and scannable proof modules.
+- Visual trust is weakened by clutter, excessive animation, decorative iconography, stock-smile imagery, and long sections that do not quickly advance the trust story.
+- High-rigor claims should not be visually implied unless they are verified operationally. This includes inspections, verified completion, photo proof, response-time guarantees, backup coverage, clinic protocols, and turnover-specific guarantees.
+
+---
+
+## 3. Audience And Segment Cues
+
+- STR needs timing control, guest-readiness, issue flagging, and low management overhead. Design should cue readiness, operational flow, and prevented problems -- not generic hospitality polish.
+- Property managers / buildings need dependable support across units, schedules, and recurring vendor interaction. Design should cue coordination, repeatability, and reduced oversight -- without implying full property management.
+- Offices need consistency, low disruption, and communication discipline. Design should feel routine-based, calm, and managed rather than urgent or deep-clean oriented.
+- Clinics need a more disciplined and conservative signal than offices. The page should feel careful, restrained, and process-capable without over-claiming medical-grade sophistication.
+- Homes / apartments can be present, but should not dominate the page's visual language. If home cues overpower the operator-facing cues, the whole page drifts toward residential maid-service signaling.
+- Catch-all / other should feel intentionally handled, not like a leftover bucket. Flexibility is good; visual vagueness is not.
+
+---
+
+## 4. Design Implications
+
+- The hero should feel stable, specific, and operator-facing -- not warm, generic, decorative, or lifestyle-driven.
+- Early hierarchy should reinforce a control narrative: what Brazusa is, who it serves, why it is more dependable, how it works, what the client does not have to manage, then proof.
+- The single-page structure should still behave like a routing page. Each section should help a serious buyer identify fit and move deeper into trust, rather than feeling like a long undifferentiated stack.
+- The process section is not filler. "How it works" is one of the strongest trust-building mechanisms because it makes the control loop visible.
+- Testimonials alone are not enough. The market trusts mechanism over adjectives, so proof should be layered across process, accountability, and deliverables.
+- Section transitions should communicate increasing certainty: positioning -> segment fit -> process -> proof -> qualified next step.
+- Visuals should avoid signaling domestic cleaning, luxury hospitality, or fake enterprise scale.
+- If real imagery is weak or limited, the design should rely more on typography, structure, proof strips, trust cards, and process modules than on generic stock imagery.
+- Motion should be restrained enough that it never competes with credibility.
+- CTAs and forms should feel like a fit / scope / walkthrough conversation, not commodity quote-shopping.
+- Mobile design should prioritize scan speed, hierarchy clarity, and reduced vertical bloat. If the page becomes too tall before it proves structure and trust, the design is underperforming.
+
+---
+
+## 5. Anti-Patterns To Avoid
+
+- Generic local cleaning-template energy
+- Residential maid-service cues dominating the page
+- Performative luxury signaling
+- Testimonial-heavy sections with weak operational substance
+- Decorative icons, counters, or animations that do not build trust
+- Large service dumps with weak segmentation
+- Soft lifestyle tone or vague "partner" language unsupported by visible systems
+- Any visual direction that makes the business feel informal, overdesigned, or unclear about who it is for
+
+---
+
+## 6. What The Reviewer Should Pay Attention To
+
+- Does the first screen communicate "operations partner," not "generic cleaner"?
+- Do the first one to two screenfuls establish who the site is for, why it is different, and why it is trustworthy?
+- Does the visual tone feel organized, calm, and mature rather than domestic, flashy, luxury-coded, or templated?
+- Is trust being built through process, accountability, and proof rather than mostly through adjectives or testimonials?
+- Are STR, office/clinic, and property-manager cues visually clear enough to support fast self-selection?
+- Do any visuals accidentally signal house-cleaning, luxury hospitality, or generic janitorial commodity?
+- Does the page rhythm move toward qualified conversion rather than just stacking sections?
+- Are any high-rigor signals being implied visually without verified operational backing?
+
+---
+
+## Reviewer Guidance
+
+For Claude or Codex design-review use:
+- Treat this file as a lens for evaluating the current live page, not as a request to invent a new style system.
+- Separate true layout bugs from broader design weaknesses.
+- Separate copy-density problems from visual hierarchy problems.
+- If a criticism depends on an operational claim being true, flag that dependency explicitly rather than assuming it.
+- Prioritize findings that affect trust, self-selection, scan speed, and perceived control.

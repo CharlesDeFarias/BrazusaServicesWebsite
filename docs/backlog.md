@@ -9,8 +9,6 @@ Locked architectural decisions live in `decisions.md`, not here.
 
 Items that should be resolved before the site is promoted or shared publicly.
 
-- **Image compression** — str.png is 7.4 MB; hero/home/office/property/team range from 2.0\u20132.7 MB. Next.js serves WebP at runtime but source sizes still affect build performance and cold-start delivery. Compress all images in `public/images/` with Squoosh or Sharp, max 1800px width. str.png target: under 500 KB. Others: under 500 KB.
-
 ---
 
 ## Pre-Launch (High Priority)
@@ -49,7 +47,7 @@ These require a chatgpt-prep pass before sending to ChatGPT for rewriting.
 
 - **Greater Boston area photo** \u2014 a photo of the coverage area for the ServiceArea section. Charles to source.
 
-- **Staff and family photos** \u2014 team photo for About section, plus any other personal photos when ready. Charles to arrange.
+- **Additional staff and family photos** \u2014 the current team/about image is in place. Add more real supporting photos later if they strengthen trust or section-level storytelling.
 
 - **WeChat contact option** \u2014 add after WhatsApp is live and tested.
 
@@ -64,8 +62,6 @@ These require a chatgpt-prep pass before sending to ChatGPT for rewriting.
 - **Ze Jr landing page** \u2014 Ze Jr runs a tiling and ceramics business. Same pattern as Primo.
 
 - **Platform footer** \u2014 once Primo and/or Ze Jr pages exist, update the footer to reference the broader Brazusa Services platform and link to the sibling pages.
-
-- **ClientAccordion headline** \u2014 change "What kind of space?" to operator vocabulary, e.g. "Which operation do you manage?" (flagged as [MEDIUM] in the 2026-04-20 design review in decisions.md).
 
 ---
 

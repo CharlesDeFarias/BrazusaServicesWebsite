@@ -8169,3 +8169,6 @@ Charles still needs to fill in: observation memo (Part 1) and screenshot priorit
 - "help me prepare for the design review... A) prep B) more effective review C) Claude Design"
 - "create that design review notes file..."
 - "do a durable update and then push"
+
+### 04/23/2026, 02:13:37 PM
+**Prompt:** do a durable update and push

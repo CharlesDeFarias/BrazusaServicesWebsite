@@ -7595,3 +7595,487 @@ Codex-authored. Refreshed `docs/copy-decisions.md` so it no longer contradicted 
 
 ### 04/21/2026, 09:51:53 PM
 **Prompt:** push to git
+
+### 04/21/2026, 09:53:41 PM
+**Prompt:** gitignore and rebase
+
+### 04/22/2026, 07:36:26 PM
+**Prompt:** session start
+
+### 04/22/2026, 07:39:52 PM
+**Prompt:** we only have 6% of tokens remaining left on my weekly limit, which resets in 19 hours. i want to make use of the entirety of whats left in the best way. I dont think it's worth doing anything on the project itself right now, so instead i'm thinking i'm inbeetween either A) having you review everything we've done so far, especially since i last used you (i've used codex heavily since we've approachede the weeekly limit) or B) working with you to help me lower token usage overall without sacrificing quality/value of your work
+
+### 04/22/2026, 07:48:39 PM
+**Prompt:** I want you to review the readme, ai case study, session log and decisions documents, all from the perspecetive of an engineering/claude/codex expert that's deeply familiar with my project and what i'm trying to do.  Reply with feedback on ways I can significantly lower token usage without sacrificing any of the great quality workflow we've created so far
+
+### 04/22/2026, 08:02:34 PM
+**Prompt:** I've pasted codex's reply to the same prompt i gave you, as well as codex's reply to your reply. Analyze it and what you've already sent me to then provide me with a final updated reply from that expert point of view with recommendations on what to do next.Findings
+
+Highest token drain: docs/decisions.md is doing too many jobs at once
+docs/decisions.md is supposed to be startup-critical durable context, but it now mixes:
+
+locked rules
+status updates
+implementation history
+deferred work
+a full design-review audit
+The biggest examples are the long Phase 3 status block around docs/decisions.md and the full design review section starting at docs/decisions.md.
+This preserves quality, but it increases reread cost every time the startup context is refreshed.
+docs/session-log.md is now too large to be a practical review source without a thinner companion layer
+It is correctly not startup context, which is good. But as a human review/history file it has grown into a very expensive artifact to re-open for meta review. You can see the scale from docs/session-log.md onward, where one late-session cluster already carries major token-budget history, addenda, and multiple continuations.
+The file is still valuable, but right now it is a monolith, not a usable “review surface.”
+
+docs/ai-case-study.md is excellent as a narrative artifact, but too broad to be an operational reference
+This file is strong, but it currently mixes:
+
+historical explanation
+current-state description
+known problems
+open improvements
+repo navigation
+That makes it great for humans and future public sharing, but expensive if an agent is asked to “review the AI system” and reaches for it as a primary operating doc. See the density across docs/ai-case-study.md, 93, 122, 177, and 209.
+The system still lacks a dedicated low-token “what should happen now?” layer
+This is the biggest strategic gap. You have:
+
+durable rules
+history
+narrative case study
+backlog/deferred items
+But you do not yet have a small, stable, always-current working-context doc whose only job is:
+current objective
+active constraints
+next AI task
+next Charles-only task
+queued review task
+That absence forces models to reconstruct “what matters now?” from larger docs.
+README is not the problem
+Of the four docs, README.md is actually in a pretty good place. It is app-focused, scoped, and relatively clean. The doc map at README.md and AI preview at README.md are not your major token problem.
+If anything, the right move is to keep README lean and resist turning it into another operational source.
+
+What I would change to significantly lower token usage
+
+Create a tiny docs/working-now.md and make it the default “what matters right now?” file
+This would be the single highest-value improvement.
+It should stay short, maybe 30-80 lines max, and include only:
+
+current phase
+active task
+top 3 locked constraints relevant now
+next Charles-only tasks
+next Claude review task
+next Codex implementation task
+known blockers
+This would reduce the need to reconstruct present state from decisions.md, session-log.md, and case-study prose.
+Split docs/decisions.md into “startup kernel” vs “reference/archive” content
+You do not need to throw anything away. Just separate reading surfaces.
+Best pattern:
+
+keep docs/decisions.md for live, startup-critical decisions only
+move long Status: blocks, completed phase summaries, and full design-review audit material into:
+docs/working/decision-context.md
+or docs/working/design-review/
+or docs/decision-notes.md
+Quality stays intact because the information remains available, but startup rereads get much cheaper.
+Archive the session log and keep a thin current-log surface
+Right now the session log is too useful to delete and too big to review efficiently.
+I’d suggest:
+
+docs/session-log-current.md
+docs/session-log-archive/2026-04.md
+optional docs/session-log-index.md
+The current file should only hold recent sessions plus 3-5 durable summaries. The archive keeps everything else.
+This preserves richness without forcing giant review passes later.
+Keep docs/ai-case-study.md as a public/deep narrative, but create a short operational sibling
+The case study should remain long. It is good.
+But add a short counterpart, something like:
+
+docs/ai-ops-summary.md
+or docs/ai-system-current-state.md
+That doc should answer only:
+what the current AI operating system is
+what each file is for
+what each tool should do
+what is still open
+Then future meta reviews can use the short summary first and only open the case study when deeper historical context is actually needed.
+Add a mandatory “solo-work lane” to your durable workflow
+This is the best answer to your usage-limit problem.
+Every meaningful wrap-up should preserve:
+
+one task Charles can do without AI
+one task queued for Codex
+one task queued for Claude review
+one deferred item that should wait for fresh context
+That way usage limits stop causing idle time.
+Add a “review packet” pattern for expensive review sessions
+When you ask Claude or Codex for a large review, do not point them at full durable history by default.
+Instead have a compact packet:
+
+what changed since last review
+exact docs to read
+explicit things to ignore
+what judgment is needed
+This will save a lot more tokens than more instruction tuning.
+What I would not change
+
+I would not aggressively shrink the README.
+I would not delete richness from the case study.
+I would not collapse everything into one master file.
+I would not move back toward chat-only memory.
+Your current system is strong because it is rich and explicit. The right optimization is better layering, not less information.
+
+Best next move
+
+If you only do one thing, do this:
+
+Create a short docs/working-now.md and slim docs/decisions.md back down to startup-only material.
+
+That alone would meaningfully reduce token usage while preserving almost all of the quality you’ve built. I agree with most of Claude’s review, and I think it sharpens the right parts of the problem.
+
+What I agree with strongly:
+
+docs/decisions.md is the biggest live token-efficiency problem.
+
+Claude is right that it has drifted from “startup kernel” into a mixed document.
+I especially agree that the design-review section does not belong there. That’s stale-detail-heavy material with line references, which is expensive and increasingly wrong over time.
+I also agree that status narratives inside decision entries are a bad trade. That’s one of the clearest places where durable-update quality accidentally created startup bloat.
+The durable-update promotion rule should be tighter.
+
+Claude’s formulation is better than “anything durable.”
+The right promotion threshold is closer to:
+locked decision
+active constraint
+current invariant the AI must obey
+Not:
+implementation history
+progress diary
+verification transcript
+“what happened this week”
+Inline review vs spawning should be more explicit.
+
+Claude is right that tool isolation should be the main trigger for spawning.
+I especially agree about copy review: if the artifact is already in context, spawning is often wasteful.
+Where I partly disagree or would refine:
+
+I would not make docs/current-state.md the only startup file.
+
+I agree with the instinct.
+I disagree with making docs/decisions.md mostly historical and replacing it wholesale at startup.
+That creates a new risk: the “current-state” doc becomes yet another place where drift can happen, and the real contract gets bypassed.
+My preferred version is:
+docs/current-state.md = first read, very short operational state
+docs/decisions.md = second read, but trimmed hard to startup-critical rules only
+So I want a two-layer startup, not a full replacement.
+I’m less confident than Claude that CLAUDE.md is one of the biggest wins right now.
+
+Yes, trimming always-loaded text matters.
+But I think the much bigger savings are still in:
+reducing startup document sprawl
+reducing repeated rediscovery
+reducing agent/subagent cold starts
+I’d trim CLAUDE.md, but I would not make that step 2 before fixing the startup-context layering.
+I would not move all deferred items out of docs/decisions.md blindly.
+
+Some deferred items are actually useful startup context.
+Example: “do not do X yet” or “this open issue is unresolved and easy to trip over” can matter at startup.
+So I’d split deferreds into:
+startup-relevant deferreds
+general backlog
+Not all deferred items are equal.
+New ideas Claude’s review helped crystallize:
+
+You need a stricter document taxonomy.
+Right now the system has good documents, but the boundaries are still too soft.
+I’d define them like this:
+
+CLAUDE.md / CODEX.md: behavioral contract
+docs/decisions.md: active rules and locked decisions only
+docs/current-state.md: what matters right now
+docs/session-log.md: chronology and learning
+docs/backlog.md: open work
+docs/working/: temporary review packs, audits, prep docs
+That taxonomy would cut a lot of token waste because each file would have a much narrower job.
+
+Durable updates should write to multiple targets more selectively.
+This is probably the biggest workflow refinement.
+Right now a good durable update can still over-preserve into the wrong place.
+I’d make the rule more like:
+
+session log gets narrative
+current-state gets active next-step state
+decisions gets only enforceable constraints
+backlog gets open work
+working docs get audit detail
+That’s a better routing model than “what should be preserved?”
+
+You need a “startup budget” concept.
+Not just token optimization in general, but a specific target:
+startup should cost no more than X amount of context
+anything that exceeds that must move out of startup docs
+That gives you a measurable standard instead of just “this feels bloated.”
+
+You should add a “human momentum” field to current-state.
+This connects back to your earlier concern about not depending on model availability.
+If you do create docs/current-state.md, I’d include:
+
+current active AI task
+current active human-only task
+next Claude review task
+next Codex execution task
+That would make token limits much less disruptive.
+
+My updated priority order would be:
+
+Trim docs/decisions.md into a real startup kernel
+Add docs/current-state.md as a short operational layer
+Update session-start to read current-state first, then trimmed decisions
+Tighten durable-update routing rules
+Then trim CLAUDE.md / matching Codex docs
+So overall:
+
+I agree with Claude on the main diagnosis
+I agree strongly on trimming decisions.md
+I agree on tightening durable-update rules
+I agree on being more selective about spawning
+I disagree with replacing decisions.md too aggressively with current-state
+I’d use current-state as a thin first-layer, not a full substitute
+The strongest new synthesis from both reviews is:
+your next optimization should be document-boundary enforcement, not more general workflow philosophy.
+
+### 04/22/2026, 08:34:25 PM
+**Prompt:** I want your final opinion / confirmation / refinement on the current plan before I implement anything.
+
+Context:
+You and Codex have both reviewed how to significantly lower token usage without sacrificing the quality of the workflow system. I want this pass to be the final alignment check before I give Codex an implementation prompt.
+
+Important:
+- This is not an implementation task.
+- This is not a broad re-audit.
+- I want you to evaluate the current plan, my notes, and the remaining unresolved questions.
+- Be critical where needed, but optimize for converging on a safe, high-leverage plan.
+- Do not rewrite the whole system. Focus only on the document-boundary / startup-cost / durable-routing pass.
+
+## Current consensus so far
+
+What Codex and I believe is agreed:
+1. The core problem is document-boundary drift, not the system architecture itself.
+2. `docs/current-state.md` should be added as a short operational layer.
+3. `docs/decisions.md` should be trimmed back to active rules and locked startup-relevant constraints only.
+4. This should be a preservation-first reclassification pass, not a deletion pass.
+   - Nothing should be removed from `docs/decisions.md` unless it is already preserved elsewhere or moved in the same pass.
+5. Durable update routing should be tightened:
+   - `docs/session-log.md` = narrative / chronology / learning
+   - `docs/current-state.md` = overwritten active now-state
+   - `docs/decisions.md` = enforceable constraints / locked decisions only
+   - `docs/backlog.md` = open work / aspirational work
+   - `docs/working/` = audit detail / prep materials / working artifacts
+6. Session start should eventually read `docs/current-state.md` first, then trimmed `docs/decisions.md`.
+7. `README.md` should be left alone for this pass.
+8. `docs/ai-case-study.md` should be left alone for this pass unless something genuinely new/important happens later.
+9. `CLAUDE.md` should not be trimmed in this pass.
+10. For future `CLAUDE.md` trimming, I prefer moving lower-frequency but still valuable material into a side reference doc rather than deleting it.
+11. The new file should be called exactly:
+   - `docs/current-state.md`
+12. `docs/current-state.md` should include a short Charles-perspective note / current thought field.
+
+## My notes / preferences
+
+- I want the implementation prompt to explicitly require that no valuable information gets lost.
+- If something leaves `docs/decisions.md`, the prompt should require verifying that it is either already preserved or moved during the same pass.
+- For `CLAUDE.md`, if we trim it later, I prefer the “move lower-frequency material to a side doc” option.
+- I agree with the review-packet pattern idea, but I do not fully understand yet how it should work in practice.
+- I feel less confident on the inline-review vs spawned-agent rule and want your confirmation that the final recommendation there is correct.
+- Token usage tracking sounds valuable, but I want to defer that to a later task.
+
+## Where I want your help now
+
+Please evaluate the plan above and answer these:
+
+### 1. Final judgment on the plan
+- Is this the right implementation scope for the next pass?
+- Is anything important missing?
+- Is anything here premature or mis-sequenced?
+
+### 2. `docs/current-state.md`
+Please confirm or refine:
+- whether this file should exist
+- whether it should be overwritten each durable update rather than appended
+- whether including a short Charles-perspective note is a good idea
+- what exact sections it should contain
+
+Right now I’m leaning toward something like:
+- Current phase
+- Active constraints most likely to matter this session
+- Next tasks
+  - Claude
+  - Codex
+  - Charles only
+- Known blockers
+- Charles note
+
+If you think that should change, say exactly how.
+
+### 3. Preservation / no-loss rule
+Please confirm the right way to enforce this in the implementation prompt:
+- nothing gets deleted from `docs/decisions.md` unless already preserved elsewhere or moved in the same pass
+
+If you think that needs stronger wording or a better mechanism, propose it.
+
+### 4. Remaining unresolved questions
+These are the items Codex flagged as not fully settled yet. Please answer them directly and concretely:
+
+#### A. Startup-relevant deferred items
+What exact rule should determine whether a deferred item stays in `docs/decisions.md` versus moves to `docs/backlog.md`?
+
+#### B. `CLAUDE.md` trimming later
+Do you agree that later trimming should move lower-frequency material to a side reference doc rather than simply cutting it?
+If yes, what kind of side doc should that be?
+
+#### C. Review-packet workflow
+Please explain the review-packet idea in a practical way:
+- what it is
+- when to use it
+- what fields it should contain
+- whether it should become a durable workflow now or later
+
+#### D. Inline review vs spawned agent
+This still feels unsettled to me.
+Please give your final recommendation in a way that both you and Codex would likely agree on:
+- when should review stay inline
+- when should it use a spawned agent / separate context
+- what is the simplest durable rule for me to follow
+
+#### E. Whether the implementation pass should also update durable-update rules now
+Should the same pass that creates `docs/current-state.md` and trims `docs/decisions.md` also tighten the durable-update routing rules immediately?
+Or should that be a second pass after the document cleanup lands?
+
+### 5. Final implementation order
+Please give the best final order for the upcoming implementation pass.
+
+Right now the likely order is:
+1. define / confirm routing and taxonomy
+2. create `docs/current-state.md`
+3. trim `docs/decisions.md` safely
+4. update session-start to read `docs/current-state.md` first, then `docs/decisions.md`
+5. tighten Codex durable-update routing rules
+6. leave `CLAUDE.md` alone for now
+
+Tell me if that is the right order, and if not, provide the corrected order.
+
+## Output format
+
+Use this exact structure:
+
+### 1. Executive verdict
+Short direct judgment on whether this plan is ready.
+
+### 2. What I agree with
+Only the parts of the plan you endorse.
+
+### 3. What I would change or tighten
+Only the parts that need refinement.
+
+### 4. Answers to the unresolved questions
+Answer A-E directly.
+
+### 5. Final recommended implementation order
+A numbered list.
+
+### 6. Best next move
+Tell me the single best next move after this review.
+
+Important:
+- Do not broaden scope.
+- Do not start implementing.
+- Do not re-audit unrelated docs.
+- Treat this as the final planning/alignment pass before implementation.
+
+
+### 04/22/2026, 08:52:34 PM
+**Prompt:** here's codex's reply after finishing its tasks. review it and the file changes and give your feedback/confirm everything makes sense and is according to plan.
+Findings:
+
+- `docs/decisions.md` is now trimmed back to a real startup kernel: active rules, locked constraints, and short startup-relevant warnings only.
+- `docs/current-state.md` now exists as the short operational now-state layer that can be read before `docs/decisions.md`.
+- The removed design-review snapshot detail was preserved in [docs/working/design-review/review-prep-todo.txt](C:\Users\charl\Desktop\claudecoding\docs\working\design-review\review-prep-todo.txt) as still-live findings, without stale line-number audit baggage.
+- Non-critical deferred/future items were moved into [docs/backlog.md](C:\Users\charl\Desktop\claudecoding\docs\backlog.md).
+- The durable-update and session-start skills now reflect the five-destination routing model and the new startup read order.
+
+Exactly which files I updated and why:
+
+Repo files changed:
+- [docs/current-state.md](C:\Users\charl\Desktop\claudecoding\docs\current-state.md)
+  - created as the short overwritten operational layer for “what matters right now”
+- [docs/decisions.md](C:\Users\charl\Desktop\claudecoding\docs\decisions.md)
+  - rewritten as a startup kernel
+  - removed status narratives and the full design-review snapshot
+  - kept startup-relevant warnings and active constraints
+  - preserved file-discipline rules as actual decisions
+- [docs/backlog.md](C:\Users\charl\Desktop\claudecoding\docs\backlog.md)
+  - added moved non-startup deferred work:
+    - operational claim verification pass
+    - QuoteDrawer file uploads / WhatsApp fallback
+    - multi-tool write conflict protocol
+    - review-packet workflow
+    - Claude/Codex clean-code review layer
+- [docs/working/design-review/review-prep-todo.txt](C:\Users\charl\Desktop\claudecoding\docs\working\design-review\review-prep-todo.txt)
+  - preserved the still-live design findings that were removed from `docs/decisions.md`
+- [docs/ai-config-export/codex/skills/charles-durable-update/SKILL.md](C:\Users\charl\Desktop\claudecoding\docs\ai-config-export\codex\skills\charles-durable-update\SKILL.md)
+  - mirrored the new durable-routing model into the repo source-of-truth export
+- [docs/ai-config-export/codex/skills/charles-session-start/SKILL.md](C:\Users\charl\Desktop\claudecoding\docs\ai-config-export\codex\skills\charles-session-start\SKILL.md)
+  - mirrored the new startup order into the repo source-of-truth export
+
+Global Codex files changed outside the repo:
+- `C:\Users\charl\.codex\skills\charles-durable-update\SKILL.md`
+  - made the routing model explicit
+  - tightened the promotion threshold for `docs/decisions.md`
+- `C:\Users\charl\.codex\skills\charles-session-start\SKILL.md`
+  - updated startup context order to `docs/current-state.md` first, then `docs/decisions.md`, with fallback behavior
+
+Verification results:
+
+- No valuable information was dropped without being preserved or moved.
+  - Design-review findings were preserved in `docs/working/design-review/review-prep-todo.txt`
+  - non-startup deferred work was preserved in `docs/backlog.md`
+  - completed implementation history was already preserved in `docs/session-log.md` / commits, so it was not duplicated
+- `docs/current-state.md` is short and not diary-like.
+- `docs/decisions.md` now contains:
+  - active rules
+  - locked constraints
+  - startup-relevant warnings
+- Non-critical deferred work moved to `docs/backlog.md`.
+- Design-review snapshot detail no longer lives in `docs/decisions.md`.
+- Durable-update routing now matches the five-destination model.
+- Session-start now reads current-state first, then decisions, and still does not use session log as startup context.
+
+Current git status:
+- modified by this pass:
+  - `docs/current-state.md`
+  - `docs/decisions.md`
+  - `docs/backlog.md`
+  - `docs/working/design-review/review-prep-todo.txt`
+  - `docs/ai-config-export/codex/skills/charles-durable-update/SKILL.md`
+  - `docs/ai-config-export/codex/skills/charles-session-start/SKILL.md`
+- unrelated pre-existing repo change still present:
+  - `docs/session-log.md`
+
+Any item I chose to preserve rather than move because the destination was unclear:
+- I kept the operational-claim safety outcome as startup-relevant in `docs/decisions.md` and also moved the broader verification work into `docs/backlog.md`. That split felt safer than forcing it entirely into one place.
+- I kept the “future design pass should include one focused Claude design exploration” as a startup-relevant warning in `docs/decisions.md` instead of moving it fully to backlog, because it still changes how a future AI session should behave.
+- I promoted the `docs/working/` and `docs/briefs/` discipline lines into real decisions instead of dropping them, because they are now part of the repo’s file-boundary rules.
+
+Short summary of the new startup / durable-update model:
+
+- Startup now has two layers:
+  - `docs/current-state.md` for the short operational now-state
+  - `docs/decisions.md` for active rules, locked constraints, and startup-relevant warnings
+- Durable updates now route selectively:
+  - `docs/session-log.md` for narrative/history
+  - `docs/current-state.md` for overwritten current state
+  - `docs/decisions.md` for enforceable constraints and locked decisions only
+  - `docs/backlog.md` for open/future work
+  - `docs/working/` for audit detail and prep material
+
+I did not commit this pass because your prompt, as received here, did not include a commit step.
+
+### 04/22/2026, 08:55:41 PM
+**Prompt:** create a prompt for me to feed codex for it to make those final fixes. you dont have enough tokens to do it yourself

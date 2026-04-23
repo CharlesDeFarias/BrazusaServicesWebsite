@@ -8099,3 +8099,73 @@ I need to know A) what else i should do to prep for the most succesful design re
 - Codex-authored implementation. Added the review-scoping rule to `C:\Users\charl\.claude\skills\optimize-and-plan\SKILL.md`: review prompts should specify what to read, what to skip, and what exact questions need judgment instead of using broad "review everything" requests.
 - Joint decision. The correct trim pattern for `CLAUDE.md` is "move to side reference doc, then leave a pointer stub" rather than deleting lower-frequency guidance outright.
 - Commit: `f8216fd` - `docs: trim CLAUDE.md — lower-frequency material moved to claude-reference, review scoping added`
+
+### 04/23/2026, 01:16:39 PM
+**Prompt:** do a durable update and then push
+
+---
+
+## Session: 2026-04-22 to 2026-04-23 — Token efficiency pass + design review prep
+
+### What this session covered
+Token reset allowed a full Claude session. Charles opened with 6% remaining on the prior week's limit (now reset). The session was entirely meta/governance work — no product code changed.
+
+### Token efficiency work (Claude-authored decisions, Codex execution)
+
+**Problem diagnosed:** Document boundary drift. decisions.md was doing four jobs simultaneously (locked decisions, design audit snapshot, deferred backlog, status narratives). CLAUDE.md was loading lower-frequency material on every session start.
+
+**What was implemented across this session:**
+- Created `docs/current-state.md` — short operational now-state layer, overwritten at every durable update
+- Trimmed `docs/decisions.md` to a startup kernel — design review section removed, status narratives removed, non-critical deferreds moved to backlog.md
+- Non-critical deferred items moved to `docs/backlog.md`
+- Design review findings preserved in `docs/working/design-review/review-prep-todo.txt`
+- Durable-update routing rules made explicit in the Codex skill — five-destination routing model
+- Session-start agent updated to read `docs/current-state.md` first, then `docs/decisions.md`
+- CLAUDE.md trimmed: multi-model role table, naming examples, fast-coding details, and AI copy standards moved to `docs/claude-reference.md` with pointer stubs in CLAUDE.md
+- `optimize-and-plan` skill updated with review-scoping instruction (scope before submitting any large review)
+
+**Authorship:** Codex executed all file changes. Claude authored the diagnosis, the document taxonomy, the routing rules, and the implementation prompts. All alignment passes were joint.
+
+**Impact:** Session-start now reads a ~24-line current-state file before a ~182-line decisions file, replacing a single read of the prior bloated decisions.md. CLAUDE.md is materially shorter for always-on load.
+
+### Design review prep (Claude-authored)
+
+Full prep guidance produced for the upcoming Brazusa design review:
+- Three-pass review structure: trust hierarchy audit / mobile hierarchy audit / section rhythm audit
+- Claude Design workflow: section-by-section, tight brief, output as direction not spec, token budget for exploration not verification
+- Reset evaluation pass: how to run a cold first-impression audit to determine whether a visual direction change is warranted vs an execution improvement pass
+- `docs/working/design-review/review-notes.txt` created — pre-populated with review structure, known violations, locked constraints, screenshot priority list, and the reset evaluation guide
+
+Charles still needs to fill in: observation memo (Part 1) and screenshot priority labels (Part 4).
+
+### Decisions made this session
+- Document taxonomy formalized: CLAUDE.md = behavioral contract, current-state.md = now-state, decisions.md = startup kernel, session-log.md = diary, backlog.md = open work, working/ = temp artifacts
+- Durable-update promotion threshold: locked constraints and enforceable decisions only — not status, history, or verification transcripts
+- Inline review vs spawned agent: spawn when Claude needs to read files; stay inline when the artifact is already in context
+- CLAUDE.md lower-frequency trimming strategy: move to `docs/claude-reference.md` with pointer stubs, not delete
+- Review-packet pattern: scope every large review before submitting — files to read, files to skip, specific questions
+
+### What remains open
+- Charles to fill in observation memo and screenshot priorities before design review
+- Design review itself (three passes in Claude CLI + Claude Design exploration)
+- Design violation fixes from April 20 audit (Codex, after design direction confirmed)
+- CLAUDE.md trim was completed; `docs/claude-reference.md` exists as the side reference
+
+### Prompt log
+- "session start"
+- "we only have 6% of tokens remaining... A) review everything or B) lower token usage"
+- "I want you to review the readme, ai case study, session log and decisions documents... reply with feedback on ways I can significantly lower token usage"
+- "[pasted Codex's findings and its reply to Claude's review]"
+- "provide a final updated reply from that expert point of view"
+- "I want your final opinion / confirmation / refinement on the current plan before I implement"
+- "[pasted Codex's implementation report] review the changes and give your feedback"
+- "create a prompt for me to feed codex for the final fixes"
+- "[new session] review the changes made... reply with what's the next two best steps"
+- "go ahead and create a prompt for me to feed into codex to make those changes"
+- "review the changes made... give your feedback/confirm everything makes sense"
+- "create a prompt for me to feed into codex for the final fixes [session-start agent]"
+- "review the changes... from an LLM/claude expert perspective, reply with next two best steps"
+- "create a prompt for me to feed into codex to make those changes"
+- "help me prepare for the design review... A) prep B) more effective review C) Claude Design"
+- "create that design review notes file..."
+- "do a durable update and then push"

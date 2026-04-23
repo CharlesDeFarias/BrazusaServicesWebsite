@@ -1,0 +1,275 @@
+# Design Review Notes
+# Brazusa Cleaning — /clean page
+# Last updated: 2026-04-23
+#
+# This file is Charles's input layer for the design review.
+# Fill in the [CHARLES TO COMPLETE] sections before starting any review session.
+# The rest is pre-populated guidance from the LLM/Claude expert planning pass.
+
+---
+
+## PART 1: CHARLES'S OBSERVATIONS
+# [CHARLES TO COMPLETE — 10-15 minutes of honest first-person notes from using the site on your phone]
+
+### What feels wrong
+- [Fill in specific issues from real mobile use — "the gap below the banner" not "it feels unpolished"]
+
+### What feels right / should not be touched
+- [2-3 things that already work and should survive any design pass]
+
+### Top 3 concerns (ranked)
+1. [Most important]
+2.
+3.
+
+### 2 specific questions you want answered
+# Frame these as hypotheses, not open-ended asks.
+# Good: "Does the hero establish 'operations partner' within the first scroll, or does it read as generic cleaner?"
+# Bad: "What's wrong with the hero?"
+1.
+2.
+
+### Decision: redesign-acceptable vs evolution-only
+# You've said you're open to either. This needs to be declared before any review session starts.
+# The honest expert read: current issues look like execution gaps (backgrounds, spacing, hierarchy)
+# not architectural failures. The copy layer, trust hierarchy, and section structure are sound.
+# A focused improvement pass is almost certainly better than a reset.
+# But let the audit confirm this — don't predetermine it.
+#
+# [ ] Evolution-only — improve what's there, no structural changes
+# [ ] Redesign-acceptable — open to significant visual direction change if the case is clear
+# [ ] Full reset acceptable — willing to start from scratch if significantly better
+
+---
+
+## PART 2: KNOWN VIOLATIONS (pre-existing, from April 20 review)
+# These are already documented findings. Give these to Claude as starting context,
+# not rediscovery tasks. Ask Claude to confirm whether they're still present and rank
+# them against anything new it finds.
+
+- ClientAccordion: flat off-white background with no texture or layering — flagged as too plain
+- FinalCTA: judgment call still open on whether grid + radial glow is sufficient without .grain
+- Services.tsx: one raw gold rgba value that should either round to a token or be annotated clearly
+- ClientAccordion: raw `background: 'white'` keyword usage in two spots — should be tokenized
+- Testimonials: zero Office segment cases — empty chip reads as "we haven't done this"
+- Testimonials: trust proof is single-modality (social proof only); operational assurance proof
+  is missing from or near the carousel
+
+---
+
+## PART 3: LOCKED CONSTRAINTS
+# What is already decided and must not be reopened in the design review.
+
+- Single-page /clean stays for this phase — no segment routes
+- Navy/gold direction is locked — navy dominant, gold as restrained functional accent only
+- Hero CTA: "Start with a free quote" — locked
+- Accordion headline: "The kind of work you need" — locked
+- Copy layer architecture is in place — segment-driven, cannot be bypassed in design decisions
+- No static price ranges in Pricing
+- Brazusa Cleaning color scheme: navy/gold/off-white — locked for this client
+
+---
+
+## PART 4: SCREENSHOT PRIORITY LIST
+# [CHARLES TO COMPLETE — or leave for Claude to request what it needs]
+# Mark each as: HIGH / MEDIUM / LOW / SKIP
+# Especially flag: strongest examples, weakest examples, clearest bug/spacing captures
+
+Desktop:
+- desktop-01-hero-overview-top: [ ]
+- desktop-02-hero-to-truststrip-positioning: [ ]
+- desktop-03-positioning-to-accordion: [ ]
+- desktop-04-accordion-to-services-top: [ ]
+- desktop-05-accordion-property-panel-open: [ ]
+- desktop-06-services-grid-overview: [ ]
+- desktop-07-services-extended-list-to-how-it-works: [ ]
+- desktop-08-how-it-works-to-pricing-top: [ ]
+- desktop-09-pricing-overview: [ ]
+- desktop-10-pricing-detail-cards: [ ]
+- desktop-11-testimonials-overview: [ ]
+- desktop-12-service-area-overview: [ ]
+- desktop-13-about-overview: [ ]
+- desktop-14-quick-contact-overview: [ ]
+- desktop-15-final-cta-top: [ ]
+- desktop-16-final-cta-to-newsletter: [ ]
+- desktop-17-newsletter-to-footer: [ ]
+
+Mobile:
+- mobile-01-hero-first-load-full: [ ]
+- mobile-02-hero-to-positioning-transition: [ ]
+- mobile-03-positioning-to-accordion: [ ]
+- mobile-04-accordion-property-panel-open: [ ]
+- mobile-05-services-to-how-it-works-transition: [ ]
+- mobile-06-quote-drawer-open-form: [ ]
+- mobile-07-how-it-works-to-pricing-transition: [ ]
+- mobile-08-pricing-overview-filter-chips: [ ]
+- mobile-09-pricing-custom-quote-card: [ ]
+- mobile-10-pricing-efficiency-to-testimonials: [ ]
+- mobile-11-testimonials-overview-first-card: [ ]
+- mobile-12-service-area-overview: [ ]
+- mobile-13-service-area-town-list: [ ]
+- mobile-14-service-area-town-list-close: [ ]
+- mobile-15-about-overview: [ ]
+- mobile-16-quick-contact-overview: [ ]
+- mobile-17-quick-contact-to-final-cta-gap: [ ]  # The blank beige gap — likely HIGH
+
+---
+
+## PART 5: HOW TO RUN THE REVIEW
+
+### Recommended session structure (3 passes, not 1)
+
+Do not ask for everything at once. Three separate passes produce better findings with fewer tokens.
+
+**Pass 1 — Trust hierarchy audit**
+Question: "Does the page build trust in the right order, through the right mechanisms?"
+Input: marketresearch-distilled.txt + hero/positioning/accordion screenshots only
+Output: ranked findings, no implementation
+
+**Pass 2 — Mobile hierarchy audit**
+Question: "Is the page scannable and trust-establishing within the first 2 screenfuls on mobile?"
+Input: mobile-01 through mobile-04 + your observation memo only
+Output: ranked findings, no implementation
+
+**Pass 3 — Section rhythm audit**
+Question: "Do transitions between sections build toward conversion, or do they stall?"
+Input: the transition screenshots (desktop-02, desktop-03, mobile-17 spacing gap)
+Output: ranked findings, no implementation
+
+### How to scope each prompt (review-packet pattern)
+Before each pass, state explicitly:
+- Which files to read
+- Which files to skip
+- What specific questions need answering
+Never say "review everything" — scope it before you submit.
+
+### Give Claude the marketresearch as a scoring rubric
+marketresearch-distilled.txt already frames it correctly as a lens.
+Push further: ask Claude to score each section against the trust hierarchy:
+  (1) operational proof → (2) workforce credibility → (3) accountability proof →
+  (4) segment relevance → (5) deliverable proof → (6) social proof → (7) identity proof
+That turns the review from impressionistic to structured.
+
+### Don't ask for implementation in the same session as findings
+Design review ends with a ranked findings list + design direction recommendation.
+Implementation prompts come after, once you've read the findings and decided what to act on.
+
+---
+
+## PART 6: HOW TO USE CLAUDE DESIGN
+
+Claude Design = visual ideation tool, not audit tool.
+Claude CLI = audit tool. These are different jobs.
+
+**Division:**
+- Claude CLI audits what's there, ranked findings, what's wrong and why
+- Claude Design explores what it could look like instead, for the top 2-3 issues you decide to address
+- Claude Design sessions start AFTER you've read the Claude CLI findings and made decisions
+
+**Practical rules for Claude Design sessions:**
+
+1. Go section by section, not page by page.
+   Start with the hero — highest leverage, best-screenshotted, clearest case.
+   One Claude Design session = one section.
+
+2. Give it a tight brief, not an open question.
+   Include: who the audience is (B2B operators, not homeowners), what's locked (navy dominant,
+   gold as functional accent only, off-white backgrounds), and the specific problem to solve
+   ("this section needs to read as operations partner, not generic cleaner").
+   Without a brief, Claude Design defaults to generic aesthetics.
+
+3. Give it the screenshot + the anti-patterns list.
+   Paste section 5 from marketresearch-distilled.txt (the anti-patterns) + one screenshot.
+   Ask: "Here is what we have. Here is what we must avoid. Show me 2-3 alternative treatments
+   for this section that avoid these patterns."
+
+4. Treat Claude Design output as direction, not spec.
+   It is not Codex-ready code. It is a visual hypothesis you evaluate.
+   The output should answer: "what direction are we going?"
+   Codex implements the direction. Claude Design does not.
+
+5. Use its token budget for exploration, not verification.
+   Don't use Claude Design to confirm something looks bad — Claude CLI does that.
+   Use Claude Design to explore what something better could look like.
+
+**Suggested full workflow:**
+1. Run Claude CLI trust hierarchy audit → ranked findings
+2. Read findings, pick top 2-3 issues to address
+3. Run Claude Design on those 2-3 issues → visual direction options
+4. Make decisions based on both
+5. Write Codex implementation prompts from those decisions
+
+---
+
+## PART 7: INITIAL RESET EVALUATION PASS
+# Use this before committing to either evolution or full redesign.
+# This is a separate first pass whose only job is answering the reset question.
+
+### When to run this pass
+Run this BEFORE the three-pass review above, if you genuinely haven't decided
+whether evolution or a reset is the right call. If you already know it's evolution,
+skip this and go straight to Part 5.
+
+### What this pass evaluates
+The reset question is not "does the site look good?" It is:
+  "Are the current design's problems fixable within its existing visual language,
+   or does the visual language itself need to change?"
+
+These are different problems with different solutions.
+
+Fixable within the current language:
+  - Section backgrounds are too flat → add layering treatments
+  - Spacing gaps between sections → layout fix
+  - Individual components feel unpolished → component-level improvement
+  - Mobile density is too high → hierarchy tightening
+
+Requires a new visual language:
+  - The overall tone is wrong (feels domestic when it should feel operational)
+  - The color system no longer serves the positioning
+  - Typography is working against credibility
+  - The site communicates the wrong category at first glance
+
+### How to run the reset evaluation in Claude Design
+This is the one case where Claude Design is the right first tool, not Claude CLI.
+
+Prompt structure:
+  1. Give it the hero screenshot and mobile-01 only (first impressions only)
+  2. Give it the core positioning statement from marketresearch-distilled.txt section 1
+     ("locally owned, professionally run cleaning operations partner — not generic cleaner,
+      not luxury brand, not residential-first maid service")
+  3. Ask this specific question:
+     "Looking only at the visual impression of this site — before reading any copy —
+      does the design communicate an operations partner for B2B buyers, or something else?
+      What does it actually communicate? What category does it signal?"
+  4. Do NOT give it the full marketresearch doc, anti-patterns, or any implementation context.
+     You want a cold, honest first-impression read — not a coached evaluation.
+
+If Claude Design says "this reads as generic cleaning / residential / warm lifestyle brand"
+and can explain why clearly → that is evidence for a reset conversation.
+
+If Claude Design says "this reads as organized, operator-facing, but execution is inconsistent
+in X and Y" → that is evidence for evolution.
+
+### How to run the reset evaluation in Claude CLI
+After the Claude Design first-impression pass, run a second cold read in Claude CLI:
+  1. Give it desktop-01 and mobile-01 only
+  2. Give it the same positioning statement (one sentence)
+  3. Ask: "Does this site's visual design support or undermine its positioning as a
+     professionally run cleaning operations partner for B2B buyers? Score it 1-5 on:
+     (a) category clarity at first glance, (b) operator vs residential signal, (c) trust
+     through structure. Flag which specific visual elements are producing the wrong signal."
+
+### What to do with the results
+- Both tools say it reads wrong → real reset case, worth exploring
+- One tool says it reads wrong, one says it doesn't → the inconsistency is itself useful data.
+  Dig into why they disagree before deciding.
+- Both tools say it reads right but with execution gaps → evolution pass only, proceed to Part 5
+
+### Important reset guardrails
+If a reset is warranted, it should still be:
+  - Constrained by the locked color system (navy/gold/off-white) unless there is an explicit
+    separate decision to change the palette
+  - Constrained by the single-page /clean architecture
+  - Not a reason to revisit the copy layer or accordion structure
+A reset means: new visual direction within the existing architecture.
+Not: start over on everything.

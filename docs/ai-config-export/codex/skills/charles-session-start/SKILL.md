@@ -38,7 +38,9 @@ Read the strongest relevant instructions before doing anything else.
 
 ### 2. Restore durable project context
 Read the most relevant durable files that explain the current project state.
-- Treat docs/decisions.md as the primary durable context source for startup when the repo uses it.
+- If docs/current-state.md exists, read it first for the short operational now-state.
+- Read docs/decisions.md second for active rules, locked constraints, and startup-relevant warnings.
+- If docs/current-state.md is missing, fall back to docs/decisions.md only.
 - Do not read docs/session-log.md at session start. It is the human-facing learning record unless Charles explicitly asks for historical or process review.
 - Prioritize other durable artifacts like plans, task trackers, and architecture notes only when they materially clarify the current situation.
 

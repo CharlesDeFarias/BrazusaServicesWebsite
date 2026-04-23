@@ -111,3 +111,13 @@ Suggested structure for that file:
 - Locked constraints
 - Priority captures
 - Questions for Claude
+
+---
+
+Existing unresolved findings already worth preserving from the April 20 review:
+- ClientAccordion still needs a texture/layering check; the flat off-white treatment was flagged as too plain.
+- FinalCTA layering still needs a judgment call on whether the current grid/glow treatment is enough without `.grain`.
+- Services still has one raw gold value that should either round to a token or be annotated more clearly.
+- ClientAccordion still has raw white background usage that should be normalized to a tokenized light background.
+- Testimonials still needs at least one credible Office case to avoid an empty primary-audience chip.
+- Testimonials trust proof is still too single-modality; consider compact operational assurance proof near the carousel in the next design/copy pass.

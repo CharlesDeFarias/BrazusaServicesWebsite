@@ -39,6 +39,8 @@ These require a chatgpt-prep pass before sending to ChatGPT for rewriting.
 
 - **Full site copy audit against brand-rules.md** \u2014 mechanism over promise, no banned phrases. Flagging any remaining generic language is its own ChatGPT pass after the section-level rewrites are done. The copy.txt blueprint is the prerequisite.
 
+- **Operational claim verification pass** \u2014 before broader per-segment page copy expansion, verify which inspections, proof-of-completion, response-time, staffing, clinic-protocol, and STR operational claims are factually safe to use on the site.
+
 ---
 
 ## Post-MVP
@@ -57,6 +59,8 @@ These require a chatgpt-prep pass before sending to ChatGPT for rewriting.
 
 - **AI chatbot** \u2014 not needed for MVP. Less complex than initially assumed. Implement post-launch once core site is stable and operational.
 
+- **QuoteDrawer file uploads / WhatsApp fallback** \u2014 Phase 1 should stay email-first with file metadata saved through the existing integrations. When files exceed email-safe limits, direct users to WhatsApp; revisit later with a storage-backed upload system.
+
 - **Primo landing page** \u2014 Primo runs a construction business. Will get its own one-page app as a separate client under the Brazusa Services umbrella. Architecture already supports this via `lib/clients/`.
 
 - **Ze Jr landing page** \u2014 Ze Jr runs a tiling and ceramics business. Same pattern as Primo.
@@ -66,6 +70,12 @@ These require a chatgpt-prep pass before sending to ChatGPT for rewriting.
 ---
 
 ## Much Later
+
+- **Multi-tool write conflict protocol** \u2014 define what happens when Claude and Codex both want to edit the same durable file in overlapping work.
+
+- **Review-packet workflow** \u2014 formalize a repeatable review packet pattern for large Claude/Codex review requests: what changed, exact files to read, files to skip, and specific judgment questions.
+
+- **Claude/Codex clean-code review layer** \u2014 create the dedicated clean-code / Charles-preferences review layer when it becomes worth enforcing as a separate workflow artifact.
 
 - **Per-client-type sub-pages** \u2014 fully tailored pages for STR, office, clinic, and property manager audiences (separate routes: `/clean/str`, `/clean/office`, etc.). Prerequisite: content depth per segment must justify the split. See decisions.md for the locked rationale on why this is deferred.
 

@@ -28,7 +28,10 @@ Do not use it for trivial one-off interactions with no durable value.
 ## Durable destinations
 Choose among these based on the type of information:
 - session log for what happened and what was learned in the session
+- current-state doc for overwritten active now-state
 - decisions doc for locked architectural, UX, or workflow decisions
+- backlog for open work, aspirational work, and future features
+- working docs for audit detail, review packs, or temporary artifacts
 - global or project `AGENTS.md` when future behavior needs to change systematically
 - preferences files when a stable Charles preference was clarified
 - skills when a repeated workflow deserves its own reusable tool
@@ -60,10 +63,18 @@ Ask:
 - Will future Codex behavior improve if this is saved?
 - Is this a one-off detail or a reusable rule?
 - Is this project-specific or global?
+- Is this a constraint the AI must obey, or just history/status?
 
 ### 4. Recommend or perform the update
 When Charles wants the update done, prepare or apply the exact durable update.
 When Charles is still deciding, recommend the best destination and explain why.
+
+Use this routing model:
+- `docs/session-log.md` for narrative, chronology, prompt log, and learning
+- `docs/current-state.md` for overwritten active now-state
+- `docs/decisions.md` only for enforceable constraints or locked decisions that materially change future work
+- `docs/backlog.md` for open work, aspirational work, and future features
+- `docs/working/` for audit detail, review packs, and temporary artifacts
 
 ## Output structure
 When reviewing what to preserve from a session, prefer this structure unless Charles asks otherwise:
@@ -89,6 +100,7 @@ When reviewing what to preserve from a session, prefer this structure unless Cha
 - Preserve the difference between decision records and chronological logs.
 - Preserve Charles's learning journey, not just engineering facts.
 - Favor durable updates that improve future sessions, not just historical completeness.
+- Do not put status updates, verification transcripts, or implementation diary detail into `docs/decisions.md`.
 - If nothing durable emerged, say so plainly instead of inventing updates.
 
 ## References

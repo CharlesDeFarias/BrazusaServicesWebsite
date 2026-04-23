@@ -8079,3 +8079,23 @@ I did not commit this pass because your prompt, as received here, did not includ
 
 ### 04/22/2026, 08:55:41 PM
 **Prompt:** create a prompt for me to feed codex for it to make those final fixes. you dont have enough tokens to do it yourself
+
+### 04/23/2026, 12:53:29 PM
+**Prompt:** ok, review the changes made, and then from that perspective of an llm/claude/codex engineer expert point of view, reply with what's the next two best steps for lowering token usage and/or improving quality of this workflow
+
+### 04/23/2026, 12:58:41 PM
+**Prompt:** go ahead and create a prompt for me to feed into codex to make those changes. ensure claude's truly able to follow/reference/get triggered on using this claude reference file and we aren't just hiding things from claude.md and in general.
+
+### 04/23/2026, 01:02:39 PM
+**Prompt:** now while codex is working on that, I want you to help me prepare for the design review i'm going to attempt to do soon, using both Claude in CLI (you) and the new claude design feature that's available and has its own token usage limits.
+I want you to review the current design review folder and all of the docs folder and use that LLM/claude expert perspective to make recommendations to me. My goal is to evaluate the design of the site, as entirely as possible, to finally and confidently decide what the site is going to look like. Right now, there's nothing in particular i hate about the design, but there's also nothing i particularly love or am attachede to, so i'm completely open to a total redesign from scratch, but only if its necessary and if its replacement will be significantly better.
+I need to know A) what else i should do to prep for the most succesful design review B) how i can make the claude design review even more effective and C) specifically recommendations on how to utilize claude design, as i have no experience with the feature
+
+### 04/23/2026, 01:12:32 PM
+**Prompt:** create that design review notes file if it hasn't been created already and add everything you just told me to it. make no other changes for now, i'll review it later to iterate on. Also add an additional note on the best way to do an additional initial design audit pass for exaiming whether an entire reset is necessary/good, and how to go about that examining.
+
+### 04/23/2026, 01:09:37 PM
+- Codex-authored implementation. Trimmed `CLAUDE.md` so lower-frequency workflow detail moved into the new repo file `docs/claude-reference.md`, with pointer stubs left in place for Multi-Model Role Assignment, Naming Convention Examples, Fast-Coding Session Details, and AI Copy Writing Standards.
+- Codex-authored implementation. Added the review-scoping rule to `C:\Users\charl\.claude\skills\optimize-and-plan\SKILL.md`: review prompts should specify what to read, what to skip, and what exact questions need judgment instead of using broad "review everything" requests.
+- Joint decision. The correct trim pattern for `CLAUDE.md` is "move to side reference doc, then leave a pointer stub" rather than deleting lower-frequency guidance outright.
+- Commit: `f8216fd` - `docs: trim CLAUDE.md — lower-frequency material moved to claude-reference, review scoping added`

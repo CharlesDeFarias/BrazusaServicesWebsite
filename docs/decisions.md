@@ -153,6 +153,10 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** Claude and Codex both have usage limits; without explicit routing discipline, the wrong tool silently takes the wrong task and tokens get wasted on repeated work.
 **Constraints:** Conserve high-value reasoning for judgment-heavy work. Repeated chat patterns should become skills, agents, or durable files. Parallel splits only when write surfaces are disjoint. At usage-limit boundaries, produce a structured handoff rather than a vague suggestion to switch tools.
 
+**Decision:** Lower-frequency Claude workflow detail lives in `docs/claude-reference.md`, while `CLAUDE.md` keeps compact pointer stubs for always-loaded startup use.
+**Why:** Claude startup cost should stay low, but the moved guidance still needs to remain discoverable and explicit when a task actually needs it.
+**Constraints:** Do not trim `CLAUDE.md` by silently deleting useful guidance. Move lower-frequency elaboration into `docs/claude-reference.md` first, then leave a stub in `CLAUDE.md` that says what moved, where it lives, and when Claude should consult it.
+
 **Decision:** Working docs live under `docs/working/`. Temporary or in-flight artifacts should not stay at the top level of `docs/`.
 **Why:** Top-level `docs/` had started mixing durable operating docs with temporary review packs and worksheets, which made both startup context and human navigation noisier.
 **Constraints:** Put review-prep material, evidence packs, and working worksheets under `docs/working/` unless a file is clearly durable project truth.

@@ -213,3 +213,13 @@ The short version:
 For the full explanation, current workflow history, and replication notes, see:
 - `docs/ai-case-study.md`
 - `docs/ai-config-export/INDEX.md`
+
+---
+
+## Full File Index
+
+A complete annotated index of every meaningful file in the project lives at:
+
+- `docs/file-index.md`
+
+Consult it when looking for a specific file rather than searching the directory tree.

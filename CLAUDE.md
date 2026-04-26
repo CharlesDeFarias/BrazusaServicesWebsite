@@ -6,6 +6,8 @@
 
 **Then:** read `lib/clients/` and `app/api/` before making any substantive changes.
 
+**Finding files:** before globbing or grepping for a file, read `docs/file-index.md` first. It is a complete annotated index of every meaningful file in the project.
+
 **Project:** Next.js multi-client agency hub. First live client: Brazusa Cleaning (real,
 family business, full content control). Future pages (roofing, painting, tiling,
 construction) are separate businesses sharing the same platform.
@@ -304,6 +306,8 @@ see Rule 3.
 Append a summary to `docs/session-log.md` when wrapping up. This file is the human-facing
 learning record - chronology, prompt history, process notes, and reflections. It is **not**
 read by Claude or Codex at session start.
+
+**File index rule:** Any session that adds, removes, or moves files must update `docs/file-index.md` before closing. The index is only useful if it stays current.
 
 **Promotion rule:** Before a session ends, anything durable must be explicitly written to
 `docs/decisions.md`, not only to the session log. If a decision, active constraint, or

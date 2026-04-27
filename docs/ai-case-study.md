@@ -88,6 +88,8 @@ The result is a shared operating system that neither tool designed alone. It is 
 
 **Authorship notation.** When both tools contributed to a session, the session log records which tool authored which part. This sounds like overhead, but it matters: future sessions can distinguish Claude-driven decisions from Codex-driven ones and avoid misattributing reasoning.
 
+**Hooks for automatic rule enforcement.** Claude Code supports hooks - shell commands that fire automatically before or after specific tool calls. A PreToolUse hook on the Glob tool fires every time Claude tries to search for files, echoing a reminder to check `docs/file-index.md` first. This is the same design principle as restricted agent tool lists: the rule is enforced structurally, not left to memory or in-context goodwill. If a workflow rule matters enough to write down, it probably matters enough to make self-executing.
+
 ---
 
 ## What changed over time
@@ -102,6 +104,10 @@ This was not designed all at once. It evolved.
 6. **Model role assignment made explicit** - the division between Claude and Codex was implicit for a while, which caused both tools to occasionally take on tasks that belonged to the other. Writing the role table into CLAUDE.md fixed this.
 7. **Authorship notation added** - sessions were producing decisions that mixed Claude and Codex contributions without attribution. Adding notation conventions made the record reliable.
 8. **Codex preferences and skills refined** through multiple passes, often with Claude reviewing the output of each pass.
+9. **File-index enforcement via hooks** - `docs/file-index.md` existed as a complete annotated project file index, but Claude was still globbing and grepping for files instead of checking it first. The rule was written into CLAUDE.md, but the more interesting fix was structural: a PreToolUse hook was wired to the Glob tool - a shell command that fires automatically every time Claude tries to search for files, echoing a reminder to check the index first. This is the same principle as restricted agent tool lists. The rule enforces itself rather than relying on the model remembering to follow it.
+10. **Skill consolidation and chatgpt-prep deprecation** - two tools were doing overlapping jobs, neither scoped correctly. The `chatgpt-prep` agent produced copy briefs for ChatGPT specifically. The `optimize-and-plan` skill had a "prompt optimizer" mode bolted onto its task-sequencer function - two unrelated jobs in one place. A new `prompt-engineering-advisor` personal skill was created to consolidate all cross-model prompt-writing: it covers any destination (Claude Design, ChatGPT, Codex, Gemini, fresh session, subagent) and includes a reference table mapping what each model has vs. lacks, so the prompt bridges exactly the right context gap. `chatgpt-prep` was deprecated. `optimize-and-plan`'s Mode 1 was removed. The rule: one tool, one job.
+11. **Stop hook for session-end checklist** - a second hook was added that fires at session end and echoes a checklist: session log, decisions.md, file-index update. A nuance worth knowing: in interactive Claude Code mode, the Stop hook fires after every response turn, not only at the true end of a session. This means the checklist can appear mid-conversation during normal work. It requires judgment about when it actually applies rather than being a clean trigger. Documented as known behavior.
+12. **First Claude Design pass** - the Brazusa /clean page went through its first dedicated design review using Claude Design as a separate review layer from Claude Code. Claude Design reviewed screenshots of the live page and diagnosed it as "upscale residential cleaning with boutique-local personality," identifying two structural problems (an italic serif typeface reading as too editorial for an operational cleaning business, and a residential hero photo reinforcing the wrong client positioning) alongside two evolution-fix areas (background tone, gold overuse). Direction confirmed as evolution-only - no full design reset. This marked the first time design governance was handled through a dedicated model and workflow rather than as an afterthought during code sessions.
 
 ---
 
@@ -111,7 +117,7 @@ This was not designed all at once. It evolved.
 
 **The integration safety gate.** On a live production system with no staging environment, this gate is not optional - it is the difference between catching a schema mismatch in a manifest and catching it after a broken form submission.
 
-**Cross-model handoffs.** The chatgpt-prep and copy-review agents made the Claude-to-ChatGPT-to-Claude loop reliable. Copy came back already mapped to the component's data structure. Violations were caught before anything landed in code.
+**Cross-model handoffs.** The copy-review agent enforces quality on anything coming back from an external model - it flags specific violations before copy touches the codebase. The original `chatgpt-prep` agent handled the outbound side for ChatGPT specifically; it has since been deprecated in favor of `prompt-engineering-advisor`, a skill that covers any destination model. The loop is the same: prepare the outbound prompt with the right context gap in mind, get the output back, run it through copy-review before implementing anything. The improvement is that the outbound preparation is no longer locked to one destination.
 
 **Having two tools audit each other.** The recursive improvement loop produced real corrections that neither tool would have found alone. Codex's encoding argument was correct and changed the convention. Claude's structural catches fixed Codex's outputs multiple times.
 
@@ -167,7 +173,8 @@ As of the latest Brazusa pass:
 - the repo is still a multi-client platform, with Brazusa Cleaning as the first live implementation
 - the Brazusa copy layer now lives in `lib/copy/brazusa-cleaning/`
 - hero, shared accordion headline, and Services copy are wired into that layer
-- design-review evidence is now being collected in a dedicated working area under `docs/working/design-review/`
+- design-review evidence has been collected in `docs/working/design-review/` and the first Claude Design pass is complete: evolution-only direction confirmed, two structural fixes identified (typeface and hero photo), two evolution fixes queued (background tone, gold overuse)
+- `chatgpt-prep` is deprecated; cross-model prompt-writing is now handled by the `prompt-engineering-advisor` personal skill, which covers any destination model
 - the system has moved beyond "how should we use Claude and Codex?" into "how do we keep the operating system, review inputs, and durable docs from drifting as the repo evolves?"
 
 The sections above explain how the system was built. The sections below should be read as "what is still open now" rather than "what was open at the moment every earlier paragraph was written."
@@ -201,7 +208,7 @@ These are not all equal. Some are immediate and blockers for clean product work.
 - ~~Testimonials pricing context~~ - done (commit 6524f9f). Real per-engagement numbers added to Thatch, Michelle, New Horizons, and Dr. Silver cases.
 - ~~Shareable hash links for Pricing filter chips~~ - done. Hash fragment state (`#testimonials-str` etc.) implemented in Testimonials; Pricing chips link directly.
 - ~~ChatGPT refinement of per-client service copy~~ - done (commit 078bc43). Full mechanism-based language pass across all service definitions.
-- ~~Formalize the ChatGPT copy workflow as reusable tooling~~ - done. `chatgpt-prep` and `copy-review` agents handle the handoff loop; chatgpt-prep generates character-counted briefs, copy-review enforces violations before anything enters the codebase.
+- ~~Formalize the ChatGPT copy workflow as reusable tooling~~ - superseded. `chatgpt-prep` was later deprecated. The loop is now `prompt-engineering-advisor` (any destination model, not just ChatGPT) + `copy-review` (unchanged). The underlying pattern is the same; the scope expanded.
 - ~~Accordion / hero / about image replacements~~ - done. The live content images were re-exported, compressed to `.webp`, and wired into the app. The same pass also produced a dedicated design-review evidence pack for the next Claude review.
 
 ---
@@ -251,7 +258,8 @@ There is no protocol for what happens when Claude and Codex both attempt to edit
 - `docs/decisions.md` - locked decisions with rationale and constraints. The AI-facing startup context.
 - `docs/session-log.md` - the human-facing session diary. Not read by AI tools at startup.
 - `docs/working/` - temporary working artifacts and review-prep material that are useful in active phases but are not top-level durable truth.
-- `.claude/agents/` - five subagent files. Each is self-contained: you can read any one cold and understand exactly what it does, what tools it has, and what it produces.
+- `.claude/agents/` - Claude subagent files. Each is self-contained: you can read any one cold and understand exactly what it does, what tools it has, and what it produces. Note: `chatgpt-prep` is in this folder but deprecated - it is kept for reference only.
+- `~/.claude/skills/` - personal skill files that live on the developer's machine, not in the repo. These are reusable instruction sets Claude loads on demand. Unlike agents, skills are not project-scoped - they apply across all Claude Code sessions on this machine. Current skills: `prompt-engineering-advisor` (cross-model prompt-writing for any destination), `optimize-and-plan` (task sequencer for multi-step implementation work).
 
 **Codex runtime config and repo export:**
 

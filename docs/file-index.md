@@ -212,9 +212,16 @@ Point-in-time export of the Codex config. Not the authoritative source — live 
 |---|---|
 | `.claude/agents/session-start.md` | Session-start agent — reads current-state, decisions, git log, returns brief |
 | `.claude/agents/design-review.md` | Design-review agent — audits components for token violations, font violations, layout anti-patterns |
-| `.claude/agents/chatgpt-prep.md` | ChatGPT prep agent — reads source component, produces copy brief for ChatGPT |
+| `.claude/agents/chatgpt-prep.md` | ~~ChatGPT prep agent~~ — deprecated; replaced by the `prompt-engineering-advisor` personal skill |
 | `.claude/agents/copy-review.md` | Copy-review agent — checks incoming copy for AI writing violations before implementation |
 | `.claude/agents/integration-safety.md` | Integration-safety agent — documents current API/Airtable/Resend/Sheets payload before any change |
+
+Personal skills (live at `~/.claude/skills/` on the developer's machine — global, not project-scoped, not tracked in this repo):
+
+| Skill | Purpose |
+|---|---|
+| `prompt-engineering-advisor` | Structures any prompt written for handoff to another model — covers Claude Design, ChatGPT, Codex, Gemini, fresh session |
+| `optimize-and-plan` | Task sequencer — orders multi-step implementation tasks, routes to Claude vs. Codex, surfaces write-surface conflicts |
 
 ---
 

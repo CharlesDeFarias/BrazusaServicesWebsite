@@ -146,8 +146,20 @@ When a decision is made, add it here before the session ends. Format:
 **Constraints:** Apply the labels at the artifact level (decision, implementation block, reasoning artifact), not only at the session level.
 
 **Decision:** `optimize-and-plan` personal skill exists at `~/.claude/skills/optimize-and-plan/SKILL.md`.
-**Why:** Charles repeatedly needs help turning raw intent into optimized prompts and sequenced task plans.
-**Constraints:** Two modes only: prompt optimizer and task sequencer. Codex-side wording lives separately; Claude must not modify Codex workflow files directly.
+**Why:** Charles needs help sequencing multi-step implementation tasks, identifying dependencies, and routing work between tools.
+**Constraints:** Task sequencer only — Mode 1 (prompt optimizer) was removed and replaced by the dedicated `prompt-engineering-advisor` skill. Codex-side wording lives separately; Claude must not modify Codex workflow files directly.
+
+**Decision:** `prompt-engineering-advisor` personal skill exists at `~/.claude/skills/prompt-engineering-advisor/SKILL.md`.
+**Why:** Charles frequently writes prompts for handoff to other models (ChatGPT, Gemini, Claude Design, Codex, fresh Claude sessions) and also uses the write-prompt-then-feed-back strategy within the same session. The skill replaces Mode 1 of optimize-and-plan and the old chatgpt-prep agent.
+**Constraints:** Trigger on any prompt intended for cross-model handoff or feed-back-to-self. Output always includes five sections: Engineering Assessment, Prompt, Why It's Written This Way, What Would Strengthen This, Token Notes. The write-prompt-then-feed-back strategy has real value for cross-model transfer (different context gap); for same-session self-prompting it is usually overhead — the skill assesses this per situation.
+
+**Decision:** Two Claude Code hooks added to `.claude/settings.local.json` (project-level only):
+- `PreToolUse` on `Glob` — echoes reminder to check `docs/file-index.md` before doing file discovery searches.
+- `Stop` — echoes session-end checklist: append to session-log.md, write durable decisions to decisions.md, update file-index.md if files changed.
+**Why:** Written rules are unreliable mid-task; hooks fire at the right moment. File index checking was being skipped (Claude globbed market research files instead of reading the index). Session-end documentation was inconsistent.
+**Constraints:** Stop hook fires in interactive mode after every response turn, not only at true session end — treat it as a reminder, not a guarantee. Project-level only; do not add to global settings.
+
+**Deferred:** Stale permissions in `.claude/settings.local.json` — the `allow` list contains scaffold commands from initial Next.js setup that are no longer needed. Clean these up in a single pass once remaining config changes settle. Do not remove them piecemeal.
 
 **Decision:** Usage discipline and parallel-work protocol is a durable rule.
 **Why:** Claude and Codex both have usage limits; without explicit routing discipline, the wrong tool silently takes the wrong task and tokens get wasted on repeated work.
@@ -182,4 +194,6 @@ When a decision is made, add it here before the session ends. Format:
 ## Startup-Relevant Warnings
 
 - Do not add new operational claims to copy or design without Charles verifying them first.
-- During the future design pass, take one focused Claude Design exploration before coding major visual changes.
+- Design direction for the Brazusa /clean page is confirmed as evolution-only (not a full reset). Two structural fixes are in scope: typeface system-wide replacement (the current italic serif reads as lifestyle/boutique, not B2B operational) and hero photo swap (current image codes as residential premium — needs operational-scale imagery). Background tone and gold usage are evolution fixes, not structural changes.
+- Claude Design has completed the first-impression (reset evaluation) pass. Its diagnosis: "upscale residential cleaning with boutique-local personality." The typeface and hero photo are the structural problems; background tone and gold deployment are fixable within the current visual language.
+- Before coding any visual changes from the design review, take one focused Claude Design exploration to establish direction for the typeface and hero replacement. Do not implement before that pass is complete.

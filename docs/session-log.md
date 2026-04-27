@@ -8172,3 +8172,322 @@ Charles still needs to fill in: observation memo (Part 1) and screenshot priorit
 
 ### 04/23/2026, 02:13:37 PM
 **Prompt:** do a durable update and push
+
+### 04/24/2026, 02:48:58 PM
+**Prompt:** session start
+
+### 04/24/2026, 07:02:59 PM
+**Prompt:** session start
+
+### 04/24/2026, 08:06:50 PM
+**Prompt:** just checking if we're still connected
+
+### 04/24/2026, 09:01:51 PM
+**Prompt:** alright i've made some changes to the review-notes.txt but halfway through i got very lazy/paralyzed and am struggling to fill everything in. but beyond laziness its also because A) design is my weakest skill and B) i'm just not sure what i want, what i want to change or by how much, etc.
+ask me some clarifying questions after examining the notes i added
+
+### 04/24/2026, 09:07:17 PM
+**Prompt:** 1- While as a whole there's something i dont quite like about the entirety of it, it does feel more like the right thing but rough. I like that we're focusing targetting on STRs and commercial, but it does feel a little too stuffy/formal when it comes to A) beeing welcoming to resideential clients and B) feeling like a warm small business and not yet another corporate cleaning startup franchise
+2- Most likely the thing that bothers me most is the general relationship between text and general outline of the site. opening the site feels a little exhausting at the moment, its a lot of reading and self-direction. its immediately intimidating and offputting i think.
+3- I like the navy and gold, i really like some of the buttons and their styles. Honestly not sure what i lik and may be better to ask me specific examples.
+4- A bit of both. I mentioned them because i feel it's all part of what should be considered for the design, but anything that's a UX bug-fix can be theoretically pinnde for later if we decide that's the design we want to go with, but understanding/pointing out the UX may help inform those design decisions even before we make those fixes or add any features.
+
+### 04/24/2026, 09:21:07 PM
+**Prompt:** go ahead
+
+### 04/25/2026, 05:43:28 PM
+**Prompt:** start session
+
+### 04/26/2026, 01:29:41 PM
+**Prompt:** remote session
+
+### 04/26/2026, 01:32:16 PM
+**Prompt:** have we initiated a remote session that i can continue on my phone?
+
+### 04/26/2026, 01:33:07 PM
+**Prompt:** you're mistaken. there's a feature for starting a remote session.
+
+### 04/26/2026, 01:33:21 PM
+**Prompt:** -rc
+
+### 04/26/2026, 01:46:11 PM
+**Prompt:** are we connected?
+
+### 04/26/2026, 01:47:00 PM
+**Prompt:** check again
+
+### 04/26/2026, 01:47:34 PM
+**Prompt:** are you able to see the review notes doc?
+
+### 04/26/2026, 01:49:36 PM
+**Prompt:** alright, let's get into this design review. before we double down and dig into the existing site, I want you to take the existing notes and market research and do a design review that's focused entirely on whether and how we would go about replacing the entirety of the design instead of just some small parts.
+
+I want to see or understand how things COULD look before I truly and permanently commit to the design we have now.
+
+what's the best way to utilize and prompt you for this?
+
+### 04/26/2026, 01:53:19 PM
+**Prompt:** I'm on mobile and can't find it now. let's take this opportunity to create an index file that index all files in the project with a description of each, and is referenced in claude.md so we can prevent token burning on finding files in the future 
+
+### 04/26/2026, 01:56:35 PM
+**Prompt:** from an LLM/Claude/codex engineering expert point of view, give me feedback:
+1- it seems to me the best choice would be to auto generate it now and confirm with me before creating. and then in claude.md we just stare the existence and location of the index file so that Claude knows where to look anytime it's searching for a specific file, rather than require Claude look into the index each time.
+
+2- docs and files too
+
+### 04/26/2026, 02:01:11 PM
+**Prompt:** - what is globbing and grepping  and how does it impact in this situation?
+- how is it can't you tell me that when you literally just told me that? @ routes.ts
+-ageeed on ignoring the obviously unnecessary files like node modules.
+-i also think it's important we update whatever currently spells out how to do durable updates so that any changes to file structure or adding/removing files triggers an update to the index
+-sidenote: deferred task for later: I want to set up a cleanup /code review skill that does things like check and fix up index and other stray cleanups. something I can run every so often to ensure things are staying neat and as expected.
+
+### 04/26/2026, 02:03:00 PM
+**Prompt:** proceed
+
+### 04/26/2026, 02:08:22 PM
+**Prompt:** - include codex config mirror
+- that's a good location
+I also want the index  referenced at the bottom of the existing readme. eventually once the project is completed, I'll put the full index there.
+
+### 04/26/2026, 02:12:10 PM
+**Prompt:** commit and proceed but focusing just on this part I'm pasting of your response to me. I want you to do it as though I'm already leaning towards a reset but haven't officially decided.
+Recommended sequence:
+Reset evaluation pass (me, now) — I read the market research and current code cold, then answer: does the visual design signal "B2B operations partner" or something else? What specific elements are producing the wrong signal? This gives you an evidence basis before you go anywhere near visual exploration.
+Visual direction pass (Claude Design) — Armed with those findings, you give Claude Design the hero screenshot + the positioning statement + the anti-patterns, and ask it to show 2-3 alternative directions. One session per section — hero first.
+Decision — You read both outputs and decide: evolution, constrained reset, or full reset. That decision drives what I implement.
+What I'd need from you first:
+Where is marketresearch-distilled.txt? The review notes reference it but I haven't read it yet.
+The redesign decision checkbox in Part 1 — I know you want to explore first, but should I treat this pass as "genuinely undecided" or "leaning toward reset, looking for confirmation"? That changes how I frame the findings.
+
+### 04/26/2026, 02:22:06 PM
+**Prompt:** am I able to use Claude design on mobile app?
+
+### 04/26/2026, 02:22:54 PM
+**Prompt:** do a git push for now while I look into it
+
+### 04/26/2026, 02:26:35 PM
+**Prompt:** @"C:\Users\charl\.claude\uploads\008c2fa1-990e-47c9-bbd1-a685e424b33d\019dcb0b-235631.png" ok I looked it up and I can access claude.ai/design from mobile browser, but not sure if I can get it to see the project remotely like you can now. I've attached a screenshot shit, tell me what you can
+
+### 04/26/2026, 02:28:23 PM
+**Prompt:** I can also download anything I need from the GitHub repo link. with that in mind, alter your instructions to include all I should download and upload
+
+### 04/26/2026, 02:31:03 PM
+**Prompt:** before we continue I want you to examine again, this time from an LLM/Claude expert point of view. Im wondering if doing it bit by bit like this is truly the best way to utilize Claude design, or if it isn't better to do s larger batch first all at once
+
+### 04/26/2026, 02:45:34 PM
+**Prompt:** in Claude design should this be prototype, from template, other?
+
+### 04/26/2026, 02:47:59 PM
+**Prompt:** shouldn't I also feed in some market research?
+
+### 04/26/2026, 02:49:00 PM
+**Prompt:** give me the full text to paste from the design brief. easier for me to copy
+
+### 04/26/2026, 02:49:32 PM
+**Prompt:** give me the new full prompt to give to Claude design with the screenshots, In cluding the relevant text from market research
+
+### 04/26/2026, 02:52:02 PM
+**Prompt:** here's the reply:
+These screenshots show the full Brazusa Cleaning page on mobile and desktop — a B2B cleaning operations company targeting STR hosts, property managers, and office/clinic operators. Not homeowners.
+Intended positioning: locally owned, professionally run cleaning operations partner. Not a generic cleaner, not a luxury brand, not a residential maid service.
+What the design should be doing (design implications from market research):
+The hero should feel stable, specific, and operator-facing — not warm, generic, decorative, or lifestyle-driven
+Early hierarchy should reinforce a control narrative: what Brazusa is, who it serves, why it is more dependable, how it works, what the client does not have to manage, then proof
+The single-page structure should behave like a routing page — each section should help a serious buyer identify fit and move deeper into trust, not feel like a long undifferentiated stack
+Visuals should avoid signaling domestic cleaning, luxury hospitality, or fake enterprise scale
+If real imagery is weak or limited, the design should rely more on typography, structure, proof strips, trust cards, and process modules than on generic stock imagery
+Motion should be restrained enough that it never competes with credibility
+CTAs and forms should feel like a fit/scope/walkthrough conversation, not commodity quote-shopping
+Mobile design should prioritize scan speed, hierarchy clarity, and reduced vertical bloat
+Anti-patterns to flag if present:
+Generic local cleaning-template energy
+Residential maid-service cues dominating the page
+Performative luxury signaling
+Testimonial-heavy sections with weak operational substance
+Decorative icons, counters, or animations that do not build trust
+Large service dumps with weak segmentation
+Soft lifestyle tone or vague "partner" language unsupported by visible systems
+Any visual direction that makes the business feel informal, overdesigned, or unclear about who it is for
+Locked constraints: navy dominant palette, gold as a restrained functional accent only, off-white for light backgrounds. Copy and page structure do not change.
+Looking only at the visual impression across these screenshots — before reading any copy — answer three questions:
+What category does this design currently signal?
+Which specific visual elements are producing that signal?
+Are these problems fixable within the current visual language, or does the visual language itself need to change?
+Do not suggest solutions yet. Diagnose first.
+mobile-03-positioning-to-accordion.png
+desktop-11-testimonials-overview.png
+desktop-06-services-grid-overview.png
+desktop-03-positioning-to-accordion.png
+desktop-01-hero-overview-top-83dcd9c5.png
+Claude
+Visual Diagnosis: Brazusa Cleaning
+1. What category does this design currently signal?
+Upscale residential cleaning with boutique-local personality. The first-impression read — before any copy registers — is a premium home cleaning or high-end maid service, possibly targeting homeowners who want a "trustworthy local team." There's a secondary signal of boutique hospitality (think hotel gift shop or spa services), but nothing in the visual layer immediately communicates B2B, multi-unit operations, or vendor-grade reliability.
+
+2. Which specific visual elements are producing that signal?
+The hero photograph is the single strongest mismatch. A woman in uniform cleaning a marble countertop under warm residential ambient light, shot close-up in what reads as a well-appointed home or luxury short-term rental interior — this is the dominant first impression. The framing, lighting, and surface material all code as "premium home cleaning," not operational-scale services for property managers or office operators.
+
+The display typeface is doing sustained damage throughout. The large italic serif — used as the primary headline treatment across all sections — is the typographic register of a boutique restaurant, a day spa, or a luxury real estate brand. It reads as personal, lifestyle-adjacent, and decorative. It undercuts the control narrative at every heading it anchors.
+
+The warm beige/cream background is domestically coded. The off-white used throughout the light sections carries a residential warmth — closer to a home décor brand or interior design studio than an operations vendor. It makes the page feel comfortable and personal rather than structured and professional.
+
+Gold is deployed decoratively, not functionally. The carousel arrow buttons, the small accent rules, the bullet markers — gold in these roles reads as "premium local business" styling, not as a precision accent reinforcing operational specificity. It accumulates into a luxury-adjacent signal.
+
+The testimonials/case studies section layout feels like consumer reviews. Large white rounded cards with italic serif headlines and attribution lines read like Yelp or Google reviews. The format doesn't signal operational proof — it signals social validation for a local service, which is a different category of trust.
+
+Mobile spacing and density signal a consumer-grade experience. The generous whitespace on mobile reads as airy and personal — appropriate for a consumer app or lifestyle brand, but it slows scan speed and softens the operator-facing register the copy is trying to establish.
+
+3. Are these problems fixable within the current visual language, or does the visual language itself need to change?
+Partially fixable — but two elements are structural, not cosmetic.
+
+The photograph and the decorative gold usage are fixable without changing the visual language. Swapping the hero image and rationalizing how gold is applied can reduce the residential signal significantly.
+
+The italic serif typeface is a structural problem. It's used system-wide as the primary display voice, and it's producing a softness and lifestyle register that the positioning brief actively contradicts. You can't patch that with layout changes — it's doing the wrong categorical work at every heading.
+
+The warm background tone is also structural but more recoverable. Shifting toward a cooler or more neutral off-white wouldn't violate the locked palette but would meaningfully alter the ambient register from "domestic comfort" toward "professional environment."
+
+The overall typographic hierarchy lacks the density and legibility architecture that B2B operator-facing designs require. The page currently trades on elegance — which reads as a positioning signal that belongs to a different customer and a different category.
+
+### 04/27/2026, 01:19:01 PM
+**Prompt:** session start
+
+### 04/27/2026, 01:24:23 PM
+**Prompt:** I lost the history we were working on so I'm going to paste for you the results from claude design after we tried to do a preliminary total review to see how much needs to be changed in the design, whether just evolution or start over. Here's the response from claude design, reply to it with your opinions and what you suggest for next steeps.
+Visual Diagnosis: Brazusa Cleaning
+1. What category does this design currently signal?
+Upscale residential cleaning with boutique-local personality. The first-impression read — before any copy registers — is a premium home cleaning or high-end maid service, possibly targeting homeowners who want a "trustworthy local team." There's a secondary signal of boutique hospitality (think hotel gift shop or spa services), but nothing in the visual layer immediately communicates B2B, multi-unit operations, or vendor-grade reliability.
+
+2. Which specific visual elements are producing that signal?
+The hero photograph is the single strongest mismatch. A woman in uniform cleaning a marble countertop under warm residential ambient light, shot close-up in what reads as a well-appointed home or luxury short-term rental interior — this is the dominant first impression. The framing, lighting, and surface material all code as "premium home cleaning," not operational-scale services for property managers or office operators.
+
+The display typeface is doing sustained damage throughout. The large italic serif — used as the primary headline treatment across all sections — is the typographic register of a boutique restaurant, a day spa, or a luxury real estate brand. It reads as personal, lifestyle-adjacent, and decorative. It undercuts the control narrative at every heading it anchors.
+
+The warm beige/cream background is domestically coded. The off-white used throughout the light sections carries a residential warmth — closer to a home décor brand or interior design studio than an operations vendor. It makes the page feel comfortable and personal rather than structured and professional.
+
+Gold is deployed decoratively, not functionally. The carousel arrow buttons, the small accent rules, the bullet markers — gold in these roles reads as "premium local business" styling, not as a precision accent reinforcing operational specificity. It accumulates into a luxury-adjacent signal.
+
+The testimonials/case studies section layout feels like consumer reviews. Large white rounded cards with italic serif headlines and attribution lines read like Yelp or Google reviews. The format doesn't signal operational proof — it signals social validation for a local service, which is a different category of trust.
+
+Mobile spacing and density signal a consumer-grade experience. The generous whitespace on mobile reads as airy and personal — appropriate for a consumer app or lifestyle brand, but it slows scan speed and softens the operator-facing register the copy is trying to establish.
+
+3. Are these problems fixable within the current visual language, or does the visual language itself need to change?
+Partially fixable — but two elements are structural, not cosmetic.
+
+The photograph and the decorative gold usage are fixable without changing the visual language. Swapping the hero image and rationalizing how gold is applied can reduce the residential signal significantly.
+
+The italic serif typeface is a structural problem. It's used system-wide as the primary display voice, and it's producing a softness and lifestyle register that the positioning brief actively contradicts. You can't patch that with layout changes — it's doing the wrong categorical work at every heading.
+
+The warm background tone is also structural but more recoverable. Shifting toward a cooler or more neutral off-white wouldn't violate the locked palette but would meaningfully alter the ambient register from "domestic comfort" toward "professional environment."
+
+The overall typographic hierarchy lacks the density and legibility architecture that B2B operator-facing designs require. The page currently trades on elegance — which reads as a positioning signal that belongs to a different customer and a different category.
+
+### 04/27/2026, 01:28:12 PM
+**Prompt:** -Agreed then, we're just doing evolution design now, not full reset.
+-provide me the full prompt to put into claude design for our next step regarding typeface and  anything else you feel should be asked at the same time. utilize informatino from the marketresearch docs, not just the distilled market research doc file but also the original one. 
+- All the images on the website are currently AI generated, so I'll need you or claude design to give me the prompts to use with AI tools. eventually i'll replace these with real photos.
+- I have no instinct for typeface honestly, other than it should be easy to read while the current one isn't.
+
+### 04/27/2026, 01:32:26 PM
+**Prompt:** - I'm curious, when i told you to look at the two market research files: how did you find them? did you search manually or did you use the index file we created and mentioned in cluade.md?
+- for these instructions you gave me to give to claude design, should i continue in the existing project where i did the top level review or start from scratch? and what should i feed into the claude design along with the prompt?
+
+### 04/27/2026, 01:34:42 PM
+**Prompt:** -From an llm expert point of view, how can we increase the chance you wont make that mistake again? 
+- are you sure just those two screenshots are enough when there are other examples of why the font needs work?
+
+### 04/27/2026, 01:37:11 PM
+**Prompt:** - from an llm/claude/codex/engineering expert point of view, what's the suggested best course of action for increasing the likelihood you check the index file when its best to do so, vs not enough or too much.
+
+### 04/27/2026, 01:41:11 PM
+**Prompt:** - for the claude design prompt, should i be starting a new conversation using the prototype, slide deck, from template, or other?
+- provide me the prompt to give you and the instructions for me to follow to update this change in the hook as you've suggested.
+
+### 04/27/2026, 01:45:50 PM
+**Prompt:** Add a PreToolUse hook on the Glob tool to .claude/settings.json. The hook should run an echo command with this message: "File discovery
+  ▎ search? If you're trying to find where a file lives, check docs/file-index.md first." Do not add it to global settings — project-level only.
+
+### 04/27/2026, 01:48:12 PM
+**Prompt:** - from an llm/claude engineering expert's point of view, explain to me something: How different/effective is my often used strategy of having you write a prompt for me to then immediately feed back to you instead of having you just act on it yourself? Am i just wasting tokens or does this have an impact on result and token usage that's beneficial?
+- Has this change opened up any other considerations i should make to the configurations considering the current stup and goals i have?
+
+### 04/27/2026, 01:55:46 PM
+**Prompt:** - This gives me an idea then. evaluate this from that same expret point of view: What if we set up another hook/skill that's set up that everytime i ask you to give me a prompt to feed back into you or another agent, you do the following: A) you "think" from the perspective of an LLM/claude engineering expert. B) You ask clarifying questions and make recommendations from that perspective on things that would make the prompt more effective and C) you consider implications and make suggestions that could lower or maximize impact of the tokens being used? 
+I figure this way it would meaningfully change the behavior while also helping me understand even better how to use Claude with every session.
+- why are those stale permissions in the settings file in the first place? Is this something we should consider building into instructions to prevent in the future?
+- that stop hook sounds like a good idea, let's do it. and it also sounds like it would be a good idea to run a version of this on every session start too, no? in case the last session ended without a durable update or officially recognized "stop"
+- let's add the fewer-permissions skill update thing to deferred items for now. i feel like theres a few more changes i'm going to bee making to your configs and skills and then may as well do the update at that point.
+
+### 04/27/2026, 02:00:57 PM
+**Prompt:** - Let's actually go ahead and make the update to the prompt-engineering skill because this is something i will be using very often.  Tell me more and ask me questions before you do anything on it.
+
+### 04/27/2026, 02:22:50 PM
+**Prompt:** - I want it to trigger for cross model and for prompts to feed back into you. 
+- Which do you recommend for the relationship question? I'm actually not sure i see much of an advantage of having the chatgpt-prep skill and lean towards the option of having the nwe skill replace the prompt-writing half of optimnize and plan. but the wrapping option also sounds smart. 
+- I'd prefer a mix of option A and B where you assess whther context is sufficient, and whenever you decide it is sufficient, you still include questions/notes before or after the prompt to show/explain what information i could give that would significantly change the prompt. giving me the option to use what you gave me or provide the additional information to hone th prompt further.
+- all of the above for sure. Token usage is a huge limitation for me so all of these things are useful.
+- absolutely annotate with intention to explain to a budding engineer from that perspective of an expert that's teaching.
+
+### 04/27/2026, 02:41:30 PM
+**Prompt:** durable update
+
+### 04/27/2026, 02:47:11 PM
+**Prompt:** my mistake, continue with durable update
+
+---
+
+## Session: 2026-04-27 -- Design review, AI image prompts, workflow tooling
+
+### Decisions made this session (Claude-authored)
+
+- **Evolution-only confirmed:** After Claude Design's first-impression diagnosis ("upscale residential cleaning with boutique-local personality"), Charles confirmed evolution-only -- no full reset.
+- **Structural design fixes in scope:** (1) typeface system-wide -- the current italic serif is in the wrong categorical register; (2) hero photo -- current image codes as residential premium, needs operational-scale imagery.
+- **Background tone and gold deployment** are evolution fixes (fixable within the current visual language), not structural changes.
+- **optimize-and-plan skill updated:** Mode 1 (prompt optimizer) removed. Skill is now task-sequencer only. Reference moved to prompt-engineering-advisor for all prompt-writing work.
+- **prompt-engineering-advisor skill created** at `~/.claude/skills/prompt-engineering-advisor/SKILL.md`. Replaces chatgpt-prep agent and optimize-and-plan Mode 1. Triggers on cross-model handoffs and feed-back-to-self prompts. Output always includes five sections with annotation explaining mechanism, not just what each section does.
+- **CLAUDE.md updated:** Split the optimize-and-plan / prompt-engineering-advisor triggers into two separate trigger rules. ChatGPT prep section updated to route through prompt-engineering-advisor. Agent roster row updated.
+- **PreToolUse hook on Glob added** to `.claude/settings.local.json` -- echoes reminder to check `docs/file-index.md` first. Project-level only.
+- **Stop hook added** to `.claude/settings.local.json` -- echoes session-end checklist (session-log, decisions.md, file-index). Caveat: fires after every response turn in interactive mode, not only at true session end.
+- **Stale permissions deferred:** `allow` list in settings.local.json has scaffold commands from initial Next.js setup. Clean up in one pass once remaining config changes settle.
+
+### What happened (Claude-authored)
+
+1. **Session started** with context from previous conversation (design review state, Claude Design visual diagnosis already completed in prior session).
+2. **Responded to Claude Design diagnosis** -- agreed with the findings, confirmed evolution-only direction, identified the two structural problems (typeface + hero photo) vs the two evolution fixes (background tone, gold discipline).
+3. **Provided Claude Design prompt** for the next pass (typeface direction + background tone + AI image generation prompts) using both `marketresearch.txt` and `marketresearch-distilled.txt`. Prompt formatted for a fresh Claude Design session starting with "Other" template or closest available. Four AI hero image generation prompts provided (Options A-D).
+4. **Identified Glob tool violation** -- discovered Claude had used Glob to find market research files instead of reading `docs/file-index.md` first. Admitted the mistake. Led directly to the PreToolUse hook on Glob.
+5. **PreToolUse hook added** to project-level settings. Stop hook added at the same time.
+6. **Analyzed write-prompt-then-feed-back strategy** from LLM engineering expert perspective. Conclusion: genuinely valuable for cross-model transfer (different context gap = real work for the prompt); overhead for same-session self-prompting. This insight shaped the prompt-engineering-advisor skill design.
+7. **prompt-engineering-advisor skill created** -- full five-section format, destination model reference table (Claude Design / ChatGPT / Codex / Fresh Claude / Subagent / Gemini), annotation style teaching mechanism not description, common mistakes table.
+8. **optimize-and-plan skill updated** -- Mode 1 removed, description updated, reference to prompt-engineering-advisor added.
+9. **CLAUDE.md updated** -- three edits total (trigger split, ChatGPT prep section, agent roster).
+10. **Durable update** -- this entry.
+
+### Pending (carry to next session)
+
+- Claude Design session: start fresh, paste the typeface+background+image prompt, attach 4 screenshots (desktop-01, desktop-04, desktop-08 or desktop-09, mobile-01). Use "Other" template if no relevant design template exists.
+- Stale permissions cleanup in `.claude/settings.local.json` (deferred).
+- AI image generation: 4 prompts ready for hero photo replacement once Claude Design direction is confirmed.
+- Design violation fixes (ClientAccordion flat background, FinalCTA grain judgment call, Services.tsx raw gold, Testimonials tokenization, raw white surfaces) -- deferred until design direction is confirmed from Claude Design pass.
+
+### Token usage context
+
+Session was a context-limit continuation from a prior conversation (the prior conversation was summarized). All durable work completed via text output (tool use had been blocked at the point the summary was requested). This durable update was the first tool-use action in the continuation.
+
+### Prompt log
+
+- "session start"
+- "[pasted Claude Design visual diagnosis] reply to it with your opinions and what you suggest for next steps"
+- "Agreed then, we're just doing evolution design now... provide me the full prompt to put into claude design for our next step regarding typeface and anything else..."
+- "I'm curious, when i told you to look at the two market research files: how did you find them?..."
+- "From an llm expert point of view, how can we increase the chance you wont make that mistake again?..."
+- "from an llm/claude/codex/engineering expert point of view, what's the suggested best course of action for increasing the likelihood you check the index file..."
+- "for the claude design prompt, should i be starting a new conversation using the prototype, slide deck, from template, or other?..."
+- "Add a PreToolUse hook on the Glob tool to .claude/settings.json..."
+- "from an llm/claude engineering expert's point of view, explain to me something: How different/effective is my often used strategy of having you write a prompt for me to then immediately feed back to you..."
+- "This gives me an idea then. evaluate this from that same expert point of view: What if we set up another hook/skill..."
+- "Let's actually go ahead and make the update to the prompt-engineering skill..."
+- "[Answered 5 design questions about skill scope, relationship to existing tools, option A+B mix, token implications, annotation style]"
+- "durable update"
+- "[interrupted] i told you to give me the prompt to feed back into you. not to implement the changes"
+- "my mistake, continue with durable update"

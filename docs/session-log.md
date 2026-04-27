@@ -8491,3 +8491,62 @@ Session was a context-limit continuation from a prior conversation (the prior co
 - "durable update"
 - "[interrupted] i told you to give me the prompt to feed back into you. not to implement the changes"
 - "my mistake, continue with durable update"
+
+### 04/27/2026, 03:09:32 PM
+**Prompt:** now i want you to provide me with the prompt to feed you so that you can give the best update to the existing AI documentation in the project trackign how i'm using AI. I want to ensure that we're capturing not just the changes we've made now but also the logic behind the changes and how we got there in the first place. including how we started with discussing the index file not getting used and how to fix that, and the changes we made to the skills and such.
+
+I haven't read those docs since we created them so i dont know how useful or faithful they are to my goal, which is to utilize this to learn from later and perhaps as a case study to share with others as help or content.
+
+### 04/27/2026, 03:17:35 PM
+**Prompt:** update the prompt now that i answered your questions:
+- ignore the entire forvitor folder, that's just for my friend and can be ignored for now. it'll just contain a translated version of the other existing docs eventually.
+- the audience level is basically me. people with some knowledge of LLMs/ai/coding but not expeeerts in anything.
+- dont reply with the prompt, build it and then execute it, as i've confirmed what you're doing and answered your questions
+
+### 04/27/2026, 03:22:25 PM
+**Prompt:** great, do a durable update and push
+
+---
+
+## Session: 2026-04-27 (continuation) — AI documentation update
+
+**Tool:** Claude (this session)
+
+### Decisions made this session
+- None architectural. Pure documentation pass.
+
+### What happened
+
+1. Charles asked for a prompt to feed back into Claude to update the AI documentation (`docs/ai-case-study.md` and related files) to capture the 04/27 session's workflow changes — specifically with rationale and narrative, not just a changelog.
+
+2. Used `prompt-engineering-advisor` skill. Pre-write assessment concluded the skip-prompt option was available (all context was in this session), but Charles explicitly wanted the prompt artifact first, so went through the full skill output.
+
+3. Charles answered two clarifying questions: ignore the `forVitor/` folder entirely; audience is self/other developers with some LLM knowledge but not experts.
+
+4. Charles confirmed to skip the prompt output and execute directly.
+
+5. Read all four AI documentation files (`ai-case-study.md`, `forVitor/README.md`, `forVitor/replicate-ai-setup.md`, `file-index.md`) to understand current state before editing.
+
+6. Made six targeted edits to `docs/ai-case-study.md`:
+   - Concrete mechanisms: new entry for hooks as structural enforcement
+   - What changed over time: four new steps (9-12) covering file-index hook, skill consolidation/chatgpt-prep deprecation, Stop hook quirk, first Claude Design pass
+   - What worked well: updated chatgpt-prep entry to reflect deprecation and broader scope
+   - Completed items: chatgpt-prep formalization entry updated to "superseded"
+   - Current state snapshot: updated to reflect design review completion and skill change
+   - Where to look: chatgpt-prep noted as deprecated; personal skills at `~/.claude/skills/` explained
+
+7. Made two edits to `docs/file-index.md`:
+   - chatgpt-prep row marked deprecated
+   - Personal skills table added with explanatory note about global vs. project scope
+
+8. Committed both files: `9bb9118` — "docs: update ai-case-study and file-index to capture 04/27 workflow changes"
+
+9. Durable update (this entry). `decisions.md` and `current-state.md` not changed — no new architectural decisions, and operational project state unchanged (still waiting for Claude Design session for typeface/hero).
+
+### Pending items
+- Same as prior session: Claude Design session for typeface/hero (Charles only), then design decisions + Codex implementation prompts.
+
+### Prompt log
+- "now i want you to provide me with the prompt to feed you so that you can give the best update to the existing AI documentation..."
+- "update the prompt now that i answered your questions: [forVitor skip, audience level, execute directly]"
+- "great, do a durable update and push"

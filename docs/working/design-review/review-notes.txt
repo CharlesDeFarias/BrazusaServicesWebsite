@@ -9,10 +9,40 @@
 ---
 
 ## PART 1: CHARLES'S OBSERVATIONS
-# [CHARLES TO COMPLETE — 10-15 minutes of honest first-person notes from using the site on your phone]
+# Obeservations while on desktop monitor, 1920x1080
+- despite my screen/monitor being huge, upon initial load, the hero of the site is still too tall and needs to be scrolled down to see fully.
+- there's an unnecessary amount of blank space between the top nav and the actual start of the content of the hero
+- The space in the top nav between "Brazusa Cleaning" and the actual navigation options seems strangely bare
+- I'm not a big fan of the font for the hero title. a little hard to read somehow.
+- There's some space between the hero's photo that isn't being used, which could help lower the height if we utilize it
+- I think the "tell us how your space runs and we will say if it fits or not" should be removed entirely.
+- I like the scrolling horizontal banner, but it could have more points that it scrolls through
+- The "built for operators, not oversight" section (including what this means for you) isn't bad, but it seems rather boring and not that useful in comparison to the sections that come after it.
+- "The kind of work you need" isn't a good title for that section, and in general it doesnt feel like the site visitor is being invited or instructed to click on any of the sections to see the additional information.
+-  I dont like that each of the space-type headers (while collapsed) take up so much width but are pretty empty (until expanded)
+-  I dont like that when you expand one of these sections, it doesn't change scroll at all. 
+-  I dont like that the "other spaces too" isn't as obiously an expandble section. I like that it has a special differentiator, but it should also bee more obiously a collapsbile section like the others.
+- for the services section, i dont like the what we handle daily title, and i dont like that we have a table for 6 fields with one of them empty. seems unlikely we cant fill that with a relevant bit of text.
+- I dont like that the "these are optional layers" and the "not sure what fits?" together take up so much vertical space when they could eitheer be put on the same line, or the "optional layers" note could be put in a better spot with "not sure what fits" getting raised. Also the line spacing of the bullet poitns is a little weird. like the space between the second to last and last bullet points in the first column.
+- the how it works section feels a little useless/random here, almost feels like it should be something in the background or on the side, not its own content section.
+- I dont like that we have both "real examples, real clients" and "real clients, real situations" feels repetitive and weird.
+- it's not good that currently in real examples section, clicking on a property type moves you out of the entire section. its jarring and strange, especially compared to the behavior of all the other simnilar buttons on the page just expanding or filtering something.
+- The testimonials section seems rather dense and hard to read currently.
+- There's a lot of unused vertical space in the first colum of the greater boston section, seems like it could be used better
+- above "tell us what you need" there's a huge empty space
+- I dont like how small the logo is at the bottom of the page
+now while looking in mobile:
+-The hero height here is also a problem, with "start a free quote" being at the bottom of my screen on initial load, meaning i have to scroll down a full page to see the call/text and the hero image.
+-It feels like the banner is moving SUPER slow. shouldn't be too much faster but it's comically slow at the moment.
+-the intial load of the hero also just feels super dense/word heavy and yet also hard to read because of font size on top of the amount of text.
+- the "what this means for you" font color and style makes it really hard to read on that background color.
+- "The kind of work you need" section looks strange bceause it starts with the line seperator from the previous section, and then there's another similar full-length line seperator that's actually just the top border of the first expandable menu option.
+- When opening th expandable space type options, the viewport/scroll doesnt change. so if you click the first one and then click the second one, your screen shows the bottom half of the opened up menu instead of starting you at the top of the new opened section.
+- clicking "other space too" opens up a menu while simultaneously scrolling you down slightly to the next section, making you barely even notice a text box was expanded.
+- the services section gets a bit unweildy and difficult to read on mobile, especeially when attempting to trigger different text arrangements by clicking the types of space "filters", as you basically have to scroll down and then back up to see changes and apply a new one.
+- line spacing in the bullets of "we can also help with" is also high, not just between bullets but between sentences within the same bullet. looks bad.
+- huge empty space above the last section "tell us what you need"
 
-### What feels wrong
-- [Fill in specific issues from real mobile use — "the gap below the banner" not "it feels unpolished"]
 
 ### What feels right / should not be touched
 - [2-3 things that already work and should survive any design pass]

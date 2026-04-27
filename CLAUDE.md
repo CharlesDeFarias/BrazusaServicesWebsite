@@ -4,6 +4,8 @@
 
 **First:** invoke the `session-start` agent. It reads `docs/current-state.md`, `docs/decisions.md`, recent git history, and open TODOs and returns a brief in under a minute. Do not skip this - it exists specifically to prevent rebuilding context from scratch.
 
+**Incomplete previous session:** If the session-start agent surfaces uncommitted changes in `docs/` files, treat this as a sign the previous session ended without a proper wrap-up. Explicitly check what was left undone — session log, decisions.md, file-index.md — and address it before proceeding with new work.
+
 **Then:** read `lib/clients/` and `app/api/` before making any substantive changes.
 
 **Finding files:** before globbing or grepping for a file, read `docs/file-index.md` first. It is a complete annotated index of every meaningful file in the project.
@@ -68,7 +70,9 @@ More questions are appropriate when they increase learning, control, or tailorin
 **When a task is better suited to another tool, say so.**
 For bounded implementation tasks with no governance or design dimension, flag that Codex is likely the better tool and explain why. For copy generation where business voice and history matter, flag ChatGPT. For design/copy review and project governance, stay in Claude. Do not silently take on tasks that would produce better output elsewhere - including flagging when Gemini would offer a useful alternative perspective.
 
-**When Charles wants to turn context or intent into a prompt, or wants a task list planned and sequenced:** invoke the `optimize-and-plan` skill before responding.
+**When writing any prompt for handoff to another model or to feed back into a fresh conversation:** invoke the `prompt-engineering-advisor` skill before responding.
+
+**When Charles has a list of tasks to plan and sequence:** invoke the `optimize-and-plan` skill before responding.
 
 **Help Charles make the most of each tool's usage limits.**
 Conserve reasoning tokens for judgment-heavy work: governance, copy review, integration safety, architecture. Suggest when repeated chat work should become a skill, agent, or durable file. When tasks are separable with non-overlapping write surfaces, propose an explicit Claude+Codex parallel split with named responsibility boundaries. Do not recommend parallelization when tasks are tightly coupled. When approaching a usage limit, produce a structured Codex-ready handoff prompt - not just a suggestion to switch tools.
@@ -256,10 +260,9 @@ Charles frequently drafts copy in ChatGPT (which has more business context and v
 history) and brings it back here for implementation.
 
 **When preparing a prompt for ChatGPT:**
-Invoke the `chatgpt-prep` agent with the component name. It reads the source file,
-counts characters per section, maps the data structure, and outputs a ready-to-paste
-brief with format constraints already filled in. Do not manually write ChatGPT briefs
-for copy work - the agent produces a more accurate brief faster.
+Invoke the `prompt-engineering-advisor` skill. It handles ChatGPT as a destination —
+including format constraints, character count awareness, voice considerations, and what
+not to produce. The `chatgpt-prep` agent is deprecated and replaced by this skill.
 
 **When receiving copy from ChatGPT:**
 Invoke the `copy-review` agent before implementing anything. Paste the returned copy
@@ -283,7 +286,7 @@ ambient triggers. The description field in each file is what Claude uses for aut
 |---|---|---|
 | `session-start` | First thing in every new session | Read the brief, then proceed with the task |
 | `design-review` | After any visual component work, before committing | Fix violations before committing - no staging means violations go live |
-| `chatgpt-prep` | Before preparing any copy for ChatGPT or Gemini | Paste the output brief directly into ChatGPT, fill in `INSTRUCTION_HERE` |
+| `prompt-engineering-advisor` skill | Before writing any prompt for handoff to another model | Use the output prompt directly or provide the suggested additional context to refine it |
 | `copy-review` | After receiving copy from any external AI model | Fix violations before implementing - do not paste flagged copy into components |
 | `integration-safety` | Before any change to API routes, Airtable, Resend, or Google Sheets | Get explicit confirmation on each destination change before touching files |
 

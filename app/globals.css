@@ -4,10 +4,10 @@
 @theme {
   /* Core palette */
   --color-navy:        #0B1D2E;
-  --color-off-white:   #F2EDE6;
-  --color-linen:       #EAE3DA;
-  --color-linen-dark:  #E8E0D6;
-  --color-light-gray:  #D8D0C6;
+  --color-off-white:   #EFF1F3;
+  --color-linen:       #E5E8EC;
+  --color-linen-dark:  #DCE0E5;
+  --color-light-gray:  #CACED4;
 
   /* Brand accents */
   --color-brand-gold:  #C49A44;
@@ -81,8 +81,9 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--font-cormorant, Georgia, serif);
-  font-weight: 400;
+  font-family: var(--font-ibm-plex-sans, ui-sans-serif, system-ui);
+  font-weight: 700;
+  font-style: normal;
 }
 
 /* Grain texture overlay - applied to sections that need depth */

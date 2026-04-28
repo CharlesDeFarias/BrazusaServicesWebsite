@@ -167,6 +167,7 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
             <p className="text-xs leading-relaxed mb-4 text-warm-gray">
               We can quote only the parts of the job that actually need doing.
             </p>
+            <div className="h-px w-6 mb-4" style={{ background: 'var(--color-brand-gold)' }} />
             <p className="text-sm font-medium text-navy mb-3">Cleaning does not have to be all-or-nothing:</p>
             <ul className="space-y-2">
               {customExamples.map((customExample) => (
@@ -198,6 +199,7 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
             <p className="text-xs leading-relaxed mb-4 text-warm-gray">
               If the work is easier to run well, we can usually structure it more efficiently.
             </p>
+            <div className="h-px w-6 mb-4" style={{ background: 'var(--color-brand-gold)' }} />
             <p className="text-sm font-medium text-navy mb-3">Help us operate efficiently and we pass that on where we can:</p>
             <ul className="space-y-3">
               {savingsWays.map((savingsWay) => (

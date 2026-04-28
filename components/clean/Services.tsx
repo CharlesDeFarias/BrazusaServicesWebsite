@@ -122,6 +122,10 @@ export default function Services({ onQuoteClick, activeClientId, servicesCopy }:
                     background: isRelevant && hasFilter ? 'var(--color-white-5)' : undefined,
                   }}
                 >
+                  <div
+                    className="w-5 h-px mb-4 transition-all duration-300 group-hover:w-10"
+                    style={{ background: 'var(--color-brand-gold)', opacity: isRelevant ? 1 : 0.5 }}
+                  />
                   <p className="font-medium text-white text-sm mb-1.5">{serviceDefinition.name}</p>
                   <p className="text-xs leading-relaxed text-white-70">{description}</p>
                 </div>
@@ -143,7 +147,7 @@ export default function Services({ onQuoteClick, activeClientId, servicesCopy }:
 
               return (
                 <div key={extendedServiceDefinition.name} className="flex items-start gap-2.5" style={{ opacity: isRelevant ? 1 : 0.3 }}>
-                  <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: 'var(--color-white-40)' }}>→</span>
+                  <span className="flex-shrink-0 mt-0.5 text-xs text-brand-gold">→</span>
                   <div>
                     <span className="text-xs font-medium text-white">{extendedServiceDefinition.name}</span>
                     <span className="text-xs text-white-40">

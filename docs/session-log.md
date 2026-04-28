@@ -8624,3 +8624,265 @@ Reduce, don't recolor. The gold tone is correct. The problem is frequency, not h
 
 ### 04/27/2026, 08:22:48 PM
 **Prompt:** yes
+
+### 04/27/2026, 08:25:46 PM
+**Prompt:** We're continuing where we left off on using claude design to make changes. Below, i've pasted everything claude design gave me. though some of it was given as html so it may not copy and paste that well.
+Here's what's in the project:
+
+Developer Handoff.html — the document Charles implements from. Contains:
+
+Diff view for layout.tsx (font swap, 3 lines changed)
+Diff view for globals.css (4 background tokens + heading rule, 8 lines changed)
+18-component checklist with exact inline style targets, categorized by type change / gold strip / clean
+handoff/layout.tsx and handoff/globals.css — drop-in ready files, replace in full.
+
+The implementation order I'd recommend to Charles:
+
+Drop in layout.tsx and globals.css first — that handles ~80% of the typography change automatically via the cascade
+Do a grep for font-cormorant and fontStyle.*italic to catch the remaining inline overrides (Hero, Pricing, FinalCTA are the ones with explicit font calls)
+Run the gold strip pass component by component — TrustStrip and ScrollToTop are the quickest wins, Testimonials carousel arrows are the most visibleapp/layout.tsx
+Drop-in ready
+Swaps Cormorant_Garamond for IBM_Plex_Sans. Variable changes from --font-cormorant to --font-ibm-plex-sans.
+// layout.tsx
+import type { Metadata } from 'next'
+import { Cormorant_Garamond, Syne } from 'next/font/google'
+
+import { IBM_Plex_Sans, Syne } from 'next/font/google'
+
+import './globals.css'
+
+const cormorant = Cormorant_Garamond({
+
+  weight: ['300', '400', '500', '600'],
+
+  style: ['normal', 'italic'],
+
+  subsets: ['latin'],
+
+  variable: '--font-cormorant',
+
+  display: 'swap',
+
+})
+
+const ibmPlexSans = IBM_Plex_Sans({
+
+  weight: ['400', '500', '600', '700'],
+
+  style: ['normal'],
+
+  subsets: ['latin'],
+
+  variable: '--font-ibm-plex-sans',
+
+  display: 'swap',
+
+})
+
+
+const syne = Syne({ subsets: ['latin'], variable: '--font-syne', display: 'swap' })
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${cormorant.variable} ${syne.variable}`}>
+
+    <html lang="en" className={`${ibmPlexSans.variable} ${syne.variable}`}>
+
+      <body className="overflow-x-hidden">{children}</body>
+    </html>
+  )
+}app/globals.css
+Drop-in ready
+Updates 4 background tokens and the h1/h2/h3 font rule. Everything else unchanged.
+/* Background tokens — cool slate off-white */
+--color-off-white:  #F2EDE6;
+
+--color-off-white:  #EFF1F3;
+
+
+--color-linen:      #EAE3DA;
+
+--color-linen:      #E5E8EC;
+
+
+--color-linen-dark: #E8E0D6;
+
+--color-linen-dark: #DCE0E5;
+
+
+--color-light-gray: #D8D0C6;
+
+--color-light-gray: #CACED4;
+
+
+/* Heading font rule */
+h1, h2, h3 {
+
+  font-family: var(--font-cormorant, Georgia, serif);
+
+  font-weight: 400;
+
+}
+
+h1, h2, h3 {
+
+  font-family: var(--font-ibm-plex-sans, ui-sans-serif, system-ui);
+
+  font-weight: 700;
+
+  font-style: normal;
+
+}Component checklist — 18 files
+The globals.css change handles most heading typography automatically. Components listed below need manual edits where inline style= props override the cascade, or where gold needs to be stripped or confirmed.
+
+File    Changes required
+Hero.tsxtype    
+T
+h1 inline style: remove fontStyle:'italic', change fontWeight:300 → fontWeight:700, add fontFamily:"var(--font-ibm-plex-sans)". Also reduce fontSize slightly — IBM Plex Sans has a taller x-height than Cormorant and will appear larger at the same value. Try clamp(2rem, 5vw, 4.2rem).
+✓
+Gold CTA button, eyebrow rule (w-8 h-px), h1 accent rule (w-12 h-px) — all fine, keep as-is.
+StickyNav.tsxtype    
+T
+Wordmark "Brazusa Cleaning" has explicit fontFamily: 'var(--font-cormorant)', fontStyle: 'italic', fontWeight: 400. Decision required: replace with var(--font-ibm-plex-sans) weight 600, normal — or keep as a deliberate brand exception. Recommend replacing for consistency.
+✓
+Quote CTA borderLeft: '2px solid var(--color-brand-gold)' — structural, keep.
+ClientAccordion.tsxtype    
+T
+h2 inside expanded item: remove italic class and fontWeight: 300. The globals rule will apply IBM Plex Sans 700, but the explicit fontWeight: 300 inline will override it — must be removed.
+✓
+Step numbers in gold (01–04) — structural process marker, keep. Accordion + turning gold on open — active state indicator, keep. "Other spaces too" gold border card — structural distinction, keep.
+Services.tsxtypegold    
+T
+h2: remove italic class and fontWeight: 300 inline style.
+×
+Each service card has a w-5 h-px bg-brand-gold line that expands on hover (group-hover:w-10). Strip it — decorative hover accent with no structural role. Remove the entire <div className="w-5 h-px mb-4 ..." />.
+×
+"We can also help with" section: gold → arrows on each extended service. Replace text-brand-gold with color: 'var(--color-navy-40)'.
+✓
+Active filter pill with gold background — functional active state, keep.
+HowItWorks.tsxtypegold    
+T
+h2: remove italic class and fontWeight: 300.
+×
+Per-step w-5 h-px bg-brand-gold rule under each step number (6 instances). Replace with style={{ background: 'var(--color-navy-20)' }}.
+×
+Callout box → arrow: text-brand-gold. Replace with color: 'var(--color-navy-40)'.
+✓
+Step number gold text (01–06) — structural, keep.
+Pricing.tsxtypegold    
+T
+h2 has explicit fontFamily: 'var(--font-cormorant)', fontStyle not set but inherits italic from class, fontWeight: 300. Replace with fontFamily: 'var(--font-ibm-plex-sans)', remove italic, fontWeight: 700.
+×
+"What affects your quote" list: gold w-1 h-1 rounded-full bullet dots. Replace with style={{ background: 'var(--color-navy-30)' }}.
+×
+Custom cleaning card and savings card: gold → arrows in lists (7 instances total). Replace with color: 'var(--color-navy-40)'.
+×
+Both cards have a h-px w-6 bg-brand-gold divider rule. Remove — no structural work being done here.
+✓
+Quote button borderLeft: '2px solid var(--color-brand-gold)' — structural CTA accent, keep. Tag chips ("Flexible scope", "Efficiency wins") with gold text — low-impact labels, acceptable.
+Testimonials.tsxtypegold    
+T
+h2: remove italic class and fontWeight: 300.
+T
+Testimonial card result text uses fontFamily: 'var(--font-cormorant)', fontStyle: 'italic'. Replace with fontFamily: 'var(--font-ibm-plex-sans)', fontWeight: 600, normal style, fontSize: '0.95rem'.
+×
+Carousel arrow buttons: gold fill + gold border when active (background: canScrollLeft ? 'var(--color-brand-gold)' : 'transparent'). Navigation controls don't earn gold. Replace active state with background: 'var(--color-navy)', color: 'white', borderColor: 'var(--color-navy)'.
+✓
+Filter pills use navy (not gold) for active state — already correct, no change needed.
+Positioning.tsxtypegold    
+T
+h2: remove italic class and fontWeight: 300.
+×
+Key points list: gold → arrows (5 instances). Replace text-brand-gold with color: 'var(--color-navy-40)'.
+About.tsxtype    
+T
+h2: remove italic class and fontWeight: 300.
+✓
+Gold rule (w-8 h-px bg-brand-gold) next to "Serving Boston since 1994" — single structural accent, keep.
+FinalCTA.tsxtype    
+T
+h2 has explicit fontFamily: 'var(--font-cormorant)', fontStyle: 'italic', fontWeight: 300. Replace with fontFamily: 'var(--font-ibm-plex-sans)', normal, weight 700.
+✓
+Gold CTA button, gold rule (w-8 h-px) — keep both. Gold ambient radial gradient in corner — acceptable at this scale (one instance, section-level).
+ServiceArea.tsxtypegold    
+T
+h2: remove italic class and fontWeight: 300.
+×
+Top-right radial gradient glow: radial-gradient(circle at top right, var(--color-gold-5) 0%, transparent 70%). Remove — purely ambient decoration, no structural role.
+QuickContact.tsxtypegold    
+T
+h2: remove italic class and fontWeight: 300.
+×
+Google Business card: arrow SVG uses stroke="var(--color-brand-gold)". Replace with stroke="var(--color-navy-40)" — navigation arrow, not a CTA.
+TrustStrip.tsxgold    
+×
+Gold dot separators (w-1 h-1 rounded-full bg-brand-gold) between each badge — 12 instances in the marquee. These accumulate into a gold-heavy decorative strip. Replace with background: 'var(--color-navy-25)'.
+ScrollToTop.tsxgold    
+×
+Entire button background is gold (background: 'var(--color-brand-gold)'). A scroll-to-top control is navigation utility, not a primary action. Replace with background: 'var(--color-navy)' and change icon stroke to var(--color-white-70).
+Footer.tsxclean    
+No gold usage, no heading font overrides. No changes needed.
+NewsletterCTA.tsxclean    
+No gold usage, no heading overrides. No changes needed.
+MobileCTABar.tsxclean    
+Not audited (file is small, navbar-level). Verify no gold is used beyond any CTA button.
+QuoteDrawer.tsxclean    
+Not audited (drawer/modal). Verify any submit CTA uses gold correctly. Heading font overrides may be present — check for font-cormorant class or fontFamily: 'var(--font-cormorant)'.
+Gold discipline — reference card
+✓ Gold earns its place
+Primary CTA buttons · Active state indicators (nav, filter pills) · Single structural rule in a hero or section header · Process step numbers (01–06 sequences)
+× Strip it out
+Carousel / navigation arrows · Bullet markers in lists · Per-step decorative rules · Ambient glow effects · Hover-expanding decorative lines · Scroll-to-top utility button
+→ One gold moment per section
+If a section already has a gold CTA, it doesn't also need gold bullets, a gold rule, and a gold number. One instance per section is the ceiling.
+→ Greyscale test
+If the design still works when gold is replaced with navy at 60% opacity, the gold wasn't doing structural work — strip it.
+
+
+### 04/27/2026, 08:28:15 PM
+**Prompt:** I'm actually going to have you do all of it. i'm currently using all my codex tokens to work on another project. Proceed with phase 1
+
+### 04/27/2026, 08:29:25 PM
+**Prompt:** proceed with phase 2
+
+### 04/27/2026, 08:40:09 PM
+**Prompt:** why is there no matching token?
+should we make these changes now or do another review pass with claude design
+
+### 04/27/2026, 08:40:50 PM
+**Prompt:** proceed
+
+### 04/27/2026, 09:29:44 PM
+**Prompt:** do a durable update and push
+
+---
+
+## Session: 04/27/2026 — Claude Design handoff implementation (Phase 1 + 2 + verification)
+
+### Decisions made this session
+- IBM Plex Sans 700 replaces Cormorant Garamond as the heading typeface (locked in decisions.md)
+- Background palette updated from warm amber to cool slate (4 tokens updated, locked in decisions.md)
+- Gold discipline formally locked as a component-level rule (locked in decisions.md)
+- StickyNav raw rgba cleanup deferred (pre-existing, not from this pass — needs `/* no token: intentional */` comments)
+- Hero photo swap is the one remaining structural fix from the Claude Design evaluation
+
+### What was built (Claude-authored)
+- Phase 1: `app/layout.tsx` + `app/globals.css` — font import swap, variable rename, 4 background tokens, h1/h2/h3 cascade rule
+- Phase 2: 14 components — italic/300 overrides removed, explicit Cormorant inline overrides replaced, gold strip pass (decorative lines, bullet dots, carousel arrows, scroll-to-top button, ambient glow)
+- Design-review violations fixed post-audit: TrustStrip grain/bg, ServiceArea gradient layering, Pricing token comment
+- Phase 3 verification: Footer and NewsletterCTA confirmed clean, MobileCTABar confirmed clean, QuoteDrawer Cormorant reference caught and fixed
+- decisions.md updated with three locked decisions
+
+### One correction from the Claude Design handoff
+Services.tsx "We can also help with" arrows: handoff said to use `navy-40`, but that section has a navy background — `navy-40` on navy = invisible. Corrected to `white-40`. Confirmed correct by design-review agent.
+
+### Prompt log
+- "session start"
+- "yes" (commit uncommitted session log)
+- [pasted full Claude Design handoff output]
+- "I'm actually going to have you do all of it. i'm currently using all my codex tokens to work on another project. Proceed with phase 1"
+- "proceed with phase 2"
+- [design-review ran, medium violations surfaced]
+- "why is there no matching token? should we make these changes now or do another review pass with claude design"
+- "proceed" (fix the violations)
+- "do a durable update and push"

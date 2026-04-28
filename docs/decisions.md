@@ -47,6 +47,21 @@ When a decision is made, add it here before the session ends. Format:
 **Decision:** Error tokens: `--color-error`, `--color-error-bg`, `--color-error-border`.
 **Why:** `#E07070` appeared hardcoded in 2 files. Form validation states need a consistent set.
 
+**Decision:** IBM Plex Sans replaces Cormorant Garamond as the heading typeface site-wide. IBM Plex Sans 700, never italic. CSS variable: `--font-ibm-plex-sans`. The cascade rule in `globals.css` applies to h1/h2/h3 automatically; components with explicit `fontFamily: 'var(--font-cormorant)'` inline overrides must be caught and updated manually on each pass.
+**Why:** Claude Design first-impression evaluation identified Cormorant Garamond italic as the structural problem — it coded the site as lifestyle/boutique residential rather than B2B operational. IBM Plex Sans 700 signals technical authority and B2B credibility.
+**Constraints:** Never re-introduce Cormorant Garamond in any context. Syne remains the body/UI font. Do not use IBM Plex Sans italic in headings. If a future client needs a serif heading typeface, scope it to that client's config only.
+
+**Decision:** Background palette updated from warm amber/linen to cool slate. Live token values: `--color-off-white: #EFF1F3`, `--color-linen: #E5E8EC`, `--color-linen-dark: #DCE0E5`, `--color-light-gray: #CACED4`.
+**Why:** Warm amber tokens coded as residential/domestic. Cool undertone puts background temperature in harmony with the navy system and reads operational.
+**Constraints:** These four values are now locked. Do not revert. If a future client uses warm backgrounds, scope to their config — never reintroduce warm values into the shared token layer.
+
+**Decision:** Gold discipline is formally locked as a component-level rule.
+Gold earns its place: primary CTA buttons (one per section max), active state indicators (filter pills, nav underline), single structural rule in a hero or section header, process step numbers (01-06 sequences).
+Strip it out: carousel/navigation arrows, bullet markers in lists, per-step decorative rules, ambient glow effects (except one hero-level instance), hover-expanding decorative lines, scroll-to-top utility button.
+One gold moment per scroll section. If a section has a gold CTA, it does not also get gold bullets, a gold rule, and gold numbers.
+**Why:** Pre-pass audit found gold accumulating as decoration throughout. The gold tone was correct; frequency was the problem. Claude Design part 3 audit formalized this as a structured rule.
+**Constraints:** Apply the greyscale test before adding any new gold usage: if the design still works with gold replaced by navy-60, the gold is not doing structural work. Strip it. The white opacity scale has a gap between 70 and 90 — raw rgba values in that range need `/* no token: intentional */` comments.
+
 **Decision:** Seven sections that had flat solid backgrounds (About, QuickContact, ServiceArea, Positioning, HowItWorks, Testimonials, Pricing) get one of two layering treatments:
 - Treatment A (light sections): subtle linen-to-off-white gradient + geometric grid at ~1.5% opacity
 - Treatment B (ServiceArea): `.grain` class + faint gold radial glow
@@ -194,6 +209,5 @@ When a decision is made, add it here before the session ends. Format:
 ## Startup-Relevant Warnings
 
 - Do not add new operational claims to copy or design without Charles verifying them first.
-- Design direction for the Brazusa /clean page is confirmed as evolution-only (not a full reset). Two structural fixes are in scope: typeface system-wide replacement (the current italic serif reads as lifestyle/boutique, not B2B operational) and hero photo swap (current image codes as residential premium — needs operational-scale imagery). Background tone and gold usage are evolution fixes, not structural changes.
-- Claude Design has completed the first-impression (reset evaluation) pass. Its diagnosis: "upscale residential cleaning with boutique-local personality." The typeface and hero photo are the structural problems; background tone and gold deployment are fixable within the current visual language.
-- Before coding any visual changes from the design review, take one focused Claude Design exploration to establish direction for the typeface and hero replacement. Do not implement before that pass is complete.
+- Design direction for the Brazusa /clean page is evolution-only (confirmed, not a full reset). Of the two structural fixes identified by Claude Design: typeface replacement is complete (IBM Plex Sans, implemented 04/27/2026). Hero photo swap is still pending — current image codes as residential premium and needs operational-scale imagery. Do not treat the visual pass as complete until the hero photo is addressed.
+- Background tone and gold discipline passes are complete. See CSS/Design System decisions above for locked values.

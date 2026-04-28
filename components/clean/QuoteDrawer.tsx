@@ -185,8 +185,7 @@ export default function QuoteDrawer({ isOpen, onClose, defaultSpaceType }: Quote
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h3
-              className="text-xl text-white italic"
-              style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 400 }}
+              className="text-xl text-white"
             >
               {submitted ? 'Thanks!' : 'Get a Quote'}
             </h3>

@@ -8886,3 +8886,36 @@ Services.tsx "We can also help with" arrows: handoff said to use `navy-40`, but 
 - "why is there no matching token? should we make these changes now or do another review pass with claude design"
 - "proceed" (fix the violations)
 - "do a durable update and push"
+
+### 04/27/2026, 09:53:12 PM
+**Prompt:** we'll leave the image swapping for later. There's a few things i dont quite like about the new changed design however, and i'm unsure if we should start a new design review with updated notes and screenshots or move on to the deferred design bugs we know have to be fixed so that we can later tackle the other design aspects, or what
+
+### 04/27/2026, 10:02:20 PM
+**Prompt:** - I dont really like how the topnav now looks when it scrolls down and alternates from navy. I'm not sure how to explain it but it looks strange/jarring and had a better look before.
+- i dont like that the gold accents and highlight/hover behavior was removed from the services/what we handle daily section
+- i think i dont like the difference between the two non-navy colors, they're not different enough from each other and gives the page a.. i dont know, blander monotonous feel?
+- the font color on headers of each section that's on the new non-navy color also doesnt look great or easy to read.
+- I think the stripping of gold from the site was a little too thorough, it removed some of its charm and interest
+- I think that might be everything, though i'm not sure and would feel better getting a fresh objective review of the entirety of the site's new design
+
+### 04/27/2026, 10:04:18 PM
+**Prompt:** sounds good, go ahead with that fix
+
+### 04/27/2026, 10:35:39 PM
+**Prompt:** ok i want to stop for tonight but pick back up tomorrow. My next steps are to take screenshots and make more notes on the design that come to mind. tomorrow we'll start by having you give me a prompt to feed to claude design along with my screenshots. For now, do a durable update and leave us set up to pick up again tomorrow
+
+### Session postscript — gold feedback and tomorrow's plan
+
+After implementation, Charles reviewed the live site and flagged five concerns: jarring nav scrolled-state transition, Services gold accents stripped (explicitly didn't want those gone), background tones too similar/monotonous, navy header contrast on cool slate, and overall gold level too low.
+
+Split into two buckets:
+- **Preference overrides (fixed tonight):** Services card hover lines, "We can also help with" arrows, HowItWorks per-step gold rules, Pricing card dividers — all restored. These were Claude Design's judgment vs. Charles's preference; Charles wins.
+- **Direction questions (deferred to tomorrow):** Nav transition, background tone, header contrast. These are interconnected and require a Claude Design pass with screenshots before touching code.
+
+**Tomorrow's plan:** Charles takes screenshots and writes design notes tonight. First task of tomorrow's session: produce a Claude Design prompt using those screenshots and notes. Then run the Claude Design session. Then implement from the output.
+
+Prompt log (continued):
+- "we'll leave the image swapping for later. There's a few things i dont quite like..."
+- [listed 5 concerns]
+- "sounds good, go ahead with that fix" (gold restorations)
+- "ok i want to stop for tonight but pick back up tomorrow..."

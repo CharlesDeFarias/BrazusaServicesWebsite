@@ -12,7 +12,7 @@ const badges = [
 export default function TrustStrip(): JSX.Element {
   return (
     <div
-      className="bg-white border-b py-3.5 overflow-hidden"
+      className="grain bg-off-white border-b py-3.5 overflow-hidden"
       style={{ borderColor: 'var(--color-light-gray)' }}
     >
       <div className="flex marquee-track whitespace-nowrap">

@@ -126,7 +126,7 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
                 </li>
               ))}
             </ul>
-            <div className="rounded-xl p-4" style={{ border: '1px solid var(--color-light-gray)', background: 'rgba(255,255,255,0.82)' }}>
+            <div className="rounded-xl p-4" style={{ border: '1px solid var(--color-light-gray)', background: 'rgba(255,255,255,0.82)' /* no token: intentional — between white-70 and white-90 */ }}>
               <p className="text-sm font-medium text-navy mb-2">How we build a custom quote</p>
               <p className="text-xs leading-relaxed mb-3 text-warm-gray">
                 Basic cleaning, deeper resets, and operational support are scoped differently because they take different levels of time,

@@ -34,8 +34,8 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
   return (
     <section
       id="service-area"
-      className="grain bg-off-white py-14 px-6 overflow-hidden"
-      style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
+      className="grain py-14 px-6 overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, var(--color-off-white), var(--color-linen))', borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div>

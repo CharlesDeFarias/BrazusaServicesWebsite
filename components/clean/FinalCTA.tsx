@@ -22,8 +22,8 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
       <div className="max-w-3xl mx-auto text-center relative">
         <div className="w-8 h-px mx-auto mb-8" style={{ background: 'var(--color-brand-gold)' }} />
         <h2
-          className="italic leading-none mb-5 text-navy"
-          style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 300 }}
+          className="leading-none mb-5 text-navy"
+          style={{ fontFamily: 'var(--font-ibm-plex-sans)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 700, fontStyle: 'normal' }}
         >
           Tell us what you need.
         </h2>

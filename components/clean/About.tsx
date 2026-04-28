@@ -17,7 +17,7 @@ export default function About(): JSX.Element {
       }} />
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center relative">
         <div>
-          <h2 className="italic text-3xl md:text-4xl text-navy mb-5 leading-snug" style={{ fontWeight: 300 }}>
+          <h2 className="text-3xl md:text-4xl text-navy mb-5 leading-snug">
             Built through real work, not theory
           </h2>
           <div className="space-y-3 text-sm leading-relaxed text-warm-gray-darker">

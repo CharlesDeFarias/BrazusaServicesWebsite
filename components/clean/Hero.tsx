@@ -31,8 +31,8 @@ export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JS
           </div>
 
           <h1
-            className="fade-up-1 italic leading-none mb-6"
-            style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)', fontWeight: 300, letterSpacing: '-0.01em' }}
+            className="fade-up-1 leading-none mb-6"
+            style={{ fontSize: 'clamp(2rem, 5vw, 4.2rem)', fontWeight: 700, fontFamily: 'var(--font-ibm-plex-sans)', letterSpacing: '-0.01em' }}
           >
             {heroCopy.h1}
           </h1>

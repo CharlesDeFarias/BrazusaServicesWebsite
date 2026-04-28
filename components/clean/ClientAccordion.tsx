@@ -110,8 +110,7 @@ function AccordionItem({
               />
             </div>
             <h2
-              className="italic text-2xl text-navy mb-3 leading-snug"
-              style={{ fontWeight: 300 }}
+              className="text-2xl text-navy mb-3 leading-snug"
             >
               {item.headline}
             </h2>
@@ -196,8 +195,7 @@ export default function ClientAccordion({
       }} />
       <div className="max-w-5xl mx-auto relative">
         <h2
-          className="italic text-2xl md:text-3xl text-navy mb-5"
-          style={{ fontWeight: 300 }}
+          className="text-2xl md:text-3xl text-navy mb-5"
         >
           {headline}
         </h2>

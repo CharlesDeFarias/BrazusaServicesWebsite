@@ -24,7 +24,7 @@ export default function TrustStrip(): JSX.Element {
           >
             <span
               className="w-1 h-1 rounded-full flex-shrink-0"
-              style={{ background: 'var(--color-brand-gold)' }}
+              style={{ background: 'var(--color-navy-25)' }}
             />
             {b}
           </span>

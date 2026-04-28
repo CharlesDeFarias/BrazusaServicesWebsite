@@ -78,8 +78,8 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
               Pricing approach
             </p>
             <h2
-              className="italic text-navy leading-none mb-4"
-              style={{ fontFamily: 'var(--font-cormorant)', fontSize: 'clamp(2.8rem, 7vw, 5rem)', fontWeight: 300 }}
+              className="text-navy leading-none mb-4"
+              style={{ fontFamily: 'var(--font-ibm-plex-sans)', fontSize: 'clamp(2.8rem, 7vw, 5rem)', fontWeight: 700, fontStyle: 'normal' }}
             >
               Real examples, real clients.
             </h2>
@@ -121,7 +121,7 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
             <ul className="space-y-2.5 mb-5">
               {factors.map((factor) => (
                 <li key={factor} className="flex items-center gap-2.5 text-sm text-warm-gray-darker">
-                  <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--color-brand-gold)' }} />
+                  <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--color-navy-30)' }} />
                   {factor}
                 </li>
               ))}
@@ -167,12 +167,11 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
             <p className="text-xs leading-relaxed mb-4 text-warm-gray">
               We can quote only the parts of the job that actually need doing.
             </p>
-            <div className="h-px w-6 mb-4" style={{ background: 'var(--color-brand-gold)' }} />
             <p className="text-sm font-medium text-navy mb-3">Cleaning does not have to be all-or-nothing:</p>
             <ul className="space-y-2">
               {customExamples.map((customExample) => (
                 <li key={customExample} className="flex items-start gap-2.5 text-sm text-warm-gray-darker">
-                  <span className="flex-shrink-0 mt-0.5 text-brand-gold">
+                  <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-navy-40)' }}>
                     &rarr;
                   </span>
                   {customExample}
@@ -199,12 +198,11 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
             <p className="text-xs leading-relaxed mb-4 text-warm-gray">
               If the work is easier to run well, we can usually structure it more efficiently.
             </p>
-            <div className="h-px w-6 mb-4" style={{ background: 'var(--color-brand-gold)' }} />
             <p className="text-sm font-medium text-navy mb-3">Help us operate efficiently and we pass that on where we can:</p>
             <ul className="space-y-3">
               {savingsWays.map((savingsWay) => (
                 <li key={savingsWay.title} className="flex items-start gap-2.5 text-sm text-warm-gray-darker">
-                  <span className="flex-shrink-0 mt-0.5 text-brand-gold">
+                  <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-navy-40)' }}>
                     &rarr;
                   </span>
                   <span>

@@ -199,7 +199,7 @@ export default function Testimonials(): JSX.Element {
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-5 mb-8">
           <div>
-            <h2 className="italic text-3xl md:text-4xl text-navy mb-1.5" style={{ fontWeight: 300 }}>
+            <h2 className="text-3xl md:text-4xl text-navy mb-1.5">
               Real clients, real situations
             </h2>
             <p className="text-sm text-warm-gray">
@@ -241,9 +241,9 @@ export default function Testimonials(): JSX.Element {
                 className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
                 style={{
                   border: '1px solid',
-                  borderColor: canScrollLeft ? 'var(--color-brand-gold)' : 'var(--color-light-gray)',
-                  background: canScrollLeft ? 'var(--color-brand-gold)' : 'transparent',
-                  color: canScrollLeft ? 'var(--color-navy)' : 'var(--color-light-gray)',
+                  borderColor: canScrollLeft ? 'var(--color-navy)' : 'var(--color-light-gray)',
+                  background: canScrollLeft ? 'var(--color-navy)' : 'transparent',
+                  color: canScrollLeft ? 'white' : 'var(--color-light-gray)',
                   cursor: canScrollLeft ? 'pointer' : 'not-allowed',
                 }}
               >
@@ -258,9 +258,9 @@ export default function Testimonials(): JSX.Element {
                 className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200"
                 style={{
                   border: '1px solid',
-                  borderColor: canScrollRight ? 'var(--color-brand-gold)' : 'var(--color-light-gray)',
-                  background: canScrollRight ? 'var(--color-brand-gold)' : 'transparent',
-                  color: canScrollRight ? 'var(--color-navy)' : 'var(--color-light-gray)',
+                  borderColor: canScrollRight ? 'var(--color-navy)' : 'var(--color-light-gray)',
+                  background: canScrollRight ? 'var(--color-navy)' : 'transparent',
+                  color: canScrollRight ? 'white' : 'var(--color-light-gray)',
                   cursor: canScrollRight ? 'pointer' : 'not-allowed',
                 }}
               >
@@ -300,8 +300,8 @@ export default function Testimonials(): JSX.Element {
                 }}
               >
                 <p
-                  className="italic text-navy leading-snug"
-                  style={{ fontFamily: 'var(--font-cormorant)', fontSize: '1.1rem', fontWeight: 400 }}
+                  className="text-navy leading-snug"
+                  style={{ fontFamily: 'var(--font-ibm-plex-sans)', fontSize: '0.95rem', fontWeight: 600, fontStyle: 'normal' }}
                 >
                   {c.result}
                 </p>

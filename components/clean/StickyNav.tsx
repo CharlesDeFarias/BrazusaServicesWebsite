@@ -119,10 +119,9 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           <span
             className="hidden sm:block"
             style={{
-              fontFamily: 'var(--font-cormorant)',
+              fontFamily: 'var(--font-ibm-plex-sans)',
               fontSize: '1.15rem',
-              fontWeight: 400,
-              fontStyle: 'italic',
+              fontWeight: 600,
               letterSpacing: '0.03em',
               color: scrolled ? 'var(--color-navy)' : 'rgba(255,255,255,0.88)',
               transition: 'color 0.3s',

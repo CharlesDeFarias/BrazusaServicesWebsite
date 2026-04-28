@@ -13,7 +13,7 @@ export default function QuickContact(): JSX.Element {
         backgroundSize: '48px 48px',
       }} />
       <div className="max-w-5xl mx-auto relative">
-        <h2 className="italic text-3xl md:text-4xl text-navy mb-2 leading-snug" style={{ fontWeight: 300 }}>
+        <h2 className="text-3xl md:text-4xl text-navy mb-2 leading-snug">
           Reach us directly
         </h2>
         <p className="text-sm mb-10 text-warm-gray">
@@ -86,7 +86,7 @@ export default function QuickContact(): JSX.Element {
               </p>
             </div>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0 transition-transform group-hover:translate-x-0.5">
-              <path d="M3 7h8M7 3l4 4-4 4" stroke="var(--color-brand-gold)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M3 7h8M7 3l4 4-4 4" stroke="var(--color-navy-40)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </a>
         </div>

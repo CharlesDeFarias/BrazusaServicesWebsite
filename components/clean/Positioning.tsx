@@ -23,8 +23,7 @@ export default function Positioning(): JSX.Element {
 
         <div>
           <h2
-            className="italic text-3xl md:text-4xl text-navy mb-6 leading-snug"
-            style={{ fontWeight: 300 }}
+            className="text-3xl md:text-4xl text-navy mb-6 leading-snug"
           >
             Built for operators, not oversight
           </h2>
@@ -48,7 +47,7 @@ export default function Positioning(): JSX.Element {
           <ul className="space-y-3">
             {keyPoints.map((point) => (
               <li key={point} className="flex items-start gap-3 text-sm text-warm-gray-darker">
-                <span className="flex-shrink-0 mt-0.5 text-brand-gold">→</span>
+                <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-navy-40)' }}>→</span>
                 {point}
               </li>
             ))}

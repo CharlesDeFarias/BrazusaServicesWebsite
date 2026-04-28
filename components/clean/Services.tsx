@@ -67,12 +67,12 @@ export default function Services({ onQuoteClick, activeClientId, servicesCopy }:
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
           <div>
-            <h2 className="italic text-3xl md:text-4xl text-white leading-none" style={{ fontWeight: 300 }}>
+            <h2 className="text-3xl md:text-4xl text-white leading-none">
               What we handle daily
             </h2>
             <p
               className="text-xs mt-2"
-              style={{ color: hasFilter ? 'var(--color-gold-90)' : 'var(--color-white-35)', fontFamily: hasFilter ? 'var(--font-syne)' : 'var(--font-cormorant)', fontSize: hasFilter ? '0.75rem' : '0.9rem' }}
+              style={{ color: hasFilter ? 'var(--color-gold-90)' : 'var(--color-white-35)', fontFamily: hasFilter ? 'var(--font-syne)' : 'var(--font-ibm-plex-sans)', fontSize: hasFilter ? '0.75rem' : '0.9rem' }}
             >
               {hasFilter
                 ? 'We highlight the services that tend to apply to your space.'
@@ -122,10 +122,6 @@ export default function Services({ onQuoteClick, activeClientId, servicesCopy }:
                     background: isRelevant && hasFilter ? 'var(--color-white-5)' : undefined,
                   }}
                 >
-                  <div
-                    className="w-5 h-px mb-4 transition-all duration-300 group-hover:w-10"
-                    style={{ background: 'var(--color-brand-gold)', opacity: isRelevant ? 1 : 0.5 }}
-                  />
                   <p className="font-medium text-white text-sm mb-1.5">{serviceDefinition.name}</p>
                   <p className="text-xs leading-relaxed text-white-70">{description}</p>
                 </div>
@@ -147,7 +143,7 @@ export default function Services({ onQuoteClick, activeClientId, servicesCopy }:
 
               return (
                 <div key={extendedServiceDefinition.name} className="flex items-start gap-2.5" style={{ opacity: isRelevant ? 1 : 0.3 }}>
-                  <span className="flex-shrink-0 mt-0.5 text-xs text-brand-gold">→</span>
+                  <span className="flex-shrink-0 mt-0.5 text-xs" style={{ color: 'var(--color-white-40)' }}>→</span>
                   <div>
                     <span className="text-xs font-medium text-white">{extendedServiceDefinition.name}</span>
                     <span className="text-xs text-white-40">

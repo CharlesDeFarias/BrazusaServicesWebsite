@@ -22,8 +22,7 @@ export default function HowItWorks(): JSX.Element {
       }} />
       <div className="max-w-5xl mx-auto relative">
         <h2
-          className="italic text-3xl md:text-4xl text-navy mb-10 leading-snug"
-          style={{ fontWeight: 300 }}
+          className="text-3xl md:text-4xl text-navy mb-10 leading-snug"
         >
           How it works
         </h2>
@@ -37,7 +36,7 @@ export default function HowItWorks(): JSX.Element {
               >
                 {step.n}
               </span>
-              <div className="w-5 h-px" style={{ background: 'var(--color-brand-gold)' }} />
+              <div className="w-5 h-px" style={{ background: 'var(--color-navy-20)' }} />
               <p className="font-medium text-navy text-sm">{step.label}</p>
               <p className="text-xs leading-relaxed text-warm-gray">
                 {step.detail}
@@ -50,7 +49,7 @@ export default function HowItWorks(): JSX.Element {
           className="flex items-start gap-3 px-5 py-4 text-sm"
           style={{ background: 'var(--color-linen)', border: '1px solid var(--color-linen-dark)' }}
         >
-          <span className="flex-shrink-0 mt-0.5 text-brand-gold">→</span>
+          <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-navy-40)' }}>→</span>
           <p className="text-warm-gray-darker">
             No surprises. Scope and expectations are clear upfront. If something changes, it&apos;s discussed
             before it becomes a problem.

@@ -37,13 +37,9 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
       className="grain bg-off-white py-14 px-6 overflow-hidden"
       style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
-      <div className="absolute top-0 right-0 w-96 h-96 pointer-events-none" style={{
-        background: 'radial-gradient(circle at top right, var(--color-gold-5) 0%, transparent 70%)',
-        position: 'absolute', // override .grain > * which sets position: relative
-      }} />
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div>
-          <h2 className="italic text-3xl md:text-4xl text-navy mb-4 leading-snug" style={{ fontWeight: 300 }}>
+          <h2 className="text-3xl md:text-4xl text-navy mb-4 leading-snug">
             Greater Boston &amp;<br />surrounding areas
           </h2>
           <p className="text-sm leading-relaxed mb-6 text-warm-gray-dark">

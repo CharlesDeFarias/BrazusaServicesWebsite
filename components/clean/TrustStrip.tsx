@@ -1,32 +1,46 @@
 import type { JSX } from 'react'
 
-const badges = [
-  'Work completed and confirmed',
-  'Issues flagged early',
-  'Structured communication',
-  'Fully insured',
-  'Stable, consistent team',
-  'Boston-based, locally run',
+const items = [
+  'Work Confirmed',
+  'Issues Flagged Early',
+  'Structured Communication',
+  'Fully Insured',
+  'Same Team Every Visit',
+  '30+ Years in Boston',
 ]
 
 export default function TrustStrip(): JSX.Element {
   return (
     <div
-      className="grain bg-off-white border-b py-3.5 overflow-hidden"
-      style={{ borderColor: 'var(--color-light-gray)' }}
+      className="bg-off-white overflow-hidden"
+      style={{
+        borderTop: '1px solid rgba(11,29,46,0.08)',
+        borderBottom: '1px solid rgba(11,29,46,0.08)',
+        padding: '10px 0',
+      }}
     >
-      <div className="flex marquee-track whitespace-nowrap">
-        {[...badges, ...badges].map((b, i) => (
+      <div
+        className="flex marquee-track whitespace-nowrap"
+      >
+        {[...items, ...items].map((item, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-2.5 mx-8 text-xs font-medium flex-shrink-0 text-navy"
-            style={{ letterSpacing: '0.04em' }}
+            className="inline-flex items-center gap-3 flex-shrink-0"
+            style={{
+              margin: '0 32px',
+              fontFamily: 'var(--font-syne)',
+              fontSize: '11px',
+              fontWeight: 500,
+              letterSpacing: '0.18em',
+              color: 'rgba(122, 116, 112, 0.6)', /* no token: intentional — warm-gray-dark at 60%, no opacity scale for warm-gray */
+              textTransform: 'uppercase',
+            }}
           >
             <span
               className="w-1 h-1 rounded-full flex-shrink-0"
-              style={{ background: 'var(--color-navy-25)' }}
+              style={{ background: 'var(--color-navy-20)' }}
             />
-            {b}
+            {item}
           </span>
         ))}
       </div>

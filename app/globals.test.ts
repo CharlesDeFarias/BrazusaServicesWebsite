@@ -14,6 +14,10 @@ describe('globals.css design system', () => {
     expect(css).toContain('--color-linen-dark')
   })
 
+  it('defines linen-deep background token', () => {
+    expect(css).toContain('--color-linen-deep')
+  })
+
   it('defines rgba overlay variables', () => {
     expect(css).toContain('--color-navy-subtle')
     expect(css).toContain('--color-navy-dim')

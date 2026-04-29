@@ -6,20 +6,19 @@ import StickyNav        from '@/components/clean/StickyNav'
 import Hero             from '@/components/clean/Hero'
 import TrustStrip       from '@/components/clean/TrustStrip'
 import Positioning      from '@/components/clean/Positioning'
+import CalloutBand      from '@/components/clean/CalloutBand'
 import ClientAccordion  from '@/components/clean/ClientAccordion'
 import type { ClientItem } from '@/components/clean/ClientAccordion'
 import Services         from '@/components/clean/Services'
-import HowItWorks       from '@/components/clean/HowItWorks'
 import Pricing          from '@/components/clean/Pricing'
+import About            from '@/components/clean/About'
 import Testimonials     from '@/components/clean/Testimonials'
 import ServiceArea      from '@/components/clean/ServiceArea'
-import About            from '@/components/clean/About'
-import QuickContact     from '@/components/clean/QuickContact'
+import TrustStats       from '@/components/clean/TrustStats'
 import FinalCTA         from '@/components/clean/FinalCTA'
 import Footer           from '@/components/clean/Footer'
 import QuoteDrawer      from '@/components/clean/QuoteDrawer'
 import ScrollToTop      from '@/components/clean/ScrollToTop'
-import MobileCTABar     from '@/components/clean/MobileCTABar'
 
 const clientItems: ClientItem[] = [
   {
@@ -76,10 +75,10 @@ const clientItems: ClientItem[] = [
   {
     id: 'homes',
     n: '04',
-    label: 'Apartments & Homes',
+    label: 'Homes',
     teaser: 'Consistent team, flexible scope, simple communication',
-    headline: 'Apartment & Home Cleaning',
-    imageLabel: 'Home / apartment photo',
+    headline: 'Home Cleaning',
+    imageLabel: 'Home photo',
     imageSrc: '/images/home.webp',
     spaceType: 'apartment',
     body: (
@@ -101,7 +100,7 @@ export default function CleanPage(): JSX.Element {
     return param && isValidSegment(param) ? param : null
   })
   const [showServicesHint, setShowServicesHint] = useState(false)
-  const heroRef      = useRef<HTMLElement>(null)
+  const heroRef = useRef<HTMLElement>(null)
   const servicesHintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -135,16 +134,23 @@ export default function CleanPage(): JSX.Element {
   }
 
   return (
-    <main className="pb-16 md:pb-0">
+    <main>
+      {/* 1. Nav */}
       <StickyNav
         heroRef={heroRef}
         onQuoteClick={() => openDrawer()}
         setActiveClient={handleActiveClientChange}
         onOtherClick={() => openDrawer('other')}
       />
+      {/* 2. Hero (navy) */}
       <Hero heroRef={heroRef} onQuoteClick={() => openDrawer()} heroCopy={getCopy(activeClient).hero} />
+      {/* 3. Ticker (light) */}
       <TrustStrip />
+      {/* 4. Positioning (navy) */}
       <Positioning />
+      {/* 5. CalloutBand (navy) */}
+      <CalloutBand />
+      {/* 6. Services Accordion (off-white) */}
       <ClientAccordion
         headline={getCopy(activeClient).accordion.headline}
         items={clientItems}
@@ -165,19 +171,25 @@ export default function CleanPage(): JSX.Element {
         </div>
       )}
 
+      {/* 7. Services Cards (navy) */}
       <Services
         servicesCopy={getCopy(activeClient).services}
         activeClientId={activeClient}
         onQuoteClick={() => openDrawer()}
       />
-
-      <HowItWorks />
+      {/* 8. Pricing (off-white) */}
       <Pricing onQuoteClick={() => openDrawer()} />
-      <Testimonials />
-      <ServiceArea onQuoteClick={() => openDrawer()} />
+      {/* 9. About (off-white) */}
       <About />
-      <QuickContact />
+      {/* 10. Testimonials (linen-deep) */}
+      <Testimonials />
+      {/* 11. Service Area (off-white) */}
+      <ServiceArea onQuoteClick={() => openDrawer()} />
+      {/* 12. Trust Stats (navy) */}
+      <TrustStats />
+      {/* 13. Final CTA + Contact (off-white) */}
       <FinalCTA onQuoteClick={() => openDrawer()} />
+      {/* 14. Footer (navy) */}
       <Footer />
 
       <QuoteDrawer
@@ -186,7 +198,6 @@ export default function CleanPage(): JSX.Element {
         defaultSpaceType={drawerSpaceType}
       />
       <ScrollToTop drawerOpen={drawerOpen} />
-      <MobileCTABar onQuoteClick={() => openDrawer()} drawerOpen={drawerOpen} />
     </main>
   )
 }

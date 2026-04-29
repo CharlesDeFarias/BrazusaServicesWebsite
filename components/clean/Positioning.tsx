@@ -11,23 +11,36 @@ const keyPoints = [
 export default function Positioning(): JSX.Element {
   return (
     <section
-      className="py-16 px-6 relative overflow-hidden"
-      style={{ background: 'linear-gradient(to bottom, var(--color-linen), var(--color-off-white))', borderTop: '1px solid var(--color-light-gray)' }}
+      className="grain bg-navy text-white py-16 px-6 relative overflow-hidden"
+      style={{ borderTop: '1px solid var(--color-white-10)' }}
     >
-      {/* no token: intentional — 1.5% opacity falls below all stops */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: `linear-gradient(rgba(11,29,46,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(11,29,46,0.015) 1px, transparent 1px)`,
-        backgroundSize: '48px 48px',
-      }} />
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-14 items-start relative">
 
         <div>
+          {/* Section label */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-px flex-shrink-0" style={{ height: '32px', background: 'var(--color-brand-gold)' }} />
+            <span
+              style={{
+                fontFamily: 'var(--font-syne)',
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '0.18em',
+                color: 'var(--color-brand-gold)',
+                textTransform: 'uppercase',
+              }}
+            >
+              Positioning
+            </span>
+          </div>
+
           <h2
-            className="text-3xl md:text-4xl text-navy mb-6 leading-snug"
+            className="text-3xl md:text-4xl leading-snug mb-6"
+            style={{ color: 'white' }}
           >
             Built for operators, not oversight
           </h2>
-          <div className="space-y-4 text-sm leading-relaxed text-warm-gray-darker">
+          <div className="space-y-4 text-sm leading-relaxed" style={{ color: 'var(--color-white-60)' }}>
             <p>Most cleaning services fall into two categories.</p>
             <p>Small independent teams are affordable, but inconsistent. You end up managing them more than you should.</p>
             <p>Large vendors have structure, but little flexibility. You become just another account.</p>
@@ -37,17 +50,33 @@ export default function Positioning(): JSX.Element {
           </div>
         </div>
 
-        <div className="lg:pt-2">
-          <p
-            className="text-xs uppercase mb-5 text-warm-gray-light"
-            style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+        {/* Right card */}
+        <div
+          className="lg:pt-2 p-7"
+          style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.08)',
+          }}
+        >
+          <span
+            className="inline-block mb-5"
+            style={{
+              background: 'var(--color-brand-gold)',
+              color: 'var(--color-navy)',
+              padding: '4px 11px',
+              fontFamily: 'var(--font-syne)',
+              fontSize: '10.5px',
+              fontWeight: 700,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+            }}
           >
             What this means for you
-          </p>
+          </span>
           <ul className="space-y-3">
             {keyPoints.map((point) => (
-              <li key={point} className="flex items-start gap-3 text-sm text-warm-gray-darker">
-                <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-navy-40)' }}>→</span>
+              <li key={point} className="flex items-start gap-3 text-sm" style={{ color: 'rgba(255,255,255,0.78)' }}>
+                <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-white-70)' }}>&#8594;</span>
                 {point}
               </li>
             ))}

@@ -12,7 +12,7 @@ const pricingFilters: { label: string; value: PricingFilter }[] = [
   { label: 'STR', value: 'str' },
   { label: 'Property', value: 'property' },
   { label: 'Offices', value: 'offices' },
-  { label: 'Apartments', value: 'homes' },
+  { label: 'Homes', value: 'homes' },
   { label: 'Other', value: 'other' },
 ]
 

@@ -209,8 +209,63 @@ One gold moment per scroll section. If a section has a gold CTA, it does not als
 
 ---
 
+---
+
+## Section Architecture (Brazusa /clean)
+
+**Decision:** Section order is locked as of the 04/29/2026 Claude Design pass. Order: StickyNav → Hero → TrustStrip → Positioning → CalloutBand → ClientAccordion → Services → Pricing → About → Testimonials → ServiceArea → TrustStats → FinalCTA → Footer.
+**Why:** Claude Design reviewed the existing section order, confirmed About should remain (oversight in initial handoff), and the sequence was implemented and committed.
+**Constraints:** Do not reorder sections without an explicit design decision. HowItWorks was removed from this sequence — do not re-insert it without discussion.
+
+**Decision:** `CalloutBand` is a new component inserted between Positioning and ClientAccordion. Navy bg + grain. Single IBM Plex Sans 700 statement: "You shouldn't have to manage the people managing your space." No CTA.
+**Why:** Adds a punchy positioning break between the explanation and the service selector.
+**Constraints:** One gold rule (42×1px) as the gold moment. Do not add more gold elements to this section.
+
+**Decision:** `TrustStats` is a new component inserted between ServiceArea and FinalCTA. Navy bg + grain. Three stats: 30+ Years / 100% Insured / 24/7 Availability. Numbers in white (not gold), 24×1px gold rule per stat.
+**Why:** Provides operational proof in the lower funnel, after service area has established geographic context.
+**Constraints:** Numbers stay white — gold rules are the gold moment here. Do not change number color to gold without revisiting gold discipline.
+
+**Decision:** `MobileCTABar` is retired. Persistent CTAs moved into the mobile nav header (StickyNav).
+**Why:** Claude Design confirmed the nav header handles mobile CTAs — a fixed bottom bar creates redundancy.
+**Constraints:** Do not re-add MobileCTABar. If mobile CTA behavior needs adjusting, adjust StickyNav.
+
+**Decision:** `HowItWorks` component deleted. Not in the new section order.
+**Why:** Claude Design omitted it from the new section order and it was not referenced anywhere else in the app.
+**Constraints:** Do not restore without discussion.
+
+**Decision:** `QuickContact` component deleted. Phone, email, and Google Business contact info merged into `FinalCTA`.
+**Why:** Two consecutive contact surfaces were redundant. FinalCTA is the natural home for all contact info at page bottom.
+**Constraints:** FinalCTA now contains a 3-column contact strip (CALL OR TEXT / EMAIL / GOOGLE). Do not add a separate contact section elsewhere.
+
+**Decision:** `Testimonials` is now a category accordion, not a carousel. Five categories: STR / Property / Offices / Homes / Other. None open by default. Toggle behavior extracts to `helpers/testimonialToggle.ts`.
+**Why:** Claude Design specified accordion over carousel for B2B credibility. Carousels scan poorly for operational buyers.
+**Constraints:** Do not revert to carousel without a new design decision. The `testimonialToggle` pure function is the canonical toggle logic — do not inline it.
+
+**Decision:** Section label bar pattern: every section gets a 1px-wide × 32px-tall gold vertical bar + gold uppercase Syne text as the section label.
+**Why:** Claude Design introduced this as a consistent wayfinding pattern across all sections.
+**Constraints:** This is the one gold "wayfinding" element per section. Its presence counts toward the gold-per-section budget.
+
+**Decision:** `--color-linen-deep: #D0D5DC` added as a CSS token. Used in Testimonials gradient background.
+**Why:** Needed for the Testimonials section linen-to-off-white background range after background palette shifted to cool slate.
+**Constraints:** Cool slate family only — do not reintroduce warm amber values.
+
+**Deferred — Gold discipline final pass:** Gold discipline rule (one gold moment per scroll section) was temporarily suspended for the 04/29/2026 Claude Design pass because Charles wanted to see the full design before making cuts. Section label bars, CTAs, rules, and numbers all accumulate gold in some sections. A final pass is needed once the full redesign is visually stable.
+**How to apply:** When running the final gold pass, use the greyscale test (does the design still work if gold is replaced with navy-60?) on each element. Strip anything that fails that test and leaves another gold element doing structural work in the same section.
+
+**Deferred — Component render test coverage:** Full component render tests (jsdom + React Testing Library) are not possible with the current Vitest node environment. Package install required. Defer until the site is more finished — add tests in a single pass across all components rather than piecemeal.
+**How to apply:** When the time comes, the package install conversation should cover: `@testing-library/react`, `@testing-library/user-event`, jsdom environment config in vitest.config.ts. Start with the most interactive components (QuoteDrawer, Testimonials, StickyNav).
+
+**Deferred — Code-review skill:** A personal skill to run coding standards checks, catch basic errors, and audit file architecture/organization for messiness, loose files, and misplaced components. Not yet built.
+**How to apply:** When building this skill, scope it to: CLAUDE.md rule compliance, TypeScript standards (strict mode, explicit types, no implicit any), component line count thresholds, file placement conventions (helpers in /helpers, utilities not loose), CSS token vs. raw rgba usage.
+
+**Deferred — Design-review agent updates:** The `.claude/agents/design-review.md` agent needs to be updated to reflect the current design standards (section label bar pattern, new background treatments, IBM Plex Sans as heading typeface, cool slate token values).
+**How to apply:** Run a targeted agent update once the gold discipline pass is complete, so the agent reflects the final locked state.
+
+---
+
 ## Startup-Relevant Warnings
 
 - Do not add new operational claims to copy or design without Charles verifying them first.
 - Design direction for the Brazusa /clean page is evolution-only (confirmed, not a full reset). Of the two structural fixes identified by Claude Design: typeface replacement is complete (IBM Plex Sans, implemented 04/27/2026). Hero photo swap is still pending — current image codes as residential premium and needs operational-scale imagery. Do not treat the visual pass as complete until the hero photo is addressed.
-- Background tone and gold discipline passes are complete. See CSS/Design System decisions above for locked values.
+- Background tone and gold discipline passes are complete (token values locked). Gold discipline suspension is deliberate — final pass deferred. See Section Architecture deferred item above.
+- Section order locked as of 04/29/2026. See Section Architecture section above.

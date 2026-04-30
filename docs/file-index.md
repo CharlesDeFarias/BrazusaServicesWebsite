@@ -1,5 +1,5 @@
 # Project File Index
-# Last updated: 2026-04-26
+# Last updated: 2026-04-29
 # Written by Claude with codebase context — not a dumb directory listing.
 # Update this file whenever files are added, removed, or moved.
 
@@ -53,24 +53,25 @@ All components are Brazusa Cleaning-specific and live under `components/clean/`.
 
 | File | Purpose |
 |---|---|
-| `components/clean/Hero.tsx` | Hero section — segment-aware headline, body, differentiators, quote CTA |
-| `components/clean/StickyNav.tsx` | Top navigation bar — logo, nav links, sticky behavior |
-| `components/clean/TrustStrip.tsx` | Scrolling horizontal trust banner below the hero |
-| `components/clean/Positioning.tsx` | "Built for operators, not oversight" section — value proposition |
+| `components/clean/Hero.tsx` | Hero section — two-column grid (text + image stripe), segment-aware headline, differentiator pills, quote CTA |
+| `components/clean/StickyNav.tsx` | Top navigation — off-white on scroll, gold top bar, phone number, "Clean my..." mobile dropdown, persistent mobile CTAs |
+| `components/clean/TrustStrip.tsx` | Scrolling marquee trust banner below hero — warm-gray text on off-white |
+| `components/clean/Positioning.tsx` | "Built for operators, not oversight" — navy section, section label bar, right card with gold badge |
+| `components/clean/CalloutBand.tsx` | Navy punchy statement between Positioning and ClientAccordion — "You shouldn't have to manage the people managing your space." |
 | `components/clean/ClientAccordion.tsx` | Space-type selector — expandable panels for STR, property, offices, homes, other |
 | `components/clean/Services.tsx` | Services grid — filterable by space type, daily + extended services |
-| `components/clean/HowItWorks.tsx` | Process explainer section |
-| `components/clean/Pricing.tsx` | Pricing overview — filter chips by space type, custom quote card |
-| `components/clean/Testimonials.tsx` | Client testimonials carousel |
+| `components/clean/Pricing.tsx` | Pricing overview — filter chips by space type (homes not apartments), custom quote card |
+| `components/clean/About.tsx` | Team/about section — has section label bar |
+| `components/clean/Testimonials.tsx` | Category accordion (not carousel) — 5 categories (STR/Property/Offices/Homes/Other), none open by default |
 | `components/clean/ServiceArea.tsx` | Greater Boston coverage map and town list |
-| `components/clean/About.tsx` | Team/about section |
-| `components/clean/QuickContact.tsx` | Quick contact block — phone, email, WhatsApp |
+| `components/clean/TrustStats.tsx` | Three-stat trust strip between ServiceArea and FinalCTA — 30+ Years / 100% Insured / 24/7 Availability |
 | `components/clean/QuoteDrawer.tsx` | Slide-in quote request form — segment-aware, submits to /api/quote |
-| `components/clean/FinalCTA.tsx` | Bottom conversion section before newsletter |
+| `components/clean/FinalCTA.tsx` | Bottom conversion section — merged with contact info (phone/email/Google), 3-column contact strip |
 | `components/clean/NewsletterCTA.tsx` | Newsletter signup block — submits to /api/newsletter |
-| `components/clean/MobileCTABar.tsx` | Fixed bottom bar on mobile with primary CTA |
 | `components/clean/ScrollToTop.tsx` | Scroll-to-top button |
 | `components/clean/Footer.tsx` | Page footer — links, logo, contact info |
+| `components/clean/helpers/testimonialToggle.ts` | Pure toggle function for Testimonials accordion — toggleCategory(current, clicked) |
+| `components/clean/helpers/testimonialToggle.test.ts` | Tests for testimonialToggle — open, close, switch, open-from-null |
 
 ---
 

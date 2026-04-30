@@ -55,13 +55,9 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** Warm amber tokens coded as residential/domestic. Cool undertone puts background temperature in harmony with the navy system and reads operational.
 **Constraints:** These four values are now locked. Do not revert. If a future client uses warm backgrounds, scope to their config — never reintroduce warm values into the shared token layer.
 
-**Decision:** Gold discipline is formally locked as a component-level rule.
-Gold earns its place: primary CTA buttons (one per section max), active state indicators (filter pills, nav underline), single structural rule in a hero or section header, process step numbers (01-06 sequences).
-Strip it out: carousel/navigation arrows, bullet markers in lists, per-step decorative rules, ambient glow effects (except one hero-level instance), hover-expanding decorative lines, scroll-to-top utility button.
-One gold moment per scroll section. If a section has a gold CTA, it does not also get gold bullets, a gold rule, and gold numbers.
-**Why:** Pre-pass audit found gold accumulating as decoration throughout. The gold tone was correct; frequency was the problem. Claude Design part 3 audit formalized this as a structured rule.
-**Constraints:** Apply the greyscale test before adding any new gold usage: if the design still works with gold replaced by navy-60, the gold is not doing structural work. Strip it. The white opacity scale has a gap between 70 and 90 — raw rgba values in that range need `/* no token: intentional */` comments.
-**Post-pass refinement (04/27/2026):** Three elements stripped by the gold pass were restored as Charles's explicit preference override: (1) Services card hover lines (`w-5 h-px` expanding to `w-10` on hover), (2) HowItWorks per-step gold rules under each step number, (3) Pricing card divider rules (`h-px w-6`). These appear once per section and complement already-gold structural elements. Do not re-strip them in future passes without discussion.
+**Decision:** Gold discipline rule suspended as of 04/30/2026. The one-gold-moment-per-section constraint is removed for now. Gold may be used freely where it aids legibility, hierarchy, or visual signal.
+**Why:** The constraint was causing readability problems — the extra caution it generated pushed UI labels and supporting text to near-illegible gray tones. Readability takes priority over gold frequency.
+**Constraints:** None currently active. If gold usage accumulates to the point where it loses meaning, re-introduce a targeted rule in a new design pass. The previous "strip it out" list is not binding.
 
 **Deferred — Claude Design pass on background calibration:** Three interconnected issues observed after the 04/27 implementation pass require a targeted Claude Design session with fresh screenshots before any code changes: (1) StickyNav scrolled state feels jarring at the navy-to-slate transition, (2) cool slate background tones too similar — monotonous feel, (3) navy header text contrast on cool slate reads poorly. Screenshots needed: hero-to-nav scroll transition, a mid-page section showing the header contrast issue, desktop overview. Do not attempt to fix these independently in code before that session.
 
@@ -249,9 +245,6 @@ One gold moment per scroll section. If a section has a gold CTA, it does not als
 **Why:** Needed for the Testimonials section linen-to-off-white background range after background palette shifted to cool slate.
 **Constraints:** Cool slate family only — do not reintroduce warm amber values.
 
-**Deferred — Gold discipline final pass:** Gold discipline rule (one gold moment per scroll section) was temporarily suspended for the 04/29/2026 Claude Design pass because Charles wanted to see the full design before making cuts. Section label bars, CTAs, rules, and numbers all accumulate gold in some sections. A final pass is needed once the full redesign is visually stable.
-**How to apply:** When running the final gold pass, use the greyscale test (does the design still work if gold is replaced with navy-60?) on each element. Strip anything that fails that test and leaves another gold element doing structural work in the same section.
-
 **Deferred — Component render test coverage:** Full component render tests (jsdom + React Testing Library) are not possible with the current Vitest node environment. Package install required. Defer until the site is more finished — add tests in a single pass across all components rather than piecemeal.
 **How to apply:** When the time comes, the package install conversation should cover: `@testing-library/react`, `@testing-library/user-event`, jsdom environment config in vitest.config.ts. Start with the most interactive components (QuoteDrawer, Testimonials, StickyNav).
 
@@ -259,7 +252,22 @@ One gold moment per scroll section. If a section has a gold CTA, it does not als
 **How to apply:** When building this skill, scope it to: CLAUDE.md rule compliance, TypeScript standards (strict mode, explicit types, no implicit any), component line count thresholds, file placement conventions (helpers in /helpers, utilities not loose), CSS token vs. raw rgba usage.
 
 **Deferred — Design-review agent updates:** The `.claude/agents/design-review.md` agent needs to be updated to reflect the current design standards (Geist heading typeface, cool slate tokens, section label bar exceptions for Positioning and FinalCTA, TrustStats at position 5, no CalloutBand).
-**How to apply:** Run a targeted agent update once the gold discipline pass is complete, so the agent reflects the final locked state.
+**How to apply:** Run a targeted agent update once the visual pass is stable.
+
+**Deferred — Services "Other" space type:** Add an "Other" panel to the ClientAccordion (or the Services section "What we handle daily") for spaces that don't fit a category. No copy written yet.
+**How to apply:** When copy is ready, add an accordion item matching the existing pattern in `page.tsx` clientItems array and a corresponding services filter entry.
+
+**Deferred — Services section copy customization per space type:** The "What we handle daily" services grid currently shows the same items regardless of which accordion panel is open. The copy and service list should adapt per space type (STR, property, offices, homes, other). Currently there is no per-type copy for this section.
+**How to apply:** Extend the copy layer in `lib/copy/brazusa-cleaning/` with a services-specific copy block per segment, following the same base+override pattern used for hero and accordion copy.
+
+**Deferred — TrustStrip ticker: more items + color changes:** The ticker list needs more items added over time. Also, Charles flagged wanting to revisit the font color and/or bullet point colors in the strip.
+**How to apply:** Add items to the `items` array in `TrustStrip.tsx`. For color/bullet changes, evaluate the current `--color-warm-gray-dark` text and `--color-navy-20` bullet against the off-white background — consider making the bullet gold or increasing text contrast.
+
+**Deferred — ServiceArea responsive column equalization:** The "Greater Boston towns" column has significantly more chips than "Boston neighborhoods," making the two columns unequal height and visually awkward. Hide the least-important towns dynamically to equalize column heights. Least-important towns (hide first): Canton, Belmont, Winthrop, Revere, Chelsea, Framingham, Randolph.
+**How to apply:** Implement a CSS or JS approach that progressively hides lower-priority chips until both columns reach equal height. Hiding should be responsive (depends on viewport/column width). The `+ more` chip already signals overflow.
+
+**Deferred — Service area checker widget:** A quick interactive widget where someone can enter an address and immediately know whether we cover it. Four response tiers: (A) Definitely clean there, (B) Probably clean there, (C) Probably don't clean there, (D) Definitely don't clean there. Coverage zones would be defined as a structured data object mapping to the existing town/neighborhood lists.
+**How to apply:** Design data structure for coverage zones first (town-level matched against the existing greaterBostonTowns and bostonNeighborhoods arrays). Then build a simple input + instant lookup. No API required — pure client-side match. Consider adding it to ServiceArea.tsx or as a modal/drawer triggered by the "Check if we cover your area" button.
 
 ---
 

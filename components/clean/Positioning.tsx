@@ -1,9 +1,9 @@
 import type { JSX } from 'react'
 
 const keyPoints = [
-  'Completion is confirmed without follow-up',
+  'Completion and photos relayed immediately without stress',
   'Issues are flagged before they escalate',
-  'Status shared via your tools, apps, or preferred method',
+  'Status shared via apps or preferred method',
   'Standards are applied consistently across visits',
   'Scope adapts without losing structure',
 ]
@@ -20,11 +20,23 @@ export default function Positioning(): JSX.Element {
           <div className="mb-4" style={{ width: '42px', height: '1px', background: 'var(--color-brand-gold)' }} />
 
           <h2
-            className="text-3xl md:text-4xl leading-snug mb-4"
+            className="text-3xl md:text-4xl leading-snug mb-2"
             style={{ color: 'white' }}
           >
             Built for operators, not oversight
           </h2>
+          <p
+            className="mb-5"
+            style={{
+              fontFamily: 'var(--font-ibm-plex-sans)',
+              fontSize: '15px',
+              fontWeight: 400,
+              color: 'var(--color-white-55)',
+              lineHeight: 1.45,
+            }}
+          >
+            You shouldn&apos;t have to manage the people managing your space.
+          </p>
           <div className="space-y-2.5 text-sm leading-relaxed" style={{ color: 'var(--color-white-60)' }}>
             <p>Most cleaning services fall into two categories.</p>
             <p>Small independent teams are affordable, but inconsistent. You end up managing them more than you should.</p>
@@ -33,27 +45,14 @@ export default function Positioning(): JSX.Element {
             <p>You get a consistent team that understands your space. You also get structure, communication, and accountability.</p>
             <p>The work gets done, confirmed, and communicated without requiring your oversight.</p>
           </div>
-          <p
-            className="mt-6 pt-5"
-            style={{
-              fontFamily: 'var(--font-ibm-plex-sans)',
-              fontSize: '17px',
-              fontWeight: 600,
-              color: 'var(--color-white-70)',
-              lineHeight: 1.3,
-              borderTop: '1px solid var(--color-white-10)',
-            }}
-          >
-            You shouldn&apos;t have to manage the people managing your space.
-          </p>
         </div>
 
         {/* Right card */}
         <div
           className="lg:pt-2 p-7"
           style={{
-            background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.03)', /* no token: intentional — below white-5 floor */
+            border: '1px solid rgba(255,255,255,0.08)', /* no token: intentional — between white-5 and white-10 */
           }}
         >
           <span
@@ -73,7 +72,7 @@ export default function Positioning(): JSX.Element {
           </span>
           <ul className="space-y-3">
             {keyPoints.map((point) => (
-              <li key={point} className="flex items-start gap-3 text-sm" style={{ color: 'rgba(255,255,255,0.78)' }}>
+              <li key={point} className="flex items-start gap-3 text-sm" style={{ color: 'rgba(255,255,255,0.78)' /* no token: intentional — between white-70 and white-90 */ }}>
                 <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--color-brand-gold)' }}>&#8594;</span>
                 {point}
               </li>

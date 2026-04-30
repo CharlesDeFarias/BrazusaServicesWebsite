@@ -81,12 +81,13 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
     }, 60)
   }
 
-  const navBg   = scrolled ? 'var(--color-off-white)'             : 'rgba(11,29,46,0.78)'
-  const navBdr  = scrolled ? '1px solid rgba(11,29,46,0.12)'      : 'none'
-  const linkClr = scrolled ? 'rgba(11,29,46,0.55)'                : 'var(--color-white-60)'
-  const barClr  = scrolled ? 'var(--color-navy)'                  : 'white'
+  // Scroll-state transition colors use sub-stop rgba values for fine-grained control — no token: intentional for all below
+  const navBg      = scrolled ? 'var(--color-off-white)'        : 'rgba(11,29,46,0.78)'  // above navy-60 ceiling
+  const navBdr     = scrolled ? '1px solid rgba(11,29,46,0.12)' : 'none'                 // between navy-10 and navy-15
+  const linkClr    = scrolled ? 'rgba(11,29,46,0.55)'           : 'var(--color-white-60)' // between navy-50 and navy-60
+  const barClr     = scrolled ? 'var(--color-navy)'             : 'white'
 
-  const dividerClr = scrolled ? 'var(--color-navy-15)' : 'rgba(255,255,255,0.14)'
+  const dividerClr = scrolled ? 'var(--color-navy-15)' : 'rgba(255,255,255,0.14)' // between white-10 and white-15
 
   return (
     <nav
@@ -110,7 +111,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
         >
           <div
             style={{
-              background: scrolled ? 'transparent' : 'rgba(255,255,255,0.92)',
+              background: scrolled ? 'transparent' : 'rgba(255,255,255,0.92)', /* no token: intentional — above white-90 ceiling */
               borderRadius: 0,
               padding: 0,
               overflow: 'hidden',
@@ -135,7 +136,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               fontSize: scrolled ? '14px' : '15px',
               fontWeight: 600,
               letterSpacing: '0.03em',
-              color: scrolled ? 'var(--color-navy)' : 'rgba(255,255,255,0.88)',
+              color: scrolled ? 'var(--color-navy)' : 'rgba(255,255,255,0.88)', /* no token: intentional — between white-80 and white-90 */
               transition: 'all 0.25s',
               whiteSpace: 'nowrap',
             }}
@@ -179,10 +180,10 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
             <div className="relative" ref={cleanRef}>
               <button
                 onClick={() => setCleanOpen(!cleanOpen)}
-                className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-100"
+                className="flex items-center gap-1.5 text-xs font-medium transition-opacity hover:opacity-100 cursor-pointer"
                 style={{ color: linkClr, letterSpacing: '0.06em' }}
               >
-                Clean my{'…'}
+                Spaces we clean
                 <svg
                   width="10" height="10" viewBox="0 0 10 10" fill="none"
                   className="transition-transform duration-200"
@@ -205,7 +206,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
                       key={ct.id}
                       onClick={() => handleClientSelect(ct.id)}
                       className="w-full text-left px-4 py-2.5 text-xs transition-colors"
-                      style={{ color: scrolled ? 'rgba(11,29,46,0.75)' : 'rgba(255,255,255,0.75)', minHeight: '36px' }}
+                      style={{ color: scrolled ? 'rgba(11,29,46,0.75)' : 'rgba(255,255,255,0.75)', minHeight: '36px' }} /* no token: intentional — above navy-60 / between white-70 and white-80 */
                       onMouseEnter={e => (e.currentTarget.style.background = scrolled ? 'rgba(11,29,46,0.06)' : 'rgba(255,255,255,0.06)')}
                       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     >
@@ -220,7 +221,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
                     onMouseEnter={e => (e.currentTarget.style.background = scrolled ? 'rgba(11,29,46,0.06)' : 'rgba(255,255,255,0.06)')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                   >
-                    Something else{'…'}
+                    Everything else
                   </button>
                 </div>
               )}
@@ -260,7 +261,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           <div className="relative" ref={cleanRef}>
             <button
               onClick={() => setCleanOpen(!cleanOpen)}
-              className="text-xs font-medium px-2.5 py-1.5 flex items-center gap-1"
+              className="text-xs font-medium px-2.5 py-1.5 flex items-center gap-1 cursor-pointer"
               style={{
                 fontFamily: 'var(--font-syne)',
                 color: scrolled ? 'var(--color-navy)' : 'white',
@@ -268,7 +269,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
                 letterSpacing: '0.04em',
               }}
             >
-              Clean my{'…'}
+              Spaces we clean
               <svg
                 width="8" height="8" viewBox="0 0 10 10" fill="none"
                 style={{ transform: cleanOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
@@ -290,7 +291,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
                     key={ct.id}
                     onClick={() => handleClientSelect(ct.id)}
                     className="w-full text-left px-4 py-2.5 text-xs transition-colors"
-                    style={{ color: scrolled ? 'rgba(11,29,46,0.75)' : 'rgba(255,255,255,0.75)', minHeight: '36px' }}
+                    style={{ color: scrolled ? 'rgba(11,29,46,0.75)' : 'rgba(255,255,255,0.75)', minHeight: '36px' }} /* no token: intentional — above navy-60 / between white-70 and white-80 */
                     onMouseEnter={e => (e.currentTarget.style.background = scrolled ? 'rgba(11,29,46,0.06)' : 'rgba(255,255,255,0.06)')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                   >
@@ -305,7 +306,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
                   onMouseEnter={e => (e.currentTarget.style.background = scrolled ? 'rgba(11,29,46,0.06)' : 'rgba(255,255,255,0.06)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                 >
-                  Something else{'…'}
+                  Everything else
                 </button>
               </div>
             )}
@@ -374,7 +375,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
             className="text-xs font-medium py-2 mb-1"
             style={{ color: 'var(--color-brand-gold)', letterSpacing: '0.1em' }}
           >
-            CLEAN MY{'…'}
+            SPACES WE CLEAN
           </div>
           {clientTypes.map((ct) => (
             <button
@@ -382,7 +383,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               onClick={() => handleClientSelect(ct.id)}
               className="text-sm font-medium py-2.5 text-left transition-opacity"
               style={{
-                color: scrolled ? 'rgba(11,29,46,0.65)' : 'rgba(255,255,255,0.65)',
+                color: scrolled ? 'rgba(11,29,46,0.65)' : 'rgba(255,255,255,0.65)', /* no token: intentional — above navy-60 / between white-60 and white-70 */
                 borderBottom: scrolled ? '1px solid var(--color-navy-5)' : '1px solid var(--color-white-5)',
                 minHeight: '44px',
                 display: 'flex',
@@ -403,7 +404,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               alignItems: 'center',
             }}
           >
-            Something else{'…'}
+            Everything else
           </button>
 
           <div className="my-3" style={{ borderTop: scrolled ? '1px solid var(--color-navy-10)' : '1px solid var(--color-white-10)' }} />
@@ -415,9 +416,9 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               onClick={closeMenu}
               className="text-sm font-medium py-3.5 transition-opacity"
               style={{
-                color: scrolled ? 'rgba(11,29,46,0.75)' : 'rgba(255,255,255,0.75)',
+                color: scrolled ? 'rgba(11,29,46,0.75)' : 'rgba(255,255,255,0.75)', /* no token: intentional — above navy-60 / between white-70 and white-80 */
                 textDecoration: 'none',
-                borderBottom: scrolled ? '1px solid rgba(11,29,46,0.07)' : '1px solid rgba(255,255,255,0.07)',
+                borderBottom: scrolled ? '1px solid rgba(11,29,46,0.07)' : '1px solid rgba(255,255,255,0.07)', /* no token: intentional — between navy-5 and navy-10 / between white-5 and white-10 */
                 minHeight: '44px',
                 display: 'flex',
                 alignItems: 'center',

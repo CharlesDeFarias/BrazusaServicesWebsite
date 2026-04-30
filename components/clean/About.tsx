@@ -22,7 +22,7 @@ export default function About(): JSX.Element {
       <div className="max-w-5xl mx-auto relative">
 
         {/* Section label */}
-        <div className="flex items-center gap-3 mb-8">
+        <div className="flex items-center gap-3 mb-4">
           <div className="w-px flex-shrink-0" style={{ height: '32px', background: 'var(--color-brand-gold)' }} />
           <span
             style={{

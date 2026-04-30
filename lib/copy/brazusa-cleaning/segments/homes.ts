@@ -5,7 +5,7 @@ export const homesCopy: SegmentCopy = {
   ...baseCopy,
   hero: {
     ...baseCopy.hero,
-    h1: 'Cleaning built for homes that need the same team back',
+    h1: 'Cleaning especially built for homes that need the same team back',
     body: 'Your home is handled by a team that knows the space, works from notes kept on your home, and adjusts scheduling through whatever channel works for you. Communication stays open, including translation, and work is completed and confirmed.',
   },
 }

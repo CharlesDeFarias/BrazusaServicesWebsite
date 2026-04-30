@@ -4,9 +4,12 @@ const items = [
   'Work Confirmed',
   'Issues Flagged Early',
   'Structured Communication',
-  'Fully Insured',
+  'Fully Insured & Documented',
   'Same Team Every Visit',
   '30+ Years in Boston',
+  '30+ Years Experience',
+  '100% Insured',
+  '24/7 Availability',
 ]
 
 export default function TrustStrip(): JSX.Element {
@@ -14,8 +17,8 @@ export default function TrustStrip(): JSX.Element {
     <div
       className="bg-off-white overflow-hidden"
       style={{
-        borderTop: '1px solid rgba(11,29,46,0.08)',
-        borderBottom: '1px solid rgba(11,29,46,0.08)',
+        borderTop: '1px solid rgba(11,29,46,0.08)', /* no token: intentional — between navy-5 and navy-10 */
+        borderBottom: '1px solid rgba(11,29,46,0.08)', /* no token: intentional — between navy-5 and navy-10 */
         padding: '10px 0',
       }}
     >

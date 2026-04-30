@@ -38,7 +38,7 @@ export default function TrustStats(): JSX.Element {
                 fontFamily: 'var(--font-ibm-plex-sans)',
                 fontSize: '24px',
                 fontWeight: 700,
-                color: 'white',
+                color: 'var(--color-brand-gold)',
                 letterSpacing: '-0.01em',
                 lineHeight: 1,
                 marginBottom: '8px',

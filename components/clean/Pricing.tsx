@@ -72,8 +72,8 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 mb-8">
           <div>
             <p
-              className="text-xs uppercase mb-4 text-warm-gray"
-              style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+              className="text-xs uppercase mb-4"
+              style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)', color: 'var(--color-brand-gold)' }}
             >
               Pricing approach
             </p>
@@ -113,8 +113,8 @@ export default function Pricing({ onQuoteClick }: PricingProps): JSX.Element {
 
           <div>
             <p
-              className="text-xs uppercase mb-4 text-warm-gray"
-              style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
+              className="text-xs uppercase mb-4"
+              style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)', color: 'var(--color-brand-gold)' }}
             >
               What affects your quote
             </p>

@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import { IBM_Plex_Sans, Syne } from 'next/font/google'
+import { Geist, Syne } from 'next/font/google'
 import './globals.css'
 
-const ibmPlexSans = IBM_Plex_Sans({
-  weight: ['400', '500', '600', '700'],
-  style: ['normal'],
+// Geist loaded under --font-ibm-plex-sans alias — variable name kept for backwards compat across all components
+const ibmPlexSans = Geist({
   subsets: ['latin'],
   variable: '--font-ibm-plex-sans',
   display: 'swap',

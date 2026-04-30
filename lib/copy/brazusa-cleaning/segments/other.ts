@@ -12,6 +12,5 @@ export const otherCopy: SegmentCopy = {
       { n: '02', text: 'Work completed and confirmed through your preferred channel' },
       { n: '03', text: 'Coordination handled when cleaning overlaps with logistics' },
     ],
-    microcopy: 'Tell us what you\u2019re dealing with and we\u2019ll tell you if it fits.',
   },
 }

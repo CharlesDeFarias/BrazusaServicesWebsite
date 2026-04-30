@@ -12,10 +12,9 @@ export const baseCopy: SegmentCopy = {
       { n: '05', text: 'Consistent team that learns your space' },
       { n: '06', text: 'Handles inventory, linen, and basic property tasks' },
     ],
-    microcopy: 'Tell us how your space runs and we will say if it fits or not.',
   },
   accordion: {
-    headline: 'The kind of work you need',
+    headline: 'The kind of cleaning you need',
   },
   services: {
     serviceDefinitions: [

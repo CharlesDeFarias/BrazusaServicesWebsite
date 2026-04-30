@@ -96,9 +96,6 @@ export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JS
             ))}
           </div>
 
-          <p className="fade-up-3 mt-6 text-xs" style={{ color: 'var(--color-white-30)' }}>
-            {heroCopy.microcopy}
-          </p>
         </div>
 
         {/* Desktop image stripe — full section height, flush right */}

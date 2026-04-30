@@ -15,7 +15,7 @@ export interface HeroCopy {
   h1: string
   body: string
   differentiators: Differentiator[]
-  microcopy: string
+  microcopy?: string
 }
 
 export interface AccordionCopy {

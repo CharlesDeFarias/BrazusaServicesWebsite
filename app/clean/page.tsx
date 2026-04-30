@@ -6,7 +6,6 @@ import StickyNav        from '@/components/clean/StickyNav'
 import Hero             from '@/components/clean/Hero'
 import TrustStrip       from '@/components/clean/TrustStrip'
 import Positioning      from '@/components/clean/Positioning'
-import CalloutBand      from '@/components/clean/CalloutBand'
 import ClientAccordion  from '@/components/clean/ClientAccordion'
 import type { ClientItem } from '@/components/clean/ClientAccordion'
 import Services         from '@/components/clean/Services'
@@ -148,8 +147,8 @@ export default function CleanPage(): JSX.Element {
       <TrustStrip />
       {/* 4. Positioning (navy) */}
       <Positioning />
-      {/* 5. CalloutBand (navy) */}
-      <CalloutBand />
+      {/* 5. Trust Stats (navy) */}
+      <TrustStats />
       {/* 6. Services Accordion (off-white) */}
       <ClientAccordion
         headline={getCopy(activeClient).accordion.headline}
@@ -185,9 +184,7 @@ export default function CleanPage(): JSX.Element {
       <Testimonials />
       {/* 11. Service Area (off-white) */}
       <ServiceArea onQuoteClick={() => openDrawer()} />
-      {/* 12. Trust Stats (navy) */}
-      <TrustStats />
-      {/* 13. Final CTA + Contact (off-white) */}
+      {/* 12. Final CTA + Contact (off-white) */}
       <FinalCTA onQuoteClick={() => openDrawer()} />
       {/* 14. Footer (navy) */}
       <Footer />

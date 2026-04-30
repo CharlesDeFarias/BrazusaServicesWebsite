@@ -241,7 +241,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           {/* Get a Quote */}
           <button
             onClick={onQuoteClick}
-            className="text-xs font-medium px-4 py-2 transition-all duration-200"
+            className="text-xs font-medium px-4 py-2 transition-all duration-200 hover:opacity-75"
             style={{
               background: scrolled ? 'var(--color-navy)' : 'transparent',
               color: scrolled ? 'white' : 'white',
@@ -264,7 +264,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
               style={{
                 fontFamily: 'var(--font-syne)',
                 color: scrolled ? 'var(--color-navy)' : 'white',
-                border: scrolled ? '1px solid rgba(11,29,46,0.2)' : '1px solid rgba(255,255,255,0.25)',
+                border: scrolled ? '1px solid var(--color-navy-20)' : '1px solid var(--color-white-25)',
                 letterSpacing: '0.04em',
               }}
             >
@@ -314,7 +314,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           {/* Quote button */}
           <button
             onClick={onQuoteClick}
-            className="text-xs font-medium px-2.5 py-1.5 min-h-[32px]"
+            className="text-xs font-medium px-2.5 py-1.5 min-h-[32px] hover:opacity-75"
             style={{
               background: scrolled ? 'var(--color-navy)' : 'var(--color-navy)',
               color: 'white',

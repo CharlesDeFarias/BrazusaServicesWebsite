@@ -32,7 +32,7 @@ export default function TrustStrip(): JSX.Element {
               fontSize: '11px',
               fontWeight: 500,
               letterSpacing: '0.18em',
-              color: 'rgba(122, 116, 112, 0.6)', /* no token: intentional — warm-gray-dark at 60%, no opacity scale for warm-gray */
+              color: 'var(--color-warm-gray-dark)',
               textTransform: 'uppercase',
             }}
           >

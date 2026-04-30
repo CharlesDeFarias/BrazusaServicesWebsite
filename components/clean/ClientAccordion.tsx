@@ -1,6 +1,6 @@
 'use client'
 
-import { type JSX, type ReactNode, useMemo, useState } from 'react'
+import { type JSX, type ReactNode, useMemo, useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { getServicesForClient } from '@/components/clean/Services'
 
@@ -13,6 +13,13 @@ const serviceClientMap: Record<string, ServiceClientKey> = {
   property: 'property',
   office: 'offices',
   apartment: 'apartment',
+}
+
+const testimonialCatMap: Record<string, string> = {
+  str: 'str',
+  property: 'property',
+  office: 'offices',
+  apartment: 'homes',
 }
 
 export interface ClientItem {
@@ -51,15 +58,31 @@ function AccordionItem({
     () => getServicesForClient(clientKey),
     [clientKey]
   )
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (isOpen && containerRef.current) {
+      const timer = setTimeout(() => {
+        const el = containerRef.current
+        if (!el) return
+        const rect = el.getBoundingClientRect()
+        window.scrollTo({ top: window.scrollY + rect.top - 60, behavior: 'smooth' })
+      }, 50)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen])
+
+  const testimonialCat = testimonialCatMap[item.spaceType] ?? item.spaceType
 
   return (
     <div
+      ref={containerRef}
       id={item.id}
       style={{ borderBottom: '1px solid var(--color-light-gray)' }}
     >
       <button
         onClick={() => onOpenChange(isOpen ? null : item.id)}
-        className="w-full flex items-center justify-between py-5 min-h-[44px] text-left group"
+        className="w-full flex items-center justify-between py-5 min-h-[44px] text-left group cursor-pointer"
       >
         <div className="flex items-center gap-5 flex-1 min-w-0">
           <span
@@ -120,7 +143,7 @@ function AccordionItem({
 
             <div className="mb-6">
               <p
-                className="text-xs uppercase mb-3 text-warm-gray-light"
+                className="text-xs uppercase mb-3 text-warm-gray-dark"
                 style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
               >
                 Typical services for this type
@@ -149,6 +172,31 @@ function AccordionItem({
             >
               Get a Quote
             </button>
+
+            <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+              <a
+                href={`#testimonials-${testimonialCat}`}
+                className="text-sm font-medium text-navy hover:opacity-60 transition-opacity"
+                style={{ fontFamily: 'var(--font-syne)' }}
+              >
+                See client examples &rarr;
+              </a>
+              <a
+                href="#pricing"
+                className="text-sm font-medium text-navy hover:opacity-60 transition-opacity"
+                style={{ fontFamily: 'var(--font-syne)' }}
+              >
+                How our pricing works &rarr;
+              </a>
+              <button
+                type="button"
+                onClick={() => onCTAClick(item.spaceType)}
+                className="text-sm font-medium text-navy hover:opacity-60 transition-opacity text-left"
+                style={{ fontFamily: 'var(--font-syne)' }}
+              >
+                Request a quote &rarr;
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -264,14 +312,14 @@ export default function ClientAccordion({
                     className="text-sm font-medium text-navy hover:opacity-60 transition-opacity"
                     style={{ fontFamily: 'var(--font-syne)' }}
                   >
-                    See client examples →
+                    See client examples &rarr;
                   </a>
                   <a
                     href="#pricing"
                     className="text-sm font-medium text-navy hover:opacity-60 transition-opacity"
                     style={{ fontFamily: 'var(--font-syne)' }}
                   >
-                    How our pricing works →
+                    How our pricing works &rarr;
                   </a>
                   <button
                     type="button"
@@ -279,7 +327,7 @@ export default function ClientAccordion({
                     className="text-sm font-medium text-navy hover:opacity-60 transition-opacity text-left"
                     style={{ fontFamily: 'var(--font-syne)' }}
                   >
-                    Request a quote →
+                    Request a quote &rarr;
                   </button>
                 </div>
               </div>

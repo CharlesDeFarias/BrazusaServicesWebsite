@@ -8,7 +8,7 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
   return (
     <section
       id="contact"
-      className="grain bg-off-white py-20 px-6 relative overflow-hidden"
+      className="grain bg-off-white py-14 px-6 relative overflow-hidden"
       style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
       {/* Grid pattern */}
@@ -24,24 +24,7 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
 
       <div className="max-w-3xl mx-auto text-center relative" style={{ maxWidth: '780px' }}>
 
-        {/* Section label */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-px flex-shrink-0" style={{ height: '32px', background: 'var(--color-brand-gold)' }} />
-          <span
-            style={{
-              fontFamily: 'var(--font-syne)',
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.18em',
-              color: 'var(--color-brand-gold)',
-              textTransform: 'uppercase',
-            }}
-          >
-            Contact
-          </span>
-        </div>
-
-        {/* Gold rule — part of the one gold moment (CTA + rule are one cohesive unit) */}
+        {/* Gold rule */}
         <div className="mx-auto mb-8" style={{ width: '42px', height: '1px', background: 'var(--color-brand-gold)' }} />
 
         <h2

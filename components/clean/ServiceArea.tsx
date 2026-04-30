@@ -37,28 +37,28 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
       className="grain py-14 px-6 overflow-hidden"
       style={{ background: 'linear-gradient(to bottom, var(--color-off-white), var(--color-linen))', borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
-      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        <div>
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-8">
           <h2 className="text-3xl md:text-4xl text-navy mb-4 leading-snug">
-            Greater Boston &amp;<br />surrounding areas
+            Greater Boston &amp; surrounding areas
           </h2>
           <p className="text-sm leading-relaxed mb-6 text-warm-gray-dark">
-            {"We serve apartments, high-rises, offices, and multi-unit properties across the metro area. Not sure if you're in range? Just ask \u2014 we're flexible."}
+            {"We serve apartments, high-rises, offices, and multi-unit properties across the metro area. Not sure if you're in range? Just ask — we're flexible."}
           </p>
           <button
             onClick={onQuoteClick}
             className="text-sm font-medium text-navy pb-0.5 hover:opacity-60 transition-opacity"
             style={{ borderBottom: '1px solid var(--color-navy)' }}
           >
-            Check if we cover your area →
+            Check if we cover your area &rarr;
           </button>
         </div>
 
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Greater Boston towns */}
           <div>
             <p
-              className="text-xs uppercase mb-3 text-warm-gray-light"
+              className="text-xs uppercase mb-3 text-warm-gray"
               style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
             >
               Greater Boston towns
@@ -78,13 +78,10 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
             </div>
           </div>
 
-          {/* Divider */}
-          <div style={{ height: '1px', background: 'var(--color-light-gray)' }} />
-
           {/* Boston neighborhoods */}
           <div>
             <p
-              className="text-xs uppercase mb-3 text-warm-gray-light"
+              className="text-xs uppercase mb-3 text-warm-gray"
               style={{ letterSpacing: '0.12em', fontFamily: 'var(--font-syne)' }}
             >
               Boston neighborhoods

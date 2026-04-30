@@ -95,7 +95,7 @@ const testimonialHashToCategory: Record<string, Category> = {
 }
 
 export default function Testimonials(): JSX.Element {
-  const [openCategory, setOpenCategory] = useState<Category | null>(null)
+  const [openCategory, setOpenCategory] = useState<Category | null>('str')
 
   useEffect(() => {
     const hash = window.location.hash

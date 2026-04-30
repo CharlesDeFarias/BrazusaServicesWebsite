@@ -9396,3 +9396,100 @@ The 04/28-04/29 Claude Design pass was intentionally disjointed by context const
 
 This is now documented in ai-case-study.md as point 13 in the "What changed over time" chronology.
 
+
+### 04/29/2026, 08:32:48 PM
+**Prompt:** I'm looking through the site now on desktop and making notes on things I want to address and change. For now dont change them, just add them all to the deferred list and then send me the entire deferred list so i can review what is out of date and/or what i want to tackle with priority.
+
+- The get a quote button in the top nav doesn't have the hover behavior of showing that it's a clickable button, that should be fixed.
+- remove "tell us how your space runs and we will say if it fits or not"
+- I'm not a big fan of the font, especially how it treats the letter g, its a little too fancy to the point it makes it less legible.
+- the text in the ticket is very hard to read because of the colors.
+- The copy in the positioning section is good, but there's an unncessary amount of blank space at the top of the section. we also dont need the word "positioning" there at all, instead, just have the "built for operators, not oversight" header and add the gold accent to it. Also the copy is currently a little too loose/free form and spread out. it doesnt look great and ends up taking more vertical space than it needs to.
+- Move the "you shouldn't have to manage the people managing your space" message into the "built for operators" section so its just included as an important message at the bottom of the section, instead of being an entire new section that takes up an awkward and abrupt amount of space on its own. Also make the Arrows in the "what this means for you" section gold.
+- Change "The kind of work you need" to "The kind of cleaning you need"
+- need to fix the behavior of the space types so that clicking on one makes it so the expanded section snaps the viewpoint to the proper spot, so the top of the expanded section is at the top of the page, currently it just opens up based on where your scroll bar is at.
+- the subheaders in the cleaning space expandable sections is too hard to read, that dark grey on top of the linen color. really anywhere that has this combo of font color and background needs to be fixed to be more legible.
+- Each of the expandable clickable sections should change the cursor on hovor to make it obvious these sections are expandable.
+- the "see client examples -> how our pricing works -> request a quote" clickable line that's in the "other space too" section should be in all of the expandable sections, as its very useful.
+- in the real examples, real clients section, the font color of "pricing approach" and "what affects your quote" is very ahrd to read against that background, needs to be fixed.
+- The "real clients, real situations" section should start with an automatically expanded STR section, so its immediately readable and also immediately obvious that you can click to see other options.
+- The "greater Boston and surrounding areas" section is taking up too much unnecessary veeretical space. Let's put the greater boston towns and boston neighborhoods sections in the same horizontal space, below the greater boston & surrounding areas text, which should be made wider to account for the newly opened up space from moving the others.
+- Move the trust stats banner from where it currently is to where we currently have "you shouldn't have to manage the people managing your space", but only once we've made my previous request of shifting that text into the section above it.
+- There's still a massive space above the "tell us what you need" section, and now there's also an unnecessary "Contact" word there that isn't doing anything and can be removed.
+
+### 04/29/2026, 08:48:04 PM
+**Prompt:** what does formal os versioning mean?
+
+### 04/29/2026, 09:28:24 PM
+**Prompt:** are we still connected? my claude app stopped working
+
+### 04/30/2026, 12:48:54 AM
+**Prompt:** here's the full list of items i want to tackle immediately:
+1. Stale permissions cleanup — .claude/settings.local.json allow-list contains Next.js scaffold commands that are no longer needed. Clean in one pass once remaining config
+  changes settle.
+  2. Heading typeface legibility — IBM Plex Sans flagged for stylized 'g' glyph hurting legibility. Needs a design decision before touching code. Replacement must read
+  B2B/operational; no Inter/Roboto/Arial/Space Grotesk.
+  3. "Get a Quote" button hover state — No visual hover feedback (no cursor change, no color/opacity shift). Needs a hover style.
+4. Remove microcopy line — Remove "Tell us how your space runs and we will say if it fits or not."
+5. Positioning layout tightening — Excessive top whitespace; copy too spread out. Remove the "Positioning" section label word. Replace with a gold accent directly on the H2
+  ("Built for operators, not oversight").
+ 6. Merge CalloutBand into Positioning — Move the "You shouldn't have to manage the people managing your space." line into Positioning as a closing statement. Delete CalloutBand
+   as a standalone section. The freed space becomes the new TrustStats location (see #16).
+  7. "What this means for you" arrow color — The → arrows in the Positioning card should be gold.
+
+ 8. TrustStrip text contrast — rgba(122,116,112,0.6) is too low contrast on off-white. Increase opacity or darken base color.
+
+  9. Headline copy change — "The kind of work you need" → "The kind of cleaning you need"
+  10. Scroll-snap on expand — When a panel expands, viewport should snap so the top of the expanded section sits at the top of the visible area.
+  11. Subheader legibility — Dark gray text on linen background in expanded panels is too hard to read. Review any dark-gray-on-linen combo across the page and fix.
+  12. Cursor on hover — Each accordion row should show cursor: pointer on hover.
+  13. Navigation link row in all panels — "See client examples → how our pricing works → request a quote" link row only exists in "Other spaces." Add to every expanded panel.
+  14. STR auto-expanded on load — STR category should be open by default so content is immediately readable and the interaction pattern is obvious.
+15  . "Pricing approach" / "What affects your quote" text contrast — These label strings inside case rows are too hard to read against the current background.
+  16. Layout consolidation — "Greater Boston towns" and "Boston neighborhoods" stacked vertically taking too much height. Move them side-by-side in one horizontal row, with the
+  heading above widened to fill the freed space.
+17. Reposition TrustStats — Once CalloutBand is merged into Positioning (#11), move TrustStats into the space CalloutBand occupied (between Positioning and ClientAccordion),
+  rather than its current position between ServiceArea and FinalCTA.
+18. Remove "Contact" section label + fix top whitespace — The "Contact" label isn't doing anything. Remove it and fix the excessive whitespace above "Tell us what you need."
+
+ 
+
+
+### 04/30/2026, 12:57:11 AM
+**Prompt:** let;s decide now for the typeface, and i'll be doing everything in claude
+
+### 04/30/2026, 12:59:53 AM
+**Prompt:** let's try geist. proceed
+
+### 04/30/2026, 01:19:45 AM
+**Prompt:** do a durable update and build the dev server so i can see it before we push live
+
+---
+
+## Session: 2026-04-30
+
+### Decisions made this session
+
+- **Geist replaces IBM Plex Sans** — heading typeface swap. CSS variable `--font-ibm-plex-sans` kept as alias for backwards compat. Prompted by legibility concern with IBM Plex Sans 'g' glyph.
+- **All 18 deferred items from desktop review implemented** — committed `81b06d0`. Full list in prompt log below.
+- **CalloutBand deleted** — text merged as closing callout inside Positioning. Section removed from page order.
+- **TrustStats repositioned** — now position 5 (Positioning → TrustStats → ClientAccordion), not position 12.
+- **Accordion headline** — changed from "The kind of work you need" → "The kind of cleaning you need".
+- **Testimonials default state** — STR now opens by default.
+- **Section label bars** — not universal: Positioning uses gold rule on H2 instead; FinalCTA label removed entirely.
+
+### Process notes
+
+- Session started after context compaction — the 18-item implementation resumed from a fresh summary. All 18 items were implemented in a single Claude session without splitting to Codex.
+- Design-review agent run after implementation: no blocking violations. Two direct token substitutions fixed (StickyNav mobile dropdown border to `--color-navy-20` / `--color-white-25`). Pre-existing uncommented rgba values in StickyNav, Hero, and Positioning noted but not addressed — pre-existing scope.
+- Durable update covers: current-state.md, decisions.md, file-index.md, session-log.md.
+
+### Prompt log
+
+1. *I'm looking through the site now on desktop and making notes on things I want to address and change. For now dont change them, just add them all to the deferred list…* [16 items]
+2. *what does formal os versioning mean?*
+3. *are we still connected? my claude app stopped working*
+4. *here's the full list of items i want to tackle immediately:* [18-item list]
+5. *let;s decide now for the typeface, and i'll be doing everything in claude*
+6. *let's try geist. proceed*
+7. *do a durable update and build the dev server so i can see it before we push live*

@@ -47,9 +47,9 @@ When a decision is made, add it here before the session ends. Format:
 **Decision:** Error tokens: `--color-error`, `--color-error-bg`, `--color-error-border`.
 **Why:** `#E07070` appeared hardcoded in 2 files. Form validation states need a consistent set.
 
-**Decision:** IBM Plex Sans replaces Cormorant Garamond as the heading typeface site-wide. IBM Plex Sans 700, never italic. CSS variable: `--font-ibm-plex-sans`. The cascade rule in `globals.css` applies to h1/h2/h3 automatically; components with explicit `fontFamily: 'var(--font-cormorant)'` inline overrides must be caught and updated manually on each pass.
-**Why:** Claude Design first-impression evaluation identified Cormorant Garamond italic as the structural problem — it coded the site as lifestyle/boutique residential rather than B2B operational. IBM Plex Sans 700 signals technical authority and B2B credibility.
-**Constraints:** Never re-introduce Cormorant Garamond in any context. Syne remains the body/UI font. Do not use IBM Plex Sans italic in headings. If a future client needs a serif heading typeface, scope it to that client's config only.
+**Decision:** Geist is the heading typeface (as of 04/30/2026, replacing IBM Plex Sans). Loaded via `next/font/google` under the CSS variable `--font-ibm-plex-sans` — the variable name is an intentional backwards-compat alias; do not rename it. Cascade rule in `globals.css` applies to h1/h2/h3 automatically.
+**Why:** IBM Plex Sans was flagged for a stylized lowercase 'g' and 'a' that hurt legibility at heading weight. Geist (geometric sans, designed for interfaces) retains the B2B/operational authority while reading more cleanly at all sizes.
+**Constraints:** Never re-introduce Cormorant Garamond or IBM Plex Sans in any context. Syne remains the body/UI font. Do not rename `--font-ibm-plex-sans` without updating all 9+ component references. If a future client needs a different heading typeface, scope it to their own CSS variable — never reuse this one.
 
 **Decision:** Background palette updated from warm amber/linen to cool slate. Live token values: `--color-off-white: #EFF1F3`, `--color-linen: #E5E8EC`, `--color-linen-dark: #DCE0E5`, `--color-light-gray: #CACED4`.
 **Why:** Warm amber tokens coded as residential/domestic. Cool undertone puts background temperature in harmony with the navy system and reads operational.
@@ -143,8 +143,8 @@ One gold moment per scroll section. If a section has a gold CTA, it does not als
 **Why:** Base copy mentions rentals, offices, and multi-unit work, which does not describe the catch-all audience well enough.
 **Constraints:** "Other" hero uses a shorter, intentionally different differentiator set rather than inheriting the base segment content.
 
-**Decision:** Accordion headline is locked as "The kind of work you need" and should live in the copy layer, not remain hardcoded in `ClientAccordion.tsx`.
-**Why:** Charles chose this wording because it is clearer on first read and works better for fast-skimming commercial buyers.
+**Decision:** Accordion headline is "The kind of cleaning you need" (changed from "The kind of work you need" on 04/30/2026). Lives in `lib/copy/brazusa-cleaning/base.ts`, not hardcoded in `ClientAccordion.tsx`.
+**Why:** "Cleaning" is more specific and accurate — "work" was ambiguous enough to describe any trade service.
 **Constraints:** Keep it shared across segments unless there is an explicit future decision to vary it by segment.
 
 **Decision:** Operational claim status currently cleared for production copy is limited to these three claims: (a) "24/7 virtual communication when needed" is true, (b) "Consistent team that learns your space" is aspirational/best-effort and must not be phrased as a guarantee, and (c) "Handles inventory, linen, and basic property tasks" is true for STR and property management.
@@ -213,17 +213,17 @@ One gold moment per scroll section. If a section has a gold CTA, it does not als
 
 ## Section Architecture (Brazusa /clean)
 
-**Decision:** Section order is locked as of the 04/29/2026 Claude Design pass. Order: StickyNav → Hero → TrustStrip → Positioning → CalloutBand → ClientAccordion → Services → Pricing → About → Testimonials → ServiceArea → TrustStats → FinalCTA → Footer.
-**Why:** Claude Design reviewed the existing section order, confirmed About should remain (oversight in initial handoff), and the sequence was implemented and committed.
-**Constraints:** Do not reorder sections without an explicit design decision. HowItWorks was removed from this sequence — do not re-insert it without discussion.
+**Decision:** Section order is locked as of the 04/30/2026 design pass. Order: StickyNav → Hero → TrustStrip → Positioning → TrustStats → ClientAccordion → Services → Pricing → About → Testimonials → ServiceArea → FinalCTA → Footer.
+**Why:** CalloutBand was removed and its content merged into Positioning (04/30). TrustStats moved to position 5 (between Positioning and ClientAccordion) to serve as an immediate credibility signal before the service selector.
+**Constraints:** Do not reorder sections without an explicit design decision. HowItWorks and CalloutBand were removed — do not re-insert without discussion.
 
-**Decision:** `CalloutBand` is a new component inserted between Positioning and ClientAccordion. Navy bg + grain. Single IBM Plex Sans 700 statement: "You shouldn't have to manage the people managing your space." No CTA.
-**Why:** Adds a punchy positioning break between the explanation and the service selector.
-**Constraints:** One gold rule (42×1px) as the gold moment. Do not add more gold elements to this section.
-
-**Decision:** `TrustStats` is a new component inserted between ServiceArea and FinalCTA. Navy bg + grain. Three stats: 30+ Years / 100% Insured / 24/7 Availability. Numbers in white (not gold), 24×1px gold rule per stat.
-**Why:** Provides operational proof in the lower funnel, after service area has established geographic context.
+**Decision:** `TrustStats` is between Positioning and ClientAccordion (position 5). Navy bg + grain. Three stats: 30+ Years / 100% Insured / 24/7 Availability. Numbers in white (not gold), 24×1px gold rule per stat.
+**Why:** Originally placed at position 12 (ServiceArea → TrustStats → FinalCTA), but the redesign moved it to position 5 so credibility signals appear before the service selector, not after.
 **Constraints:** Numbers stay white — gold rules are the gold moment here. Do not change number color to gold without revisiting gold discipline.
+
+**Decision:** `CalloutBand` deleted (04/30/2026). Its statement ("You shouldn't have to manage the people managing your space.") was merged as a closing callout inside `Positioning.tsx`, separated by a 1px white-10 hairline at the bottom of the left copy column.
+**Why:** Standalone section for one line wasted vertical space. The statement is more effective as a closing punch inside the Positioning argument.
+**Constraints:** Do not re-add CalloutBand as a standalone section.
 
 **Decision:** `MobileCTABar` is retired. Persistent CTAs moved into the mobile nav header (StickyNav).
 **Why:** Claude Design confirmed the nav header handles mobile CTAs — a fixed bottom bar creates redundancy.
@@ -237,13 +237,13 @@ One gold moment per scroll section. If a section has a gold CTA, it does not als
 **Why:** Two consecutive contact surfaces were redundant. FinalCTA is the natural home for all contact info at page bottom.
 **Constraints:** FinalCTA now contains a 3-column contact strip (CALL OR TEXT / EMAIL / GOOGLE). Do not add a separate contact section elsewhere.
 
-**Decision:** `Testimonials` is now a category accordion, not a carousel. Five categories: STR / Property / Offices / Homes / Other. None open by default. Toggle behavior extracts to `helpers/testimonialToggle.ts`.
-**Why:** Claude Design specified accordion over carousel for B2B credibility. Carousels scan poorly for operational buyers.
+**Decision:** `Testimonials` is a category accordion. Five categories: STR / Property / Offices / Homes / Other. STR opens by default on load. Toggle behavior in `helpers/testimonialToggle.ts`.
+**Why:** Claude Design specified accordion over carousel for B2B credibility. STR auto-open makes the content immediately readable and demonstrates the interaction pattern without requiring an additional click.
 **Constraints:** Do not revert to carousel without a new design decision. The `testimonialToggle` pure function is the canonical toggle logic — do not inline it.
 
-**Decision:** Section label bar pattern: every section gets a 1px-wide × 32px-tall gold vertical bar + gold uppercase Syne text as the section label.
-**Why:** Claude Design introduced this as a consistent wayfinding pattern across all sections.
-**Constraints:** This is the one gold "wayfinding" element per section. Its presence counts toward the gold-per-section budget.
+**Decision:** Section label bar pattern: most sections get a 1px-wide × 32px-tall gold vertical bar + gold uppercase Syne text as the section label. Exceptions: Positioning (replaced by a 42×1px gold accent rule directly on the H2) and FinalCTA (label removed entirely — section identity is clear from context).
+**Why:** Claude Design introduced this as a consistent wayfinding pattern. Positioning's label was "Positioning" — an internal descriptor that adds no user value. FinalCTA's "Contact" label was redundant alongside the H2.
+**Constraints:** The gold bar counts toward the gold-per-section budget. Positioning uses the gold rule on the H2 instead. Do not re-add labels to Positioning or FinalCTA without discussion.
 
 **Decision:** `--color-linen-deep: #D0D5DC` added as a CSS token. Used in Testimonials gradient background.
 **Why:** Needed for the Testimonials section linen-to-off-white background range after background palette shifted to cool slate.
@@ -258,7 +258,7 @@ One gold moment per scroll section. If a section has a gold CTA, it does not als
 **Deferred — Code-review skill:** A personal skill to run coding standards checks, catch basic errors, and audit file architecture/organization for messiness, loose files, and misplaced components. Not yet built.
 **How to apply:** When building this skill, scope it to: CLAUDE.md rule compliance, TypeScript standards (strict mode, explicit types, no implicit any), component line count thresholds, file placement conventions (helpers in /helpers, utilities not loose), CSS token vs. raw rgba usage.
 
-**Deferred — Design-review agent updates:** The `.claude/agents/design-review.md` agent needs to be updated to reflect the current design standards (section label bar pattern, new background treatments, IBM Plex Sans as heading typeface, cool slate token values).
+**Deferred — Design-review agent updates:** The `.claude/agents/design-review.md` agent needs to be updated to reflect the current design standards (Geist heading typeface, cool slate tokens, section label bar exceptions for Positioning and FinalCTA, TrustStats at position 5, no CalloutBand).
 **How to apply:** Run a targeted agent update once the gold discipline pass is complete, so the agent reflects the final locked state.
 
 ---
@@ -266,6 +266,7 @@ One gold moment per scroll section. If a section has a gold CTA, it does not als
 ## Startup-Relevant Warnings
 
 - Do not add new operational claims to copy or design without Charles verifying them first.
-- Design direction for the Brazusa /clean page is evolution-only (confirmed, not a full reset). Of the two structural fixes identified by Claude Design: typeface replacement is complete (IBM Plex Sans, implemented 04/27/2026). Hero photo swap is still pending — current image codes as residential premium and needs operational-scale imagery. Do not treat the visual pass as complete until the hero photo is addressed.
+- Design direction for the Brazusa /clean page is evolution-only (confirmed, not a full reset). Heading typeface is Geist (implemented 04/30/2026, under `--font-ibm-plex-sans` alias). Hero photo swap is still pending — current image codes as residential premium and needs operational-scale imagery. Do not treat the visual pass as complete until the hero photo is addressed.
 - Background tone and gold discipline passes are complete (token values locked). Gold discipline suspension is deliberate — final pass deferred. See Section Architecture deferred item above.
-- Section order locked as of 04/29/2026. See Section Architecture section above.
+- Section order locked as of 04/30/2026. See Section Architecture section above.
+- The CSS variable `--font-ibm-plex-sans` loads Geist — this is an intentional alias kept for backwards compat. Do not rename the variable.

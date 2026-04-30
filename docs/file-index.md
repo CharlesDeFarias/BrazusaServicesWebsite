@@ -1,5 +1,5 @@
 # Project File Index
-# Last updated: 2026-04-29
+# Last updated: 2026-04-30
 # Written by Claude with codebase context — not a dumb directory listing.
 # Update this file whenever files are added, removed, or moved.
 
@@ -56,15 +56,14 @@ All components are Brazusa Cleaning-specific and live under `components/clean/`.
 | `components/clean/Hero.tsx` | Hero section — two-column grid (text + image stripe), segment-aware headline, differentiator pills, quote CTA |
 | `components/clean/StickyNav.tsx` | Top navigation — off-white on scroll, gold top bar, phone number, "Clean my..." mobile dropdown, persistent mobile CTAs |
 | `components/clean/TrustStrip.tsx` | Scrolling marquee trust banner below hero — warm-gray text on off-white |
-| `components/clean/Positioning.tsx` | "Built for operators, not oversight" — navy section, section label bar, right card with gold badge |
-| `components/clean/CalloutBand.tsx` | Navy punchy statement between Positioning and ClientAccordion — "You shouldn't have to manage the people managing your space." |
+| `components/clean/Positioning.tsx` | "Built for operators, not oversight" — navy section, gold accent rule on H2, right card, closing callout statement |
 | `components/clean/ClientAccordion.tsx` | Space-type selector — expandable panels for STR, property, offices, homes, other |
 | `components/clean/Services.tsx` | Services grid — filterable by space type, daily + extended services |
 | `components/clean/Pricing.tsx` | Pricing overview — filter chips by space type (homes not apartments), custom quote card |
 | `components/clean/About.tsx` | Team/about section — has section label bar |
-| `components/clean/Testimonials.tsx` | Category accordion (not carousel) — 5 categories (STR/Property/Offices/Homes/Other), none open by default |
-| `components/clean/ServiceArea.tsx` | Greater Boston coverage map and town list |
-| `components/clean/TrustStats.tsx` | Three-stat trust strip between ServiceArea and FinalCTA — 30+ Years / 100% Insured / 24/7 Availability |
+| `components/clean/Testimonials.tsx` | Category accordion (not carousel) — 5 categories (STR/Property/Offices/Homes/Other), STR open by default |
+| `components/clean/ServiceArea.tsx` | Greater Boston coverage — full-width header + 2-col town grids (Greater Boston / Boston neighborhoods) |
+| `components/clean/TrustStats.tsx` | Three-stat trust strip between Positioning and ClientAccordion — 30+ Years / 100% Insured / 24/7 Availability |
 | `components/clean/QuoteDrawer.tsx` | Slide-in quote request form — segment-aware, submits to /api/quote |
 | `components/clean/FinalCTA.tsx` | Bottom conversion section — merged with contact info (phone/email/Google), 3-column contact strip |
 | `components/clean/NewsletterCTA.tsx` | Newsletter signup block — submits to /api/newsletter |

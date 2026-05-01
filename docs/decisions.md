@@ -213,9 +213,9 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** CalloutBand was removed and its content merged into Positioning (04/30). TrustStats moved to position 5 (between Positioning and ClientAccordion) to serve as an immediate credibility signal before the service selector.
 **Constraints:** Do not reorder sections without an explicit design decision. HowItWorks and CalloutBand were removed — do not re-insert without discussion.
 
-**Decision:** `TrustStats` is between Positioning and ClientAccordion (position 5). Navy bg + grain. Three stats: 30+ Years / 100% Insured / 24/7 Availability. Numbers in white (not gold), 24×1px gold rule per stat.
-**Why:** Originally placed at position 12 (ServiceArea → TrustStats → FinalCTA), but the redesign moved it to position 5 so credibility signals appear before the service selector, not after.
-**Constraints:** Numbers stay white — gold rules are the gold moment here. Do not change number color to gold without revisiting gold discipline.
+**Decision:** `TrustStats` is between Positioning and ClientAccordion (position 5). Navy bg + grain. Three stats: 30+ Years / 100% Insured / 24/7 Availability. Stat values are gold (changed from white in second design pass, 04/30/2026). 24×1px gold rule per stat.
+**Why:** Originally placed at position 12 (ServiceArea → TrustStats → FinalCTA), but the redesign moved it to position 5 so credibility signals appear before the service selector, not after. Numbers changed to gold during the second design pass to improve visual hierarchy on navy bg.
+**Constraints:** Gold number color is the locked state as of 04/30/2026 second pass. Do not revert to white without discussion.
 
 **Decision:** `CalloutBand` deleted (04/30/2026). Its statement ("You shouldn't have to manage the people managing your space.") was merged as a closing callout inside `Positioning.tsx`, separated by a 1px white-10 hairline at the bottom of the left copy column.
 **Why:** Standalone section for one line wasted vertical space. The statement is more effective as a closing punch inside the Positioning argument.

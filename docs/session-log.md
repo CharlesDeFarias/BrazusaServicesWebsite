@@ -9493,3 +9493,36 @@ This is now documented in ai-case-study.md as point 13 in the "What changed over
 5. *let;s decide now for the typeface, and i'll be doing everything in claude*
 6. *let's try geist. proceed*
 7. *do a durable update and build the dev server so i can see it before we push live*
+
+### 04/30/2026, 01:27:49 AM
+**Prompt:** push
+
+### 04/30/2026, 10:20:39 AM
+**Prompt:** -I'm going through desktop again and making notes as I go.
+- I want to remove the gold rule from our design rules. Maybe we add it again later, but for now it's hindering more than its helping and causing the hard to read font to keep popping up because you keep getting extra cautious over the gold rule.
+- the same stats in the current stats bar should also be added to the scrolling ticker. its ok that it duplicates information. Dont remove any from the current ticker. Also change the one in the ticker that says "fully insured" to "Fully insured & documented". Also add to deferred items adding more stuff to this ticker list and changing its font color or bullet point colors.
+-  In the "what this means for you" section, the "completion is confirmed without follow-up" should bee changed to "Completion and photos relayed immediately without stress" and "status shared..." should remove the word "tools" and just say "apps or preferred methods."
+- The "you shouldn't have to manage the people managing your space" should go just below the "built for operators, not oversight" as a sort of subtitle to the header.
+- Change the "Clean my..." text in the nav to "Spaces we clean" instead and "something else" inside of it to "Everything else".
+- The "Spaces we clean" dropdown also needs to be given the cursor hovere behavior to show its clickable
+- The hero text should say "Cleaning especially built" and the rest can stay the same.
+- The big stats in the trusted stats banner should be gold.
+- An "other" section should be added to the "what we handle daily". But since i dont have copy for this yet, let's add this to the deferred list. Also add customizing this section's copy in general for each space type to the deferred list.
+- there's still many examples of that grey font on top of the linen background that's hard to read, like in the pricing approach section. should use gold instead.
+- in the about section, the "built through real work" heading is an unnecessarily large distance away from the "about" heading.
+- There's still a very unnecessary amount of space above "tell us what you need" and bleow the service area secetion.
+-  in the service area section, i hate how it looks currently because of the large difference between number of boston towns and boston neighorhoods. Add to defered list setting up an automatic responsive system that hides the least important boston towns so that the two sections are always kept at the same height. Least important towns would be, lets say: Canton, Belmont, Winthrop, revere, chelsea, framingham, randolph.
+- add to deferred list creating an quick and easy "service area checker" where folks can just put in an address and be told whether A) we DEFINITELY clean there or B) We probably clean there, C) we definitely don't clean there and D) we probably dont clean there.-
+
+### 04/30/2026, 02:03:06 PM
+**Prompt:** remote-session
+
+### 04/30/2026, 02:04:49 PM
+**Prompt:** i want the remote session skill that allows me to code from my phone. i've used it before
+
+### 05/01/2026, 07:53:41 AM
+**Prompt:** session start
+
+### 05/01/2026, 08:04:49 AM
+**Prompt:** I'm not sure. do a durable update to be safe.
+go ahead and confirm the next env as well.

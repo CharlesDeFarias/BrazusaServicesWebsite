@@ -25,15 +25,23 @@ export default function TrustStrip(): JSX.Element {
   const isDragging   = useRef(false)
   const startX       = useRef(0)
   const dragOffset   = useRef(0)
+  const frozenX      = useRef(0)
 
   const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current
+    if (!track) return
+
     isDragging.current = true
     startX.current = e.clientX
     dragOffset.current = 0
     e.currentTarget.setPointerCapture(e.pointerId)
     if (containerRef.current) containerRef.current.style.cursor = 'grabbing'
     if (wrapperRef.current)   wrapperRef.current.style.transition = 'none'
-    if (trackRef.current)     trackRef.current.style.animationPlayState = 'paused'
+
+    // Pause then immediately read the frozen position — getComputedStyle resolves % → px
+    track.style.animationPlayState = 'paused'
+    const matrix = window.getComputedStyle(track).transform
+    frozenX.current = matrix !== 'none' ? new DOMMatrix(matrix).m41 : 0
   }, [])
 
   const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
@@ -52,33 +60,29 @@ export default function TrustStrip(): JSX.Element {
     const wrapper = wrapperRef.current
     if (!track || !wrapper) return
 
-    // Read where the animation was frozen in px (getComputedStyle resolves % to px)
-    const matrix  = window.getComputedStyle(track).transform
-    const frozenX = matrix !== 'none' ? new DOMMatrix(matrix).m41 : 0
-
-    // Combine frozen animation position with how far the user dragged
-    const totalX    = frozenX + dragOffset.current
     const halfWidth = track.scrollWidth / 2
-
-    // Instantly zero the wrapper — the track animation takes over at the same visual position
-    wrapper.style.transform = 'translateX(0)'
-
     if (halfWidth === 0) return
+
+    // Total visual displacement: where animation froze + how far the user dragged
+    const totalX = frozenX.current + dragOffset.current
 
     // Normalise to [-halfWidth, 0) — the animation's looping range
     let normalizedX = totalX % halfWidth
     if (normalizedX > 0) normalizedX -= halfWidth
 
-    // Negative delay starts the animation mid-loop at the correct position
     const duration = window.innerWidth < 768 ? DURATION_MOBILE : DURATION_DESKTOP
-    const delay    = (-normalizedX / halfWidth) * duration
+    // Negative delay seeks the animation to normalizedX at the moment it starts
+    const delay = (-normalizedX / halfWidth) * duration
 
-    // Reflow trick: 'none' → reflow → new animation with computed delay
+    // Instantly zero the wrapper — track animation takes over at the same visual position
+    wrapper.style.transform = 'translateX(0)'
+
+    // Reflow trick: 'none' → reflow → restart with delay embedded in the shorthand.
+    // animationDelay set separately after animation starts is ignored by spec — must be atomic.
     track.style.animationPlayState = ''
     track.style.animation          = 'none'
     track.offsetHeight             // eslint-disable-line @typescript-eslint/no-unused-expressions
-    track.style.animation          = `marquee ${duration}s linear infinite`
-    track.style.animationDelay     = `-${delay}s`
+    track.style.animation          = `marquee ${duration}s linear -${delay}s infinite`
   }, [])
 
   return (

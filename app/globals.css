@@ -121,3 +121,9 @@ h1, h2, h3 {
 .marquee-track {
   animation: marquee 28s linear infinite;
 }
+
+@media (max-width: 767px) {
+  .marquee-track {
+    animation-duration: 14s;
+  }
+}

@@ -372,7 +372,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           borderBottom: menuOpen ? (scrolled ? '1px solid rgba(11,29,46,0.12)' : '1px solid var(--color-white-10)') : 'none', /* no token for scrolled dark border: intentional — between navy-10 and navy-15 */
         }}
       >
-        <div className="px-5 pt-2 pb-5 flex flex-col">
+        <div className="px-5 pt-2 pb-5 flex flex-col overflow-y-auto" style={{ maxHeight: '415px' }}>
           <div
             className="text-xs font-medium py-2 mb-0.5"
             style={{ color: 'var(--color-brand-gold)', letterSpacing: '0.1em' }}

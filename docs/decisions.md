@@ -273,8 +273,14 @@ When a decision is made, add it here before the session ends. Format:
 **Deferred — Services section copy customization per space type:** The "What we handle daily" services grid currently shows the same items regardless of which accordion panel is open. The copy and service list should adapt per space type (STR, property, offices, homes, other). Currently there is no per-type copy for this section.
 **How to apply:** Extend the copy layer in `lib/copy/brazusa-cleaning/` with a services-specific copy block per segment, following the same base+override pattern used for hero and accordion copy.
 
-**Deferred — TrustStrip ticker: more items + color changes:** The ticker list needs more items added over time. Also, Charles flagged wanting to revisit the font color and/or bullet point colors in the strip.
-**How to apply:** Add items to the `items` array in `TrustStrip.tsx`. For color/bullet changes, evaluate the current `--color-warm-gray-dark` text and `--color-navy-20` bullet against the off-white background — consider making the bullet gold or increasing text contrast.
+**Deferred — TrustStrip manual scroll (desktop + mobile):** Allow users to drag or swipe the ticker manually. Currently the marquee is CSS animation only with no user interaction.
+**How to apply:** Implement pointer/touch drag that pauses the animation and pans the track, then resumes after a delay. Evaluate whether to use a library (e.g. Embla carousel in marquee mode) or a custom pointer-event approach. Keep the auto-scroll behavior as fallback.
+
+**Deferred — TrustStrip speed on mobile:** Ticker runs at the same speed on mobile as desktop, but the viewport is narrower so fewer items are visible and it feels slower. Increase animation speed on mobile (e.g. apply a faster `animation-duration` at mobile breakpoints).
+**How to apply:** The animation is driven by the `.marquee-track` keyframe in globals.css. Add a media query or Tailwind responsive class to shorten the duration on small viewports.
+
+**Deferred — Hero differentiator pills on desktop:** On mobile the pills below the call/text button are hidden and their content appears in the TrustStrip ticker instead (enacted 05/02/2026). Decide whether to apply the same treatment to desktop — removing the pills from the hero and relying on the ticker alone.
+**How to apply:** If removing on desktop, change `hidden sm:flex` back to just `hidden` in Hero.tsx and verify the ticker carries enough of the same messaging. If keeping on desktop, consider whether the content overlap between pills and ticker is redundant or reinforcing.
 
 **Deferred — ServiceArea responsive column equalization:** The "Greater Boston towns" column has significantly more chips than "Boston neighborhoods," making the two columns unequal height and visually awkward. Hide the least-important towns dynamically to equalize column heights. Least-important towns (hide first): Canton, Belmont, Winthrop, Revere, Chelsea, Randolph. (Framingham already removed 05/02/2026 to fix +more chip line-wrap at 11fr/9fr column ratio.)
 **How to apply:** Implement a CSS or JS approach that progressively hides lower-priority chips until both columns reach equal height. Hiding should be responsive (depends on viewport/column width). The `+ more` chip already signals overflow.

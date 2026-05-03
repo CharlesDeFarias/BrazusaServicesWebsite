@@ -368,12 +368,13 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
         style={{
           maxHeight: menuOpen ? '420px' : '0',
           background: scrolled ? 'var(--color-off-white)' : 'var(--color-navy)',
-          borderTop: menuOpen ? navBdr : 'none',
+          borderTop: menuOpen ? (scrolled ? navBdr : '1px solid var(--color-white-10)') : 'none',
+          borderBottom: menuOpen ? (scrolled ? '1px solid rgba(11,29,46,0.12)' : '1px solid var(--color-white-10)') : 'none', /* no token for scrolled dark border: intentional — between navy-10 and navy-15 */
         }}
       >
         <div className="px-5 pt-2 pb-5 flex flex-col">
           <div
-            className="text-xs font-medium py-2 mb-1"
+            className="text-xs font-medium py-2 mb-0.5"
             style={{ color: 'var(--color-brand-gold)', letterSpacing: '0.1em' }}
           >
             SPACES WE CLEAN
@@ -382,11 +383,11 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
             <button
               key={ct.id}
               onClick={() => handleClientSelect(ct.id)}
-              className="text-sm font-medium py-2.5 text-left transition-opacity"
+              className="text-xs py-1.5 pl-3 text-left transition-opacity"
               style={{
-                color: scrolled ? 'rgba(11,29,46,0.65)' : 'rgba(255,255,255,0.65)', /* no token: intentional — above navy-60 / between white-60 and white-70 */
+                color: scrolled ? 'rgba(11,29,46,0.45)' : 'var(--color-white-45)', /* scrolled: no navy-45 token — between navy-40 and navy-50 */
                 borderBottom: scrolled ? '1px solid var(--color-navy-5)' : '1px solid var(--color-white-5)',
-                minHeight: '44px',
+                minHeight: '36px',
                 display: 'flex',
                 alignItems: 'center',
               }}
@@ -396,11 +397,11 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           ))}
           <button
             onClick={() => { onOtherClick(); closeMenu() }}
-            className="text-sm font-medium py-2.5 text-left"
+            className="text-xs py-1.5 pl-3 text-left"
             style={{
               color: 'var(--color-brand-gold)',
               borderBottom: scrolled ? '1px solid var(--color-navy-5)' : '1px solid var(--color-white-5)',
-              minHeight: '44px',
+              minHeight: '36px',
               display: 'flex',
               alignItems: 'center',
             }}

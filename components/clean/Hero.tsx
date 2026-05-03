@@ -76,9 +76,9 @@ export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JS
             </a>
           </div>
 
-          {/* Differentiator pills — wraps to 2 rows naturally */}
+          {/* Differentiator pills — desktop only; mobile gets these in the TrustStrip ticker */}
           <div
-            className="fade-up-2 flex flex-wrap gap-2"
+            className="fade-up-2 hidden sm:flex flex-wrap gap-2"
             style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '20px' }}
           >
             {heroCopy.differentiators.map((d) => (

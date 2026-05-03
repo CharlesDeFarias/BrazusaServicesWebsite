@@ -7,9 +7,9 @@ const items = [
   'Fully Insured & Documented',
   'Same Team Every Visit',
   '30+ Years in Boston',
-  '30+ Years Experience',
-  '100% Insured',
+  'Scope Adapts to Your Needs',
   '24/7 Availability',
+  'No Oversight Required',
 ]
 
 export default function TrustStrip(): JSX.Element {

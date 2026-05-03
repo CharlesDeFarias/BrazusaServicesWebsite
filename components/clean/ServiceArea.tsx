@@ -20,7 +20,7 @@ const greaterBostonTowns = [
   'Weymouth', 'Dedham', 'Newton', 'Watertown',
   'Waltham', 'Belmont', 'Arlington', 'Lexington',
   'Woburn', 'Burlington', 'Winchester', 'Needham',
-  'Wellesley', 'Natick', 'Framingham', 'Norwood',
+  'Wellesley', 'Natick', 'Norwood',
   'Westwood', 'Canton', 'Randolph',
 ]
 
@@ -34,7 +34,7 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
   return (
     <section
       id="service-area"
-      className="grain py-10 px-6 overflow-hidden"
+      className="grain pt-10 pb-3 px-6 overflow-hidden"
       style={{ background: 'linear-gradient(to bottom, var(--color-off-white), var(--color-linen))', borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
       <div className="max-w-5xl mx-auto">

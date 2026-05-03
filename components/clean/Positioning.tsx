@@ -11,6 +11,7 @@ const keyPoints = [
 export default function Positioning(): JSX.Element {
   return (
     <section
+      id="positioning"
       className="grain bg-navy text-white py-12 px-6 relative overflow-hidden"
       style={{ borderTop: '1px solid var(--color-white-10)' }}
     >

@@ -178,10 +178,10 @@ export default function CleanPage(): JSX.Element {
       />
       {/* 8. Pricing (off-white) */}
       <Pricing onQuoteClick={() => openDrawer()} />
-      {/* 9. About (off-white) */}
-      <About />
-      {/* 10. Testimonials (linen-deep) */}
+      {/* 9. Testimonials (linen-deep) */}
       <Testimonials />
+      {/* 10. About (off-white) */}
+      <About />
       {/* 11. Service Area (off-white) */}
       <ServiceArea onQuoteClick={() => openDrawer()} />
       {/* 12. Final CTA + Contact (off-white) */}

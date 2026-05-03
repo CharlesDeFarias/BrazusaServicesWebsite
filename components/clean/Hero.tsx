@@ -15,6 +15,7 @@ const blurDataURL = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAA
 export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JSX.Element {
   return (
     <section
+      id="hero"
       ref={heroRef}
       className="grain bg-navy text-white overflow-hidden"
       style={{ minHeight: '520px' }}

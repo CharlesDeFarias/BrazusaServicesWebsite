@@ -18,10 +18,11 @@ const clientTypes = [
 ]
 
 const navLinks = [
-  { label: 'Services', href: '#services' },
-  { label: 'Pricing',  href: '#pricing' },
-  { label: 'About',    href: '#about' },
-  { label: 'Contact',  href: '#contact' },
+  { label: 'Services',  href: '#services' },
+  { label: 'Pricing',   href: '#pricing' },
+  { label: 'Examples',  href: '#testimonials' },
+  { label: 'About',     href: '#about' },
+  { label: 'Contact',   href: '#contact' },
 ]
 
 const SCROLL_THRESHOLD_DESKTOP = 540

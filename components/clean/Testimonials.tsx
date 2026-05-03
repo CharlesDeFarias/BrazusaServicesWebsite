@@ -172,8 +172,8 @@ export default function Testimonials(): JSX.Element {
                 className="text-xs px-4 py-2 transition-all duration-200"
                 style={{
                   fontFamily: 'var(--font-syne)',
-                  background: isOpen ? 'var(--color-navy)' : 'white',
-                  color: isOpen ? 'white' : 'var(--color-warm-gray)',
+                  background: isOpen ? 'var(--color-navy)' : 'var(--color-off-white)',
+                  color: isOpen ? 'var(--color-off-white)' : 'var(--color-warm-gray)',
                   border: isOpen ? '1px solid var(--color-navy)' : '1px solid var(--color-light-gray)',
                   letterSpacing: '0.06em',
                 }}

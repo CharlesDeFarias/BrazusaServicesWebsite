@@ -18,6 +18,7 @@ const stats = [
 export default function TrustStats(): JSX.Element {
   return (
     <section
+      id="trust-stats"
       className="grain bg-navy"
       style={{
         borderTop: '1px solid var(--color-white-10)',

@@ -292,6 +292,12 @@ When a decision is made, add it here before the session ends. Format:
 **Deferred — Service area checker widget:** A quick interactive widget where someone can enter an address and immediately know whether we cover it. Four response tiers: (A) Definitely clean there, (B) Probably clean there, (C) Probably don't clean there, (D) Definitely don't clean there. Coverage zones would be defined as a structured data object mapping to the existing town/neighborhood lists.
 **How to apply:** Design data structure for coverage zones first (town-level matched against the existing greaterBostonTowns and bostonNeighborhoods arrays). Then build a simple input + instant lookup. No API required — pure client-side match. Consider adding it to ServiceArea.tsx or as a modal/drawer triggered by the "Check if we cover your area" button.
 
+**Deferred — WhatsApp and WeChat contact buttons:** Add WhatsApp and WeChat as contact channels alongside the existing call/text options. Exact placement TBD (Hero CTA area, StickyNav, QuoteDrawer, or a persistent floating button are all candidates).
+**How to apply:** Confirm placement with Charles before building. WhatsApp is a standard `wa.me/` deep link. WeChat requires Charles to confirm whether a QR code modal or a direct ID display is preferred — there is no universal deep link for WeChat on desktop. Requires Charles to supply the WhatsApp number and WeChat ID.
+
+**Deferred — Hero image: dimensions + AI generation prompt:** Replace the current residential-premium hero photo with an operational-scale image. Two steps: (1) determine the correct rendered dimensions for the hero image slot at all breakpoints, (2) produce a prompt for an AI image generator (e.g. Midjourney, Firefly) that describes the right subject matter — professional cleaning crew in a commercial/STR/property management context, not a staged residential shoot.
+**How to apply:** Read Hero.tsx to get the `<Image>` width/height props and any CSS sizing constraints. Derive the correct output dimensions (likely 1600×900 or similar). Draft the generation prompt with subject, style, lighting, and negative constraints (no stock-photo staging, no residential living rooms). Charles reviews and runs the generation.
+
 ---
 
 ## Startup-Relevant Warnings

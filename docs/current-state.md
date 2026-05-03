@@ -35,7 +35,9 @@ Commits this session:
 - TrustStrip uses a `requestAnimationFrame` loop (not CSS animation). Position is `posRef.current` in px. Speed is controlled by `DURATION_DESKTOP` / `DURATION_MOBILE` constants in the component — no globals.css sync required. The `.marquee-track` CSS class is dead (do not re-apply it to the element).
 
 ## Next tasks
-- `Charles only:` Source an operational-scale hero photo (not residential/premium). Replace `public/images/hero.webp`.
+- `Charles only:` Source an operational-scale hero photo (not residential/premium). Replace `public/images/hero.webp`. — Or: run the deferred hero image prompt task (Claude derives dimensions + writes AI generation prompt for Charles to run).
+- `Deferred:` WhatsApp and WeChat contact buttons — placement TBD, Charles to supply number/ID.
+- `Deferred:` Hero image dimensions + AI generation prompt (Claude task, then Charles generates).
 - `Claude or Codex:` Final gold discipline pass — requires stable rendered state first.
 - `Deferred:` Component render test coverage (jsdom + RTL). After site is more finished.
 - `Deferred:` Code-review personal skill.

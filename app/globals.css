@@ -119,11 +119,11 @@ h1, h2, h3 {
 .fade-up-3 { animation: fadeUp 0.7s 0.45s ease both; }
 
 .marquee-track {
-  animation: marquee 28s linear infinite;
+  animation: marquee 19s linear infinite;
 }
 
 @media (max-width: 767px) {
   .marquee-track {
-    animation-duration: 14s;
+    animation-duration: 9s;
   }
 }

@@ -2,6 +2,10 @@
 
 import { type JSX, useRef, useCallback } from 'react'
 
+// Must match animation-duration values in globals.css .marquee-track / @media override
+const DURATION_DESKTOP = 19
+const DURATION_MOBILE  = 9
+
 const items = [
   'Work Confirmed',
   'Issues Flagged Early',
@@ -16,14 +20,16 @@ const items = [
 
 export default function TrustStrip(): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null)
-  const wrapperRef  = useRef<HTMLDivElement>(null)
-  const trackRef    = useRef<HTMLDivElement>(null)
-  const isDragging  = useRef(false)
-  const startX      = useRef(0)
+  const wrapperRef   = useRef<HTMLDivElement>(null)
+  const trackRef     = useRef<HTMLDivElement>(null)
+  const isDragging   = useRef(false)
+  const startX       = useRef(0)
+  const dragOffset   = useRef(0)
 
   const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     isDragging.current = true
     startX.current = e.clientX
+    dragOffset.current = 0
     e.currentTarget.setPointerCapture(e.pointerId)
     if (containerRef.current) containerRef.current.style.cursor = 'grabbing'
     if (wrapperRef.current)   wrapperRef.current.style.transition = 'none'
@@ -33,6 +39,7 @@ export default function TrustStrip(): JSX.Element {
   const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging.current) return
     const offset = e.clientX - startX.current
+    dragOffset.current = offset
     if (wrapperRef.current) wrapperRef.current.style.transform = `translateX(${offset}px)`
   }, [])
 
@@ -40,11 +47,38 @@ export default function TrustStrip(): JSX.Element {
     if (!isDragging.current) return
     isDragging.current = false
     if (containerRef.current) containerRef.current.style.cursor = 'grab'
-    if (wrapperRef.current) {
-      wrapperRef.current.style.transition = 'transform 0.4s ease-out'
-      wrapperRef.current.style.transform  = 'translateX(0)'
-    }
-    if (trackRef.current) trackRef.current.style.animationPlayState = 'running'
+
+    const track   = trackRef.current
+    const wrapper = wrapperRef.current
+    if (!track || !wrapper) return
+
+    // Read where the animation was frozen in px (getComputedStyle resolves % to px)
+    const matrix  = window.getComputedStyle(track).transform
+    const frozenX = matrix !== 'none' ? new DOMMatrix(matrix).m41 : 0
+
+    // Combine frozen animation position with how far the user dragged
+    const totalX    = frozenX + dragOffset.current
+    const halfWidth = track.scrollWidth / 2
+
+    // Instantly zero the wrapper — the track animation takes over at the same visual position
+    wrapper.style.transform = 'translateX(0)'
+
+    if (halfWidth === 0) return
+
+    // Normalise to [-halfWidth, 0) — the animation's looping range
+    let normalizedX = totalX % halfWidth
+    if (normalizedX > 0) normalizedX -= halfWidth
+
+    // Negative delay starts the animation mid-loop at the correct position
+    const duration = window.innerWidth < 768 ? DURATION_MOBILE : DURATION_DESKTOP
+    const delay    = (-normalizedX / halfWidth) * duration
+
+    // Reflow trick: 'none' → reflow → new animation with computed delay
+    track.style.animationPlayState = ''
+    track.style.animation          = 'none'
+    track.offsetHeight             // eslint-disable-line @typescript-eslint/no-unused-expressions
+    track.style.animation          = `marquee ${duration}s linear infinite`
+    track.style.animationDelay     = `-${delay}s`
   }, [])
 
   return (
@@ -52,19 +86,18 @@ export default function TrustStrip(): JSX.Element {
       ref={containerRef}
       className="bg-off-white overflow-hidden"
       style={{
-        borderTop: '1px solid rgba(11,29,46,0.08)', /* no token: intentional — between navy-5 and navy-10 */
+        borderTop:    '1px solid rgba(11,29,46,0.08)', /* no token: intentional — between navy-5 and navy-10 */
         borderBottom: '1px solid rgba(11,29,46,0.08)', /* no token: intentional — between navy-5 and navy-10 */
         padding: '10px 0',
         cursor: 'grab',
         userSelect: 'none',
-        touchAction: 'pan-y', /* allow vertical page scroll; capture horizontal drag */
+        touchAction: 'pan-y', /* vertical page scroll passes through; horizontal captured for drag */
       }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
     >
-      {/* Drag offset wrapper — slides with pointer, eases back to 0 on release */}
       <div ref={wrapperRef}>
         <div
           ref={trackRef}

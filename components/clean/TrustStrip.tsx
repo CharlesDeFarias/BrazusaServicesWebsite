@@ -3,8 +3,8 @@
 import { type JSX, useRef, useEffect, useCallback } from 'react'
 
 // Loop duration in seconds — adjust speed here; no globals.css sync needed
-const DURATION_DESKTOP = 19
-const DURATION_MOBILE  = 9
+const DURATION_DESKTOP = 48
+const DURATION_MOBILE  = 23
 
 const items = [
   'Work Confirmed',

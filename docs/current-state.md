@@ -1,11 +1,14 @@
 # Current State
 
 ## Current phase
-Active micro-fix rounds as of 2026-05-02. Two design passes locked on 04/30 (commits `81b06d0` + `9cc8978`). Three rounds of targeted micro-fixes applied in this session:
+All micro-fix rounds from 05/02/2026 session now complete and committed. Root cause of the persistent FinalCTA blank space found and fixed (globals.css `.grain` CSS cascade bug — see decisions.md).
 
-- **Round 1** (commit `487f304`): nav hover states (cursor-pointer on logo/wordmark/Get a Quote), Hero CTA font-medium → font-semibold, TrustStrip gold bullets + darker text, Positioning right card 300px → 400px, ClientAccordion "Other spaces too" cursor, Services bottom row restructured to 2-col grid (optional layers note + not sure button)
-- **Round 2** (commit `4cffe31`): Positioning subtitle restyled as true subtitle (Syne 13px/500/white-40/tracking), ScrollToTop cursor-pointer added, Services bottom row centered with flex justify-center (mt-4 → mt-2), pre-existing `color: 'white'` token violation fixed in Positioning h2
-- **Round 3** (in progress / about to commit): ServiceArea "not sure" text made clickable, "check if we cover your area" button removed, towns/neighborhoods column widths adjusted, About top spacing reduced
+Commits this session:
+- **Round 1** (commit `487f304`): nav hover states, Hero CTA font-medium → font-semibold, TrustStrip gold bullets + darker text, Positioning right card 300px → 400px, ClientAccordion "Other spaces too" cursor, Services bottom row restructured to 2-col grid
+- **Round 2** (commit `4cffe31`): Positioning subtitle restyled (Syne 13px/500/white-40/tracking), ScrollToTop cursor-pointer, Services bottom row centered with flex justify-center
+- **Round 3** (commit `3d2e...`): ServiceArea "not sure" text made clickable, "check if we cover your area" button removed, column widths adjusted to 11fr/9fr, About top spacing reduced, deferred items added to decisions.md (section swap + nav link)
+- **Round 4** (commit `4feb84b`): ServiceArea bottom padding tightened (py-10 → pt-10 pb-3), Framingham removed from towns list (fixed +more chip line-wrap)
+- **Round 5** (commit `59cc30d`): **Critical fix** — globals.css `.grain > *` rule removed, `::after` z-index changed from 1 to -1. This was the root cause of the persistent 320px blank space above FinalCTA's gold rule. See decisions.md CSS/Design System section for full explanation.
 
 ## Active constraints most likely to matter this session
 - Read this file first, then `docs/decisions.md`; `docs/session-log.md` is not startup context.
@@ -18,9 +21,11 @@ Active micro-fix rounds as of 2026-05-02. Two design passes locked on 04/30 (com
 - The CSS variable `--font-ibm-plex-sans` now loads Geist. The alias is intentional for backwards compat — do not rename the variable.
 - TrustStats stat values are gold (not white) — locked state after the second design pass.
 - Positioning subtitle is Syne 13px/500/--color-white-40 — intentional subtitle styling, not body text.
+- `.grain::after` uses z-index: -1 (within isolation: isolate stacking context). The `.grain > *` rule is gone. Do not re-add it.
 
 ## Next tasks
 - `Charles only:` Source an operational-scale hero photo (not residential/premium). Replace `public/images/hero.webp`.
+- `Charles:` Visually verify the FinalCTA blank space is resolved and ServiceArea bottom padding (pb-3) feels right — it may need to go to pb-4 or pb-6 depending on how it looks now that the 320px phantom block is gone.
 - `Claude or Codex:` Final gold discipline pass — requires stable rendered state first.
 - `Claude:` Update `.claude/agents/design-review.md` to reflect current design standards (Geist headings, cool slate tokens, no CalloutBand, TrustStats at pos 5, TrustStats numbers now gold). Deferred until gold pass is complete.
 - `Deferred:` Component render test coverage (jsdom + RTL). After site is more finished.
@@ -40,4 +45,4 @@ Active micro-fix rounds as of 2026-05-02. Two design passes locked on 04/30 (com
 
 ## Charles note
 - Claude Max subscription active as of end of 04/29/2026 session.
-- Both design passes (04/30/2026) and all micro-fix rounds implemented entirely in Claude — no Codex involvement.
+- Both design passes (04/30/2026) and all micro-fix rounds (05/02/2026) implemented entirely in Claude — no Codex involvement.

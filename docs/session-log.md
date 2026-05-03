@@ -9710,3 +9710,20 @@ proceed
 
 1. *the mobile hamburger bar needs its own scroll wheel/behavior. currently the end of it gets cut off with no ability to scroll down. go ahead and speed up the ticker on mobile and give it the ability to drag to move it horizontally for both mobile and desktop.*
 2. *on mobile, in the "not sure what fits" button of the services section, it's currently using two lines of text, with the second line being just the arrow. That's unnecessary, just remove the arrow. then do a durable update and push*
+
+### 05/02/2026, 09:49:12 PM
+**Prompt:** - the mobile ticker drag behavior isn't working. it interacts but when you try to drag it to a different position, it snaps back to the position it was in when you started to drag it. Also make it's auto scrolling 50% faster.
+- once done do a durable update and push
+
+---
+
+## Session: 2026-05-02 (ticker drag fix + 50% speed increase)
+
+### Decisions made this session
+
+- **TrustStrip drag snap-back root cause + fix** — The original wrapper ease-back approach cancelled out any drag movement: the wrapper translated back to 0 while the animation resumed from its frozen (pre-drag) position. Root fix: on pointer-up, read the frozen animation position in px using `getComputedStyle(track).transform` → `new DOMMatrix(matrix).m41`. Combine with `dragOffset.current` for total visual X. Normalise to `[-halfWidth, 0)` (the CSS animation loop range). Restart animation with a negative `animation-delay = (-normalizedX / halfWidth) * duration` so auto-scroll begins exactly at the drag-end position. Wrapper is zeroed instantly (no transition). Reflow trick: `animation = 'none'` → `element.offsetHeight` (force reflow) → new animation declaration.
+- **TrustStrip speed increase** — Desktop: 28s → 19s. Mobile: 14s → 9s. Constants `DURATION_DESKTOP = 19` and `DURATION_MOBILE = 9` in TrustStrip.tsx must always match globals.css `.marquee-track` animation-duration values — the delay math depends on it.
+
+### Prompt log
+
+1. *the mobile ticker drag behavior isn't working. it interacts but when you try to drag it to a different position, it snaps back to the position it was in when you started to drag it. Also make it's auto scrolling 50% faster. once done do a durable update and push*

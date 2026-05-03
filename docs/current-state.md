@@ -14,7 +14,8 @@ Commits this session:
 - **Meta cleanup** (commit `3b0bc46`): Deleted design-review.md agent, chatgpt-prep.md agent, agent-memory/design-review, all 34 design-review screenshots, 3 working txt files, all 5 superpowers plan/spec docs. Updated decisions.md, ai-case-study.md, CLAUDE.md, file-index.md.
 - **Mobile review fixes** (commit `bfab488`): StickyNav hamburger menu gets explicit top+bottom borders in both scroll states; clientTypes children made visually subordinate (xs, indented, dimmer). Hero differentiator pills hidden on mobile (hidden sm:flex). TrustStrip gets 'Scope Adapts to Your Needs' and 'No Oversight Required'; removed '100% Insured' duplicate. Three deferred items added to decisions.md.
 - **Mobile nav scroll + ticker drag** (commit `628cafd`): StickyNav inner menu div scrollable (overflow-y-auto, maxHeight 415px). TrustStrip converted to 'use client' with pointer-driven drag-to-scroll; animation pauses on drag, wrapper eases back on release. Mobile marquee speed halved to 14s via media query.
-- **Services button arrow removed** (commit `HEAD`): Removed trailing → from "Not sure what fits?" button text — was wrapping to a second line on mobile with just the arrow.
+- **Services button arrow removed** (commit `628cafd` area): Removed trailing → from "Not sure what fits?" button text — was wrapping to a second line on mobile with just the arrow.
+- **Ticker drag fix + 50% speed increase** (commit `d323dbc`): TrustStrip drag now uses `getComputedStyle` + `DOMMatrix.m41` to read frozen animation position, combines with drag delta, normalises to loop range, restarts with computed negative `animation-delay`. Auto-scroll: desktop 28s → 19s, mobile 14s → 9s. Constants in TrustStrip.tsx match globals.css durations exactly.
 
 ## Active constraints most likely to matter this session
 - Read this file first, then `docs/decisions.md`; `docs/session-log.md` is not startup context.

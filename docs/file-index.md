@@ -1,5 +1,5 @@
 # Project File Index
-# Last updated: 2026-04-30
+# Last updated: 2026-05-02
 # Written by Claude with codebase context — not a dumb directory listing.
 # Update this file whenever files are added, removed, or moved.
 
@@ -60,14 +60,14 @@ All components are Brazusa Cleaning-specific and live under `components/clean/`.
 | `components/clean/ClientAccordion.tsx` | Space-type selector — expandable panels for STR, property, offices, homes, other |
 | `components/clean/Services.tsx` | Services grid — filterable by space type, daily + extended services |
 | `components/clean/Pricing.tsx` | Pricing overview — filter chips by space type (homes not apartments), custom quote card |
+| `components/clean/Testimonials.tsx` | Category accordion (not carousel) — 5 categories (STR/Property/Offices/Homes/Other), STR open by default; hash-fragment nav state (#testimonials-str etc.) |
 | `components/clean/About.tsx` | Team/about section — has section label bar |
-| `components/clean/Testimonials.tsx` | Category accordion (not carousel) — 5 categories (STR/Property/Offices/Homes/Other), STR open by default |
 | `components/clean/ServiceArea.tsx` | Greater Boston coverage — full-width header + 2-col town grids (Greater Boston / Boston neighborhoods) |
 | `components/clean/TrustStats.tsx` | Three-stat trust strip between Positioning and ClientAccordion — 30+ Years / 100% Insured / 24/7 Availability |
 | `components/clean/QuoteDrawer.tsx` | Slide-in quote request form — segment-aware, submits to /api/quote |
 | `components/clean/FinalCTA.tsx` | Bottom conversion section — merged with contact info (phone/email/Google), 3-column contact strip |
 | `components/clean/NewsletterCTA.tsx` | Newsletter signup block — submits to /api/newsletter |
-| `components/clean/ScrollToTop.tsx` | Scroll-to-top button |
+| `components/clean/ScrollToTop.tsx` | Scroll-to-top button — IntersectionObserver detects dark sections (Hero/Positioning/TrustStats/Services), swaps to off-white bg + navy icon when overlapping |
 | `components/clean/Footer.tsx` | Page footer — links, logo, contact info |
 | `components/clean/helpers/testimonialToggle.ts` | Pure toggle function for Testimonials accordion — toggleCategory(current, clicked) |
 | `components/clean/helpers/testimonialToggle.test.ts` | Tests for testimonialToggle — open, close, switch, open-from-null |
@@ -147,15 +147,6 @@ All components are Brazusa Cleaning-specific and live under `components/clean/`.
 | `docs/briefs/copy.txt` | Full site copy blueprint — source of truth for all on-page text |
 | `docs/briefs/marketresearch.txt` | Raw market research notes |
 
-### Design review working files
-
-| File | Purpose |
-|---|---|
-| `docs/working/design-review/review-notes.txt` | Active design review input doc — Charles's observations, constraints, screenshot priorities |
-| `docs/working/design-review/marketresearch-distilled.txt` | Distilled market research — trust hierarchy scoring rubric, anti-patterns, positioning statement |
-| `docs/working/design-review/review-prep-todo.txt` | Checklist of prep tasks before review sessions |
-| `docs/working/design-review/desktop/` | 17 desktop screenshot captures of the /clean page (desktop-01 through desktop-17) |
-| `docs/working/design-review/mobile/` | 17 mobile screenshot captures of the /clean page (mobile-01 through mobile-17) |
 
 ### Copy working files
 
@@ -163,15 +154,6 @@ All components are Brazusa Cleaning-specific and live under `components/clean/`.
 |---|---|
 | `docs/working/copy-decisions.md` | Historical copy decision log — mostly superseded by decisions.md, kept as record |
 
-### Plans & specs
-
-| File | Purpose |
-|---|---|
-| `docs/superpowers/plans/2026-04-11-brazusa-cleaning-page.md` | Implementation plan for the Brazusa Cleaning page build |
-| `docs/superpowers/plans/2026-04-15-backend.md` | Implementation plan for the backend/API layer |
-| `docs/superpowers/plans/2026-04-16-codebase-standards-cleanup.md` | Plan for codebase standards cleanup pass |
-| `docs/superpowers/specs/2026-04-11-brazusa-cleaning-page-design.md` | Design spec for the Brazusa Cleaning page |
-| `docs/superpowers/specs/2026-04-15-backend-design.md` | Backend design spec |
 
 ### Other docs
 
@@ -211,8 +193,6 @@ Point-in-time export of the Codex config. Not the authoritative source — live 
 | File | Purpose |
 |---|---|
 | `.claude/agents/session-start.md` | Session-start agent — reads current-state, decisions, git log, returns brief |
-| `.claude/agents/design-review.md` | Design-review agent — audits components for token violations, font violations, layout anti-patterns |
-| `.claude/agents/chatgpt-prep.md` | ~~ChatGPT prep agent~~ — deprecated; replaced by the `prompt-engineering-advisor` personal skill |
 | `.claude/agents/copy-review.md` | Copy-review agent — checks incoming copy for AI writing violations before implementation |
 | `.claude/agents/integration-safety.md` | Integration-safety agent — documents current API/Airtable/Resend/Sheets payload before any change |
 

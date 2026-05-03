@@ -172,13 +172,17 @@ If you use two tools together, make them audit each other deliberately. The recu
 
 This document is partly historical and partly a current-state explainer.
 
-As of the latest Brazusa pass (April 29, 2026):
+As of the latest Brazusa pass (May 2, 2026):
 - the repo is still a multi-client platform, with Brazusa Cleaning as the first live implementation
 - the Brazusa copy layer lives in `lib/copy/brazusa-cleaning/`
 - the site has been through two Claude Design review passes; the second produced a substantial redesign with a new locked section order, new components, retired components, and Testimonials replaced with a category accordion
+- section order updated: Testimonials now precedes About (stronger trust signal earlier)
+- "Examples" nav link added to StickyNav pointing to #testimonials
+- ScrollToTop button has IntersectionObserver dark-section color adaptation
 - one structural fix from the first pass is still pending: the hero photo still codes as residential premium and needs operational-scale imagery
 - gold discipline is in a suspended state pending a final review pass on the full redesigned page
-- `chatgpt-prep` is deprecated; cross-model prompt-writing is now handled by the `prompt-engineering-advisor` personal skill, which covers any destination model
+- `chatgpt-prep` is deprecated and deleted; cross-model prompt-writing is now handled by the `prompt-engineering-advisor` personal skill, which covers any destination model
+- `.claude/agents/design-review.md` deleted — the superpowers `design-review` subagent is used instead; the standalone agent was stale and redundant with CLAUDE.md
 - Claude Max subscription is now active, replacing the standard plan
 - the system has moved beyond "how should we use Claude and Codex?" into "how do we keep the operating system, review inputs, and durable docs from drifting as the repo evolves?"
 
@@ -195,7 +199,7 @@ These are not all equal. Some are immediate and blockers for clean product work.
 - **QuoteDrawer email/phone split.** The contact field is currently a single field. The decision to split it into separate email and phone fields (both optional, at least one required) has been made. Implementation is blocked on running the integration-safety agent first to produce a manifest across Resend, Airtable, and Google Sheets.
 - **Hero photo swap.** The current hero image codes as residential premium (close-up portrait of a housekeeper at a marble counter). The B2B copy, section structure, and tone all signal operators and commercial scale. The image contradicts that frame on first load. A replacement should read operational rather than domestic.
 - **Gold discipline final pass.** The second Claude Design pass introduced multiple gold elements per section (section label bars, CTAs, rules, numbers) with discipline suspended at Charles's request. A final review pass is needed once the full redesign is visually stable - the greyscale test (does the design still work with gold replaced by navy-60?) on each element, removing those that fail when another gold element is already doing structural work.
-- **Design-review agent update.** The `.claude/agents/design-review.md` agent needs to be updated to reflect current design standards: section label bar pattern, IBM Plex Sans as heading typeface, cool slate token values. Blocked on completing the gold discipline pass first.
+- **Design-review agent.** `.claude/agents/design-review.md` was deleted rather than updated — it was too stale to be worth patching (still referenced Cormorant Garamond, pre-slate tokens, outdated component list). Design review is now handled by the superpowers `design-review` subagent, which loads its rules fresh from the skill definition. No standalone agent file exists or is needed.
 
 ### Longer-term and aspirational
 
@@ -267,7 +271,7 @@ There is no protocol for what happens when Claude and Codex both attempt to edit
 - `docs/decisions.md` - locked decisions with rationale and constraints. The AI-facing startup context.
 - `docs/session-log.md` - the human-facing session diary. Not read by AI tools at startup.
 - `docs/working/` - temporary working artifacts and review-prep material that are useful in active phases but are not top-level durable truth.
-- `.claude/agents/` - Claude subagent files. Each is self-contained: you can read any one cold and understand exactly what it does, what tools it has, and what it produces. Note: `chatgpt-prep` is in this folder but deprecated - it is kept for reference only.
+- `.claude/agents/` - Claude subagent files. Each is self-contained: you can read any one cold and understand exactly what it does, what tools it has, and what it produces. Active agents: `session-start`, `copy-review`, `integration-safety`. Note: `chatgpt-prep` and `design-review` have been deleted from this folder — both replaced by personal skills (`prompt-engineering-advisor` and the superpowers `design-review` subagent respectively).
 - `~/.claude/skills/` - personal skill files that live on the developer's machine, not in the repo. These are reusable instruction sets Claude loads on demand. Unlike agents, skills are not project-scoped - they apply across all Claude Code sessions on this machine. Current skills: `prompt-engineering-advisor` (cross-model prompt-writing for any destination), `optimize-and-plan` (task sequencer for multi-step implementation work).
 
 **Codex runtime config and repo export:**

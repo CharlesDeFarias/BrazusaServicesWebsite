@@ -176,9 +176,10 @@ Do not default to solid colors.
 
 Vary between light and dark themes across different clients. Think outside the box.
 
-**After any visual component work:** invoke the `design-review` agent before committing.
+**After any visual component work:** invoke the `design-review` superpowers subagent (via the `Skill` tool) before committing.
 It audits for token violations, forbidden fonts, flat backgrounds, and layout anti-patterns.
 This is not optional - the no-staging constraint means violations go straight to production.
+Note: `.claude/agents/design-review.md` was deleted (05/02/2026) — it was stale. Use the superpowers subagent instead.
 
 ---
 
@@ -285,7 +286,7 @@ ambient triggers. The description field in each file is what Claude uses for aut
 | Agent | Invoke when | What to do with output |
 |---|---|---|
 | `session-start` | First thing in every new session | Read the brief, then proceed with the task |
-| `design-review` | After any visual component work, before committing | Fix violations before committing - no staging means violations go live |
+| `design-review` superpowers subagent | After any visual component work, before committing | Fix violations before committing - no staging means violations go live |
 | `prompt-engineering-advisor` skill | Before writing any prompt for handoff to another model | Use the output prompt directly or provide the suggested additional context to refine it |
 | `copy-review` | After receiving copy from any external AI model | Fix violations before implementing - do not paste flagged copy into components |
 | `integration-safety` | Before any change to API routes, Airtable, Resend, or Google Sheets | Get explicit confirmation on each destination change before touching files |

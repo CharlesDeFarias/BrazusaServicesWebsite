@@ -61,6 +61,10 @@ When a decision is made, add it here before the session ends. Format:
 
 **Deferred — Claude Design pass on background calibration:** Three interconnected issues observed after the 04/27 implementation pass require a targeted Claude Design session with fresh screenshots before any code changes: (1) StickyNav scrolled state feels jarring at the navy-to-slate transition, (2) cool slate background tones too similar — monotonous feel, (3) navy header text contrast on cool slate reads poorly. Screenshots needed: hero-to-nav scroll transition, a mid-page section showing the header contrast issue, desktop overview. Do not attempt to fix these independently in code before that session.
 
+**Decision:** `StickyNav.tsx` is a recurring raw-rgba offender. The mobile menu overlay and nav scrolled-state backgrounds consistently use raw `rgba()` values instead of CSS tokens. Each time the nav is touched, re-audit for stray rgba values and replace with the closest defined token.
+**Why:** StickyNav predates the numeric opacity token system and was never fully migrated. The recurring pattern makes it a known gap.
+**Constraints:** Applies to both the scrolled-state background and the mobile drawer overlay. Use the closest white/navy opacity token — add a `/* no token: intentional */` comment only when no token is close enough.
+
 **Decision:** Seven sections that had flat solid backgrounds (About, QuickContact, ServiceArea, Positioning, HowItWorks, Testimonials, Pricing) get one of two layering treatments:
 - Treatment A (light sections): subtle linen-to-off-white gradient + geometric grid at ~1.5% opacity
 - Treatment B (ServiceArea): `.grain` class + faint gold radial glow
@@ -213,8 +217,8 @@ When a decision is made, add it here before the session ends. Format:
 
 ## Section Architecture (Brazusa /clean)
 
-**Decision:** Section order is locked as of the 04/30/2026 design pass. Order: StickyNav → Hero → TrustStrip → Positioning → TrustStats → ClientAccordion → Services → Pricing → About → Testimonials → ServiceArea → FinalCTA → Footer.
-**Why:** CalloutBand was removed and its content merged into Positioning (04/30). TrustStats moved to position 5 (between Positioning and ClientAccordion) to serve as an immediate credibility signal before the service selector.
+**Decision:** Section order is locked as of the 05/02/2026 pass. Order: StickyNav → Hero → TrustStrip → Positioning → TrustStats → ClientAccordion → Services → Pricing → Testimonials → About → ServiceArea → FinalCTA → Footer.
+**Why:** CalloutBand was removed and its content merged into Positioning (04/30). TrustStats moved to position 5 (between Positioning and ClientAccordion) to serve as an immediate credibility signal before the service selector. Testimonials and About were swapped on 05/02 — Testimonials (social/deliverable proof) is stronger than About (identity proof) and should appear earlier.
 **Constraints:** Do not reorder sections without an explicit design decision. HowItWorks and CalloutBand were removed — do not re-insert without discussion.
 
 **Decision:** `TrustStats` is between Positioning and ClientAccordion (position 5). Navy bg + grain. Three stats: 30+ Years / 100% Insured / 24/7 Availability. Stat values are gold (changed from white in second design pass, 04/30/2026). 24×1px gold rule per stat.
@@ -249,11 +253,9 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** Needed for the Testimonials section linen-to-off-white background range after background palette shifted to cool slate.
 **Constraints:** Cool slate family only — do not reintroduce warm amber values.
 
-**Deferred — Swap Testimonials and About section order:** Move Testimonials (real examples/client work) earlier in the page — before About. About is identity proof (the weakest trust tier); Testimonials is social proof + deliverable proof. Earlier placement front-loads the stronger trust signal.
-**How to apply:** Update the section order in `app/clean/page.tsx`. The locked order would become: StickyNav → Hero → TrustStrip → Positioning → TrustStats → ClientAccordion → Services → Pricing → Testimonials → About → ServiceArea → FinalCTA → Footer. Update `docs/decisions.md` Section Architecture decision when enacted.
-
-**Deferred — Add Testimonials/Examples link to StickyNav:** The top nav currently links to Services, Pricing, About, Contact. Testimonials is a high-value section (real client examples) with no direct nav entry. Add a "Examples" or "Clients" nav link pointing to `#testimonials`.
-**How to apply:** Add to the `navLinks` array in `StickyNav.tsx`. Confirm label with Charles before implementing — "Examples", "Clients", or "Testimonials" each frame the section differently.
+**Decision:** "Examples" nav link added to StickyNav (05/02/2026), pointing to `#testimonials`. Nav order: Services / Pricing / Examples / About / Contact.
+**Why:** Testimonials is high-value proof content with no direct nav entry. "Examples" frames it as real client work rather than social validation.
+**Constraints:** Keep label as "Examples" — "Clients" or "Testimonials" were the alternatives, "Examples" was chosen.
 
 **Deferred — Component render test coverage:** Full component render tests (jsdom + React Testing Library) are not possible with the current Vitest node environment. Package install required. Defer until the site is more finished — add tests in a single pass across all components rather than piecemeal.
 **How to apply:** When the time comes, the package install conversation should cover: `@testing-library/react`, `@testing-library/user-event`, jsdom environment config in vitest.config.ts. Start with the most interactive components (QuoteDrawer, Testimonials, StickyNav).
@@ -261,8 +263,9 @@ When a decision is made, add it here before the session ends. Format:
 **Deferred — Code-review skill:** A personal skill to run coding standards checks, catch basic errors, and audit file architecture/organization for messiness, loose files, and misplaced components. Not yet built.
 **How to apply:** When building this skill, scope it to: CLAUDE.md rule compliance, TypeScript standards (strict mode, explicit types, no implicit any), component line count thresholds, file placement conventions (helpers in /helpers, utilities not loose), CSS token vs. raw rgba usage.
 
-**Deferred — Design-review agent updates:** The `.claude/agents/design-review.md` agent needs to be updated to reflect the current design standards (Geist heading typeface, cool slate tokens, section label bar exceptions for Positioning and FinalCTA, TrustStats at position 5, no CalloutBand).
-**How to apply:** Run a targeted agent update once the visual pass is stable.
+**Decision:** `.claude/agents/design-review.md` deleted (05/02/2026). Design review is now handled by the superpowers `design-review` subagent (invoked via `Skill` tool). The standalone agent file was stale — it still referenced `--font-cormorant` as the heading typeface and all its checklist items were already in CLAUDE.md.
+**Why:** Maintaining a redundant agent file that diverges from the active design system is worse than no agent at all — it actively misleads future sessions. The superpowers agent loads fresh from the skill definition and is always current.
+**Constraints:** Do not recreate `.claude/agents/design-review.md`. When CLAUDE.md says "invoke the design-review agent," this means use the superpowers subagent via the Skill tool.
 
 **Deferred — Services "Other" space type:** Add an "Other" panel to the ClientAccordion (or the Services section "What we handle daily") for spaces that don't fit a category. No copy written yet.
 **How to apply:** When copy is ready, add an accordion item matching the existing pattern in `page.tsx` clientItems array and a corresponding services filter entry.
@@ -276,8 +279,9 @@ When a decision is made, add it here before the session ends. Format:
 **Deferred — ServiceArea responsive column equalization:** The "Greater Boston towns" column has significantly more chips than "Boston neighborhoods," making the two columns unequal height and visually awkward. Hide the least-important towns dynamically to equalize column heights. Least-important towns (hide first): Canton, Belmont, Winthrop, Revere, Chelsea, Randolph. (Framingham already removed 05/02/2026 to fix +more chip line-wrap at 11fr/9fr column ratio.)
 **How to apply:** Implement a CSS or JS approach that progressively hides lower-priority chips until both columns reach equal height. Hiding should be responsive (depends on viewport/column width). The `+ more` chip already signals overflow.
 
-**Deferred — ScrollToTop button color adaptation:** The button is fixed navy (`--color-navy`) which disappears when it overlaps navy-background sections (Hero, Positioning, Services, TrustStats). Implement section-aware color using `IntersectionObserver` on navy sections — switch to a light (off-white/white) variant when over dark sections, and back to navy when over light sections.
-**How to apply:** Observe the navy-background sections. When any intersects, toggle the button to a light-bg variant (`--color-off-white` background, navy icon). Color only — no shape or size changes.
+**Decision:** `ScrollToTop` uses `IntersectionObserver` with `rootMargin: '-85% 0px 0px 0px'` to detect when the button overlaps dark sections (Hero, Positioning, TrustStats, Services). When any dark section is in the bottom ~15% of the viewport, the button swaps to off-white background + navy icon; otherwise navy background + off-white icon (05/02/2026).
+**Why:** The button was invisible against navy section backgrounds. The `-85%` margin creates a detection zone covering only the bottom portion of the viewport where the button actually lives — avoids false triggers from dark sections in the middle of the page.
+**Constraints:** Color only — no shape or size changes. The `DARK_SECTION_IDS` array is `['hero', 'positioning', 'trust-stats', 'services']`.
 
 **Deferred — Service area checker widget:** A quick interactive widget where someone can enter an address and immediately know whether we cover it. Four response tiers: (A) Definitely clean there, (B) Probably clean there, (C) Probably don't clean there, (D) Definitely don't clean there. Coverage zones would be defined as a structured data object mapping to the existing town/neighborhood lists.
 **How to apply:** Design data structure for coverage zones first (town-level matched against the existing greaterBostonTowns and bostonNeighborhoods arrays). Then build a simple input + instant lookup. No API required — pure client-side match. Consider adding it to ServiceArea.tsx or as a modal/drawer triggered by the "Check if we cover your area" button.

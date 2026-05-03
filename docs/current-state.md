@@ -12,6 +12,7 @@ Commits this session:
 - **Round 5** (commit `59cc30d`): **Critical fix** — globals.css `.grain > *` rule removed, `::after` z-index changed from 1 to -1. Root cause of the persistent 320px blank space above FinalCTA.
 - **Round 6** (commit `9cc8978`): Testimonials/About swap, Examples nav link in StickyNav, ScrollToTop IntersectionObserver color adaptation (navy → off-white over dark sections)
 - **Meta cleanup** (commit `3b0bc46`): Deleted design-review.md agent, chatgpt-prep.md agent, agent-memory/design-review, all 34 design-review screenshots, 3 working txt files, all 5 superpowers plan/spec docs. Updated decisions.md, ai-case-study.md, CLAUDE.md, file-index.md.
+- **Mobile review fixes** (commit `bfab488`): StickyNav hamburger menu gets explicit top+bottom borders in both scroll states; clientTypes children made visually subordinate (xs, indented, dimmer). Hero differentiator pills hidden on mobile (hidden sm:flex). TrustStrip gets 'Scope Adapts to Your Needs' and 'No Oversight Required'; removed '100% Insured' duplicate. Three deferred items added to decisions.md.
 
 ## Active constraints most likely to matter this session
 - Read this file first, then `docs/decisions.md`; `docs/session-log.md` is not startup context.
@@ -29,7 +30,6 @@ Commits this session:
 
 ## Next tasks
 - `Charles only:` Source an operational-scale hero photo (not residential/premium). Replace `public/images/hero.webp`.
-- `Charles:` Mobile review — pending Charles's pass.
 - `Claude or Codex:` Final gold discipline pass — requires stable rendered state first.
 - `Deferred:` Component render test coverage (jsdom + RTL). After site is more finished.
 - `Deferred:` Code-review personal skill.
@@ -37,7 +37,8 @@ Commits this session:
 - `Deferred:` Service area checker widget.
 - `Deferred:` Services "Other" accordion panel — copy not written yet.
 - `Deferred:` Services section copy per space type.
-- `Deferred:` TrustStrip ticker — more items; revisit font/bullet colors (partially done: gold bullets + navy-60 text).
+- `Deferred:` TrustStrip manual scroll (desktop + mobile) and mobile speed increase.
+- `Deferred:` Decide whether to remove hero differentiator pills on desktop too.
 - `Deferred:` QuoteDrawer email/phone field split — touches API, Airtable, Resend. Requires integration-safety agent first.
 
 ## Known blockers

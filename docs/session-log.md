@@ -9650,3 +9650,40 @@ proceed
 7. *before deleting those safe to delete items, just make sure anything useful/relevant... then proceed with the deletion.*
 8. *let's keep copy-decisions for now / superpower docs can be deleted / keep the vitor folder for now*
 9. *do a durable update*
+
+### 05/02/2026, 09:32:10 PM
+**Prompt:** doing mobile review now:
+- the expandable hamburger menu in the top nav needs some kind of border. when you open it while in a navy colored section, its very hard to see where the menu ends, and the "space we clean" section's children shouldn't look the same as the rest of the items in the menu, they should be more obviously children of the spaces we clean, and take up less space.
+- add to deferred items for both desktop and mobile: making the ticker able to be scrolled manually. also increasing the speed on mobile.
+- on mobile, remove the items bellow call/text button in the hero, and instead shift them into the end of the list of bullet points that scroll through in the ticker. also add a deferred item to decide whether to also do this for desktop.
+- the rest of the mobile looks excellent and good to go.
+
+### 05/02/2026, 09:36:51 PM
+**Prompt:** durable update and push
+
+---
+
+## Session: 2026-05-02 (mobile review)
+
+### Decisions made this session
+
+- **StickyNav hamburger menu border** — mobile menu panel now has explicit `borderTop` and `borderBottom` in both scroll states. When `!scrolled` (navy bg), both use `var(--color-white-10)` so the panel is visually bounded against the page below. Previously `borderTop` was `none` in the navy state.
+- **StickyNav "Spaces we clean" children hierarchy** — clientTypes items in the hamburger menu changed from `text-sm font-medium py-2.5 minHeight:44px` to `text-xs py-1.5 pl-3 minHeight:36px` with dimmer color. They now read as children of the section header rather than peers of the main nav links.
+- **Hero differentiator pills hidden on mobile** — `hidden sm:flex` on the pills div. TrustStrip ticker carries the equivalent messaging on mobile. Deferred item added: decide whether to apply the same to desktop.
+- **TrustStrip items updated** — replaced duplicate `'30+ Years Experience'` with `'Scope Adapts to Your Needs'`; added `'No Oversight Required'`; removed `'100% Insured'` (duplicate of `'Fully Insured & Documented'`). 9 unique items, no redundancy.
+- **Mobile review complete** — Charles confirmed the rest of mobile looks excellent and is good to go.
+
+### Deferred items added (decisions.md)
+
+- TrustStrip manual scroll (desktop + mobile)
+- TrustStrip speed increase on mobile
+- Hero differentiator pills on desktop — keep or remove?
+
+### Process notes
+
+- Design-review agent run after implementation. Caught one token violation (`rgba(255,255,255,0.45)` → `var(--color-white-45)`) and one content duplication (`'100% Insured'` alongside `'Fully Insured & Documented'`). Both fixed before commit.
+
+### Prompt log
+
+1. *doing mobile review now: [nav border, child hierarchy, deferred ticker items, hero pills mobile, rest looks good]*
+2. *durable update and push*

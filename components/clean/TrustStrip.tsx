@@ -1,8 +1,8 @@
 'use client'
 
-import { type JSX, useRef, useCallback } from 'react'
+import { type JSX, useRef, useEffect, useCallback } from 'react'
 
-// Must match animation-duration values in globals.css .marquee-track / @media override
+// Loop duration in seconds — adjust speed here; no globals.css sync needed
 const DURATION_DESKTOP = 19
 const DURATION_MOBILE  = 9
 
@@ -20,69 +20,62 @@ const items = [
 
 export default function TrustStrip(): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null)
-  const wrapperRef   = useRef<HTMLDivElement>(null)
   const trackRef     = useRef<HTMLDivElement>(null)
+  const posRef       = useRef(0)         // current X offset in px (moves negative = scrolls left)
+  const halfWidthRef = useRef(0)         // scrollWidth / 2 — the loop length
+  const rafRef       = useRef<number>(0)
+  const lastTimeRef  = useRef<number | undefined>(undefined)
   const isDragging   = useRef(false)
   const startX       = useRef(0)
-  const dragOffset   = useRef(0)
-  const frozenX      = useRef(0)
+
+  const tick = useCallback((time: number) => {
+    if (lastTimeRef.current === undefined) lastTimeRef.current = time
+    const dt = time - lastTimeRef.current
+    lastTimeRef.current = time
+
+    if (!isDragging.current && halfWidthRef.current > 0) {
+      const duration = window.innerWidth < 768 ? DURATION_MOBILE : DURATION_DESKTOP
+      posRef.current -= (halfWidthRef.current / (duration * 1000)) * dt
+      if (posRef.current <= -halfWidthRef.current) posRef.current += halfWidthRef.current
+    }
+
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(${posRef.current}px)`
+    }
+
+    rafRef.current = requestAnimationFrame(tick)
+  }, [])
+
+  useEffect(() => {
+    if (trackRef.current) {
+      halfWidthRef.current = trackRef.current.scrollWidth / 2
+      trackRef.current.style.willChange = 'transform'
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => { if (rafRef.current !== undefined) cancelAnimationFrame(rafRef.current) }
+  }, [tick])
 
   const onPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    const track = trackRef.current
-    if (!track) return
-
     isDragging.current = true
     startX.current = e.clientX
-    dragOffset.current = 0
     e.currentTarget.setPointerCapture(e.pointerId)
     if (containerRef.current) containerRef.current.style.cursor = 'grabbing'
-    if (wrapperRef.current)   wrapperRef.current.style.transition = 'none'
-
-    // Pause then immediately read the frozen position — getComputedStyle resolves % → px
-    track.style.animationPlayState = 'paused'
-    const matrix = window.getComputedStyle(track).transform
-    frozenX.current = matrix !== 'none' ? new DOMMatrix(matrix).m41 : 0
   }, [])
 
   const onPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging.current) return
-    const offset = e.clientX - startX.current
-    dragOffset.current = offset
-    if (wrapperRef.current) wrapperRef.current.style.transform = `translateX(${offset}px)`
+    const dx = e.clientX - startX.current
+    startX.current = e.clientX
+    posRef.current += dx
+    if (posRef.current > 0) posRef.current -= halfWidthRef.current
+    if (posRef.current <= -halfWidthRef.current) posRef.current += halfWidthRef.current
   }, [])
 
   const onPointerUp = useCallback(() => {
     if (!isDragging.current) return
     isDragging.current = false
+    lastTimeRef.current = undefined  // reset to prevent dt spike after drag
     if (containerRef.current) containerRef.current.style.cursor = 'grab'
-
-    const track   = trackRef.current
-    const wrapper = wrapperRef.current
-    if (!track || !wrapper) return
-
-    const halfWidth = track.scrollWidth / 2
-    if (halfWidth === 0) return
-
-    // Total visual displacement: where animation froze + how far the user dragged
-    const totalX = frozenX.current + dragOffset.current
-
-    // Normalise to [-halfWidth, 0) — the animation's looping range
-    let normalizedX = totalX % halfWidth
-    if (normalizedX > 0) normalizedX -= halfWidth
-
-    const duration = window.innerWidth < 768 ? DURATION_MOBILE : DURATION_DESKTOP
-    // Negative delay seeks the animation to normalizedX at the moment it starts
-    const delay = (-normalizedX / halfWidth) * duration
-
-    // Instantly zero the wrapper — track animation takes over at the same visual position
-    wrapper.style.transform = 'translateX(0)'
-
-    // Reflow trick: 'none' → reflow → restart with delay embedded in the shorthand.
-    // animationDelay set separately after animation starts is ignored by spec — must be atomic.
-    track.style.animationPlayState = ''
-    track.style.animation          = 'none'
-    track.offsetHeight             // eslint-disable-line @typescript-eslint/no-unused-expressions
-    track.style.animation          = `marquee ${duration}s linear -${delay}s infinite`
   }, [])
 
   return (
@@ -95,18 +88,15 @@ export default function TrustStrip(): JSX.Element {
         padding: '10px 0',
         cursor: 'grab',
         userSelect: 'none',
-        touchAction: 'pan-y', /* vertical page scroll passes through; horizontal captured for drag */
+        touchAction: 'pan-y', /* vertical scroll passes through; horizontal captured for drag */
       }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
     >
-      <div ref={wrapperRef}>
-        <div
-          ref={trackRef}
-          className="flex marquee-track whitespace-nowrap"
-        >
+      <div>
+        <div ref={trackRef} className="flex whitespace-nowrap">
           {[...items, ...items].map((item, i) => (
             <span
               key={i}

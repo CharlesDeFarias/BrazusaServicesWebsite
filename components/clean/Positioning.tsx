@@ -20,19 +20,19 @@ export default function Positioning(): JSX.Element {
           <div className="mb-4" style={{ width: '42px', height: '1px', background: 'var(--color-brand-gold)' }} />
 
           <h2
-            className="text-3xl md:text-4xl leading-snug mb-2"
-            style={{ color: 'white' }}
+            className="text-3xl md:text-4xl leading-snug mb-1"
           >
             Built for operators, not oversight
           </h2>
           <p
-            className="mb-5"
+            className="mb-4"
             style={{
-              fontFamily: 'var(--font-ibm-plex-sans)',
-              fontSize: '15px',
-              fontWeight: 400,
-              color: 'var(--color-white-55)',
-              lineHeight: 1.45,
+              fontFamily: 'var(--font-syne)',
+              fontSize: '13px',
+              fontWeight: 500,
+              color: 'var(--color-white-40)',
+              letterSpacing: '0.04em',
+              lineHeight: 1.3,
             }}
           >
             You shouldn&apos;t have to manage the people managing your space.

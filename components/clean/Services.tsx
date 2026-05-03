@@ -161,19 +161,17 @@ export default function Services({ onQuoteClick, activeClientId, servicesCopy }:
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 items-end">
+        <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-5 text-center">
           <p className="text-xs text-white-30">
             These are optional layers. Scope depends on how much of the operation you want handled.
           </p>
-          <div className="flex sm:justify-end mt-3 sm:mt-0">
-            <button
-              onClick={onQuoteClick}
-              className="text-sm font-medium px-6 py-3.5 min-h-[44px] text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy"
-              style={{ background: 'var(--color-white-10)', borderLeft: '2px solid var(--color-brand-gold)' }}
-            >
-              Not sure what fits? Tell us how your space runs →
-            </button>
-          </div>
+          <button
+            onClick={onQuoteClick}
+            className="text-sm font-medium px-6 py-3.5 min-h-[44px] text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy flex-shrink-0"
+            style={{ background: 'var(--color-white-10)', borderLeft: '2px solid var(--color-brand-gold)' }}
+          >
+            Not sure what fits? Tell us how your space runs →
+          </button>
         </div>
       </div>
     </section>

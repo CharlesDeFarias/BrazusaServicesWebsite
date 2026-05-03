@@ -21,7 +21,7 @@ export default function ScrollToTop({ drawerOpen }: ScrollToTopProps): JSX.Eleme
     <button
       onClick={scrollToTop}
       aria-label="Scroll to top"
-      className="fixed bottom-6 right-6 z-50 w-11 h-11 flex items-center justify-center transition-all duration-300 shadow-lg"
+      className="fixed bottom-6 right-6 z-50 w-11 h-11 flex items-center justify-center transition-all duration-300 shadow-lg cursor-pointer"
       style={{
         background: 'var(--color-navy)',
         opacity: visible && !drawerOpen ? 1 : 0,

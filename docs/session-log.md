@@ -9727,3 +9727,42 @@ proceed
 ### Prompt log
 
 1. *the mobile ticker drag behavior isn't working. it interacts but when you try to drag it to a different position, it snaps back to the position it was in when you started to drag it. Also make it's auto scrolling 50% faster. once done do a durable update and push*
+
+### 05/02/2026, 10:13:02 PM
+**Prompt:** the ticker drag issue hasnt been fixed. it still resets its position the moment you let it go. it should instead continue scrolling from the position you left it in after dragging
+
+### 05/02/2026, 10:19:26 PM
+**Prompt:** push
+
+### 05/02/2026, 10:25:47 PM
+**Prompt:** both on desktop and mobile the issue hasnt beeen fixed at all. same exact problem. the target behavior is:
+- ticker is continously looping, with the first item on the list scrolling up behind the last item on the list and looping seamlessly
+- upon dragging the ticket, the list should move accordingly across the ticker, pausing its position where it stops being dragged and then continuing its animation looping from that point instead of resetting to the start of the list or anywhere else.
+
+### 05/02/2026, 10:40:14 PM
+**Prompt:** you fixed the drag behavior, but now the speed is way too fast. seems your speed change wasnt visible before you fixed the drag behavior. Make it 60% slower
+
+### 05/02/2026, 10:43:54 PM
+**Prompt:** almost there. desktop ticker should be slowed by another 20% and mobile by 50%.
+
+### 05/02/2026, 10:46:21 PM
+**Prompt:** excellent, do a durable update
+
+---
+
+## Session: 2026-05-02 (TrustStrip RAF rewrite + speed calibration)
+
+### Decisions made this session
+
+- **CSS animation approach abandoned for TrustStrip** — Two iterations of the `animation-delay` seek approach both failed. Root cause identified: per CSS spec, `animation-delay` only applies at the moment an animation starts. Setting it as a separate property after the `animation` shorthand commits is a no-op on the running animation. Even embedding it in the shorthand was unreliable due to `getComputedStyle` edge cases on paused animations across browsers.
+- **RAF loop replaces CSS animation** — TrustStrip now uses `requestAnimationFrame`. Position is a plain `posRef` (number, px). Each frame: `posRef.current -= (halfWidth / duration / 1000) * dt`. Drag: `pointermove` adds pointer deltas directly to `posRef` and updates `startX` for delta tracking. Release: loop continues from wherever `posRef` is — no restart, no timing math. `lastTimeRef` is reset to `undefined` on pointer-up to prevent a dt spike from the drag pause. `.marquee-track` CSS class no longer applied (exists in globals.css but unused).
+- **Speed constants** — Final: `DURATION_DESKTOP = 60`, `DURATION_MOBILE = 46`. No globals.css sync needed — RAF uses the constants directly.
+
+### Prompt log
+
+1. *the ticker drag issue hasn't been fixed. it still resets its position the moment you let it go. it should instead continue scrolling from the position you left it in after dragging*
+2. *push*
+3. *both on desktop and mobile the issue hasn't been fixed at all. [description of target behavior]*
+4. *you fixed the drag behavior, but now the speed is way too fast. Make it 60% slower*
+5. *almost there. desktop ticker should be slowed by another 20% and mobile by 50%*
+6. *excellent, do a durable update*

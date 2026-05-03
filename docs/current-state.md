@@ -15,7 +15,9 @@ Commits this session:
 - **Mobile review fixes** (commit `bfab488`): StickyNav hamburger menu gets explicit top+bottom borders in both scroll states; clientTypes children made visually subordinate (xs, indented, dimmer). Hero differentiator pills hidden on mobile (hidden sm:flex). TrustStrip gets 'Scope Adapts to Your Needs' and 'No Oversight Required'; removed '100% Insured' duplicate. Three deferred items added to decisions.md.
 - **Mobile nav scroll + ticker drag** (commit `628cafd`): StickyNav inner menu div scrollable (overflow-y-auto, maxHeight 415px). TrustStrip converted to 'use client' with pointer-driven drag-to-scroll; animation pauses on drag, wrapper eases back on release. Mobile marquee speed halved to 14s via media query.
 - **Services button arrow removed** (commit `628cafd` area): Removed trailing → from "Not sure what fits?" button text — was wrapping to a second line on mobile with just the arrow.
-- **Ticker drag fix + 50% speed increase** (commit `d323dbc`): TrustStrip drag now uses `getComputedStyle` + `DOMMatrix.m41` to read frozen animation position, combines with drag delta, normalises to loop range, restarts with computed negative `animation-delay`. Auto-scroll: desktop 28s → 19s, mobile 14s → 9s. Constants in TrustStrip.tsx match globals.css durations exactly.
+- **Ticker drag fix + 50% speed increase** (commit `d323dbc`): First two attempts at CSS animation-delay approach — both failed. Root cause: `animationDelay` set as a separate property after the `animation` shorthand starts is ignored by CSS spec; delay only applies at animation start time. Even embedding delay in the shorthand was unreliable due to `getComputedStyle` edge cases on paused animations.
+- **TrustStrip rewrite to RAF loop** (commit `1036cc0`): Replaced CSS animation entirely with a `requestAnimationFrame` loop. Position lives in a `posRef` (plain number, px). Loop subtracts `(halfWidth / duration / 1000) * dt` each frame. Drag adds pointer deltas directly to `posRef` on each `pointermove`. On release the loop just continues — no restart, no timing math, no CSS animation involved. `lastTimeRef` reset to `undefined` on pointer-up prevents a dt spike from the drag pause. `.marquee-track` CSS class no longer applied to the element (class still exists in globals.css but is dead).
+- **Speed calibration** (commits `6d19242`, `cf130ff`): 19s/9s was too fast once drag worked. Final: desktop 60s, mobile 46s.
 
 ## Active constraints most likely to matter this session
 - Read this file first, then `docs/decisions.md`; `docs/session-log.md` is not startup context.
@@ -30,6 +32,7 @@ Commits this session:
 - Positioning subtitle is Syne 13px/500/--color-white-40 — intentional subtitle styling, not body text.
 - `.grain::after` uses z-index: -1 (within isolation: isolate stacking context). The `.grain > *` rule is gone. Do not re-add it.
 - `.claude/agents/design-review.md` is deleted. Use the superpowers design-review subagent (Skill tool) instead.
+- TrustStrip uses a `requestAnimationFrame` loop (not CSS animation). Position is `posRef.current` in px. Speed is controlled by `DURATION_DESKTOP` / `DURATION_MOBILE` constants in the component — no globals.css sync required. The `.marquee-track` CSS class is dead (do not re-apply it to the element).
 
 ## Next tasks
 - `Charles only:` Source an operational-scale hero photo (not residential/premium). Replace `public/images/hero.webp`.
@@ -40,7 +43,7 @@ Commits this session:
 - `Deferred:` Service area checker widget.
 - `Deferred:` Services "Other" accordion panel — copy not written yet.
 - `Deferred:` Services section copy per space type.
-- `Deferred:` TrustStrip manual scroll (desktop + mobile) and mobile speed increase.
+- `Done:` TrustStrip drag-to-scroll — complete (RAF loop, both platforms).
 - `Deferred:` Decide whether to remove hero differentiator pills on desktop too.
 - `Deferred:` QuoteDrawer email/phone field split — touches API, Airtable, Resend. Requires integration-safety agent first.
 

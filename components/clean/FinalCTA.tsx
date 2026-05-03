@@ -8,7 +8,7 @@ export default function FinalCTA({ onQuoteClick }: FinalCTAProps): JSX.Element {
   return (
     <section
       id="contact"
-      className="grain bg-off-white py-10 px-6 relative overflow-hidden"
+      className="grain bg-off-white pt-4 pb-10 px-6 relative overflow-hidden"
       style={{ borderTop: '1px solid var(--color-light-gray)', scrollMarginTop: '56px' }}
     >
       {/* Grid pattern */}

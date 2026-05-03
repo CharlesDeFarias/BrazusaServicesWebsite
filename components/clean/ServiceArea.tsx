@@ -54,7 +54,7 @@ export default function ServiceArea({ onQuoteClick }: ServiceAreaProps): JSX.Ele
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-[11fr_9fr] gap-4">
           {/* Greater Boston towns */}
           <div>
             <p

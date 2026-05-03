@@ -245,6 +245,12 @@ When a decision is made, add it here before the session ends. Format:
 **Why:** Needed for the Testimonials section linen-to-off-white background range after background palette shifted to cool slate.
 **Constraints:** Cool slate family only — do not reintroduce warm amber values.
 
+**Deferred — Swap Testimonials and About section order:** Move Testimonials (real examples/client work) earlier in the page — before About. About is identity proof (the weakest trust tier); Testimonials is social proof + deliverable proof. Earlier placement front-loads the stronger trust signal.
+**How to apply:** Update the section order in `app/clean/page.tsx`. The locked order would become: StickyNav → Hero → TrustStrip → Positioning → TrustStats → ClientAccordion → Services → Pricing → Testimonials → About → ServiceArea → FinalCTA → Footer. Update `docs/decisions.md` Section Architecture decision when enacted.
+
+**Deferred — Add Testimonials/Examples link to StickyNav:** The top nav currently links to Services, Pricing, About, Contact. Testimonials is a high-value section (real client examples) with no direct nav entry. Add a "Examples" or "Clients" nav link pointing to `#testimonials`.
+**How to apply:** Add to the `navLinks` array in `StickyNav.tsx`. Confirm label with Charles before implementing — "Examples", "Clients", or "Testimonials" each frame the section differently.
+
 **Deferred — Component render test coverage:** Full component render tests (jsdom + React Testing Library) are not possible with the current Vitest node environment. Package install required. Defer until the site is more finished — add tests in a single pass across all components rather than piecemeal.
 **How to apply:** When the time comes, the package install conversation should cover: `@testing-library/react`, `@testing-library/user-event`, jsdom environment config in vitest.config.ts. Start with the most interactive components (QuoteDrawer, Testimonials, StickyNav).
 

@@ -106,7 +106,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
         {/* Logo + wordmark */}
         <button
           onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); closeMenu(); setCleanOpen(false) }}
-          className="flex-shrink-0 focus:outline-none flex items-center gap-3"
+          className="flex-shrink-0 focus:outline-none flex items-center gap-3 cursor-pointer"
           aria-label="Back to top"
         >
           <div
@@ -242,7 +242,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           {/* Get a Quote */}
           <button
             onClick={onQuoteClick}
-            className="text-xs font-medium px-4 py-2 transition-all duration-200 hover:opacity-75"
+            className="text-xs font-medium px-4 py-2 transition-all duration-200 hover:opacity-75 cursor-pointer"
             style={{
               background: scrolled ? 'var(--color-navy)' : 'transparent',
               color: scrolled ? 'white' : 'white',
@@ -315,7 +315,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           {/* Quote button */}
           <button
             onClick={onQuoteClick}
-            className="text-xs font-medium px-2.5 py-1.5 min-h-[32px] hover:opacity-75"
+            className="text-xs font-medium px-2.5 py-1.5 min-h-[32px] hover:opacity-75 cursor-pointer"
             style={{
               background: scrolled ? 'var(--color-navy)' : 'var(--color-navy)',
               color: 'white',
@@ -429,7 +429,7 @@ export default function StickyNav({ onQuoteClick, setActiveClient, onOtherClick 
           ))}
           <button
             onClick={() => { onQuoteClick(); closeMenu() }}
-            className="mt-4 w-full text-sm font-medium text-white transition-all duration-200"
+            className="mt-4 w-full text-sm font-medium text-white transition-all duration-200 cursor-pointer"
             style={{ background: 'var(--color-navy)', borderLeft: '2px solid var(--color-brand-gold)', minHeight: '44px' }}
           >
             Get a Quote

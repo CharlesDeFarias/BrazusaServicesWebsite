@@ -35,13 +35,13 @@ export default function TrustStrip(): JSX.Element {
               fontSize: '11px',
               fontWeight: 500,
               letterSpacing: '0.18em',
-              color: 'var(--color-warm-gray-dark)',
+              color: 'var(--color-navy-60)',
               textTransform: 'uppercase',
             }}
           >
             <span
               className="w-1 h-1 rounded-full flex-shrink-0"
-              style={{ background: 'var(--color-navy-20)' }}
+              style={{ background: 'var(--color-brand-gold)' }}
             />
             {item}
           </span>

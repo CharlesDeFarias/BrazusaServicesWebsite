@@ -14,7 +14,7 @@ export default function Positioning(): JSX.Element {
       className="grain bg-navy text-white py-12 px-6 relative overflow-hidden"
       style={{ borderTop: '1px solid var(--color-white-10)' }}
     >
-      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-14 items-start relative">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-14 items-start relative">
 
         <div>
           <div className="mb-4" style={{ width: '42px', height: '1px', background: 'var(--color-brand-gold)' }} />

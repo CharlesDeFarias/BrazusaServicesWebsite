@@ -61,7 +61,7 @@ export default function Hero({ heroRef, onQuoteClick, heroCopy }: HeroProps): JS
           <div className="fade-up-2 flex flex-col sm:flex-row gap-3 mb-8">
             <button
               onClick={onQuoteClick}
-              className="text-sm font-medium px-8 py-4 min-h-[52px] transition-all duration-200 hover:opacity-90 text-navy"
+              className="text-sm font-semibold px-8 py-4 min-h-[52px] transition-all duration-200 hover:opacity-90 text-navy cursor-pointer"
               style={{ background: 'var(--color-brand-gold)' }}
             >
               Start with a free quote

@@ -264,7 +264,7 @@ export default function ClientAccordion({
           <button
             type="button"
             onClick={handleOtherToggle}
-            className="w-full flex items-center gap-5 px-5 py-4 min-h-[44px] text-left transition-colors hover:bg-white/80"
+            className="w-full flex items-center gap-5 px-5 py-4 min-h-[44px] text-left transition-colors hover:bg-white/80 cursor-pointer"
             style={{ border: '1.5px solid var(--color-brand-gold)', borderRadius: '10px', background: 'var(--color-gold-5)' }}
           >
             <span

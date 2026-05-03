@@ -7,7 +7,7 @@ export default function About(): JSX.Element {
   return (
     <section
       id="about"
-      className="py-14 px-6 relative overflow-hidden"
+      className="pt-10 pb-14 px-6 relative overflow-hidden"
       style={{
         background: 'linear-gradient(to bottom, var(--color-linen), var(--color-off-white))',
         borderTop: '1px solid var(--color-light-gray)',
@@ -22,7 +22,7 @@ export default function About(): JSX.Element {
       <div className="max-w-5xl mx-auto relative">
 
         {/* Section label */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-2">
           <div className="w-px flex-shrink-0" style={{ height: '32px', background: 'var(--color-brand-gold)' }} />
           <span
             style={{

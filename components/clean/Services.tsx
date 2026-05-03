@@ -170,7 +170,7 @@ export default function Services({ onQuoteClick, activeClientId, servicesCopy }:
             className="text-sm font-medium px-6 py-3.5 min-h-[44px] text-white transition-all duration-200 hover:bg-brand-gold hover:text-navy flex-shrink-0"
             style={{ background: 'var(--color-white-10)', borderLeft: '2px solid var(--color-brand-gold)' }}
           >
-            Not sure what fits? Tell us how your space runs →
+            Not sure what fits? Tell us how your space runs
           </button>
         </div>
       </div>

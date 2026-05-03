@@ -9687,3 +9687,26 @@ proceed
 
 1. *doing mobile review now: [nav border, child hierarchy, deferred ticker items, hero pills mobile, rest looks good]*
 2. *durable update and push*
+
+### 05/02/2026, 09:40:31 PM
+**Prompt:** - the mobile hamburger bar needs its own scroll wheel/behavior. currently the end of it gets cut off with no ability to scroll down.
+- go ahead and speed up the ticker on mobile and give it the ability to drag to move it horizontally for both mobile and desktop.
+
+### 05/02/2026, 09:44:48 PM
+**Prompt:** on mobile, in the "not sure what fits" button of the services section, it's currently using two lines of text, with the second line being just the arrow. That's unnecessary, just remove the arrow. then do a durable update and push
+
+---
+
+## Session: 2026-05-02 (mobile polish — nav scroll, ticker drag, button fix)
+
+### Decisions made this session
+
+- **StickyNav hamburger menu scrollable** — inner menu div now has `overflow-y-auto` and `maxHeight: 415px`. Outer `overflow-hidden` container is untouched so the open/close height animation works; the inner div scrolls independently within the clamped outer height.
+- **TrustStrip drag-to-scroll** — converted to `'use client'`. Pointer events pause the CSS animation and apply a translateX offset to a wrapper div during drag; on release the wrapper eases back (0.4s ease-out) and the animation resumes. All manipulation is direct DOM style changes — no React re-renders during pointermove. `touch-action: pan-y` lets vertical page scroll pass through while capturing horizontal drags.
+- **TrustStrip mobile speed** — `animation-duration: 14s` at `max-width: 767px` via globals.css media query (half the desktop 28s).
+- **Services "Not sure what fits?" arrow removed** — trailing `→` was wrapping to a solo second line on mobile. Text now ends at "runs" with no arrow.
+
+### Prompt log
+
+1. *the mobile hamburger bar needs its own scroll wheel/behavior. currently the end of it gets cut off with no ability to scroll down. go ahead and speed up the ticker on mobile and give it the ability to drag to move it horizontally for both mobile and desktop.*
+2. *on mobile, in the "not sure what fits" button of the services section, it's currently using two lines of text, with the second line being just the arrow. That's unnecessary, just remove the arrow. then do a durable update and push*

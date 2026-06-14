@@ -1,0 +1,141 @@
+/*
+ * Nurse Aloane (client preview) — route-scoped styles.
+ * Everything is scoped under `.na-root` so it cannot leak into the
+ * Brazusa pages. Loaded only by app/nurse-aloane/layout.tsx.
+ * Component classes are plain CSS referencing the `na-` design tokens
+ * defined in globals.css @theme (no @apply, so no Tailwind context needed).
+ */
+
+.na-root {
+  background-color: var(--color-na-ivory);
+  color: var(--color-na-charcoal);
+  font-family: var(--font-na-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.na-root ::selection {
+  background: color-mix(in srgb, var(--color-na-champagne) 30%, transparent);
+  color: var(--color-na-forest);
+}
+
+.na-root :focus-visible {
+  outline: 2px solid var(--color-na-gold);
+  outline-offset: 3px;
+}
+
+/* Inner content width */
+.na-container {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+/* Eyebrow / kicker label above section titles */
+.na-eyebrow {
+  font-family: var(--font-na-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-na-eyebrow);
+  color: var(--color-na-gold);
+  font-weight: 500;
+}
+
+/* Section display heading */
+.na-display-title {
+  font-family: var(--font-na-display);
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--color-na-forest);
+}
+
+/* Primary button — used for main CTAs */
+.na-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: var(--color-na-forest);
+  padding: 0.875rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-na-ivory);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.na-btn-primary:hover {
+  background: var(--color-na-charcoal);
+  box-shadow: 0 10px 25px -10px color-mix(in srgb, var(--color-na-forest) 40%, transparent);
+}
+.na-btn-primary:active { transform: scale(0.98); }
+
+/* Secondary / ghost button */
+.na-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--color-na-forest) 25%, transparent);
+  padding: 0.875rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-na-forest);
+  transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+}
+.na-btn-ghost:hover {
+  border-color: var(--color-na-forest);
+  background: var(--color-na-forest);
+  color: var(--color-na-ivory);
+}
+.na-btn-ghost:active { transform: scale(0.98); }
+
+/* Film-grain atmosphere overlay */
+.na-grain { position: relative; isolation: isolate; }
+.na-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+}
+
+/* Scroll-reveal (paired with use-in-view hook) */
+.na-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.na-reveal.na-is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Contact form fields (dark section) */
+.na-form-input {
+  width: 100%;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--color-na-ivory) 18%, transparent);
+  background: color-mix(in srgb, var(--color-na-ivory) 6%, transparent);
+  padding: 0.75rem 1rem;
+  color: var(--color-na-ivory);
+  font-size: 0.95rem;
+  transition: border-color 0.25s, background 0.25s;
+}
+.na-form-input::placeholder { color: color-mix(in srgb, var(--color-na-ivory) 40%, transparent); }
+.na-form-input:focus {
+  outline: none;
+  border-color: var(--color-na-champagne);
+  background: color-mix(in srgb, var(--color-na-ivory) 10%, transparent);
+}
+.na-form-input option { color: var(--color-na-charcoal); }
+
+@media (prefers-reduced-motion: reduce) {
+  .na-reveal { opacity: 1; transform: none; transition: none; }
+  .na-root *[class*='animate-na-'] { animation: none !important; }
+}

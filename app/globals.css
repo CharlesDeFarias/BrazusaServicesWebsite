@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @source not "../docs";
+@source not "../nurse-aloane"; /* nested Vite project — not part of the Next build */
 
 @theme {
   /* Core palette */
@@ -68,6 +69,31 @@
   --color-error:        #E07070;
   --color-error-bg:     rgba(224, 112, 112, 0.08);
   --color-error-border: rgba(224, 112, 112, 0.30);
+
+  /* ─────────────────────────────────────────────────────────────
+     Nurse Aloane (client preview) — isolated, `na-` namespaced.
+     Self-contained scheme for the /nurse-aloane route only. Does NOT
+     touch the locked Brazusa palette. Safe to remove with the route.
+     ───────────────────────────────────────────────────────────── */
+  --color-na-ivory:     #FAF6F0;
+  --color-na-cream:     #F1E8DC;
+  --color-na-sand:      #E4D5C3;
+  --color-na-blush:     #E8D2C2;
+  --color-na-forest:    #33402F; /* primary dark — deep sage */
+  --color-na-moss:      #5C6E58;
+  --color-na-champagne: #B8946A; /* gold accent */
+  --color-na-gold:      #A47E4C; /* deeper gold for borders/hover */
+  --color-na-charcoal:  #2A2722; /* body text */
+  --color-na-whatsapp:  #25D366;
+
+  --font-na-display: var(--font-cormorant, Georgia), serif;
+  --font-na-body:    var(--font-jost, ui-sans-serif), system-ui, sans-serif;
+
+  --tracking-na-eyebrow: 0.28em;
+
+  --animate-na-fade-up: na-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-na-fade-in: na-fade-in 1.2s ease forwards;
+  --animate-na-float:   na-float 6s ease-in-out infinite;
 }
 
 html {
@@ -126,4 +152,18 @@ h1, h2, h3 {
   .marquee-track {
     animation-duration: 9s;
   }
+}
+
+/* Nurse Aloane (client preview) keyframes — used only by the /nurse-aloane route */
+@keyframes na-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes na-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes na-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
 }

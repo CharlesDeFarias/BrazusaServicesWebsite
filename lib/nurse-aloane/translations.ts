@@ -39,6 +39,7 @@ export interface Translation {
     chipRole: string
     chipRated: string
     photoCaption: string
+    photoHint: string
   }
   about: {
     eyebrow: string
@@ -124,6 +125,7 @@ export const translations: Record<Lang, Translation> = {
       chipRole: 'Nurse Injector',
       chipRated: 'Client rated',
       photoCaption: 'Photo of Aloane',
+      photoHint: 'Replace with a real photo',
     },
     about: {
       eyebrow: 'Meet your injector',
@@ -237,6 +239,7 @@ export const translations: Record<Lang, Translation> = {
       chipRole: 'Enfermeira Injetora',
       chipRated: 'Avaliação 5★',
       photoCaption: 'Foto da Aloane',
+      photoHint: 'Substituir por uma foto real',
     },
     about: {
       eyebrow: 'Conheça sua injetora',

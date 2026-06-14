@@ -135,7 +135,22 @@
 }
 .na-form-input option { color: var(--color-na-charcoal); }
 
+/*
+ * Hero entry animations — self-contained (do NOT depend on Tailwind's @theme
+ * animate-* generation, which doesn't reliably emit custom names here).
+ * `both` fill mode means: hidden during the delay, visible after — and if an
+ * animation ever fails to run, the element stays at its default opacity (1),
+ * so content is NEVER permanently hidden.
+ */
+.na-fade-up { animation: na-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.na-fade-in { animation: na-fade-in 1.2s ease both; }
+.na-float   { animation: na-float 6s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
   .na-reveal { opacity: 1; transform: none; transition: none; }
-  .na-root *[class*='animate-na-'] { animation: none !important; }
+  /* No opacity-0 utility is used with these, so disabling the animation
+     simply leaves the element fully visible. */
+  .na-fade-up,
+  .na-fade-in,
+  .na-float { animation: none !important; opacity: 1 !important; }
 }

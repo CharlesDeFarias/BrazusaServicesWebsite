@@ -90,10 +90,6 @@
   --font-na-body:    var(--font-jost, ui-sans-serif), system-ui, sans-serif;
 
   --tracking-na-eyebrow: 0.28em;
-
-  --animate-na-fade-up: na-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-na-fade-in: na-fade-in 1.2s ease forwards;
-  --animate-na-float:   na-float 6s ease-in-out infinite;
 }
 
 html {

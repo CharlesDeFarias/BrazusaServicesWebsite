@@ -25,11 +25,11 @@ export default function Hero() {
       <div className="na-container relative grid items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr]">
         {/* Copy column */}
         <div className="max-w-xl">
-          <p className="na-eyebrow animate-na-fade-up opacity-0" style={{ animationDelay: '0.05s' }}>
+          <p className="na-eyebrow na-fade-up" style={{ animationDelay: '0.05s' }}>
             {h.eyebrow}
           </p>
           <h1
-            className="mt-5 font-na-display text-6xl font-medium leading-[0.95] text-na-forest animate-na-fade-up opacity-0 sm:text-7xl lg:text-8xl"
+            className="mt-5 font-na-display text-6xl font-medium leading-[0.95] text-na-forest na-fade-up sm:text-7xl lg:text-8xl"
             style={{ animationDelay: '0.15s' }}
           >
             Nurse
@@ -37,20 +37,20 @@ export default function Hero() {
             <span className="italic text-na-gold">Aloane</span>
           </h1>
           <p
-            className="mt-6 max-w-md font-na-display text-2xl italic leading-snug text-na-charcoal/80 animate-na-fade-up opacity-0"
+            className="mt-6 max-w-md font-na-display text-2xl italic leading-snug text-na-charcoal/80 na-fade-up"
             style={{ animationDelay: '0.28s' }}
           >
             {h.subtitle}
           </p>
           <p
-            className="mt-5 max-w-md text-base leading-relaxed text-na-charcoal/70 animate-na-fade-up opacity-0"
+            className="mt-5 max-w-md text-base leading-relaxed text-na-charcoal/70 na-fade-up"
             style={{ animationDelay: '0.4s' }}
           >
             {h.description}
           </p>
 
           <div
-            className="mt-9 flex flex-wrap items-center gap-3 animate-na-fade-up opacity-0"
+            className="mt-9 flex flex-wrap items-center gap-3 na-fade-up"
             style={{ animationDelay: '0.52s' }}
           >
             <a
@@ -69,32 +69,35 @@ export default function Hero() {
 
         {/* Visual column — arch-framed portrait placeholder + floating chips */}
         <div
-          className="relative mx-auto w-full max-w-sm animate-na-fade-in opacity-0 lg:max-w-none"
+          className="relative mx-auto w-full max-w-sm na-fade-in lg:max-w-none"
           style={{ animationDelay: '0.45s' }}
         >
           <div className="relative aspect-[4/5] w-full">
             {/* Arch frame */}
             <div className="absolute inset-0 rounded-t-full rounded-b-[2.5rem] bg-gradient-to-b from-na-moss/30 via-na-blush/40 to-na-cream shadow-2xl shadow-na-forest/10" />
             <div className="absolute inset-3 overflow-hidden rounded-t-full rounded-b-[2rem] border border-na-ivory/60 bg-gradient-to-br from-na-cream to-na-sand">
-              {/* Photo placeholder */}
-              <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-center text-na-forest/40">
-                <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+              {/* Photo placeholder — dashed slot clearly marks where Aloane's portrait goes */}
+              <div className="absolute inset-4 flex flex-col items-center justify-center gap-3 rounded-t-full rounded-b-[1.5rem] border-2 border-dashed border-na-forest/30 text-center text-na-forest/45">
+                <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
                   <circle cx="12" cy="8" r="4" />
                   <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
                 </svg>
-                <span className="px-6 font-na-display text-lg italic">{h.photoCaption}</span>
+                <span className="px-6 font-na-display text-xl italic">{h.photoCaption}</span>
+                <span className="rounded-full bg-na-forest/10 px-3 py-1 text-[0.6rem] uppercase tracking-na-eyebrow text-na-forest/60">
+                  {h.photoHint}
+                </span>
               </div>
             </div>
 
             {/* Floating credential chip */}
-            <div className="absolute -left-4 top-10 animate-na-float rounded-2xl border border-na-forest/10 bg-na-ivory/90 px-4 py-3 shadow-lg shadow-na-forest/10 backdrop-blur sm:-left-8">
+            <div className="absolute -left-4 top-10 na-float rounded-2xl border border-na-forest/10 bg-na-ivory/90 px-4 py-3 shadow-lg shadow-na-forest/10 backdrop-blur sm:-left-8">
               <p className="text-[0.6rem] uppercase tracking-na-eyebrow text-na-gold">{h.chipCertified}</p>
               <p className="font-na-display text-lg text-na-forest">{h.chipRole}</p>
             </div>
 
             {/* Floating stat chip */}
             <div
-              className="absolute -right-3 bottom-10 animate-na-float rounded-2xl border border-na-forest/10 bg-na-forest px-4 py-3 text-na-ivory shadow-lg shadow-na-forest/20 sm:-right-6"
+              className="absolute -right-3 bottom-10 na-float rounded-2xl border border-na-forest/10 bg-na-forest px-4 py-3 text-na-ivory shadow-lg shadow-na-forest/20 sm:-right-6"
               style={{ animationDelay: '1.5s' }}
             >
               <p className="font-na-display text-2xl leading-none">5.0★</p>

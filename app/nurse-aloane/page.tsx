@@ -1,8 +1,14 @@
+import { notFound } from 'next/navigation'
+
 // ─────────────────────────────────────────────────────────────────────────
-// Nurse Aloane preview is TEMPORARILY DISABLED.
-// The full site is preserved (commented out) at the bottom of this file.
-// To restore it: uncomment the imports + the original return block, and
-// delete the placeholder message component below.
+// Nurse Aloane preview is HIDDEN. The route responds as a non-existent page
+// (HTTP 404) — nothing is rendered to visitors.
+//
+// No work was lost: all components live in components/nurse-aloane/, copy in
+// lib/nurse-aloane/, and the original page composition is preserved below.
+//
+// To bring the site back: delete the `notFound()` call, uncomment the imports
+// and the original return block.
 // ─────────────────────────────────────────────────────────────────────────
 
 // import Header from '@/components/nurse-aloane/Header'
@@ -16,14 +22,7 @@
 // import WhatsAppButton from '@/components/nurse-aloane/WhatsAppButton'
 
 export default function NurseAloanePage() {
-  return (
-    <div className="flex min-h-screen items-center justify-center px-6 py-20">
-      <p className="max-w-2xl text-center font-na-display text-2xl italic leading-snug text-na-forest sm:text-3xl">
-        When sending a two second text is too annoying so you let somebody else
-        waste their time on and effort instead of you
-      </p>
-    </div>
-  )
+  notFound()
 }
 
 /* ===== ORIGINAL NURSE ALOANE SITE — DISABLED (uncomment to restore) =====

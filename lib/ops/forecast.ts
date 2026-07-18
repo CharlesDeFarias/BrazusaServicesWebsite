@@ -1,0 +1,147 @@
+import { listAll, OPS_TABLES, type AirtableRecord } from './airtable'
+
+/**
+ * Forecast builder - TypeScript port of BrazusaOps airtable_forecast.py (validated vs
+ * posted forecasts). Tasks in range + unit-level check-in marks derived by matching each
+ * task's Unit + date against Reservations (the Check-in checkbox on Tasks is deprecated).
+ * Property/unit names all come from Airtable at runtime - nothing hardcoded.
+ */
+
+export interface ForecastUnit {
+  label: string
+  kind: 'dep' | 'mid' | 'restock' | 'linen' | 'ca' | 'other'
+  checkin: boolean
+}
+
+export interface ForecastGroup {
+  property: string
+  units: ForecastUnit[]
+}
+
+export interface ForecastDay {
+  date: string // YYYY-MM-DD
+  groups: ForecastGroup[]
+}
+
+function first(v: unknown): string | null {
+  return Array.isArray(v) && v.length ? String(v[0]) : null
+}
+
+export function typeShort(name: string): ForecastUnit['kind'] {
+  const n = name.toLowerCase()
+  if (n.includes('departure')) return 'dep'
+  if (n.includes('mid')) return 'mid'
+  if (n.includes('restock')) return 'restock'
+  if (n.includes('linen')) return 'linen'
+  if (n.includes('common')) return 'ca'
+  return 'other'
+}
+
+/** "6 Prentiss St 10 (Guest)" -> "10"; "... Rm 07" -> "7"; common areas -> "CA". */
+export function unitLabel(unitText: string, kind: ForecastUnit['kind']): string {
+  const base = unitText.replace(/\s*\([^)]*\)\s*$/, '').trim()
+  const low = base.toLowerCase()
+  if (kind === 'ca' || low.includes('common area')) return 'CA'
+  const rm = /\brm\s*0*(\d+)/i.exec(base)
+  if (rm) return rm[1]
+  const parts = base.split(/\s+/)
+  return parts[parts.length - 1] || base
+}
+
+export function unitSortKey(label: string): [number, number, string] {
+  const m = /^(\d+)/.exec(label)
+  return m ? [0, parseInt(m[1], 10), label] : [1, 0, label]
+}
+
+export function buildForecastData(
+  tasks: AirtableRecord[],
+  reservations: AirtableRecord[],
+  taskTypes: Map<string, string>,
+  propertyNames: Map<string, string>,
+  dates: string[]
+): ForecastDay[] {
+  const arrivals = new Set<string>()
+  for (const r of reservations) {
+    const ci = String(r.fields['Check-in'] ?? '').slice(0, 10)
+    const units = Array.isArray(r.fields['Unit']) ? (r.fields['Unit'] as string[]) : []
+    for (const u of units) arrivals.add(`${u}|${ci}`)
+  }
+
+  const wanted = new Set(dates)
+  const byDay = new Map<string, Map<string, ForecastUnit[]>>()
+
+  for (const t of tasks) {
+    const f = t.fields
+    const date = String(f['Scheduled Date'] ?? '').slice(0, 10)
+    if (!wanted.has(date)) continue
+    const typeName = taskTypes.get(first(f['Task Type']) ?? '') ?? ''
+    const kind = typeShort(typeName)
+    const property = propertyNames.get(first(f['Property']) ?? '') ?? 'Other'
+    const unitId = first(f['Unit'])
+    const checkin = unitId ? arrivals.has(`${unitId}|${date}`) : false
+    const label = unitLabel(String(f['Unit (Text)'] ?? ''), kind)
+
+    if (!byDay.has(date)) byDay.set(date, new Map())
+    const groups = byDay.get(date)!
+    if (!groups.has(property)) groups.set(property, [])
+    groups.get(property)!.push({ label, kind, checkin })
+  }
+
+  return dates
+    .filter((d) => byDay.has(d))
+    .map((date) => ({
+      date,
+      groups: [...byDay.get(date)!.entries()]
+        .map(([property, units]) => {
+          // Dedupe: CA/Restock/Linen collapse to one line; unit lines dedupe on exact
+          // (label,kind,checkin) - Airtable imports occasionally create duplicate Task
+          // rows and the forecast should not repeat them.
+          const seen = new Set<string>()
+          const deduped: ForecastUnit[] = []
+          for (const u of units.sort((a, b) => {
+            const [ax, ay, az] = unitSortKey(a.label)
+            const [bx, by, bz] = unitSortKey(b.label)
+            return ax - bx || ay - by || az.localeCompare(bz)
+          })) {
+            const dedupeKey = ['ca', 'restock', 'linen'].includes(u.kind)
+              ? u.kind
+              : `${u.label}|${u.kind}|${u.checkin}`
+            if (seen.has(dedupeKey)) continue
+            seen.add(dedupeKey)
+            deduped.push(u)
+          }
+          return { property, units: deduped }
+        })
+        .sort((a, b) => a.property.localeCompare(b.property)),
+    }))
+}
+
+/** Fetch + build for a date range (inclusive ISO dates). */
+export async function fetchForecast(dates: string[]): Promise<ForecastDay[]> {
+  const lo = dates[0]
+  const hi = dates[dates.length - 1]
+  const [tasks, reservations, typeRecs, propRecs] = await Promise.all([
+    listAll(OPS_TABLES.tasks, {
+      filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
+    }),
+    listAll(OPS_TABLES.reservations, {
+      filterByFormula: `AND({Check-in (Text)}>='${lo}',{Check-in (Text)}<='${hi}')`,
+    }),
+    listAll(OPS_TABLES.taskTypes),
+    listAll(OPS_TABLES.properties),
+  ])
+  const taskTypes = new Map(typeRecs.map((r) => [r.id, String(r.fields['Name'] ?? '')]))
+  const propertyNames = new Map(
+    propRecs.map((r) => [r.id, String(r.fields['Property Name'] ?? 'Other')])
+  )
+  return buildForecastData(tasks, reservations, taskTypes, propertyNames, dates)
+}
+
+export function dateRange(startISO: string, days: number): string[] {
+  const start = new Date(`${startISO}T00:00:00`)
+  return Array.from({ length: days }, (_, i) => {
+    const d = new Date(start)
+    d.setDate(d.getDate() + i)
+    return d.toISOString().slice(0, 10)
+  })
+}

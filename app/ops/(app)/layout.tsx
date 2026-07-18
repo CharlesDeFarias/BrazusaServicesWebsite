@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { requireUser } from '@/lib/ops/auth'
+import { LogoutButton } from './logout-button'
 
 export default async function OpsAppLayout({ children }: { children: React.ReactNode }) {
   const user = await requireUser()
@@ -18,7 +19,10 @@ export default async function OpsAppLayout({ children }: { children: React.React
             Invoices
           </Link>
         </nav>
-        <span className="text-xs text-neutral-500">{user}</span>
+        <span className="flex items-center gap-3">
+          <span className="text-xs text-neutral-500">{user}</span>
+          <LogoutButton />
+        </span>
       </header>
       <main className="px-4 py-6 max-w-3xl mx-auto">{children}</main>
     </div>

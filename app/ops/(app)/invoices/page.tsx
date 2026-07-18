@@ -82,9 +82,17 @@ export default async function InvoicesPage({
         <section className="space-y-4">
           <div className="flex items-baseline justify-between">
             <h2 className="font-medium text-neutral-200">{invoice.client}</h2>
-            <Link href={`/ops/invoices?month=${month}`} className="text-sm text-neutral-400 underline">
-              all clients
-            </Link>
+            <span className="flex gap-3 text-sm">
+              <Link
+                href={`/ops/invoice-print?month=${month}&client=${encodeURIComponent(clientSub!)}`}
+                className="text-emerald-400 underline"
+              >
+                print view
+              </Link>
+              <Link href={`/ops/invoices?month=${month}`} className="text-neutral-400 underline">
+                all clients
+              </Link>
+            </span>
           </div>
           {invoice.byProperty.map((p) => (
             <div key={p.property}>

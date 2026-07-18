@@ -61,12 +61,23 @@ function getAuth() {
   })
 }
 
-export async function readPayrollFeed(): Promise<{ weeks: PayrollWeek[]; days: PayrollDay[] }> {
+async function readRows(): Promise<RawRow[]> {
+  // Dev/local fallback: OPS_PAYROLL_FILE points at a JSON file of rows (same shape as the
+  // sheet). Lets the page run with real engine output before the transport sheet exists.
+  const filePath = process.env.OPS_PAYROLL_FILE
+  if (filePath) {
+    const { readFile } = await import('fs/promises')
+    return JSON.parse(await readFile(filePath, 'utf-8')) as RawRow[]
+  }
   const spreadsheetId = process.env.OPS_PAYROLL_SHEET_ID
-  if (!spreadsheetId) throw new Error('OPS_PAYROLL_SHEET_ID not configured')
+  if (!spreadsheetId) throw new Error('Payroll feed not configured')
   const sheets = google.sheets({ version: 'v4', auth: getAuth() })
   const res = await sheets.spreadsheets.values.get({ spreadsheetId, range: 'payroll!A:D' })
-  const rows = (res.data.values ?? []) as RawRow[]
+  return (res.data.values ?? []) as RawRow[]
+}
+
+export async function readPayrollFeed(): Promise<{ weeks: PayrollWeek[]; days: PayrollDay[] }> {
+  const rows = await readRows()
   const latest = latestPerKey(rows)
 
   const weeks: PayrollWeek[] = []

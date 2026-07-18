@@ -40,10 +40,16 @@ export function buildInvoiceData(
   const sorted = [...tasks].sort((a, b) =>
     String(a.fields['Scheduled Date'] ?? '').localeCompare(String(b.fields['Scheduled Date'] ?? ''))
   )
+  // month may be "YYYY-MM" (calendar month) or "YYYY-MM-DD..YYYY-MM-DD" (inclusive range,
+  // used for weekly invoices confirmed in Group B).
+  const range = month.includes('..') ? month.split('..') : null
+  const inPeriod = (date: string) =>
+    range ? date >= range[0] && date <= range[1] : date.startsWith(month)
+
   for (const t of sorted) {
     const f = t.fields
     const date = String(f['Scheduled Date'] ?? '').slice(0, 10)
-    if (!date.startsWith(month)) continue
+    if (!inPeriod(date)) continue
     const billing = (Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : [])
       .map((id) => contactNames.get(id) ?? '')
     const match = billing.find((b) => b.toLowerCase().includes(clientSub.toLowerCase()))
@@ -84,9 +90,11 @@ export function listBillableClients(
   month: string
 ): BillableClient[] {
   const agg = new Map<string, { taskCount: number; total: number }>()
+  const range = month.includes('..') ? month.split('..') : null
   for (const t of tasks) {
     const f = t.fields
-    if (!String(f['Scheduled Date'] ?? '').startsWith(month)) continue
+    const date = String(f['Scheduled Date'] ?? '').slice(0, 10)
+    if (range ? date < range[0] || date > range[1] : !date.startsWith(month)) continue
     for (const id of Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : []) {
       const name = contactNames.get(id) ?? 'Unknown'
       const cur = agg.get(name) ?? { taskCount: 0, total: 0 }
@@ -106,9 +114,12 @@ export async function fetchMonthTasks(month: string): Promise<{
   propertyNames: Map<string, string>
   templateNames: Map<string, string>
 }> {
+  const [lo, hi] = month.includes('..')
+    ? month.split('..')
+    : [`${month}-01`, `${month}-31`]
   const [tasks, contacts, props, templates] = await Promise.all([
     listAll(OPS_TABLES.tasks, {
-      filterByFormula: `AND({Scheduled Date (Text)}>='${month}-01',{Scheduled Date (Text)}<='${month}-31')`,
+      filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
     }),
     listAll(OPS_TABLES.contacts),
     listAll(OPS_TABLES.properties),

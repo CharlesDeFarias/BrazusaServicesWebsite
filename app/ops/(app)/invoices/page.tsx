@@ -9,12 +9,19 @@ const money = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigi
 export default async function InvoicesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ month?: string; client?: string }>
+  searchParams: Promise<{ month?: string; client?: string; week?: string }>
 }) {
   await requireUser()
   const params = await searchParams
   const defaultMonth = new Date().toISOString().slice(0, 7)
-  const month = /^\d{4}-\d{2}$/.test(params.month ?? '') ? params.month! : defaultMonth
+  // week=YYYY-MM-DD (a Monday) switches to a Mon-Sun weekly invoice period
+  const week = /^\d{4}-\d{2}-\d{2}$/.test(params.week ?? '') ? params.week! : null
+  const weekEnd = week
+    ? new Date(new Date(`${week}T00:00:00`).getTime() + 6 * 86400000).toISOString().slice(0, 10)
+    : null
+  const month = week
+    ? `${week}..${weekEnd}`
+    : /^\d{4}-\d{2}$/.test(params.month ?? '') ? params.month! : defaultMonth
   const clientSub = params.client
 
   let data
@@ -25,9 +32,10 @@ export default async function InvoicesPage({
     error = 'Could not load Airtable data. Check ops token configuration.'
   }
 
-  const prevMonth = new Date(`${month}-15T00:00:00`)
+  const monthBase = week ? defaultMonth : month
+  const prevMonth = new Date(`${monthBase}-15T00:00:00`)
   prevMonth.setMonth(prevMonth.getMonth() - 1)
-  const nextMonth = new Date(`${month}-15T00:00:00`)
+  const nextMonth = new Date(`${monthBase}-15T00:00:00`)
   nextMonth.setMonth(nextMonth.getMonth() + 1)
   const fmt = (d: Date) => d.toISOString().slice(0, 7)
 
@@ -42,13 +50,19 @@ export default async function InvoicesPage({
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">Invoices</h1>
         <div className="flex items-center gap-3 text-sm">
-          <Link href={`/ops/invoices?month=${fmt(prevMonth)}`} className="text-neutral-400">
-            ←
-          </Link>
-          <span className="text-neutral-200">{month}</span>
-          <Link href={`/ops/invoices?month=${fmt(nextMonth)}`} className="text-neutral-400">
-            →
-          </Link>
+          {week ? (
+            <span className="text-neutral-200">week {week} – {weekEnd}</span>
+          ) : (
+            <>
+              <Link href={`/ops/invoices?month=${fmt(prevMonth)}`} className="text-neutral-400">
+                ←
+              </Link>
+              <span className="text-neutral-200">{month}</span>
+              <Link href={`/ops/invoices?month=${fmt(nextMonth)}`} className="text-neutral-400">
+                →
+              </Link>
+            </>
+          )}
         </div>
       </div>
 

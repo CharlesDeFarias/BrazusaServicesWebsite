@@ -9,6 +9,9 @@ export default async function OpsAppLayout({ children }: { children: React.React
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
       <header className="border-b border-neutral-800 px-4 py-3 flex items-center justify-between">
         <nav className="flex gap-4 text-sm">
+          <Link href="/ops/daily" className="hover:text-white text-neutral-300">
+            Daily
+          </Link>
           <Link href="/ops/forecast" className="hover:text-white text-neutral-300">
             Forecast
           </Link>

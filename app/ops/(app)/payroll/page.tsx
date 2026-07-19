@@ -1,5 +1,8 @@
 import { requireUser } from '@/lib/ops/auth'
 import { readPayrollFeed, type PayrollDay, type PayrollWeek } from '@/lib/ops/payroll'
+import { Card } from '@/components/ops/Card'
+import { DataTable } from '@/components/ops/DataTable'
+import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,7 +27,10 @@ export default async function PayrollPage() {
   return (
     <div className="space-y-8">
       <h1 className="text-lg font-semibold">Payroll</h1>
-      {error && <p className="text-amber-400 text-sm">{error}</p>}
+      {error && <ErrorState tone="warning">{error}</ErrorState>}
+      {!error && !week && days.length === 0 && (
+        <EmptyState>No payroll data available yet.</EmptyState>
+      )}
 
       {week && (
         <section className="space-y-2">
@@ -32,33 +38,31 @@ export default async function PayrollPage() {
             Week of {week.weekStart}
             <span className="text-xs text-neutral-500 ml-2">pushed {week.pushedAt.slice(0, 16)}</span>
           </h2>
-          <div className="rounded-lg border border-neutral-800 overflow-hidden">
-            <table className="w-full text-sm">
-              <thead className="bg-neutral-900 text-neutral-400">
-                <tr>
-                  <th className="text-left px-3 py-2">Check Name</th>
-                  <th className="text-right px-3 py-2">Hours</th>
-                  <th className="text-right px-3 py-2">Total Payment</th>
+          <DataTable className="overflow-hidden" table>
+            <thead className="bg-neutral-900 text-neutral-400">
+              <tr>
+                <th className="text-left px-3 py-2">Check Name</th>
+                <th className="text-right px-3 py-2">Hours</th>
+                <th className="text-right px-3 py-2">Total Payment</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-neutral-800">
+              {week.lines.map((l) => (
+                <tr key={l.payee}>
+                  <td className="px-3 py-2">{l.payee}</td>
+                  <td className="px-3 py-2 text-right text-neutral-400">{l.hours.toFixed(1)}</td>
+                  <td className="px-3 py-2 text-right font-medium">{money(l.pay)}</td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-800">
-                {week.lines.map((l) => (
-                  <tr key={l.payee}>
-                    <td className="px-3 py-2">{l.payee}</td>
-                    <td className="px-3 py-2 text-right text-neutral-400">{l.hours.toFixed(1)}</td>
-                    <td className="px-3 py-2 text-right font-medium">{money(l.pay)}</td>
-                  </tr>
-                ))}
-                <tr className="bg-neutral-900/60">
-                  <td className="px-3 py-2 font-semibold">Grand total</td>
-                  <td />
-                  <td className="px-3 py-2 text-right font-semibold text-emerald-400">
-                    {money(week.total)}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+              ))}
+              <tr className="bg-neutral-900/60">
+                <td className="px-3 py-2 font-semibold">Grand total</td>
+                <td />
+                <td className="px-3 py-2 text-right font-semibold text-emerald-400">
+                  {money(week.total)}
+                </td>
+              </tr>
+            </tbody>
+          </DataTable>
           {week.anomalies?.length > 0 && (
             <div className="rounded-lg border border-amber-900/60 bg-amber-950/30 px-3 py-2 text-sm">
               <p className="text-amber-400 font-medium mb-1">
@@ -79,7 +83,7 @@ export default async function PayrollPage() {
           <h2 className="font-medium text-neutral-200">Recent days</h2>
           <div className="space-y-3">
             {days.slice(0, 7).map((d) => (
-              <div key={d.date} className="rounded-lg border border-neutral-800 px-3 py-2 text-sm">
+              <Card key={d.date} className="px-3 py-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-neutral-300 font-medium">{d.date}</span>
                   <span className="text-neutral-400">{money(d.total)}</span>
@@ -92,7 +96,7 @@ export default async function PayrollPage() {
                     {d.anomalies.map((a) => `${a.worker}: ${a.detail}`).join(' · ')}
                   </p>
                 )}
-              </div>
+              </Card>
             ))}
           </div>
         </section>

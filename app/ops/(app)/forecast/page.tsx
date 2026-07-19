@@ -1,6 +1,9 @@
 import { requireUser } from '@/lib/ops/auth'
 import { fetchForecast, dateRange, type ForecastDay, type ForecastUnit } from '@/lib/ops/forecast'
 import Link from 'next/link'
+import { Card } from '@/components/ops/Card'
+import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
+import { PropertyRow } from '@/components/ops/PropertyRow'
 
 export const dynamic = 'force-dynamic'
 
@@ -58,9 +61,9 @@ export default async function ForecastPage({
       </div>
 
       <p className="text-xs text-neutral-500">° = same-day check-in (from Reservations)</p>
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <ErrorState>{error}</ErrorState>}
       {!error && days.length === 0 && (
-        <p className="text-neutral-400 text-sm">No cleanings scheduled in this range (or Airtable not yet imported for these dates).</p>
+        <EmptyState>No cleanings scheduled in this range (or Airtable not yet imported for these dates).</EmptyState>
       )}
 
       {days.map((day) => {
@@ -70,22 +73,16 @@ export default async function ForecastPage({
             <h2 className="font-medium text-neutral-200">
               {day.date.slice(8)}/{day.date.slice(5, 7)} — {WEEKDAYS[d.getDay()]}
             </h2>
-            <div className="rounded-lg border border-neutral-800 divide-y divide-neutral-800">
+            <Card className="divide-y divide-neutral-800">
               {day.groups.map((g) => (
-                <div key={g.property} className="px-3 py-2 flex flex-wrap items-baseline gap-x-2">
-                  <span className="font-medium text-neutral-300 mr-1">{g.property}:</span>
-                  {g.units.map((u, i) => (
-                    <span
-                      key={i}
-                      className={u.checkin ? 'font-bold text-emerald-400' : 'text-neutral-300'}
-                    >
-                      {unitBadge(u)}
-                      {i < g.units.length - 1 ? ',' : ''}
-                    </span>
-                  ))}
-                </div>
+                <PropertyRow
+                  key={g.property}
+                  property={g.property}
+                  units={g.units}
+                  unitLabel={unitBadge}
+                />
               ))}
-            </div>
+            </Card>
           </section>
         )
       })}

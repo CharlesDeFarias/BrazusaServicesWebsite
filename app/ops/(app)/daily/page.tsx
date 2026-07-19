@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { requireUser } from '@/lib/ops/auth'
 import { fetchForecast, type ForecastDay, type ForecastUnit } from '@/lib/ops/forecast'
 import { readPayrollFeed, type PayrollDay } from '@/lib/ops/payroll'
+import { Card } from '@/components/ops/Card'
+import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
+import { PropertyRow } from '@/components/ops/PropertyRow'
 
 export const dynamic = 'force-dynamic'
 
@@ -71,22 +74,19 @@ export default async function DailyPage({
             {cleans} cleans · {checkins} check-ins
           </span>
         </div>
-        {forecastErr && <p className="text-red-400 text-sm">Could not load Airtable.</p>}
-        {!forecastErr && !day && <p className="text-neutral-400 text-sm">Nothing scheduled.</p>}
+        {forecastErr && <ErrorState>Could not load Airtable.</ErrorState>}
+        {!forecastErr && !day && <EmptyState>Nothing scheduled.</EmptyState>}
         {day && (
-          <div className="rounded-lg border border-neutral-800 divide-y divide-neutral-800">
+          <Card className="divide-y divide-neutral-800">
             {day.groups.map((g) => (
-              <div key={g.property} className="px-3 py-2 flex flex-wrap items-baseline gap-x-2">
-                <span className="font-medium text-neutral-300 mr-1">{g.property}:</span>
-                {g.units.map((u, i) => (
-                  <span key={i} className={u.checkin ? 'font-bold text-emerald-400' : 'text-neutral-300'}>
-                    {unitBadge(u)}
-                    {i < g.units.length - 1 ? ',' : ''}
-                  </span>
-                ))}
-              </div>
+              <PropertyRow
+                key={g.property}
+                property={g.property}
+                units={g.units}
+                unitLabel={unitBadge}
+              />
             ))}
-          </div>
+          </Card>
         )}
         <p className="text-xs text-neutral-600">° = same-day check-in · full week on the <Link href={`/ops/forecast?start=${date}&view=week`} className="underline">Forecast</Link> page</p>
       </section>
@@ -96,10 +96,10 @@ export default async function DailyPage({
           Yesterday&apos;s labor <span className="text-neutral-500 text-sm">({yesterday})</span>
         </h2>
         {!labor && (
-          <p className="text-neutral-400 text-sm">No payroll pushed for {yesterday} yet.</p>
+          <EmptyState>No payroll pushed for {yesterday} yet.</EmptyState>
         )}
         {labor && (
-          <div className="rounded-lg border border-neutral-800 px-3 py-2 text-sm space-y-1">
+          <Card className="px-3 py-2 text-sm space-y-1">
             {labor.rows.map((r) => (
               <div key={r.worker} className="flex justify-between">
                 <span className="text-neutral-300">{r.worker}</span>
@@ -119,7 +119,7 @@ export default async function DailyPage({
                 ))}
               </div>
             )}
-          </div>
+          </Card>
         )}
       </section>
     </div>

@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { requireUser } from '@/lib/ops/auth'
 import { buildInvoiceData, fetchMonthTasks, listBillableClients } from '@/lib/ops/invoice'
+import { DataTable } from '@/components/ops/DataTable'
+import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 
 export const dynamic = 'force-dynamic'
 
@@ -66,10 +68,10 @@ export default async function InvoicesPage({
         </div>
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <ErrorState>{error}</ErrorState>}
 
       {!error && !clientSub && (
-        <div className="rounded-lg border border-neutral-800 divide-y divide-neutral-800">
+        <DataTable className="divide-y divide-neutral-800">
           {clients.map((c) => (
             <Link
               key={c.name}
@@ -83,13 +85,13 @@ export default async function InvoicesPage({
             </Link>
           ))}
           {clients.length === 0 && (
-            <p className="px-3 py-3 text-neutral-400 text-sm">No billable tasks this month.</p>
+            <EmptyState contained>No billable tasks this month.</EmptyState>
           )}
-        </div>
+        </DataTable>
       )}
 
       {!error && clientSub && !invoice && (
-        <p className="text-neutral-400 text-sm">No billable tasks for “{clientSub}” in {month}.</p>
+        <EmptyState>No billable tasks for “{clientSub}” in {month}.</EmptyState>
       )}
 
       {invoice && (
@@ -111,7 +113,7 @@ export default async function InvoicesPage({
           {invoice.byProperty.map((p) => (
             <div key={p.property}>
               <h3 className="text-sm font-medium text-neutral-300 mb-1">{p.property}</h3>
-              <div className="rounded-lg border border-neutral-800 divide-y divide-neutral-800 text-sm">
+              <DataTable className="divide-y divide-neutral-800 text-sm">
                 {p.lines.map((l, i) => (
                   <div key={i} className="px-3 py-2 flex justify-between gap-3">
                     <span className="text-neutral-500 whitespace-nowrap">{l.date}</span>
@@ -126,7 +128,7 @@ export default async function InvoicesPage({
                   <span>Subtotal — {p.property}</span>
                   <span className="text-neutral-200 font-medium">{money(p.subtotal)}</span>
                 </div>
-              </div>
+              </DataTable>
             </div>
           ))}
           <div className="rounded-lg border border-emerald-900/50 bg-emerald-950/20 px-3 py-3 flex justify-between">

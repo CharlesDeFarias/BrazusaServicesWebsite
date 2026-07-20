@@ -15,6 +15,7 @@ import { PropertyRow } from '@/components/ops/PropertyRow'
 import { CopyButton } from '@/components/ops/CopyButton'
 import { SourceNote } from '@/components/ops/SourceNote'
 import { ForecastDateNav } from '@/components/ops/ForecastDateNav'
+import { bostonToday } from '@/lib/ops/time'
 
 export const dynamic = 'force-dynamic'
 
@@ -35,7 +36,7 @@ export default async function ForecastPage({
 }) {
   await requireUser()
   const params = await searchParams
-  const todayISO = new Date().toISOString().slice(0, 10)
+  const todayISO = bostonToday()
   const start = /^\d{4}-\d{2}-\d{2}$/.test(params.start ?? '') ? params.start! : todayISO
   const week = params.view === 'week'
   // Day view shows today AND tomorrow (today on top); week view shows 7 days.

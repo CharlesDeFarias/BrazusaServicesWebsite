@@ -3,6 +3,7 @@ import { requireUser } from '@/lib/ops/auth'
 import { buildInvoiceData, fetchMonthTasks, listBillableClients } from '@/lib/ops/invoice'
 import { DataTable } from '@/components/ops/DataTable'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
+import { bostonMonth } from '@/lib/ops/time'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,7 +19,7 @@ export default async function InvoicesPage({
 }) {
   await requireUser()
   const params = await searchParams
-  const defaultMonth = new Date().toISOString().slice(0, 7)
+  const defaultMonth = bostonMonth()
   // week=YYYY-MM-DD (a Monday) switches to a Mon-Sun weekly invoice period
   const week = /^\d{4}-\d{2}-\d{2}$/.test(params.week ?? '') ? params.week! : null
   const weekEnd = week

@@ -3,6 +3,7 @@ import { readPayrollFeed, type PayrollDay, type PayrollWeek } from '@/lib/ops/pa
 import { Card } from '@/components/ops/Card'
 import { DataTable } from '@/components/ops/DataTable'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
+import { bostonToday } from '@/lib/ops/time'
 
 export const dynamic = 'force-dynamic'
 
@@ -48,7 +49,7 @@ export default async function PayrollPage() {
 
   // Recent days = every day since the displayed week's last day (so a backlog gap is visible),
   // most-recent first. Fall back to whatever days were pushed if no week is shown.
-  const today = new Date().toISOString().slice(0, 10)
+  const today = bostonToday()
   const dayByDate = new Map(days.map((d) => [d.date, d]))
   const weekEnd = week ? shiftDate(week.weekStart, 6) : null
   const recentDates =

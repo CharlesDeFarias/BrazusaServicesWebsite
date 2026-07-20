@@ -8,6 +8,7 @@ import {
   type ForecastUnit,
 } from '@/lib/ops/forecast'
 import { readPayrollFeed, type PayrollDay } from '@/lib/ops/payroll'
+import { bostonToday } from '@/lib/ops/time'
 import { Card } from '@/components/ops/Card'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 import { PropertyRow } from '@/components/ops/PropertyRow'
@@ -40,7 +41,7 @@ export default async function DailyPage({
 }) {
   await requireUser()
   const params = await searchParams
-  const today = new Date().toISOString().slice(0, 10)
+  const today = bostonToday()
   const date = /^\d{4}-\d{2}-\d{2}$/.test(params.date ?? '') ? params.date! : today
   const yesterday = shiftDate(date, -1)
 

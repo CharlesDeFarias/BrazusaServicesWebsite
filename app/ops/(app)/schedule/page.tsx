@@ -5,6 +5,7 @@ import { fetchSchedule, type ScheduleDay } from '@/lib/ops/schedule'
 import { Card } from '@/components/ops/Card'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 import { SourceNote } from '@/components/ops/SourceNote'
+import { bostonToday } from '@/lib/ops/time'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,7 +24,7 @@ export default async function SchedulePage({
 }) {
   await requireUser()
   const params = await searchParams
-  const todayISO = new Date().toISOString().slice(0, 10)
+  const todayISO = bostonToday()
   const start = /^\d{4}-\d{2}-\d{2}$/.test(params.start ?? '') ? params.start! : todayISO
   const dates = dateRange(start, 7)
 

@@ -48,6 +48,23 @@ describe('buildInvoiceData', () => {
   it('returns null when no tasks match', () => {
     expect(buildInvoiceData([], contacts, props, templates, 'acme', '2026-06')).toBeNull()
   })
+
+  it('dedupes duplicate Airtable task rows so a client is not double-billed', () => {
+    const dup = () => task('2026-06-19', 'c1', 'p1', 'tpl1', 130)
+    const inv = buildInvoiceData([dup(), dup(), dup()], contacts, props, templates, 'acme', '2026-06')!
+    expect(inv.taskCount).toBe(1)
+    expect(inv.total).toBe(130) // not 390
+  })
+
+  it('keeps genuinely different same-day cleans (different description)', () => {
+    const tasks = [
+      task('2026-06-19', 'c1', 'p1', 'tpl1', 130),
+      { ...task('2026-06-19', 'c1', 'p1', null, 50), fields: { ...task('2026-06-19', 'c1', 'p1', null, 50).fields, 'Unit (Text)': 'Different task - extra' } },
+    ]
+    const inv = buildInvoiceData(tasks, contacts, props, templates, 'acme', '2026-06')!
+    expect(inv.taskCount).toBe(2)
+    expect(inv.total).toBe(180)
+  })
 })
 
 describe('listBillableClients', () => {

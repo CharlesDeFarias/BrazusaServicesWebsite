@@ -46,6 +46,10 @@ export function buildInvoiceData(
   const inPeriod = (date: string) =>
     range ? date >= range[0] && date <= range[1] : date.startsWith(month)
 
+  // DEDUPE: Airtable holds duplicate task rows (its Unique Key formula errors out, so
+  // re-imports aren't caught). Billing each row double-charges the client. One clean =
+  // (Unit, date, Template, desc, note); a genuinely different clean differs in desc/type.
+  const seen = new Set<string>()
   for (const t of sorted) {
     const f = t.fields
     const date = String(f['Scheduled Date'] ?? '').slice(0, 10)
@@ -54,15 +58,18 @@ export function buildInvoiceData(
       .map((id) => contactNames.get(id) ?? '')
     const match = billing.find((b) => b.toLowerCase().includes(clientSub.toLowerCase()))
     if (!match) continue
-    client = client ?? match
 
     const property = propertyNames.get(first(f['Property']) ?? '') ?? 'Other'
     const desc =
-      templateNames.get(first(f['Template']) ?? '') ??
-      `${String(f['Unit (Text)'] ?? '').trim()}`.trim() ??
+      templateNames.get(first(f['Template']) ?? '') ||
+      String(f['Unit (Text)'] ?? '').trim() ||
       'Task'
-    const amount = Number(f['Base Price'] ?? 0) || 0
     const note = String(f['Invoice Note'] ?? '')
+    const key = `${first(f['Unit'])}|${date}|${first(f['Template'])}|${desc}|${note}`
+    if (seen.has(key)) continue
+    seen.add(key)
+    client = client ?? match
+    const amount = Number(f['Base Price'] ?? 0) || 0
     if (!byProp.has(property)) byProp.set(property, [])
     byProp.get(property)!.push({ date, desc, amount, note })
   }
@@ -91,10 +98,14 @@ export function listBillableClients(
 ): BillableClient[] {
   const agg = new Map<string, { taskCount: number; total: number }>()
   const range = month.includes('..') ? month.split('..') : null
+  const seen = new Set<string>() // dedupe Airtable duplicate task rows (see buildInvoiceData)
   for (const t of tasks) {
     const f = t.fields
     const date = String(f['Scheduled Date'] ?? '').slice(0, 10)
     if (range ? date < range[0] || date > range[1] : !date.startsWith(month)) continue
+    const key = `${first(f['Unit'])}|${date}|${first(f['Template'])}|${String(f['Task Name'] ?? '')}`
+    if (seen.has(key)) continue
+    seen.add(key)
     for (const id of Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : []) {
       const name = contactNames.get(id) ?? 'Unknown'
       const cur = agg.get(name) ?? { taskCount: 0, total: 0 }

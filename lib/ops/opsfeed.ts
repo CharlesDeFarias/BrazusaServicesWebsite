@@ -85,3 +85,29 @@ export async function scheduleNotes(): Promise<Map<string, string>> {
   }
   return map
 }
+
+export interface ResidentSheetInfo {
+  code: string
+  notes: string
+}
+
+/**
+ * Per-resident door code + notes, editable in the ops sheet `residents` tab
+ * (rows [resident, door_code, notes]). Keyed by lowercased resident name.
+ * Address/phone come from Airtable; only the code + free-text notes live here.
+ */
+export async function residentInfo(): Promise<Map<string, ResidentSheetInfo>> {
+  const map = new Map<string, ResidentSheetInfo>()
+  let rows: string[][]
+  try {
+    rows = await readTab('residents!A:C')
+  } catch {
+    return map // tab not created yet
+  }
+  for (const [resident, code, notes] of rows) {
+    const key = (resident ?? '').trim().toLowerCase()
+    if (!key || key === 'resident') continue // skip blanks + header
+    map.set(key, { code: (code ?? '').trim(), notes: (notes ?? '').trim() })
+  }
+  return map
+}

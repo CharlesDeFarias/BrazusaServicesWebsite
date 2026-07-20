@@ -1,10 +1,18 @@
 import Link from 'next/link'
 import { requireUser } from '@/lib/ops/auth'
-import { fetchForecast, type ForecastDay, type ForecastUnit } from '@/lib/ops/forecast'
+import {
+  fetchForecast,
+  dayToWhatsApp,
+  FORECAST_SOURCE_NOTE,
+  type ForecastDay,
+  type ForecastUnit,
+} from '@/lib/ops/forecast'
 import { readPayrollFeed, type PayrollDay } from '@/lib/ops/payroll'
 import { Card } from '@/components/ops/Card'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 import { PropertyRow } from '@/components/ops/PropertyRow'
+import { CopyButton } from '@/components/ops/CopyButton'
+import { SourceNote } from '@/components/ops/SourceNote'
 
 export const dynamic = 'force-dynamic'
 
@@ -68,11 +76,14 @@ export default async function DailyPage({
       </div>
 
       <section className="space-y-2">
-        <div className="flex items-baseline justify-between">
+        <div className="flex items-center justify-between gap-2">
           <h2 className="font-medium text-neutral-200">Cleanings — {wd}</h2>
-          <span className="text-xs text-neutral-500">
-            {cleans} cleans · {checkins} check-ins
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-neutral-500 whitespace-nowrap">
+              {cleans} cleans · {checkins} check-ins
+            </span>
+            {day && <CopyButton text={dayToWhatsApp(day)} size="sm" />}
+          </div>
         </div>
         {forecastErr && <ErrorState>Could not load Airtable.</ErrorState>}
         {!forecastErr && !day && <EmptyState>Nothing scheduled.</EmptyState>}
@@ -88,7 +99,11 @@ export default async function DailyPage({
             ))}
           </Card>
         )}
-        <p className="text-xs text-neutral-600">° = same-day check-in · full week on the <Link href={`/ops/forecast?start=${date}&view=week`} className="underline">Forecast</Link> page</p>
+        <SourceNote source="Airtable" loadedAt={new Date()} note={FORECAST_SOURCE_NOTE} />
+        <p className="text-xs text-neutral-600">
+          Full week on the{' '}
+          <Link href={`/ops/forecast?start=${date}&view=week`} className="underline">Forecast</Link> page
+        </p>
       </section>
 
       <section className="space-y-2">

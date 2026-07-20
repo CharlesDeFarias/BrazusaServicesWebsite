@@ -7,6 +7,9 @@ import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 export const dynamic = 'force-dynamic'
 
 const money = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+const shortDate = (iso: string) =>
+  new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+const dateSpan = (a: string, b: string) => (a === b ? shortDate(a) : `${shortDate(a)} – ${shortDate(b)}`)
 
 export default async function InvoicesPage({
   searchParams,
@@ -76,10 +79,13 @@ export default async function InvoicesPage({
             <Link
               key={c.name}
               href={`/ops/invoices?month=${month}&client=${encodeURIComponent(c.name)}`}
-              className="flex justify-between px-3 py-3 hover:bg-neutral-900"
+              className="flex items-center justify-between px-3 py-3 hover:bg-neutral-900"
             >
-              <span>{c.name}</span>
-              <span className="text-neutral-400">
+              <span className="min-w-0">
+                <span className="block truncate">{c.name}</span>
+                <span className="block text-xs text-neutral-500">{dateSpan(c.firstDate, c.lastDate)}</span>
+              </span>
+              <span className="text-neutral-400 whitespace-nowrap pl-3">
                 {c.taskCount} tasks · <span className="text-neutral-100 font-medium">{money(c.total)}</span>
               </span>
             </Link>

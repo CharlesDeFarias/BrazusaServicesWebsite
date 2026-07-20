@@ -89,6 +89,8 @@ export interface BillableClient {
   name: string
   taskCount: number
   total: number
+  firstDate: string
+  lastDate: string
 }
 
 export function listBillableClients(
@@ -96,7 +98,7 @@ export function listBillableClients(
   contactNames: Map<string, string>,
   month: string
 ): BillableClient[] {
-  const agg = new Map<string, { taskCount: number; total: number }>()
+  const agg = new Map<string, { taskCount: number; total: number; firstDate: string; lastDate: string }>()
   const range = month.includes('..') ? month.split('..') : null
   const seen = new Set<string>() // dedupe Airtable duplicate task rows (see buildInvoiceData)
   for (const t of tasks) {
@@ -108,9 +110,11 @@ export function listBillableClients(
     seen.add(key)
     for (const id of Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : []) {
       const name = contactNames.get(id) ?? 'Unknown'
-      const cur = agg.get(name) ?? { taskCount: 0, total: 0 }
+      const cur = agg.get(name) ?? { taskCount: 0, total: 0, firstDate: date, lastDate: date }
       cur.taskCount += 1
       cur.total += Number(f['Base Price'] ?? 0) || 0
+      if (date < cur.firstDate) cur.firstDate = date
+      if (date > cur.lastDate) cur.lastDate = date
       agg.set(name, cur)
     }
   }

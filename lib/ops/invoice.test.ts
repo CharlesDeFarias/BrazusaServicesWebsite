@@ -77,8 +77,8 @@ describe('listBillableClients', () => {
     ]
     const clients = listBillableClients(tasks, contacts, '2026-06')
     expect(clients).toEqual([
-      { name: 'Pat Smith', taskCount: 1, total: 350 },
-      { name: 'Acme Management Inc', taskCount: 2, total: 260 },
+      { name: 'Pat Smith', taskCount: 1, total: 350, firstDate: '2026-06-03', lastDate: '2026-06-03' },
+      { name: 'Acme Management Inc', taskCount: 2, total: 260, firstDate: '2026-06-19', lastDate: '2026-06-22' },
     ])
   })
 })

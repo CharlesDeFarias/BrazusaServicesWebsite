@@ -145,3 +145,44 @@ export function dateRange(startISO: string, days: number): string[] {
     return d.toISOString().slice(0, 10)
   })
 }
+
+// ---- WhatsApp-format rendering (matches the validated house format Vitor posts) ----
+
+const WA_WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+/** Provenance note shown UNDER the forecast (never part of the copied WhatsApp text). */
+export const FORECAST_SOURCE_NOTE =
+  'Check-ins (°) are derived from Reservations. Data is read live from Airtable, which Vitor ' +
+  'populates — it can lag same-day Breezeway changes.'
+
+function waUnit(u: ForecastUnit): string {
+  if (u.kind === 'ca' || u.label === 'CA') return 'CA'
+  if (u.kind === 'restock') return 'Restock'
+  if (u.kind === 'linen') return 'Linen'
+  if (u.kind === 'mid') return `${u.label} (Mid)`
+  return u.checkin ? `*${u.label}°*` : u.label
+}
+
+function dayBlock(day: ForecastDay): string {
+  const d = new Date(`${day.date}T00:00:00`)
+  const dd = String(d.getDate()).padStart(2, '0')
+  const mm = String(d.getMonth() + 1).padStart(2, '0')
+  const head = `*☀️ ${dd}/${mm} – ${WA_WEEKDAYS[d.getDay()]} 🗓️*`
+  const lines = day.groups.map((g) => `- *${g.property}*: ${g.units.map(waUnit).join(', ')}`)
+  return [head, ...lines].join('\n')
+}
+
+function mmdd(iso: string): string {
+  const d = new Date(`${iso}T00:00:00`)
+  return `${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`
+}
+
+export function dayToWhatsApp(day: ForecastDay): string {
+  return [`*🗓️ Daily Forecast (${mmdd(day.date)})*`, '*° = same-day check-in*', '', dayBlock(day)].join('\n')
+}
+
+export function weekToWhatsApp(days: ForecastDay[]): string {
+  if (!days.length) return ''
+  const span = `${mmdd(days[0].date)} - ${mmdd(days[days.length - 1].date)}`
+  return [`*🗓️ Weekly Forecast (${span})*`, '*° = same-day check-in*', '', days.map(dayBlock).join('\n\n')].join('\n')
+}

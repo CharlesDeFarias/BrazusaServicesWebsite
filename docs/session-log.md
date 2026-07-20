@@ -9766,3 +9766,12 @@ proceed
 4. *you fixed the drag behavior, but now the speed is way too fast. Make it 60% slower*
 5. *almost there. desktop ticker should be slowed by another 20% and mobile by 50%*
 6. *excellent, do a durable update*
+
+### 05/02/2026, 10:48:55 PM
+**Prompt:** show me the full deferred item list now.
+
+### 05/02/2026, 10:54:12 PM
+**Prompt:** add to deferred items that i want to add both a whatsapp and wechat button. also that i want to update the hero image by getting new dimensions and a prompt to feed into an ai image generator
+
+### 05/03/2026, 01:01:00 PM
+**Prompt:** session start

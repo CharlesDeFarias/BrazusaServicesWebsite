@@ -15,6 +15,12 @@ export default async function OpsAppLayout({ children }: { children: React.React
           <Link href="/ops/forecast" className="hover:text-white text-neutral-300">
             Forecast
           </Link>
+          <Link href="/ops/reconcile" className="hover:text-white text-neutral-300">
+            Reconcile
+          </Link>
+          <Link href="/ops/breezeway" className="hover:text-white text-neutral-300">
+            Breezeway
+          </Link>
           <Link href="/ops/payroll" className="hover:text-white text-neutral-300">
             Payroll
           </Link>

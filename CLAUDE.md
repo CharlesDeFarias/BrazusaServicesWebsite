@@ -43,8 +43,12 @@ It reads the current payload shape, field mappings across all three destinations
 surfaces exactly what would need to change. Do not touch a single file until Charles
 has reviewed that manifest and confirmed each destination change explicitly.
 
-**4. Always ask before pushing to remote.**
-No exceptions - even if previously told to push. Commit unilaterally; push only with permission.
+**4. Push freely on `main` — standing authorization (granted by Charles 2026-07-20).**
+Commit and push to `origin/main` without asking each time. This is durable, not per-session.
+Still applies: never `push --force`, never reset/rewrite pushed history, and never touch a
+non-`main` branch or a different remote without asking. If a push would carry someone else's
+uncommitted work (e.g. stray files, another tool's half-done changes), stage only your own
+files explicitly rather than `git add -A`.
 
 ---
 

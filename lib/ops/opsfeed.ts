@@ -111,3 +111,44 @@ export async function residentInfo(): Promise<Map<string, ResidentSheetInfo>> {
   }
   return map
 }
+
+export interface CodeEntry {
+  unit: string
+  code: string
+  notes: string
+}
+
+export interface CodeBuilding {
+  building: string
+  entries: CodeEntry[]
+}
+
+/**
+ * Door / lockbox codes reference, editable in the ops sheet `codes` tab
+ * (rows [building, unit, code, notes]). Grouped by building in sheet order.
+ * Seeded from the Thatch main sheet; the ops sheet is now the maintained source.
+ */
+export async function doorCodes(): Promise<CodeBuilding[]> {
+  let rows: string[][]
+  try {
+    rows = await readTab('codes!A:D')
+  } catch {
+    return []
+  }
+  const order: string[] = []
+  const byBuilding = new Map<string, CodeEntry[]>()
+  for (const [building, unit, code, notes] of rows) {
+    const b = (building ?? '').trim()
+    if (!b || b.toLowerCase() === 'building') continue // skip header/blanks
+    if (!byBuilding.has(b)) {
+      byBuilding.set(b, [])
+      order.push(b)
+    }
+    byBuilding.get(b)!.push({
+      unit: (unit ?? '').trim(),
+      code: (code ?? '').trim(),
+      notes: (notes ?? '').trim(),
+    })
+  }
+  return order.map((b) => ({ building: b, entries: byBuilding.get(b)! }))
+}

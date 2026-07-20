@@ -16,9 +16,9 @@ export function SourceNote({
     minute: '2-digit',
   })
   return (
-    <div className="mt-3 border-t border-neutral-800 pt-2 text-xs text-neutral-500 space-y-0.5">
+    <div className="mt-3 border-t border-navy-10 pt-2 text-xs text-warm-gray-dark space-y-0.5">
       <p>
-        Source: <span className="text-neutral-400">{source}</span> · loaded {when}
+        Source: <span className="font-medium text-navy">{source}</span> · loaded {when}
       </p>
       {note && <p>{note}</p>}
     </div>

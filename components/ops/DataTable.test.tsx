@@ -15,7 +15,7 @@ describe('DataTable', () => {
     )
 
     expect(html).toBe(
-      '<div class="rounded-lg border border-neutral-800 overflow-hidden"><table class="w-full text-sm"><tbody><tr><td>row</td></tr></tbody></table></div>'
+      '<div class="rounded-lg border border-navy-10 bg-white overflow-hidden"><table class="w-full text-sm"><tbody><tr><td>row</td></tr></tbody></table></div>'
     )
   })
 
@@ -27,7 +27,7 @@ describe('DataTable', () => {
     )
 
     expect(html).toBe(
-      '<div class="rounded-lg border border-neutral-800 divide-y divide-neutral-800 text-sm"><div>invoice row</div></div>'
+      '<div class="rounded-lg border border-navy-10 bg-white divide-y divide-neutral-800 text-sm"><div>invoice row</div></div>'
     )
   })
 })

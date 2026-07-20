@@ -53,17 +53,17 @@ export default async function InvoicesPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold">Invoices</h1>
+        <h1 className="text-xl font-bold text-navy tracking-tight">Invoices</h1>
         <div className="flex items-center gap-3 text-sm">
           {week ? (
-            <span className="text-neutral-200">week {week} – {weekEnd}</span>
+            <span className="text-navy">week {week} – {weekEnd}</span>
           ) : (
             <>
-              <Link href={`/ops/invoices?month=${fmt(prevMonth)}`} className="text-neutral-400">
+              <Link href={`/ops/invoices?month=${fmt(prevMonth)}`} className="text-warm-gray-dark">
                 ←
               </Link>
-              <span className="text-neutral-200">{month}</span>
-              <Link href={`/ops/invoices?month=${fmt(nextMonth)}`} className="text-neutral-400">
+              <span className="text-navy">{month}</span>
+              <Link href={`/ops/invoices?month=${fmt(nextMonth)}`} className="text-warm-gray-dark">
                 →
               </Link>
             </>
@@ -74,19 +74,19 @@ export default async function InvoicesPage({
       {error && <ErrorState>{error}</ErrorState>}
 
       {!error && !clientSub && (
-        <DataTable className="divide-y divide-neutral-800">
+        <DataTable className="divide-y divide-navy-10">
           {clients.map((c) => (
             <Link
               key={c.name}
               href={`/ops/invoices?month=${month}&client=${encodeURIComponent(c.name)}`}
-              className="flex items-center justify-between px-3 py-3 hover:bg-neutral-900"
+              className="flex items-center justify-between px-3 py-3 hover:bg-linen"
             >
               <span className="min-w-0">
                 <span className="block truncate">{c.name}</span>
-                <span className="block text-xs text-neutral-500">{dateSpan(c.firstDate, c.lastDate)}</span>
+                <span className="block text-xs text-warm-gray">{dateSpan(c.firstDate, c.lastDate)}</span>
               </span>
-              <span className="text-neutral-400 whitespace-nowrap pl-3">
-                {c.taskCount} tasks · <span className="text-neutral-100 font-medium">{money(c.total)}</span>
+              <span className="text-warm-gray-dark whitespace-nowrap pl-3">
+                {c.taskCount} tasks · <span className="text-navy font-medium">{money(c.total)}</span>
               </span>
             </Link>
           ))}
@@ -103,43 +103,43 @@ export default async function InvoicesPage({
       {invoice && (
         <section className="space-y-4">
           <div className="flex items-baseline justify-between">
-            <h2 className="font-medium text-neutral-200">{invoice.client}</h2>
+            <h2 className="font-medium text-navy">{invoice.client}</h2>
             <span className="flex gap-3 text-sm">
               <Link
                 href={`/ops/invoice-print?month=${month}&client=${encodeURIComponent(clientSub!)}`}
-                className="text-emerald-400 underline"
+                className="text-brand-gold underline"
               >
                 print view
               </Link>
-              <Link href={`/ops/invoices?month=${month}`} className="text-neutral-400 underline">
+              <Link href={`/ops/invoices?month=${month}`} className="text-warm-gray-dark underline">
                 all clients
               </Link>
             </span>
           </div>
           {invoice.byProperty.map((p) => (
             <div key={p.property}>
-              <h3 className="text-sm font-medium text-neutral-300 mb-1">{p.property}</h3>
-              <DataTable className="divide-y divide-neutral-800 text-sm">
+              <h3 className="text-sm font-medium text-navy/80 mb-1">{p.property}</h3>
+              <DataTable className="divide-y divide-navy-10 text-sm">
                 {p.lines.map((l, i) => (
                   <div key={i} className="px-3 py-2 flex justify-between gap-3">
-                    <span className="text-neutral-500 whitespace-nowrap">{l.date}</span>
-                    <span className="flex-1 text-neutral-300">
+                    <span className="text-warm-gray whitespace-nowrap">{l.date}</span>
+                    <span className="flex-1 text-navy/80">
                       {l.desc}
-                      {l.note && <span className="block text-xs text-neutral-500">{l.note}</span>}
+                      {l.note && <span className="block text-xs text-warm-gray">{l.note}</span>}
                     </span>
                     <span className="whitespace-nowrap">{money(l.amount)}</span>
                   </div>
                 ))}
-                <div className="px-3 py-2 flex justify-between text-neutral-400">
+                <div className="px-3 py-2 flex justify-between text-warm-gray-dark">
                   <span>Subtotal — {p.property}</span>
-                  <span className="text-neutral-200 font-medium">{money(p.subtotal)}</span>
+                  <span className="text-navy font-medium">{money(p.subtotal)}</span>
                 </div>
               </DataTable>
             </div>
           ))}
-          <div className="rounded-lg border border-emerald-900/50 bg-emerald-950/20 px-3 py-3 flex justify-between">
+          <div className="rounded-lg border border-navy bg-navy text-white px-3 py-3 flex justify-between">
             <span className="font-semibold">AMOUNT DUE ({invoice.taskCount} tasks)</span>
-            <span className="font-bold text-emerald-400">{money(invoice.total)}</span>
+            <span className="font-bold text-brand-gold">{money(invoice.total)}</span>
           </div>
         </section>
       )}

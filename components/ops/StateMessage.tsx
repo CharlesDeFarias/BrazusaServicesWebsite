@@ -12,14 +12,14 @@ interface ErrorStateProps {
 
 export function EmptyState({ children, contained = false }: EmptyStateProps) {
   const className = contained
-    ? 'px-3 py-3 text-neutral-400 text-sm'
-    : 'text-neutral-400 text-sm'
+    ? 'px-3 py-3 text-warm-gray-dark text-sm'
+    : 'text-warm-gray-dark text-sm'
 
   return <p className={className}>{children}</p>
 }
 
 export function ErrorState({ children, tone = 'error' }: ErrorStateProps) {
-  const className = tone === 'warning' ? 'text-amber-400 text-sm' : 'text-red-400 text-sm'
+  const className = tone === 'warning' ? 'text-amber-700 text-sm' : 'text-red-600 text-sm'
 
   return <p className={className}>{children}</p>
 }

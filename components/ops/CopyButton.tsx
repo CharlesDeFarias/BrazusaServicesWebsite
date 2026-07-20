@@ -32,14 +32,14 @@ export function CopyButton({
     setTimeout(() => setCopied(false), 1600)
   }
 
-  const pad = size === 'sm' ? 'px-2 py-1 text-xs' : 'px-3 py-1.5 text-sm'
+  const pad = size === 'sm' ? 'px-3 py-1 text-xs' : 'px-4 py-1.5 text-sm'
   return (
     <button
       onClick={copy}
-      className={`${pad} rounded-md border transition-colors ${
+      className={`${pad} border-l-2 font-medium tracking-[0.04em] transition-all duration-200 ${
         copied
-          ? 'border-emerald-600 bg-emerald-950/40 text-emerald-300'
-          : 'border-neutral-700 bg-neutral-900 text-neutral-200 hover:border-neutral-500'
+          ? 'border-navy bg-brand-gold text-navy'
+          : 'border-brand-gold bg-navy text-white hover:opacity-80'
       }`}
     >
       {copied ? '✓ Copied' : label}

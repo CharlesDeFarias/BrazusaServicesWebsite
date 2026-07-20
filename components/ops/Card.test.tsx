@@ -11,7 +11,7 @@ describe('Card', () => {
     )
 
     expect(html).toBe(
-      '<div class="rounded-lg border border-neutral-800 divide-y divide-neutral-800"><span>content</span></div>'
+      '<div class="rounded-lg border border-navy-10 bg-white divide-y divide-neutral-800"><span>content</span></div>'
     )
   })
 })

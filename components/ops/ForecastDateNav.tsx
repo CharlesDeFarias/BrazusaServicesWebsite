@@ -17,29 +17,29 @@ export function ForecastDateNav({ start, week }: { start: string; week: boolean 
   return (
     <div className="flex flex-wrap items-center gap-2 text-sm">
       <div className="flex items-center gap-1">
-        <button onClick={() => go(shift(start, -step))} className="px-2 py-1 rounded-md border border-neutral-700 text-neutral-300 hover:border-neutral-500" aria-label="previous">
+        <button onClick={() => go(shift(start, -step))} className="rounded-md border border-navy-15 px-2 py-1 text-navy transition-colors hover:border-navy hover:bg-linen" aria-label="previous">
           ←
         </button>
         <input
           type="date"
           value={start}
           onChange={(e) => e.target.value && go(e.target.value)}
-          className="rounded-md border border-neutral-700 bg-neutral-900 px-2 py-1 text-neutral-100 [color-scheme:dark]"
+          className="rounded-md border border-navy-15 bg-white px-2 py-1 text-navy [color-scheme:light]"
         />
-        <button onClick={() => go(shift(start, step))} className="px-2 py-1 rounded-md border border-neutral-700 text-neutral-300 hover:border-neutral-500" aria-label="next">
+        <button onClick={() => go(shift(start, step))} className="rounded-md border border-navy-15 px-2 py-1 text-navy transition-colors hover:border-navy hover:bg-linen" aria-label="next">
           →
         </button>
       </div>
-      <div className="flex overflow-hidden rounded-md border border-neutral-700">
+      <div className="flex overflow-hidden rounded-md border border-navy-15">
         <button
           onClick={() => router.push(`/ops/forecast?start=${start}`)}
-          className={`px-3 py-1 ${!week ? 'bg-neutral-200 text-neutral-900' : 'bg-neutral-900 text-neutral-400'}`}
+          className={`px-3 py-1 transition-colors ${!week ? 'bg-navy text-white' : 'bg-white text-navy/55 hover:bg-linen'}`}
         >
           Day
         </button>
         <button
           onClick={() => router.push(`/ops/forecast?start=${start}&view=week`)}
-          className={`px-3 py-1 ${week ? 'bg-neutral-200 text-neutral-900' : 'bg-neutral-900 text-neutral-400'}`}
+          className={`px-3 py-1 transition-colors ${week ? 'bg-navy text-white' : 'bg-white text-navy/55 hover:bg-linen'}`}
         >
           Week
         </button>

@@ -67,19 +67,19 @@ export default async function DailyPage({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold">Daily Report</h1>
+        <h1 className="text-xl font-bold text-navy tracking-tight">Daily Report</h1>
         <div className="flex items-center gap-3 text-sm">
-          <Link href={`/ops/daily?date=${shiftDate(date, -1)}`} className="text-neutral-400">←</Link>
-          <span className="text-neutral-200">{date}</span>
-          <Link href={`/ops/daily?date=${shiftDate(date, 1)}`} className="text-neutral-400">→</Link>
+          <Link href={`/ops/daily?date=${shiftDate(date, -1)}`} className="text-warm-gray-dark">←</Link>
+          <span className="text-navy">{date}</span>
+          <Link href={`/ops/daily?date=${shiftDate(date, 1)}`} className="text-warm-gray-dark">→</Link>
         </div>
       </div>
 
       <section className="space-y-2">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="font-medium text-neutral-200">Cleanings — {wd}</h2>
+          <h2 className="font-medium text-navy">Cleanings — {wd}</h2>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-neutral-500 whitespace-nowrap">
+            <span className="text-xs text-warm-gray whitespace-nowrap">
               {cleans} cleans · {checkins} check-ins
             </span>
             {day && <CopyButton text={dayToWhatsApp(day)} size="sm" />}
@@ -88,7 +88,7 @@ export default async function DailyPage({
         {forecastErr && <ErrorState>Could not load Airtable.</ErrorState>}
         {!forecastErr && !day && <EmptyState>Nothing scheduled.</EmptyState>}
         {day && (
-          <Card className="divide-y divide-neutral-800">
+          <Card className="divide-y divide-navy-10">
             {day.groups.map((g) => (
               <PropertyRow
                 key={g.property}
@@ -100,15 +100,15 @@ export default async function DailyPage({
           </Card>
         )}
         <SourceNote source="Airtable" loadedAt={new Date()} note={FORECAST_SOURCE_NOTE} />
-        <p className="text-xs text-neutral-600">
+        <p className="text-xs text-warm-gray">
           Full week on the{' '}
           <Link href={`/ops/forecast?start=${date}&view=week`} className="underline">Forecast</Link> page
         </p>
       </section>
 
       <section className="space-y-2">
-        <h2 className="font-medium text-neutral-200">
-          Yesterday&apos;s labor <span className="text-neutral-500 text-sm">({yesterday})</span>
+        <h2 className="font-medium text-navy">
+          Yesterday&apos;s labor <span className="text-warm-gray text-sm">({yesterday})</span>
         </h2>
         {!labor && (
           <EmptyState>No payroll pushed for {yesterday} yet.</EmptyState>
@@ -117,18 +117,18 @@ export default async function DailyPage({
           <Card className="px-3 py-2 text-sm space-y-1">
             {labor.rows.map((r) => (
               <div key={r.worker} className="flex justify-between">
-                <span className="text-neutral-300">{r.worker}</span>
-                <span className="text-neutral-400">
-                  {r.hours.toFixed(1)}h · <span className="text-neutral-200">{money(r.pay)}</span>
+                <span className="text-navy/80">{r.worker}</span>
+                <span className="text-warm-gray-dark">
+                  {r.hours.toFixed(1)}h · <span className="text-navy">{money(r.pay)}</span>
                 </span>
               </div>
             ))}
-            <div className="flex justify-between border-t border-neutral-800 pt-1 font-medium">
+            <div className="flex justify-between border-t border-navy-10 pt-1 font-medium">
               <span>Total labor</span>
-              <span className="text-emerald-400">{money(labor.total)}</span>
+              <span className="text-brand-gold">{money(labor.total)}</span>
             </div>
             {labor.anomalies?.length > 0 && (
-              <div className="text-amber-400/90 text-xs pt-1">
+              <div className="text-amber-700 text-xs pt-1">
                 {labor.anomalies.map((a, i) => (
                   <p key={i}>{a.worker}: {a.detail}</p>
                 ))}

@@ -11,9 +11,9 @@ export function LogoutButton() {
         router.push('/ops/login')
         router.refresh()
       }}
-      className="text-xs text-neutral-500 hover:text-neutral-300"
+      className="text-[11px] uppercase tracking-[0.08em] text-warm-gray-dark transition-colors hover:text-navy"
     >
-      logout
+      Logout
     </button>
   )
 }

@@ -19,11 +19,11 @@ export default async function ReconcilePage() {
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="text-lg font-semibold">Reconcile</h1>
+        <h1 className="text-xl font-bold text-navy tracking-tight">Reconcile</h1>
         {feed && <CopyButton text={feed.report} label="Copy report" size="sm" />}
       </div>
 
-      <p className="text-xs text-neutral-500">
+      <p className="text-xs text-warm-gray">
         Airtable (what the report shows) vs Breezeway (Thatch source of truth), plus WhatsApp
         change-chatter. Read-only, surface-only — nothing is written back. A human verifies and fixes.
       </p>
@@ -33,10 +33,10 @@ export default async function ReconcilePage() {
 
       {feed && (
         <>
-          <p className="text-xs text-neutral-500">
+          <p className="text-xs text-warm-gray">
             Window {feed.window || '—'} · generated {feed.generatedAt.replace('T', ' ').slice(0, 16)}
           </p>
-          <pre className="overflow-x-auto rounded-lg border border-neutral-800 bg-neutral-900/50 p-3 text-xs leading-relaxed text-neutral-200 whitespace-pre-wrap">
+          <pre className="overflow-x-auto rounded-lg border border-navy-10 bg-linen p-3 text-xs leading-relaxed text-navy whitespace-pre-wrap">
             {feed.report}
           </pre>
         </>

@@ -1,39 +1,38 @@
-import Link from 'next/link'
 import { requireUser } from '@/lib/ops/auth'
 import { LogoutButton } from './logout-button'
+import { OpsNav } from './OpsNav'
 
 export default async function OpsAppLayout({ children }: { children: React.ReactNode }) {
   const user = await requireUser()
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      <header className="border-b border-neutral-800 px-4 py-3 flex items-center justify-between">
-        <nav className="flex gap-4 text-sm">
-          <Link href="/ops/daily" className="hover:text-white text-neutral-300">
-            Daily
-          </Link>
-          <Link href="/ops/forecast" className="hover:text-white text-neutral-300">
-            Forecast
-          </Link>
-          <Link href="/ops/reconcile" className="hover:text-white text-neutral-300">
-            Reconcile
-          </Link>
-          <Link href="/ops/breezeway" className="hover:text-white text-neutral-300">
-            Breezeway
-          </Link>
-          <Link href="/ops/payroll" className="hover:text-white text-neutral-300">
-            Payroll
-          </Link>
-          <Link href="/ops/invoices" className="hover:text-white text-neutral-300">
-            Invoices
-          </Link>
-        </nav>
-        <span className="flex items-center gap-3">
-          <span className="text-xs text-neutral-500">{user}</span>
-          <LogoutButton />
-        </span>
+    <div className="min-h-screen bg-off-white text-navy">
+      {/* gold hairline — the brand's signature top strip */}
+      <div className="h-0.5 w-full bg-brand-gold" />
+
+      <header className="sticky top-0 z-30 border-b border-navy-10 bg-off-white/85 backdrop-blur-md">
+        <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 px-5 py-3">
+          <div className="flex items-center gap-3">
+            <span className="text-[15px] font-bold tracking-[0.03em] text-navy [font-family:var(--font-ibm-plex-sans)]">
+              Brazusa
+            </span>
+            <span className="border-l-2 border-brand-gold px-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-gold">
+              Ops
+            </span>
+          </div>
+          <span className="flex items-center gap-4">
+            <span className="hidden text-[11px] uppercase tracking-[0.08em] text-warm-gray-dark sm:inline">
+              {user}
+            </span>
+            <LogoutButton />
+          </span>
+        </div>
+        <div className="mx-auto max-w-4xl px-5 pb-2">
+          <OpsNav />
+        </div>
       </header>
-      <main className="px-4 py-6 max-w-3xl mx-auto">{children}</main>
+
+      <main className="mx-auto max-w-4xl px-5 py-8">{children}</main>
     </div>
   )
 }

@@ -19,7 +19,7 @@ describe('PropertyRow', () => {
     )
 
     expect(html).toBe(
-      '<div class="px-3 py-2 flex flex-wrap items-baseline gap-x-2"><span class="font-semibold text-navy mr-1">Main Street:</span><span class="text-navy/60">1,</span><span class="font-bold text-navy">2\u00b0</span></div>'
+      '<div class="px-3 py-2 flex flex-wrap items-baseline gap-x-2"><span class="font-semibold text-white mr-1">Main Street:</span><span class="text-white-70">1,</span><span class="font-bold text-brand-gold">2\u00b0</span></div>'
     )
   })
 })

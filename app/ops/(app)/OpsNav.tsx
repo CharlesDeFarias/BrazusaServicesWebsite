@@ -23,7 +23,7 @@ export function OpsNav() {
             key={l.href}
             href={l.href}
             className={`relative py-1 text-xs font-medium tracking-[0.06em] transition-colors ${
-              active ? 'text-navy' : 'text-navy/50 hover:text-navy/80'
+              active ? 'text-white' : 'text-white-45 hover:text-white-70'
             }`}
           >
             {l.label}

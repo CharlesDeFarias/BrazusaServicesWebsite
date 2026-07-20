@@ -34,7 +34,7 @@ export default async function BreezewayPage() {
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="text-xl font-bold text-navy tracking-tight">Breezeway data</h1>
+        <h1 className="text-xl font-bold text-white tracking-tight">Breezeway data</h1>
         {feed && <CopyButton text={feed.raw} label="Copy raw JSON" size="sm" />}
       </div>
 
@@ -43,7 +43,7 @@ export default async function BreezewayPage() {
 
       {feed && (
         <>
-          <p className="text-xs text-warm-gray">
+          <p className="text-xs text-white-35">
             Most recent capture · {feed.tasks.length} tasks · {feed.reservationCount} reservations ·
             captured {feed.capturedAt.replace('T', ' ').slice(0, 16)}
           </p>
@@ -52,15 +52,15 @@ export default async function BreezewayPage() {
             const wd = day.toLocaleDateString('en-US', { weekday: 'short' })
             return (
               <section key={d} className="space-y-1">
-                <h2 className="text-sm font-medium text-navy/80">
-                  {d} <span className="text-warm-gray">({wd})</span>{' '}
-                  <span className="text-warm-gray">· {byDate.get(d)!.length}</span>
+                <h2 className="text-sm font-medium text-white-70">
+                  {d} <span className="text-white-35">({wd})</span>{' '}
+                  <span className="text-white-35">· {byDate.get(d)!.length}</span>
                 </h2>
-                <Card className="divide-y divide-navy-10 text-sm">
+                <Card className="divide-y divide-white-10 text-sm">
                   {byDate.get(d)!.map((t, i) => (
                     <div key={i} className="flex justify-between gap-3 px-3 py-1.5">
-                      <span className="text-navy/80 truncate">{shortProp(t[0])}</span>
-                      <span className="text-warm-gray whitespace-nowrap text-xs">{t[2]}</span>
+                      <span className="text-white-70 truncate">{shortProp(t[0])}</span>
+                      <span className="text-white-35 whitespace-nowrap text-xs">{t[2]}</span>
                     </div>
                   ))}
                 </Card>

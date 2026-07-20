@@ -17,29 +17,29 @@ export function ForecastDateNav({ start, week }: { start: string; week: boolean 
   return (
     <div className="flex flex-wrap items-center gap-2 text-sm">
       <div className="flex items-center gap-1">
-        <button onClick={() => go(shift(start, -step))} className="rounded-md border border-navy-15 px-2 py-1 text-navy transition-colors hover:border-navy hover:bg-linen" aria-label="previous">
+        <button onClick={() => go(shift(start, -step))} className="rounded-md border border-white-15 px-2 py-1 text-white-70 transition-colors hover:border-brand-gold hover:text-white" aria-label="previous">
           ←
         </button>
         <input
           type="date"
           value={start}
           onChange={(e) => e.target.value && go(e.target.value)}
-          className="rounded-md border border-navy-15 bg-white px-2 py-1 text-navy [color-scheme:light]"
+          className="rounded-md border border-white-15 bg-white-5 px-2 py-1 text-white [color-scheme:dark]"
         />
-        <button onClick={() => go(shift(start, step))} className="rounded-md border border-navy-15 px-2 py-1 text-navy transition-colors hover:border-navy hover:bg-linen" aria-label="next">
+        <button onClick={() => go(shift(start, step))} className="rounded-md border border-white-15 px-2 py-1 text-white-70 transition-colors hover:border-brand-gold hover:text-white" aria-label="next">
           →
         </button>
       </div>
-      <div className="flex overflow-hidden rounded-md border border-navy-15">
+      <div className="flex overflow-hidden rounded-md border border-white-15">
         <button
           onClick={() => router.push(`/ops/forecast?start=${start}`)}
-          className={`px-3 py-1 transition-colors ${!week ? 'bg-navy text-white' : 'bg-white text-navy/55 hover:bg-linen'}`}
+          className={`px-3 py-1 transition-colors ${!week ? 'bg-brand-gold text-navy' : 'bg-white-5 text-white-55 hover:text-white'}`}
         >
           Day
         </button>
         <button
           onClick={() => router.push(`/ops/forecast?start=${start}&view=week`)}
-          className={`px-3 py-1 transition-colors ${week ? 'bg-navy text-white' : 'bg-white text-navy/55 hover:bg-linen'}`}
+          className={`px-3 py-1 transition-colors ${week ? 'bg-brand-gold text-navy' : 'bg-white-5 text-white-55 hover:text-white'}`}
         >
           Week
         </button>

@@ -8,6 +8,6 @@ describe('OpsPageSkeleton', () => {
 
     expect(html).toContain('aria-busy="true"')
     expect(html).toContain('aria-label="Loading page"')
-    expect(html).toContain('class="rounded-lg border border-navy-10 bg-white overflow-hidden"')
+    expect(html).toContain('class="rounded-lg border border-white-10 bg-white-5 overflow-hidden"')
   })
 })

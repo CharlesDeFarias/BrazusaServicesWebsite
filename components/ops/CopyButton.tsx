@@ -38,8 +38,8 @@ export function CopyButton({
       onClick={copy}
       className={`${pad} border-l-2 font-medium tracking-[0.04em] transition-all duration-200 ${
         copied
-          ? 'border-navy bg-brand-gold text-navy'
-          : 'border-brand-gold bg-navy text-white hover:opacity-80'
+          ? 'border-white bg-brand-gold text-navy'
+          : 'border-brand-gold bg-white-10 text-white hover:bg-brand-gold hover:text-navy'
       }`}
     >
       {copied ? '✓ Copied' : label}

@@ -51,7 +51,7 @@ export default async function ForecastPage({
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-bold text-navy tracking-tight">{week ? 'Weekly' : 'Daily'} Forecast</h1>
+        <h1 className="text-xl font-bold text-white tracking-tight">{week ? 'Weekly' : 'Daily'} Forecast</h1>
         <ForecastDateNav start={start} week={week} />
       </div>
 
@@ -61,8 +61,8 @@ export default async function ForecastPage({
       )}
 
       {week && days.length > 0 && (
-        <div className="flex items-center justify-between rounded-lg border border-navy-10 bg-linen/60 px-3 py-2">
-          <span className="text-sm text-navy/80">Copy the whole week as one message</span>
+        <div className="flex items-center justify-between rounded-lg border border-white-10 bg-white-5 px-3 py-2">
+          <span className="text-sm text-white-70">Copy the whole week as one message</span>
           <CopyButton text={weekToWhatsApp(days)} label="Copy week" size="sm" />
         </div>
       )}
@@ -72,12 +72,12 @@ export default async function ForecastPage({
         return (
           <section key={day.date} className="space-y-2">
             <div className="flex items-center justify-between gap-2">
-              <h2 className="font-medium text-navy">
+              <h2 className="font-medium text-white">
                 {day.date.slice(8)}/{day.date.slice(5, 7)} — {WEEKDAYS[d.getDay()]}
               </h2>
               <CopyButton text={dayToWhatsApp(day)} label="Copy day" size="sm" />
             </div>
-            <Card className="divide-y divide-navy-10">
+            <Card className="divide-y divide-white-10">
               {day.groups.map((g) => (
                 <PropertyRow key={g.property} property={g.property} units={g.units} unitLabel={unitBadge} />
               ))}

@@ -15,6 +15,8 @@ export interface ForecastUnit {
 
 export interface ForecastGroup {
   property: string
+  /** Street address for non-Thatch resident groups (Thatch groups are already named by building). */
+  address?: string
   units: ForecastUnit[]
 }
 
@@ -70,6 +72,7 @@ export function buildForecastData(
 
   const wanted = new Set(dates)
   const byDay = new Map<string, Map<string, ForecastUnit[]>>()
+  const addrByGroup = new Map<string, string>() // `${date}|${label}` -> street address (non-Thatch)
 
   for (const t of tasks) {
     const f = t.fields
@@ -86,6 +89,8 @@ export function buildForecastData(
         .filter((n) => n && n.toLowerCase() !== 'unknown')
     const isThatch = contact('Billing Contact').some((b) => b.toLowerCase().includes('thatch'))
     const groupLabel = isThatch ? property : contact('Resident Contact')[0] || property
+    // Non-Thatch groups are named by resident, so keep the street address for reference.
+    if (!isThatch && groupLabel !== property) addrByGroup.set(`${date}|${groupLabel}`, property)
     const unitId = first(f['Unit'])
     const checkin = unitId ? arrivals.has(`${unitId}|${date}`) : false
     const label = unitLabel(String(f['Unit (Text)'] ?? ''), kind)
@@ -119,7 +124,7 @@ export function buildForecastData(
             seen.add(dedupeKey)
             deduped.push(u)
           }
-          return { property, units: deduped }
+          return { property, address: addrByGroup.get(`${date}|${property}`), units: deduped }
         })
         .sort((a, b) => a.property.localeCompare(b.property)),
     }))
@@ -268,7 +273,10 @@ function dayBlock(day: ForecastDay): string {
   const dd = String(d.getDate()).padStart(2, '0')
   const mm = String(d.getMonth() + 1).padStart(2, '0')
   const head = `*☀️ ${dd}/${mm} – ${WA_WEEKDAYS[d.getDay()]} 🗓️*`
-  const lines = day.groups.map((g) => `- *${g.property}*: ${g.units.map(waUnit).join(', ')}`)
+  const lines = day.groups.map((g) => {
+    const name = g.address ? `${g.property} (${g.address})` : g.property
+    return `- *${name}*: ${g.units.map(waUnit).join(', ')}`
+  })
   return [head, ...lines].join('\n')
 }
 

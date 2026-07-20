@@ -94,6 +94,7 @@ export default async function DailyPage({
               <PropertyRow
                 key={g.property}
                 property={g.property}
+                address={g.address}
                 units={g.units}
                 unitLabel={unitBadge}
               />

@@ -2,14 +2,18 @@ import type { ForecastUnit } from '@/lib/ops/forecast'
 
 interface PropertyRowProps {
   property: string
+  address?: string
   units: ForecastUnit[]
   unitLabel: (unit: ForecastUnit) => string
 }
 
-export function PropertyRow({ property, units, unitLabel }: PropertyRowProps) {
+export function PropertyRow({ property, address, units, unitLabel }: PropertyRowProps) {
   return (
     <div className="px-3 py-2 flex flex-wrap items-baseline gap-x-2">
-      <span className="font-semibold text-white mr-1">{property}:</span>
+      <span className="font-semibold text-white mr-1">
+        {property}
+        {address ? <span className="font-normal text-white-40"> · {address}</span> : null}:
+      </span>
       {units.map((unit, index) => (
         <span
           key={index}

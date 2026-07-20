@@ -99,7 +99,7 @@ export default async function ForecastPage({
             )}
             <Card className="divide-y divide-white-10">
               {day.groups.map((g) => (
-                <PropertyRow key={g.property} property={g.property} units={g.units} unitLabel={unitBadge} />
+                <PropertyRow key={g.property} property={g.property} address={g.address} units={g.units} unitLabel={unitBadge} />
               ))}
             </Card>
           </section>

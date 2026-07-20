@@ -48,7 +48,11 @@ export default function OpsLoginPage() {
           </div>
           <input
             type="password"
-            inputMode="numeric"
+            inputMode="text"
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="current-password"
+            spellCheck={false}
             autoFocus
             value={passcode}
             onChange={(e) => setPasscode(e.target.value)}

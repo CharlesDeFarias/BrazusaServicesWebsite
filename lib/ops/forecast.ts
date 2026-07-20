@@ -58,7 +58,8 @@ export function buildForecastData(
   reservations: AirtableRecord[],
   taskTypes: Map<string, string>,
   propertyNames: Map<string, string>,
-  dates: string[]
+  dates: string[],
+  contactNames: Map<string, string> = new Map()
 ): ForecastDay[] {
   const arrivals = new Set<string>()
   for (const r of reservations) {
@@ -77,14 +78,22 @@ export function buildForecastData(
     const typeName = taskTypes.get(first(f['Task Type']) ?? '') ?? ''
     const kind = typeShort(typeName)
     const property = propertyNames.get(first(f['Property']) ?? '') ?? 'Other'
+    // Group label: Thatch units by property (building); non-Thatch by the RESIDENT we
+    // clean for (Jaime, Elizabeth…), never the management company. Falls back to property.
+    const contact = (field: string) =>
+      (Array.isArray(f[field]) ? (f[field] as string[]) : [])
+        .map((id) => contactNames.get(id) ?? '')
+        .filter((n) => n && n.toLowerCase() !== 'unknown')
+    const isThatch = contact('Billing Contact').some((b) => b.toLowerCase().includes('thatch'))
+    const groupLabel = isThatch ? property : contact('Resident Contact')[0] || property
     const unitId = first(f['Unit'])
     const checkin = unitId ? arrivals.has(`${unitId}|${date}`) : false
     const label = unitLabel(String(f['Unit (Text)'] ?? ''), kind)
 
     if (!byDay.has(date)) byDay.set(date, new Map())
     const groups = byDay.get(date)!
-    if (!groups.has(property)) groups.set(property, [])
-    groups.get(property)!.push({ label, kind, checkin })
+    if (!groups.has(groupLabel)) groups.set(groupLabel, [])
+    groups.get(groupLabel)!.push({ label, kind, checkin })
   }
 
   return dates
@@ -120,7 +129,7 @@ export function buildForecastData(
 export async function fetchForecast(dates: string[]): Promise<ForecastDay[]> {
   const lo = dates[0]
   const hi = dates[dates.length - 1]
-  const [tasks, reservations, typeRecs, propRecs] = await Promise.all([
+  const [tasks, reservations, typeRecs, propRecs, contactRecs] = await Promise.all([
     listAll(OPS_TABLES.tasks, {
       filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
     }),
@@ -129,12 +138,16 @@ export async function fetchForecast(dates: string[]): Promise<ForecastDay[]> {
     }),
     listAll(OPS_TABLES.taskTypes),
     listAll(OPS_TABLES.properties),
+    listAll(OPS_TABLES.contacts),
   ])
   const taskTypes = new Map(typeRecs.map((r) => [r.id, String(r.fields['Name'] ?? '')]))
   const propertyNames = new Map(
     propRecs.map((r) => [r.id, String(r.fields['Property Name'] ?? 'Other')])
   )
-  return buildForecastData(tasks, reservations, taskTypes, propertyNames, dates)
+  const contactNames = new Map(
+    contactRecs.map((r) => [r.id, String(r.fields['Name'] ?? r.fields['Full Name'] ?? '')])
+  )
+  return buildForecastData(tasks, reservations, taskTypes, propertyNames, dates, contactNames)
 }
 
 // ---- Compact forecast summary (for the schedule page) --------------------------------

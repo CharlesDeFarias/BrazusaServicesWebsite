@@ -1,5 +1,4 @@
 import { listAll, OPS_TABLES, type AirtableRecord } from './airtable'
-import { canonicalClient } from './invoice'
 
 /**
  * Forecast builder - TypeScript port of BrazusaOps airtable_forecast.py (validated vs
@@ -194,11 +193,15 @@ export async function fetchForecastSummary(
     seen.add(dedupe)
 
     const property = propertyNames.get(first(f['Property']) ?? '') ?? 'Other'
-    const billing = (Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : [])
-      .map((id) => contactNames.get(id) ?? '')
-      .filter(Boolean)
-    const isThatch = billing.some((b) => b.toLowerCase().includes('thatch'))
-    const label = isThatch ? property : billing.length ? canonicalClient(billing[0]) : property
+    const names = (field: string) =>
+      (Array.isArray(f[field]) ? (f[field] as string[]) : [])
+        .map((id) => contactNames.get(id) ?? '')
+        .filter((n) => n && n.toLowerCase() !== 'unknown')
+    const isThatch = names('Billing Contact').some((b) => b.toLowerCase().includes('thatch'))
+    // Thatch units label by property; non-Thatch by the RESIDENT we actually clean for
+    // (Jaime, Elizabeth, Joe…), never the management company (GMS/Alondra bill/manage them).
+    const resident = names('Resident Contact')
+    const label = isThatch ? property : resident[0] || property
     const checkin = unitId ? arrivals.has(`${unitId}|${date}`) : false
 
     if (!byDate.has(date)) byDate.set(date, new Map())

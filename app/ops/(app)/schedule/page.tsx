@@ -89,8 +89,8 @@ export default async function SchedulePage({
                   <div className="border-t border-white-10 pt-2 space-y-1">
                     <p className="text-[11px] uppercase tracking-[0.1em] text-white-35">Forecast</p>
                     {rows.map((r) => (
-                      <div key={r.label} className="flex justify-between gap-3 text-sm">
-                        <span className="text-white-70 truncate">{r.label}</span>
+                      <div key={r.label} className="flex flex-wrap items-baseline gap-x-2 text-sm">
+                        <span className="font-medium text-white-70">{r.label}</span>
                         <span className="whitespace-nowrap text-white-40">
                           <span className="font-medium text-brand-gold">{r.checkins}</span> check-in
                           {' · '}

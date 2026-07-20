@@ -68,7 +68,7 @@ export default async function PayrollPage() {
       {week && (
         <section className="space-y-2">
           <h2 className="font-medium text-white">
-            Week of {week.weekStart}
+            Week {week.weekStart} – {shiftDate(week.weekStart, 6)}
             <span className="text-xs text-white-35 ml-2">pushed {week.pushedAt.slice(0, 16)}</span>
           </h2>
           <DataTable className="overflow-hidden" table>

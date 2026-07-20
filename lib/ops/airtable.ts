@@ -14,6 +14,8 @@ export const OPS_TABLES = {
   properties: 'tblopT6NuQAiHs2cw',
   pricingTemplates: 'tblVBwVxfyHbTM49x',
   contacts: 'tbluaPVd6ZA24Exjn',
+  scheduling: 'tblG10OCjQLfIgR4Z',
+  staff: 'tblfq8wmcqCa33hhs',
 } as const
 
 export interface AirtableRecord {

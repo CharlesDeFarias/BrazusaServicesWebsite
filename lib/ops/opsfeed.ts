@@ -65,3 +65,23 @@ export async function latestReconcile(): Promise<ReconcileFeed | null> {
   const [generatedAt, window, report] = rows[rows.length - 1]
   return { generatedAt: generatedAt ?? '', window: window ?? '', report: report ?? '' }
 }
+
+/**
+ * Per-day schedule notes, editable by Charles/Clara in the ops sheet `schedule` tab
+ * (rows [date, note]). The employee assignments come from Airtable; only the freeform
+ * per-day note lives here. Last row per date wins (edit-in-place or append both work).
+ * Returns an empty map if the tab doesn't exist yet.
+ */
+export async function scheduleNotes(): Promise<Map<string, string>> {
+  const map = new Map<string, string>()
+  let rows: string[][]
+  try {
+    rows = await readTab('schedule!A:B')
+  } catch {
+    return map // tab not created yet
+  }
+  for (const [date, note] of rows) {
+    if (date && /^\d{4}-\d{2}-\d{2}/.test(date)) map.set(date.slice(0, 10), note ?? '')
+  }
+  return map
+}

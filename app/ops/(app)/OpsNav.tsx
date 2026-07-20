@@ -7,10 +7,11 @@ const LINKS = [
   { href: '/ops/daily', label: 'Daily' },
   { href: '/ops/forecast', label: 'Forecast' },
   { href: '/ops/schedule', label: 'Schedule' },
-  { href: '/ops/reconcile', label: 'Reconcile' },
-  { href: '/ops/breezeway', label: 'Breezeway' },
   { href: '/ops/payroll', label: 'Payroll' },
   { href: '/ops/invoices', label: 'Invoices' },
+  // internal-ops pages last, out of the way for dad/Vitor
+  { href: '/ops/reconcile', label: 'Reconcile' },
+  { href: '/ops/breezeway', label: 'Breezeway' },
 ]
 
 export function OpsNav() {

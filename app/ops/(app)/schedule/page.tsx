@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { requireUser } from '@/lib/ops/auth'
-import { dateRange } from '@/lib/ops/forecast'
+import { dateRange, fetchForecastSummary, type ForecastSummaryRow } from '@/lib/ops/forecast'
 import { fetchSchedule, type ScheduleDay } from '@/lib/ops/schedule'
 import { Card } from '@/components/ops/Card'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
@@ -28,14 +28,16 @@ export default async function SchedulePage({
   const dates = dateRange(start, 7)
 
   let days: ScheduleDay[] = []
+  let summary = new Map<string, ForecastSummaryRow[]>()
   let error: string | null = null
   try {
-    days = await fetchSchedule(dates)
+    ;[days, summary] = await Promise.all([fetchSchedule(dates), fetchForecastSummary(dates)])
   } catch {
     error = 'Could not load the schedule from Airtable. Check ops token configuration.'
   }
 
   const end = dates[dates.length - 1]
+  const scheduleByDate = new Map(days.map((d) => [d.date, d]))
 
   return (
     <div className="space-y-5">
@@ -49,43 +51,65 @@ export default async function SchedulePage({
       </div>
 
       {error && <ErrorState>{error}</ErrorState>}
-      {!error && days.length === 0 && (
-        <EmptyState>No one scheduled in this range yet.</EmptyState>
+      {!error && days.length === 0 && summary.size === 0 && (
+        <EmptyState>Nothing scheduled or forecast in this range yet.</EmptyState>
       )}
 
-      {days.map((day) => {
-        const d = new Date(`${day.date}T00:00:00`)
-        return (
-          <section key={day.date} className="space-y-2">
-            <h2 className="font-medium text-white">
-              {day.date.slice(8)}/{day.date.slice(5, 7)} — {WEEKDAYS[d.getDay()]}
-              <span className="text-white-35 text-sm"> · {day.employees.length}</span>
-            </h2>
-            <Card className="px-3 py-3 space-y-2">
-              {day.employees.length > 0 ? (
-                <div className="flex flex-wrap gap-1.5">
-                  {day.employees.map((name) => (
-                    <span
-                      key={name}
-                      className="border-l-2 border-brand-gold bg-white-5 px-2 py-1 text-xs text-white"
-                    >
-                      {name}
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-xs text-white-35">No employees assigned.</p>
-              )}
-              {day.note && (
-                <p className="border-t border-white-10 pt-2 text-sm text-white-70">
-                  <span className="text-brand-gold">Note: </span>
-                  {day.note}
-                </p>
-              )}
-            </Card>
-          </section>
-        )
-      })}
+      {!error &&
+        dates.map((date) => {
+          const day = scheduleByDate.get(date)
+          const rows = summary.get(date) ?? []
+          if (!day && rows.length === 0) return null
+          const d = new Date(`${date}T00:00:00`)
+          const employees = day?.employees ?? []
+          return (
+            <section key={date} className="space-y-2">
+              <h2 className="font-medium text-white">
+                {date.slice(8)}/{date.slice(5, 7)} — {WEEKDAYS[d.getDay()]}
+                <span className="text-white-35 text-sm"> · {employees.length}</span>
+              </h2>
+              <Card className="px-3 py-3 space-y-3">
+                {employees.length > 0 ? (
+                  <div className="flex flex-wrap gap-1.5">
+                    {employees.map((name) => (
+                      <span
+                        key={name}
+                        className="border-l-2 border-brand-gold bg-white-5 px-2 py-1 text-xs text-white"
+                      >
+                        {name}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-white-35">No employees assigned.</p>
+                )}
+
+                {rows.length > 0 && (
+                  <div className="border-t border-white-10 pt-2 space-y-1">
+                    <p className="text-[11px] uppercase tracking-[0.1em] text-white-35">Forecast</p>
+                    {rows.map((r) => (
+                      <div key={r.label} className="flex justify-between gap-3 text-sm">
+                        <span className="text-white-70 truncate">{r.label}</span>
+                        <span className="whitespace-nowrap text-white-40">
+                          <span className="font-medium text-brand-gold">{r.checkins}</span> check-in
+                          {' · '}
+                          <span className="text-white-70">{r.total - r.checkins}</span> no check-in
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {day?.note && (
+                  <p className="border-t border-white-10 pt-2 text-sm text-white-70">
+                    <span className="text-brand-gold">Note: </span>
+                    {day.note}
+                  </p>
+                )}
+              </Card>
+            </section>
+          )
+        })}
 
       {!error && (
         <SourceNote

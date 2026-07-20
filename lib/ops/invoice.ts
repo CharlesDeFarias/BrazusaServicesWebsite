@@ -26,6 +26,16 @@ function first(v: unknown): string | null {
   return Array.isArray(v) && v.length ? String(v[0]) : null
 }
 
+/**
+ * Some billing contacts are the same client under different names. GMS management's
+ * contact is Alondra, so both "GMS…" and "Alondra…" bill under one client: GMS.
+ */
+export function canonicalClient(name: string): string {
+  const k = name.trim().toLowerCase()
+  if (k.includes('gms') || k.includes('alondra')) return 'GMS'
+  return name.trim()
+}
+
 export function buildInvoiceData(
   tasks: AirtableRecord[],
   contactNames: Map<string, string>,
@@ -56,7 +66,12 @@ export function buildInvoiceData(
     if (!inPeriod(date)) continue
     const billing = (Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : [])
       .map((id) => contactNames.get(id) ?? '')
-    const match = billing.find((b) => b.toLowerCase().includes(clientSub.toLowerCase()))
+    const target = canonicalClient(clientSub).toLowerCase()
+    const match = billing.find(
+      (b) =>
+        canonicalClient(b).toLowerCase() === target ||
+        b.toLowerCase().includes(clientSub.toLowerCase())
+    )
     if (!match) continue
 
     const property = propertyNames.get(first(f['Property']) ?? '') ?? 'Other'
@@ -68,7 +83,7 @@ export function buildInvoiceData(
     const key = `${first(f['Unit'])}|${date}|${first(f['Template'])}|${desc}|${note}`
     if (seen.has(key)) continue
     seen.add(key)
-    client = client ?? match
+    client = client ?? canonicalClient(match)
     const amount = Number(f['Base Price'] ?? 0) || 0
     if (!byProp.has(property)) byProp.set(property, [])
     byProp.get(property)!.push({ date, desc, amount, note })
@@ -108,8 +123,12 @@ export function listBillableClients(
     const key = `${first(f['Unit'])}|${date}|${first(f['Template'])}|${String(f['Task Name'] ?? '')}`
     if (seen.has(key)) continue
     seen.add(key)
-    for (const id of Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : []) {
-      const name = contactNames.get(id) ?? 'Unknown'
+    const clientsForTask = new Set(
+      (Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : []).map((id) =>
+        canonicalClient(contactNames.get(id) ?? 'Unknown')
+      )
+    )
+    for (const name of clientsForTask) {
       const cur = agg.get(name) ?? { taskCount: 0, total: 0, firstDate: date, lastDate: date }
       cur.taskCount += 1
       cur.total += Number(f['Base Price'] ?? 0) || 0

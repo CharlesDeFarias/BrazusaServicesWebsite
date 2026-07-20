@@ -8,6 +8,7 @@ import {
   type ForecastDay,
   type ForecastUnit,
 } from '@/lib/ops/forecast'
+import { fetchSchedule } from '@/lib/ops/schedule'
 import { Card } from '@/components/ops/Card'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 import { PropertyRow } from '@/components/ops/PropertyRow'
@@ -37,12 +38,16 @@ export default async function ForecastPage({
   const todayISO = new Date().toISOString().slice(0, 10)
   const start = /^\d{4}-\d{2}-\d{2}$/.test(params.start ?? '') ? params.start! : todayISO
   const week = params.view === 'week'
-  const dates = dateRange(start, week ? 7 : 1)
+  // Day view shows today AND tomorrow (today on top); week view shows 7 days.
+  const dates = dateRange(start, week ? 7 : 2)
 
   let days: ForecastDay[]
+  let staffByDate = new Map<string, string[]>()
   let error: string | null = null
   try {
-    days = await fetchForecast(dates)
+    const [forecast, sched] = await Promise.all([fetchForecast(dates), fetchSchedule(dates)])
+    days = forecast
+    staffByDate = new Map(sched.map((s) => [s.date, s.employees]))
   } catch {
     days = []
     error = 'Could not load Airtable data. Check ops token configuration.'
@@ -69,6 +74,7 @@ export default async function ForecastPage({
 
       {days.map((day) => {
         const d = new Date(`${day.date}T00:00:00`)
+        const staff = staffByDate.get(day.date) ?? []
         return (
           <section key={day.date} className="space-y-2">
             <div className="flex items-center justify-between gap-2">
@@ -77,6 +83,19 @@ export default async function ForecastPage({
               </h2>
               <CopyButton text={dayToWhatsApp(day)} label="Copy day" size="sm" />
             </div>
+            {staff.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="text-[11px] uppercase tracking-[0.1em] text-white-35">Team:</span>
+                {staff.map((name) => (
+                  <span
+                    key={name}
+                    className="border-l-2 border-brand-gold bg-white-5 px-2 py-0.5 text-xs text-white"
+                  >
+                    {name}
+                  </span>
+                ))}
+              </div>
+            )}
             <Card className="divide-y divide-white-10">
               {day.groups.map((g) => (
                 <PropertyRow key={g.property} property={g.property} units={g.units} unitLabel={unitBadge} />

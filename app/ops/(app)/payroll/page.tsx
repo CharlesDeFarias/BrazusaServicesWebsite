@@ -7,6 +7,28 @@ import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 export const dynamic = 'force-dynamic'
 
 const money = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+const WEEKDAY = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+function shiftDate(iso: string, n: number): string {
+  const d = new Date(`${iso}T00:00:00`)
+  d.setDate(d.getDate() + n)
+  return d.toISOString().slice(0, 10)
+}
+
+/** Inclusive list of ISO dates from `from` to `to` (ascending); capped for safety. */
+function datesBetween(from: string, to: string, cap = 31): string[] {
+  const out: string[] = []
+  let d = from
+  while (d <= to && out.length < cap) {
+    out.push(d)
+    d = shiftDate(d, 1)
+  }
+  return out
+}
+
+function weekday(iso: string): string {
+  return WEEKDAY[new Date(`${iso}T00:00:00`).getDay()]
+}
 
 export default async function PayrollPage() {
   await requireUser()
@@ -23,6 +45,16 @@ export default async function PayrollPage() {
   }
 
   const week = weeks?.[0]
+
+  // Recent days = every day since the displayed week's last day (so a backlog gap is visible),
+  // most-recent first. Fall back to whatever days were pushed if no week is shown.
+  const today = new Date().toISOString().slice(0, 10)
+  const dayByDate = new Map(days.map((d) => [d.date, d]))
+  const weekEnd = week ? shiftDate(week.weekStart, 6) : null
+  const recentDates =
+    weekEnd && today > weekEnd
+      ? datesBetween(shiftDate(weekEnd, 1), today).reverse()
+      : days.map((d) => d.date).sort((a, b) => b.localeCompare(a)).slice(0, 7)
 
   return (
     <div className="space-y-8">
@@ -50,7 +82,7 @@ export default async function PayrollPage() {
               {week.lines.map((l) => (
                 <tr key={l.payee}>
                   <td className="px-3 py-2">{l.payee}</td>
-                  <td className="px-3 py-2 text-right text-white-40">{l.hours.toFixed(1)}</td>
+                  <td className="px-3 py-2 text-right text-white-40">{l.hours > 0 ? l.hours.toFixed(1) : '—'}</td>
                   <td className="px-3 py-2 text-right font-medium">{money(l.pay)}</td>
                 </tr>
               ))}
@@ -78,26 +110,41 @@ export default async function PayrollPage() {
         </section>
       )}
 
-      {days && days.length > 0 && (
+      {recentDates.length > 0 && (
         <section className="space-y-2">
-          <h2 className="font-medium text-white">Recent days</h2>
+          <h2 className="font-medium text-white">
+            Recent days
+            {weekEnd && (
+              <span className="text-xs text-white-35 ml-2">since the {weekEnd} pay week</span>
+            )}
+          </h2>
           <div className="space-y-3">
-            {days.slice(0, 7).map((d) => (
-              <Card key={d.date} className="px-3 py-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-white-70 font-medium">{d.date}</span>
-                  <span className="text-white-40">{money(d.total)}</span>
-                </div>
-                <p className="text-white-35">
-                  {d.rows.map((r) => `${r.worker} ${r.hours.toFixed(1)}h`).join(' · ') || 'no complete sessions'}
-                </p>
-                {d.anomalies?.length > 0 && (
-                  <p className="text-amber-300 text-xs mt-1">
-                    {d.anomalies.map((a) => `${a.worker}: ${a.detail}`).join(' · ')}
-                  </p>
-                )}
-              </Card>
-            ))}
+            {recentDates.map((date) => {
+              const d = dayByDate.get(date)
+              return (
+                <Card key={date} className="px-3 py-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-white-70 font-medium">
+                      {date} <span className="text-white-35">{weekday(date)}</span>
+                    </span>
+                    <span className="text-white-40">{d ? money(d.total) : 'not pushed yet'}</span>
+                  </div>
+                  {d ? (
+                    <p className="text-white-35">
+                      {d.rows.map((r) => `${r.worker} ${r.hours.toFixed(1)}h`).join(' · ') ||
+                        'no complete sessions'}
+                    </p>
+                  ) : (
+                    <p className="text-white-35 italic">No punches pushed for this day.</p>
+                  )}
+                  {d?.anomalies && d.anomalies.length > 0 && (
+                    <p className="text-amber-300 text-xs mt-1">
+                      {d.anomalies.map((a) => `${a.worker}: ${a.detail}`).join(' · ')}
+                    </p>
+                  )}
+                </Card>
+              )
+            })}
           </div>
         </section>
       )}

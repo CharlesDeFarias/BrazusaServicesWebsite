@@ -1,4 +1,5 @@
 import { listAll, OPS_TABLES, type AirtableRecord } from './airtable'
+import { canonicalClient } from './invoice'
 
 /**
  * Forecast builder - TypeScript port of BrazusaOps airtable_forecast.py (validated vs
@@ -135,6 +136,89 @@ export async function fetchForecast(dates: string[]): Promise<ForecastDay[]> {
     propRecs.map((r) => [r.id, String(r.fields['Property Name'] ?? 'Other')])
   )
   return buildForecastData(tasks, reservations, taskTypes, propertyNames, dates)
+}
+
+// ---- Compact forecast summary (for the schedule page) --------------------------------
+// Per day, per label: how many turnover units have a same-day check-in vs not. Label is the
+// property for Thatch units, the client name for non-Thatch. CA/Restock/Linen are excluded.
+
+export interface ForecastSummaryRow {
+  label: string
+  checkins: number
+  total: number
+}
+
+export async function fetchForecastSummary(
+  dates: string[]
+): Promise<Map<string, ForecastSummaryRow[]>> {
+  if (dates.length === 0) return new Map()
+  const lo = dates[0]
+  const hi = dates[dates.length - 1]
+  const [tasks, reservations, typeRecs, propRecs, contacts] = await Promise.all([
+    listAll(OPS_TABLES.tasks, {
+      filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
+    }),
+    listAll(OPS_TABLES.reservations, {
+      filterByFormula: `AND({Check-in (Text)}>='${lo}',{Check-in (Text)}<='${hi}')`,
+    }),
+    listAll(OPS_TABLES.taskTypes),
+    listAll(OPS_TABLES.properties),
+    listAll(OPS_TABLES.contacts),
+  ])
+  const taskTypes = new Map(typeRecs.map((r) => [r.id, String(r.fields['Name'] ?? '')]))
+  const propertyNames = new Map(
+    propRecs.map((r) => [r.id, String(r.fields['Property Name'] ?? 'Other')])
+  )
+  const contactNames = new Map(
+    contacts.map((r) => [r.id, String(r.fields['Name'] ?? r.fields['Full Name'] ?? '')])
+  )
+  const arrivals = new Set<string>()
+  for (const r of reservations) {
+    const ci = String(r.fields['Check-in'] ?? '').slice(0, 10)
+    for (const u of Array.isArray(r.fields['Unit']) ? (r.fields['Unit'] as string[]) : [])
+      arrivals.add(`${u}|${ci}`)
+  }
+
+  const wanted = new Set(dates)
+  const byDate = new Map<string, Map<string, { checkins: number; total: number }>>()
+  const seen = new Set<string>()
+  for (const t of tasks) {
+    const f = t.fields
+    const date = String(f['Scheduled Date'] ?? '').slice(0, 10)
+    if (!wanted.has(date)) continue
+    const kind = typeShort(taskTypes.get(first(f['Task Type']) ?? '') ?? '')
+    if (kind === 'ca' || kind === 'restock' || kind === 'linen') continue // not turnover units
+    const unitId = first(f['Unit'])
+    const dedupe = `${unitId}|${date}|${first(f['Template'])}|${String(f['Unit (Text)'] ?? '')}`
+    if (seen.has(dedupe)) continue
+    seen.add(dedupe)
+
+    const property = propertyNames.get(first(f['Property']) ?? '') ?? 'Other'
+    const billing = (Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : [])
+      .map((id) => contactNames.get(id) ?? '')
+      .filter(Boolean)
+    const isThatch = billing.some((b) => b.toLowerCase().includes('thatch'))
+    const label = isThatch ? property : billing.length ? canonicalClient(billing[0]) : property
+    const checkin = unitId ? arrivals.has(`${unitId}|${date}`) : false
+
+    if (!byDate.has(date)) byDate.set(date, new Map())
+    const m = byDate.get(date)!
+    const cur = m.get(label) ?? { checkins: 0, total: 0 }
+    cur.total += 1
+    if (checkin) cur.checkins += 1
+    m.set(label, cur)
+  }
+
+  const out = new Map<string, ForecastSummaryRow[]>()
+  for (const [date, m] of byDate) {
+    out.set(
+      date,
+      [...m.entries()]
+        .map(([label, v]) => ({ label, checkins: v.checkins, total: v.total }))
+        .sort((a, b) => a.label.localeCompare(b.label))
+    )
+  }
+  return out
 }
 
 export function dateRange(startISO: string, days: number): string[] {

@@ -20,9 +20,23 @@ export interface ForecastGroup {
   units: ForecastUnit[]
 }
 
+/**
+ * A scheduled clean that is actually a stay EXTENSION (the same guest checks out and back in
+ * the same day — the platform split one long stay into back-to-back reservations). No turnover,
+ * so no clean is needed. Held OUT of the main forecast and listed as a removable note.
+ */
+export interface ForecastExtension {
+  property: string
+  unit: string
+  guest: string
+  until: string // YYYY-MM-DD the guest actually leaves (0 if unknown)
+}
+
 export interface ForecastDay {
   date: string // YYYY-MM-DD
   groups: ForecastGroup[]
+  /** Cleans auto-held because they look like stay extensions; verify then remove. */
+  extensions?: ForecastExtension[]
 }
 
 function first(v: unknown): string | null {
@@ -64,14 +78,35 @@ export function buildForecastData(
   contactNames: Map<string, string> = new Map()
 ): ForecastDay[] {
   const arrivals = new Set<string>()
+  // For extension detection: a same-guest check-in on a unit -> that reservation's check-out.
+  const checkinCheckout = new Map<string, string>() // `${unitId}|${ci}|${guest}` -> checkout date
+  const checkouts: { u: string; date: string; guest: string }[] = []
   for (const r of reservations) {
     const ci = String(r.fields['Check-in'] ?? '').slice(0, 10)
+    const co = String(r.fields['Check-out'] ?? '').slice(0, 10)
+    const guest = String(r.fields['Name'] ?? '').trim()
     const units = Array.isArray(r.fields['Unit']) ? (r.fields['Unit'] as string[]) : []
-    for (const u of units) arrivals.add(`${u}|${ci}`)
+    for (const u of units) {
+      if (ci) {
+        arrivals.add(`${u}|${ci}`)
+        if (guest) checkinCheckout.set(`${u}|${ci}|${guest}`, co)
+      }
+      if (co && guest) checkouts.push({ u, date: co, guest })
+    }
+  }
+  // An EXTENSION checkout: a guest checks out of a unit on date D and the SAME guest has a
+  // check-in to that unit on D (back-to-back split reservation) -> no real turnover.
+  const extensions = new Map<string, ForecastExtension>() // `${unitId}|${date}`
+  for (const { u, date, guest } of checkouts) {
+    const key = `${u}|${date}|${guest}`
+    if (checkinCheckout.has(key)) {
+      extensions.set(`${u}|${date}`, { property: '', unit: '', guest, until: checkinCheckout.get(key) || '' })
+    }
   }
 
   const wanted = new Set(dates)
   const byDay = new Map<string, Map<string, ForecastUnit[]>>()
+  const extByDay = new Map<string, ForecastExtension[]>()
   const addrByGroup = new Map<string, string>() // `${date}|${label}` -> street address (non-Thatch)
 
   for (const t of tasks) {
@@ -95,6 +130,17 @@ export function buildForecastData(
     const checkin = unitId ? arrivals.has(`${unitId}|${date}`) : false
     const label = unitLabel(String(f['Unit (Text)'] ?? ''), kind)
 
+    // Stay extension (same guest continues): hold it out of the main list, note it instead.
+    const ext = unitId ? extensions.get(`${unitId}|${date}`) : undefined
+    if (ext) {
+      if (!extByDay.has(date)) extByDay.set(date, [])
+      const list = extByDay.get(date)!
+      if (!list.some((e) => e.property === groupLabel && e.unit === label)) {
+        list.push({ property: groupLabel, unit: label, guest: ext.guest, until: ext.until })
+      }
+      continue
+    }
+
     if (!byDay.has(date)) byDay.set(date, new Map())
     const groups = byDay.get(date)!
     if (!groups.has(groupLabel)) groups.set(groupLabel, [])
@@ -102,10 +148,11 @@ export function buildForecastData(
   }
 
   return dates
-    .filter((d) => byDay.has(d))
+    .filter((d) => byDay.has(d) || extByDay.has(d))
     .map((date) => ({
       date,
-      groups: [...byDay.get(date)!.entries()]
+      extensions: extByDay.get(date),
+      groups: [...(byDay.get(date)?.entries() ?? [])]
         .map(([property, units]) => {
           // Dedupe: CA/Restock/Linen collapse to one line; unit lines dedupe on exact
           // (label,kind,checkin) - Airtable imports occasionally create duplicate Task
@@ -134,12 +181,17 @@ export function buildForecastData(
 export async function fetchForecast(dates: string[]): Promise<ForecastDay[]> {
   const lo = dates[0]
   const hi = dates[dates.length - 1]
+  // Pull reservations starting up to 21 days before the window too, so a stay that CHECKS OUT
+  // inside the window (but checked in earlier) is available for extension detection.
+  const resvLo = new Date(`${lo}T00:00:00`)
+  resvLo.setDate(resvLo.getDate() - 21)
+  const resvLoISO = resvLo.toISOString().slice(0, 10)
   const [tasks, reservations, typeRecs, propRecs, contactRecs] = await Promise.all([
     listAll(OPS_TABLES.tasks, {
       filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
     }),
     listAll(OPS_TABLES.reservations, {
-      filterByFormula: `AND({Check-in (Text)}>='${lo}',{Check-in (Text)}<='${hi}')`,
+      filterByFormula: `AND({Check-in (Text)}>='${resvLoISO}',{Check-in (Text)}<='${hi}')`,
     }),
     listAll(OPS_TABLES.taskTypes),
     listAll(OPS_TABLES.properties),
@@ -268,6 +320,15 @@ function waUnit(u: ForecastUnit): string {
   return u.checkin ? `*${u.label}°*` : u.label
 }
 
+/** Removable trailing note listing held stay-extensions (verify, then delete before/after sending). */
+function extNote(day: ForecastDay): string {
+  const items = (day.extensions ?? []).map((e) => {
+    const tail = e.guest ? ` (${e.guest}${e.until ? ` → ${mmdd(e.until)}` : ''})` : ''
+    return `- ${e.property} ${e.unit}${tail}`
+  })
+  return ['— — —', '⚠️ *Held — likely stay extensions, no clean. Verify + delete:*', ...items].join('\n')
+}
+
 function dayBlock(day: ForecastDay): string {
   const d = new Date(`${day.date}T00:00:00`)
   const dd = String(d.getDate()).padStart(2, '0')
@@ -277,7 +338,8 @@ function dayBlock(day: ForecastDay): string {
     const name = g.address ? `${g.property} (${g.address})` : g.property
     return `- *${name}*: ${g.units.map(waUnit).join(', ')}`
   })
-  return [head, ...lines].join('\n')
+  const block = [head, ...lines].join('\n')
+  return day.extensions?.length ? `${block}\n${extNote(day)}` : block
 }
 
 function mmdd(iso: string): string {

@@ -97,11 +97,31 @@ export default async function ForecastPage({
                 ))}
               </div>
             )}
-            <Card className="divide-y divide-white-10">
-              {day.groups.map((g) => (
-                <PropertyRow key={g.property} property={g.property} address={g.address} units={g.units} unitLabel={unitBadge} />
-              ))}
-            </Card>
+            {day.groups.length > 0 && (
+              <Card className="divide-y divide-white-10">
+                {day.groups.map((g) => (
+                  <PropertyRow key={g.property} property={g.property} address={g.address} units={g.units} unitLabel={unitBadge} />
+                ))}
+              </Card>
+            )}
+            {day.extensions && day.extensions.length > 0 && (
+              <div className="rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-sm">
+                <p className="text-amber-300 font-medium mb-1">
+                  ⚠️ Held — likely stay extensions (no clean). Verify, then remove:
+                </p>
+                {day.extensions.map((e, i) => (
+                  <p key={i} className="text-amber-200/90">
+                    {e.property} {e.unit}
+                    {e.guest && (
+                      <span className="text-amber-200/60">
+                        {' '}— {e.guest}
+                        {e.until && ` continues to ${e.until.slice(5)}`}
+                      </span>
+                    )}
+                  </p>
+                ))}
+              </div>
+            )}
           </section>
         )
       })}

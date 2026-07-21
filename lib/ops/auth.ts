@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 /**
  * Ops-layer auth: per-person passcodes -> signed httpOnly session cookie.
  * No database, no new dependencies. Users/passcodes live in env:
- *   OPS_PASSCODES="charles:1234,vitor:5678,clara:9012"
+ *   OPS_PASSCODES="jr:code1,sr:code2,vitor:code3,clara:code4"  (name:code, comma-separated)
  *   OPS_SESSION_SECRET=<random string, signs the cookie>
  * Session cookie value: "<user>.<expiresMs>.<hmac>"
  */

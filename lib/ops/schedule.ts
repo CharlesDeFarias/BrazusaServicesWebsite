@@ -1,4 +1,4 @@
-import { listAll, OPS_TABLES } from './airtable'
+import { listAllCached, OPS_TABLES } from './airtable'
 import { scheduleNotes } from './opsfeed'
 
 /**
@@ -20,8 +20,8 @@ export async function fetchSchedule(dates: string[]): Promise<ScheduleDay[]> {
   const want = new Set(dates)
 
   const [rows, staff] = await Promise.all([
-    listAll(OPS_TABLES.scheduling),
-    listAll(OPS_TABLES.staff),
+    listAllCached(OPS_TABLES.scheduling, {}, 120),
+    listAllCached(OPS_TABLES.staff, {}, 300),
   ])
   const nameById = new Map(
     staff.map((s) => [s.id, String(s.fields['Full Name'] ?? '').trim()])

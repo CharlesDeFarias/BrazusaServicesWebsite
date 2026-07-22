@@ -1,4 +1,4 @@
-import { listAll, OPS_TABLES } from './airtable'
+import { listAllCached, OPS_TABLES } from './airtable'
 import { residentInfo } from './opsfeed'
 
 /**
@@ -35,9 +35,9 @@ function stripResident(unitName: string): string {
 
 export async function fetchResidents(): Promise<Resident[]> {
   const [unitRecs, contactRecs, propRecs] = await Promise.all([
-    listAll(OPS_TABLES.units),
-    listAll(OPS_TABLES.contacts),
-    listAll(OPS_TABLES.properties),
+    listAllCached(OPS_TABLES.units, {}, 300),
+    listAllCached(OPS_TABLES.contacts, {}, 300),
+    listAllCached(OPS_TABLES.properties, {}, 300),
   ])
   const propName = new Map(propRecs.map((r) => [r.id, String(r.fields['Property Name'] ?? '')]))
   const contact = new Map(

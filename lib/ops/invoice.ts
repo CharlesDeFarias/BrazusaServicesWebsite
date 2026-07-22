@@ -1,4 +1,4 @@
-import { listAll, OPS_TABLES, type AirtableRecord } from './airtable'
+import { listAll, listAllCached, OPS_TABLES, type AirtableRecord } from './airtable'
 
 /**
  * Invoice builder - TypeScript port of BrazusaOps tools/invoicing/invoice.py
@@ -152,12 +152,12 @@ export async function fetchMonthTasks(month: string): Promise<{
     ? month.split('..')
     : [`${month}-01`, `${month}-31`]
   const [tasks, contacts, props, templates] = await Promise.all([
-    listAll(OPS_TABLES.tasks, {
+    listAllCached(OPS_TABLES.tasks, {
       filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
-    }),
-    listAll(OPS_TABLES.contacts),
-    listAll(OPS_TABLES.properties),
-    listAll(OPS_TABLES.pricingTemplates),
+    }, 60),
+    listAllCached(OPS_TABLES.contacts, {}, 300),
+    listAllCached(OPS_TABLES.properties, {}, 300),
+    listAllCached(OPS_TABLES.pricingTemplates, {}, 300),
   ])
   return {
     tasks,

@@ -5,6 +5,8 @@
  * This module only ever GETs. No write path by design (mirrors BrazusaOps airtable_api.py).
  */
 
+import { unstable_cache } from 'next/cache'
+
 const API = 'https://api.airtable.com/v0'
 
 export const OPS_TABLES = {
@@ -47,4 +49,21 @@ export async function listAll(
     offset = json.offset
   } while (offset)
   return records
+}
+
+/**
+ * Cached listAll. The ops pages are force-dynamic (per-user auth) but the Airtable data is
+ * Vitor-populated and lags anyway, so caching the paginated read for a few seconds/minutes
+ * makes repeat loads instant instead of re-paginating whole tables every time.
+ * Reference tables (contacts/properties/types/units) change rarely -> long TTL; tasks/reservations
+ * briefly -> short TTL. Keyed by (table, params) so each date range caches independently.
+ */
+export function listAllCached(
+  table: string,
+  params: Record<string, string> = {},
+  revalidate = 60
+): Promise<AirtableRecord[]> {
+  return unstable_cache(() => listAll(table, params), ['airtable', table, JSON.stringify(params)], {
+    revalidate,
+  })()
 }

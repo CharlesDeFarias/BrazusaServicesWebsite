@@ -1,4 +1,4 @@
-import { listAll, OPS_TABLES, type AirtableRecord } from './airtable'
+import { listAll, listAllCached, OPS_TABLES, type AirtableRecord } from './airtable'
 
 /**
  * Forecast builder - TypeScript port of BrazusaOps airtable_forecast.py (validated vs
@@ -181,21 +181,22 @@ export function buildForecastData(
 export async function fetchForecast(dates: string[]): Promise<ForecastDay[]> {
   const lo = dates[0]
   const hi = dates[dates.length - 1]
-  // Pull reservations starting up to 21 days before the window too, so a stay that CHECKS OUT
-  // inside the window (but checked in earlier) is available for extension detection.
+  // Pull reservations starting up to 10 days before the window, so a stay that CHECKS OUT inside
+  // the window (but checked in earlier) is available for extension detection. Extension segments
+  // are short (a few nights), so 10 days is plenty and keeps the (heavy) reservation fetch small.
   const resvLo = new Date(`${lo}T00:00:00`)
-  resvLo.setDate(resvLo.getDate() - 21)
+  resvLo.setDate(resvLo.getDate() - 10)
   const resvLoISO = resvLo.toISOString().slice(0, 10)
   const [tasks, reservations, typeRecs, propRecs, contactRecs] = await Promise.all([
-    listAll(OPS_TABLES.tasks, {
+    listAllCached(OPS_TABLES.tasks, {
       filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
-    }),
-    listAll(OPS_TABLES.reservations, {
+    }, 60),
+    listAllCached(OPS_TABLES.reservations, {
       filterByFormula: `AND({Check-in (Text)}>='${resvLoISO}',{Check-in (Text)}<='${hi}')`,
-    }),
-    listAll(OPS_TABLES.taskTypes),
-    listAll(OPS_TABLES.properties),
-    listAll(OPS_TABLES.contacts),
+    }, 60),
+    listAllCached(OPS_TABLES.taskTypes, {}, 300),
+    listAllCached(OPS_TABLES.properties, {}, 300),
+    listAllCached(OPS_TABLES.contacts, {}, 300),
   ])
   const taskTypes = new Map(typeRecs.map((r) => [r.id, String(r.fields['Name'] ?? '')]))
   const propertyNames = new Map(
@@ -224,15 +225,15 @@ export async function fetchForecastSummary(
   const lo = dates[0]
   const hi = dates[dates.length - 1]
   const [tasks, reservations, typeRecs, propRecs, contacts] = await Promise.all([
-    listAll(OPS_TABLES.tasks, {
+    listAllCached(OPS_TABLES.tasks, {
       filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
-    }),
-    listAll(OPS_TABLES.reservations, {
+    }, 60),
+    listAllCached(OPS_TABLES.reservations, {
       filterByFormula: `AND({Check-in (Text)}>='${lo}',{Check-in (Text)}<='${hi}')`,
-    }),
-    listAll(OPS_TABLES.taskTypes),
-    listAll(OPS_TABLES.properties),
-    listAll(OPS_TABLES.contacts),
+    }, 60),
+    listAllCached(OPS_TABLES.taskTypes, {}, 300),
+    listAllCached(OPS_TABLES.properties, {}, 300),
+    listAllCached(OPS_TABLES.contacts, {}, 300),
   ])
   const taskTypes = new Map(typeRecs.map((r) => [r.id, String(r.fields['Name'] ?? '')]))
   const propertyNames = new Map(

@@ -67,6 +67,53 @@ export async function latestReconcile(): Promise<ReconcileFeed | null> {
 }
 
 /**
+ * The authoritative daily cleaning list, assembled locally by tools/cleaning_list.py:
+ * Breezeway (Thatch, extension-screened) MERGED with Airtable residential, minus cancelled
+ * units. This is what the team works from - the live Forecast page reads Airtable, which lags.
+ * Row: [generatedAt, json]. Latest row wins.
+ */
+export interface CleaningUnit { unit: string; kind: string; checkin: boolean; label: string }
+export interface CleaningBuilding { building: string; units: CleaningUnit[] }
+export interface CleaningResidential { client: string; address: string; task: string }
+export interface CleaningListFeed {
+  date: string
+  generatedAt: string
+  buildings: CleaningBuilding[]
+  residential: CleaningResidential[]
+  held: { unit: string }[]
+  unmatched: { home_id: number; date: string; guest: string }[]
+  totals: { cleans: number; checkins: number; thatchCleans: number; residential: number }
+  whatsappText: string
+}
+
+/** Pure parse of a [generatedAt, json] cleaning-list row. Exported for tests. */
+export function parseCleaningListRow(row: string[] | undefined): CleaningListFeed | null {
+  if (!row) return null
+  const [generatedAt, json] = row
+  try {
+    const d = JSON.parse(json ?? '')
+    return {
+      date: d.date ?? '',
+      generatedAt: generatedAt ?? d.generatedAt ?? '',
+      buildings: (d.buildings ?? []) as CleaningBuilding[],
+      residential: (d.residential ?? []) as CleaningResidential[],
+      held: (d.held ?? []) as { unit: string }[],
+      unmatched: (d.unmatched ?? []) as { home_id: number; date: string; guest: string }[],
+      totals: d.totals ?? { cleans: 0, checkins: 0, thatchCleans: 0, residential: 0 },
+      whatsappText: d.whatsappText ?? '',
+    }
+  } catch {
+    return null
+  }
+}
+
+export async function latestCleaningList(): Promise<CleaningListFeed | null> {
+  const rows = await readTab('cleaninglist!A:B')
+  if (rows.length === 0) return null
+  return parseCleaningListRow(rows[rows.length - 1])
+}
+
+/**
  * Per-day schedule notes, editable by Charles/Clara in the ops sheet `schedule` tab
  * (rows [date, note]). The employee assignments come from Airtable; only the freeform
  * per-day note lives here. Last row per date wins (edit-in-place or append both work).

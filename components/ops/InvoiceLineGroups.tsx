@@ -32,6 +32,7 @@ export function InvoiceLineGroups({ groups }: { groups: LineGroup[] }) {
     Object.fromEntries(all.map((l) => [l.key, l.initialNote]))
   )
   const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [openOnly, setOpenOnly] = useState(false) // filter: show only not-confirmed (pending/flagged)
   const [editing, setEditing] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
   const [saving, setSaving] = useState(false)
@@ -95,28 +96,48 @@ export function InvoiceLineGroups({ groups }: { groups: LineGroup[] }) {
         ? 'border-amber-400/30 bg-amber-400/15 text-amber-300'
         : 'border-white-10 bg-white-5 text-white-45'
 
+  const filterPill = (on: boolean) =>
+    `rounded border px-2 py-0.5 text-xs transition-colors ${
+      on ? 'border-brand-gold/40 bg-brand-gold/10 text-brand-gold' : 'border-white-10 text-white-45 hover:text-white-70'
+    }`
+
   return (
-    <div className="space-y-4 pb-16">
+    <div className="space-y-3 pb-16">
+      {/* filter: show all vs only items still needing attention (not confirmed) */}
+      <div className="flex gap-1.5">
+        <button type="button" onClick={() => setOpenOnly(false)} className={filterPill(!openOnly)}>
+          All
+        </button>
+        <button type="button" onClick={() => setOpenOnly(true)} className={filterPill(openOnly)}>
+          Needs attention
+        </button>
+      </div>
+
       {groups.map((g) => {
-        const keys = g.lines.map((l) => l.key)
+        const visible = g.lines.filter((l) => !openOnly || status[l.key] !== 'confirmed')
+        if (visible.length === 0) return null
+        const keys = visible.map((l) => l.key)
         const allSel = keys.every((k) => selected.has(k))
         return (
-          <div key={g.heading}>
-            <div className="mb-1 flex items-center gap-2">
+          <details key={g.heading} open className="group rounded-lg border border-white-10">
+            <summary className="flex cursor-pointer select-none items-center gap-2 px-3 py-2 [&::-webkit-details-marker]:hidden">
+              <span className="text-white-45 transition-transform group-open:rotate-90">▸</span>
               <input
                 type="checkbox"
                 checked={allSel}
                 onChange={(e) => toggleGroup(keys, e.target.checked)}
+                onClick={(e) => e.stopPropagation()}
                 className="h-4 w-4 accent-brand-gold"
                 aria-label={`select all ${g.heading}`}
               />
               <h3 className="text-sm font-medium text-white">{g.heading}</h3>
-            </div>
-            <div className="divide-y divide-white-10 rounded-lg border border-white-10">
-              {g.lines.map((l, i) => {
+              <span className="ml-auto text-xs text-white-35">{visible.length}</span>
+            </summary>
+            <div className="divide-y divide-white-10 border-t border-white-10">
+              {visible.map((l, i) => {
                 const st = status[l.key]
                 let prevB: string | undefined
-                if (i > 0) prevB = g.lines[i - 1].building
+                if (i > 0) prevB = visible[i - 1].building
                 const showB = l.building && l.building !== prevB
                 return (
                   <div key={l.key} className="space-y-1 px-3 py-2 text-sm">
@@ -201,7 +222,7 @@ export function InvoiceLineGroups({ groups }: { groups: LineGroup[] }) {
                 )
               })}
             </div>
-          </div>
+          </details>
         )
       })}
 

@@ -1,7 +1,5 @@
 import { requireUser } from '@/lib/ops/auth'
 import { readPayrollFeed, type PayrollDay, type PayrollWeek } from '@/lib/ops/payroll'
-import { flags } from '@/lib/ops/opsfeed'
-import { AckButton } from '@/components/ops/AckButton'
 import { Card } from '@/components/ops/Card'
 import { DataTable } from '@/components/ops/DataTable'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
@@ -33,14 +31,6 @@ function weekday(iso: string): string {
   return WEEKDAY[new Date(`${iso}T00:00:00`).getDay()]
 }
 
-/** Monday of the week containing `iso` (ISO date). */
-function mondayOf(iso: string): string {
-  const d = new Date(`${iso}T00:00:00`)
-  const dow = d.getDay() // 0=Sun … 6=Sat
-  d.setDate(d.getDate() + (dow === 0 ? -6 : 1 - dow))
-  return d.toISOString().slice(0, 10)
-}
-
 export default async function PayrollPage() {
   await requireUser()
 
@@ -67,30 +57,31 @@ export default async function PayrollPage() {
       ? datesBetween(shiftDate(weekEnd, 1), today).reverse()
       : days.map((d) => d.date).sort((a, b) => b.localeCompare(a)).slice(0, 7)
 
-  // Alerts: it's a new pay week if the latest pushed week is before this week's Monday; plus a
-  // roll-up of anomaly notes and un-pushed days so issues are visible without scrolling.
-  const thisMonday = mondayOf(today)
-  const flg = await flags().catch(() => new Map<string, string>())
-  const payrollDone = flg.get(`payroll_done:${thisMonday}`) === 'true'
-  const needsNewWeek = (!week || week.weekStart < thisMonday) && !payrollDone
+  // Roll-up of anomaly notes and un-pushed days so issues are visible without scrolling.
   const issueCount =
     (week?.anomalies?.length ?? 0) + days.reduce((s, d) => s + (d.anomalies?.length ?? 0), 0)
   const missingDays = recentDates.filter((dt) => !dayByDate.has(dt)).length
 
   return (
     <div className="space-y-8">
-      <h1 className="text-xl font-bold text-white tracking-tight">Payroll</h1>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h1 className="text-xl font-bold text-white tracking-tight">Payroll</h1>
+        {week && (
+          <div className="text-sm text-white-60">
+            Pay period{' '}
+            <span className="font-semibold text-white">
+              {week.weekStart} – {weekEnd}
+            </span>
+            <span className="mx-2 text-white-25">·</span>
+            Last refreshed{' '}
+            <span className="font-semibold text-white">
+              {week.pushedAt.slice(0, 16).replace('T', ' ')}
+            </span>
+          </div>
+        )}
+      </div>
       {error && <ErrorState tone="warning">{error}</ErrorState>}
 
-      {!error && needsNewWeek && (
-        <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-sky-400/40 bg-sky-400/10 px-3 py-2 text-sm text-sky-200">
-          <span>
-            🗓️ New pay week started <span className="font-semibold">{thisMonday}</span> — time to run
-            payroll for the week that just ended.
-          </span>
-          <AckButton flagKey={`payroll_done:${thisMonday}`} initialDone={false} label="✓ Mark done" />
-        </div>
-      )}
       {!error && (issueCount > 0 || missingDays > 0) && (
         <div className="rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-sm text-amber-300">
           ⚠ Needs a look:{' '}

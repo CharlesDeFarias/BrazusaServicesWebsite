@@ -129,6 +129,39 @@ export async function latestCleaningList(): Promise<CleaningListFeed | null> {
 }
 
 /**
+ * Inventory snapshot pushed by tools/inventory.py (parsing-first: Group A shortage messages ->
+ * structured status). `inventory` tab: [generatedAt, json]. Latest row wins.
+ */
+export interface InvItem { item_id: string; name: string; supplier: string; status: string; category: string }
+export interface InvBuilding { building: string; items: InvItem[] }
+export interface InvReview { item: string; status: string; sender: string; raw: string; at: string }
+export interface InventoryFeed {
+  generatedAt: string
+  byBuilding: InvBuilding[]
+  review: InvReview[]
+  reportText: string
+  buyList: string
+}
+
+export async function latestInventory(): Promise<InventoryFeed | null> {
+  const rows = await readTab('inventory!A:B', 60)
+  if (rows.length === 0) return null
+  const [generatedAt, json] = rows[rows.length - 1]
+  try {
+    const d = JSON.parse(json ?? '')
+    return {
+      generatedAt: generatedAt ?? '',
+      byBuilding: (d.byBuilding ?? []) as InvBuilding[],
+      review: (d.review ?? []) as InvReview[],
+      reportText: d.reportText ?? '',
+      buyList: d.buyList ?? '',
+    }
+  } catch {
+    return null
+  }
+}
+
+/**
  * Standalone price-override layer (ops sheet `overrides` tab, cols
  * unit_match | new_price | effective_from | client | active | reason). Corrections that live
  * OUTSIDE Vitor's read-only Airtable; the invoice logic applies them by unit-name match.

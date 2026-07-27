@@ -1,5 +1,6 @@
 import { requireUser } from '@/lib/ops/auth'
 import { fetchResidents, type Resident } from '@/lib/ops/residents'
+import { doorCodes, type CodeBuilding } from '@/lib/ops/opsfeed'
 import { Card } from '@/components/ops/Card'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 import { SourceNote } from '@/components/ops/SourceNote'
@@ -21,16 +22,17 @@ export default async function ResidentsPage() {
   await requireUser()
 
   let residents: Resident[] = []
+  let codes: CodeBuilding[] = []
   let error: string | null = null
   try {
-    residents = await fetchResidents()
+    ;[residents, codes] = await Promise.all([fetchResidents(), doorCodes().catch(() => [])])
   } catch {
     error = 'Could not load residents from Airtable. Check ops token configuration.'
   }
 
   return (
-    <div className="space-y-5">
-      <h1 className="text-xl font-bold text-white tracking-tight">Residents</h1>
+    <div className="space-y-6">
+      <h1 className="text-xl font-bold text-white tracking-tight">Residents &amp; Codes</h1>
 
       {error && <ErrorState>{error}</ErrorState>}
       {!error && residents.length === 0 && <EmptyState>No residents found.</EmptyState>}
@@ -77,11 +79,46 @@ export default async function ResidentsPage() {
         </div>
       )}
 
+      {/* Door / lockbox codes by building */}
+      <section className="space-y-2">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.08em] text-white-45">Door codes</h2>
+        <p className="text-xs text-white-35">
+          By building. Edit in the ops sheet ‘codes’ tab (building, unit, code, notes). Seeded from
+          the Thatch main sheet — verify before relying on any single code.
+        </p>
+        {codes.length === 0 ? (
+          <EmptyState>No codes published yet.</EmptyState>
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {codes.map((b) => (
+              <Card key={b.building} className="border-l-2 border-l-brand-gold px-3 py-3">
+                <h3 className="mb-2 font-semibold text-white">{b.building}</h3>
+                <div className="divide-y divide-white-10">
+                  {b.entries.map((e, i) => (
+                    <div key={i} className="flex items-baseline justify-between gap-3 py-1 text-sm">
+                      <span className="text-white-70">{e.unit}</span>
+                      <span className="whitespace-nowrap text-right">
+                        {e.code ? (
+                          <span className="font-medium text-brand-gold">{e.code}</span>
+                        ) : (
+                          <span className="text-white-35 italic">—</span>
+                        )}
+                        {e.notes && <span className="block text-[11px] text-white-40">{e.notes}</span>}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+      </section>
+
       {!error && (
         <SourceNote
-          source="Airtable Units + Contacts (address, phone) · ops sheet ‘residents’ tab (code, notes)"
+          source="Airtable Units + Contacts (address, phone) · ops sheet ‘residents’ + ‘codes’ tabs"
           loadedAt={new Date()}
-          note="Add a row [resident, door_code, notes] in the sheet’s residents tab to fill codes/notes."
+          note="Fill codes/notes by adding rows in the sheet’s residents and codes tabs."
         />
       )}
     </div>

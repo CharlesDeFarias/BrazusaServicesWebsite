@@ -31,6 +31,14 @@ function weekday(iso: string): string {
   return WEEKDAY[new Date(`${iso}T00:00:00`).getDay()]
 }
 
+/** Monday of the week containing `iso` (ISO date). */
+function mondayOf(iso: string): string {
+  const d = new Date(`${iso}T00:00:00`)
+  const dow = d.getDay() // 0=Sun … 6=Sat
+  d.setDate(d.getDate() + (dow === 0 ? -6 : 1 - dow))
+  return d.toISOString().slice(0, 10)
+}
+
 export default async function PayrollPage() {
   await requireUser()
 
@@ -57,10 +65,34 @@ export default async function PayrollPage() {
       ? datesBetween(shiftDate(weekEnd, 1), today).reverse()
       : days.map((d) => d.date).sort((a, b) => b.localeCompare(a)).slice(0, 7)
 
+  // Alerts: it's a new pay week if the latest pushed week is before this week's Monday; plus a
+  // roll-up of anomaly notes and un-pushed days so issues are visible without scrolling.
+  const thisMonday = mondayOf(today)
+  const needsNewWeek = !week || week.weekStart < thisMonday
+  const issueCount =
+    (week?.anomalies?.length ?? 0) + days.reduce((s, d) => s + (d.anomalies?.length ?? 0), 0)
+  const missingDays = recentDates.filter((dt) => !dayByDate.has(dt)).length
+
   return (
     <div className="space-y-8">
       <h1 className="text-xl font-bold text-white tracking-tight">Payroll</h1>
       {error && <ErrorState tone="warning">{error}</ErrorState>}
+
+      {!error && needsNewWeek && (
+        <div className="rounded-lg border border-sky-400/40 bg-sky-400/10 px-3 py-2 text-sm text-sky-200">
+          🗓️ New pay week started <span className="font-semibold">{thisMonday}</span> — time to run
+          payroll for the week that just ended.
+        </div>
+      )}
+      {!error && (issueCount > 0 || missingDays > 0) && (
+        <div className="rounded-lg border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-sm text-amber-300">
+          ⚠ Needs a look:{' '}
+          {issueCount > 0 && `${issueCount} anomaly note${issueCount === 1 ? '' : 's'}`}
+          {issueCount > 0 && missingDays > 0 && ' · '}
+          {missingDays > 0 && `${missingDays} day${missingDays === 1 ? '' : 's'} not pushed`}
+          {' — details below.'}
+        </div>
+      )}
       {!error && !week && days.length === 0 && (
         <EmptyState>No payroll data available yet.</EmptyState>
       )}

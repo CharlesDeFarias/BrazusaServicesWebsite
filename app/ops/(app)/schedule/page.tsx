@@ -27,6 +27,17 @@ function unitBadge(u: ForecastUnit): string {
   return u.label
 }
 
+// order: check-ins first (numeric), then non-check-ins (numeric)
+function unitCmp(a: ForecastUnit, b: ForecastUnit): number {
+  const key = (u: ForecastUnit): [number, number, string] => {
+    const m = /^(\d+)/.exec(u.label)
+    return [u.checkin ? 0 : 1, m ? Number(m[1]) : 9999, u.label]
+  }
+  const [a0, a1, a2] = key(a)
+  const [b0, b1, b2] = key(b)
+  return a0 - b0 || a1 - b1 || a2.localeCompare(b2)
+}
+
 function shiftDate(iso: string, days: number): string {
   const d = new Date(`${iso}T00:00:00`)
   d.setDate(d.getDate() + days)
@@ -154,13 +165,13 @@ export default async function SchedulePage({
                         >
                           {g.property}
                         </span>
-                        {g.units.map((u, i) => (
+                        {[...g.units].sort(unitCmp).map((u, i, arr) => (
                           <span
                             key={i}
                             className={u.checkin ? 'font-semibold text-brand-gold' : 'text-white-60'}
                           >
                             {u.checkin ? `${unitBadge(u)}°` : unitBadge(u)}
-                            {i < g.units.length - 1 ? ',' : ''}
+                            {i < arr.length - 1 ? ',' : ''}
                           </span>
                         ))}
                       </div>

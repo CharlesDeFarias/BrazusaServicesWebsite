@@ -8,7 +8,7 @@ import {
   type OpenInvoiceLine,
 } from '@/lib/ops/invoice'
 import { lineConfirmations, effectiveConfirmation, type ConfirmationsFeed } from '@/lib/ops/opsfeed'
-import { LineConfirm } from '@/components/ops/LineConfirm'
+import { InvoiceLineGroups, type LineGroup } from '@/components/ops/InvoiceLineGroups'
 import { DataTable } from '@/components/ops/DataTable'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 import { bostonMonth, bostonToday } from '@/lib/ops/time'
@@ -87,6 +87,29 @@ export default async function InvoicesPage({
   for (const [, lines] of unconfByClient)
     lines.sort((a, b) => a.property.localeCompare(b.property) || a.date.localeCompare(b.date))
 
+  const unconfGroups: LineGroup[] = [...unconfByClient.entries()].map(([client, lines]) => ({
+    heading: client,
+    lines: lines.map((l) => {
+      const c = effectiveConfirmation(confs, l.key, l.date)
+      return {
+        key: l.key, date: l.date, desc: l.desc, amount: l.amount, building: l.property,
+        initialStatus: c.status, initialNote: c.note, initialBy: c.by,
+      }
+    }),
+  }))
+  const invoiceGroups: LineGroup[] = invoice
+    ? invoice.byProperty.map((p) => ({
+        heading: `${p.property} · ${money(p.subtotal)}`,
+        lines: p.lines.map((l) => {
+          const c = effectiveConfirmation(confs, l.key, l.date)
+          return {
+            key: l.key, date: l.date, desc: l.desc, amount: l.amount,
+            initialStatus: c.status, initialNote: c.note, initialBy: c.by,
+          }
+        }),
+      }))
+    : []
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -123,40 +146,8 @@ export default async function InvoicesPage({
               {unconfByClient.size} client{unconfByClient.size === 1 ? '' : 's'}
             </span>
           </summary>
-          <div className="space-y-4 px-3 pb-3">
-            {[...unconfByClient.entries()].map(([client, lines]) => (
-              <div key={client}>
-                <h3 className="mb-1 text-sm font-medium text-white">{client}</h3>
-                <DataTable className="divide-y divide-white-10 text-sm">
-                  {lines.map((l, i) => {
-                    const c = effectiveConfirmation(confs, l.key, l.date)
-                    const showBuilding = i === 0 || lines[i - 1].property !== l.property
-                    return (
-                      <div key={i} className="space-y-1 px-3 py-2">
-                        <div className="flex justify-between gap-3">
-                          <span className="whitespace-nowrap text-white-35">{l.date}</span>
-                          <span className="flex-1 text-white-70">
-                            {showBuilding && (
-                              <span className="mr-1 rounded bg-white-10 px-1 text-[11px] uppercase tracking-wide text-white-45">
-                                {l.property}
-                              </span>
-                            )}
-                            {l.desc}
-                          </span>
-                          <span className="whitespace-nowrap">{money(l.amount)}</span>
-                        </div>
-                        <LineConfirm
-                          lineKey={l.key}
-                          initialStatus={c.status}
-                          initialNote={c.note}
-                          initialBy={c.by}
-                        />
-                      </div>
-                    )
-                  })}
-                </DataTable>
-              </div>
-            ))}
+          <div className="px-3 pb-3">
+            <InvoiceLineGroups groups={unconfGroups} />
           </div>
         </details>
       )}
@@ -216,38 +207,7 @@ export default async function InvoicesPage({
             )}
           </div>
 
-          {invoice.byProperty.map((p) => (
-            <div key={p.property}>
-              <h3 className="text-sm font-medium text-white-70 mb-1">{p.property}</h3>
-              <DataTable className="divide-y divide-white-10 text-sm">
-                {p.lines.map((l, i) => {
-                  const c = effectiveConfirmation(confs, l.key, l.date)
-                  return (
-                    <div key={i} className="px-3 py-2 space-y-1.5">
-                      <div className="flex justify-between gap-3">
-                        <span className="text-white-35 whitespace-nowrap">{l.date}</span>
-                        <span className="flex-1 text-white-70">
-                          {l.desc}
-                          {l.note && <span className="block text-xs text-white-35">{l.note}</span>}
-                        </span>
-                        <span className="whitespace-nowrap">{money(l.amount)}</span>
-                      </div>
-                      <LineConfirm
-                        lineKey={l.key}
-                        initialStatus={c.status}
-                        initialNote={c.note}
-                        initialBy={c.by}
-                      />
-                    </div>
-                  )
-                })}
-                <div className="px-3 py-2 flex justify-between text-white-40">
-                  <span>Subtotal — {p.property}</span>
-                  <span className="text-white font-medium">{money(p.subtotal)}</span>
-                </div>
-              </DataTable>
-            </div>
-          ))}
+          <InvoiceLineGroups groups={invoiceGroups} />
           <div className="rounded-lg border border-gold-25 bg-white-5 text-white px-3 py-3 flex justify-between">
             <span className="font-semibold">AMOUNT DUE ({invoice.taskCount} tasks)</span>
             <span className="font-bold text-brand-gold">{money(invoice.total)}</span>

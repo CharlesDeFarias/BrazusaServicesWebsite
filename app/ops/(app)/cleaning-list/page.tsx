@@ -1,4 +1,4 @@
-import { latestCleaningList } from '@/lib/ops/opsfeed'
+import { latestCleaningList, dayMeta } from '@/lib/ops/opsfeed'
 import { fetchSchedule } from '@/lib/ops/schedule'
 import { CopyButton } from '@/components/ops/CopyButton'
 import { SourceNote } from '@/components/ops/SourceNote'
@@ -11,12 +11,17 @@ const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 export default async function CleaningListPage() {
   let feed = null
   let employees: string[] = []
+  let route = ''
   let error: string | null = null
   try {
     feed = await latestCleaningList()
     if (feed?.date) {
-      const sched = await fetchSchedule([feed.date]).catch(() => [])
+      const [sched, meta] = await Promise.all([
+        fetchSchedule([feed.date]).catch(() => []),
+        dayMeta().catch(() => new Map()),
+      ])
       employees = sched[0]?.employees ?? []
+      route = meta.get(feed.date)?.assignments ?? ''
     }
   } catch {
     error = 'Could not read the cleaning list (sheet not configured).'
@@ -122,6 +127,18 @@ export default async function CleaningListPage() {
               </span>
             </div>
           )}
+
+          {/* Posted plan / route for the cleaners (sent the night before or morning of) */}
+          <div className="rounded-lg border border-white-10 bg-white-5 px-3 py-2">
+            <span className="text-[11px] uppercase tracking-wide text-white-35">Posted route / plan</span>
+            {route ? (
+              <p className="whitespace-pre-wrap text-sm text-white-70">{route}</p>
+            ) : (
+              <p className="text-sm text-white-35 italic">
+                Not set yet — add it on the Schedule page (day’s assignments).
+              </p>
+            )}
+          </div>
 
           <SourceNote
             source="Breezeway + Airtable residential · cleaners from Airtable Scheduling"

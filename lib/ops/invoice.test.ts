@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { buildInvoiceData, listBillableClients } from './invoice'
+import { buildInvoiceData, listBillableClients, overridePrice } from './invoice'
 import type { AirtableRecord } from './airtable'
+import type { PriceOverride } from './opsfeed'
 
 const contacts = new Map([
   ['c1', 'Acme Management Inc'],
@@ -64,6 +65,27 @@ describe('buildInvoiceData', () => {
     const inv = buildInvoiceData(tasks, contacts, props, templates, 'acme', '2026-06')!
     expect(inv.taskCount).toBe(2)
     expect(inv.total).toBe(180)
+  })
+})
+
+describe('overridePrice', () => {
+  const ovs: PriceOverride[] = [
+    { unitMatch: '94 Charles St 2', newPrice: 77.25, effectiveFrom: '2026-07-01' },
+    { unitMatch: '33 - 1 Highland Ave 1G', newPrice: 100, effectiveFrom: '2026-07-01' },
+  ]
+  it('overrides a matching unit on/after the effective date', () => {
+    expect(overridePrice('94 Charles St 2 (Unknown)', '2026-07-15', 66.95, ovs)).toBe(77.25)
+    expect(overridePrice('33 - 1 Highland Ave 1G (Unknown)', '2026-07-05', 80, ovs)).toBe(100)
+  })
+  it('leaves the base price for non-matching units (e.g. unit #1, common areas)', () => {
+    expect(overridePrice('94 Charles St 1 (Unknown)', '2026-07-15', 100, ovs)).toBe(100)
+    expect(overridePrice('94 Charles St Common Areas (Unknown)', '2026-07-15', 50, ovs)).toBe(50)
+  })
+  it('does not apply before the effective date', () => {
+    expect(overridePrice('94 Charles St 2 (Unknown)', '2026-06-30', 66.95, ovs)).toBe(66.95)
+  })
+  it('no overrides -> base price unchanged', () => {
+    expect(overridePrice('94 Charles St 2 (Unknown)', '2026-07-15', 66.95, [])).toBe(66.95)
   })
 })
 

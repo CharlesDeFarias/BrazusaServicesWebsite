@@ -1,4 +1,5 @@
 import { listAll, listAllCached, OPS_TABLES, type AirtableRecord } from './airtable'
+import { priceOverrides, type PriceOverride } from './opsfeed'
 
 /**
  * Invoice builder - TypeScript port of BrazusaOps tools/invoicing/invoice.py
@@ -36,13 +37,35 @@ export function canonicalClient(name: string): string {
   return name.trim()
 }
 
+/**
+ * Apply the standalone price-override layer: if an active override's unit_match is a substring
+ * of the task's Unit (Text) and the task date >= effective_from, use its price instead of the
+ * Base Price. Longest match wins (most specific). Mirrors tools/overrides.py::price_for.
+ */
+export function overridePrice(
+  unitText: string,
+  date: string,
+  base: number,
+  overrides: PriceOverride[]
+): number {
+  const d = (date ?? '').slice(0, 10)
+  let best: PriceOverride | null = null
+  for (const o of overrides) {
+    if ((unitText ?? '').toLowerCase().includes(o.unitMatch.toLowerCase()) && d >= o.effectiveFrom) {
+      if (!best || o.unitMatch.length > best.unitMatch.length) best = o
+    }
+  }
+  return best ? best.newPrice : base
+}
+
 export function buildInvoiceData(
   tasks: AirtableRecord[],
   contactNames: Map<string, string>,
   propertyNames: Map<string, string>,
   templateNames: Map<string, string>,
   clientSub: string,
-  month: string
+  month: string,
+  overrides: PriceOverride[] = []
 ): Invoice | null {
   let client: string | null = null
   const byProp = new Map<string, InvoiceLine[]>()
@@ -84,7 +107,8 @@ export function buildInvoiceData(
     if (seen.has(key)) continue
     seen.add(key)
     client = client ?? canonicalClient(match)
-    const amount = Number(f['Base Price'] ?? 0) || 0
+    const amount = overridePrice(
+      String(f['Unit (Text)'] ?? ''), date, Number(f['Base Price'] ?? 0) || 0, overrides)
     if (!byProp.has(property)) byProp.set(property, [])
     byProp.get(property)!.push({ date, desc, amount, note })
   }
@@ -111,7 +135,8 @@ export interface BillableClient {
 export function listBillableClients(
   tasks: AirtableRecord[],
   contactNames: Map<string, string>,
-  month: string
+  month: string,
+  overrides: PriceOverride[] = []
 ): BillableClient[] {
   const agg = new Map<string, { taskCount: number; total: number; firstDate: string; lastDate: string }>()
   const range = month.includes('..') ? month.split('..') : null
@@ -131,7 +156,8 @@ export function listBillableClients(
     for (const name of clientsForTask) {
       const cur = agg.get(name) ?? { taskCount: 0, total: 0, firstDate: date, lastDate: date }
       cur.taskCount += 1
-      cur.total += Number(f['Base Price'] ?? 0) || 0
+      cur.total += overridePrice(
+        String(f['Unit (Text)'] ?? ''), date, Number(f['Base Price'] ?? 0) || 0, overrides)
       if (date < cur.firstDate) cur.firstDate = date
       if (date > cur.lastDate) cur.lastDate = date
       agg.set(name, cur)
@@ -147,17 +173,19 @@ export async function fetchMonthTasks(month: string): Promise<{
   contactNames: Map<string, string>
   propertyNames: Map<string, string>
   templateNames: Map<string, string>
+  overrides: PriceOverride[]
 }> {
   const [lo, hi] = month.includes('..')
     ? month.split('..')
     : [`${month}-01`, `${month}-31`]
-  const [tasks, contacts, props, templates] = await Promise.all([
+  const [tasks, contacts, props, templates, overrides] = await Promise.all([
     listAllCached(OPS_TABLES.tasks, {
       filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
     }, 60),
     listAllCached(OPS_TABLES.contacts, {}, 300),
     listAllCached(OPS_TABLES.properties, {}, 300),
     listAllCached(OPS_TABLES.pricingTemplates, {}, 300),
+    priceOverrides(),
   ])
   return {
     tasks,
@@ -168,5 +196,6 @@ export async function fetchMonthTasks(month: string): Promise<{
     templateNames: new Map(
       templates.map((r) => [r.id, String(r.fields['Template Name'] ?? '')])
     ),
+    overrides,
   }
 }

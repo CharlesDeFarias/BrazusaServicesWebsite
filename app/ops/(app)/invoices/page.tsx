@@ -47,9 +47,10 @@ export default async function InvoicesPage({
 
   const invoice =
     data && clientSub
-      ? buildInvoiceData(data.tasks, data.contactNames, data.propertyNames, data.templateNames, clientSub, month)
+      ? buildInvoiceData(data.tasks, data.contactNames, data.propertyNames, data.templateNames, clientSub, month, data.overrides)
       : null
-  const clients = data && !clientSub ? listBillableClients(data.tasks, data.contactNames, month) : []
+  const clients =
+    data && !clientSub ? listBillableClients(data.tasks, data.contactNames, month, data.overrides) : []
 
   return (
     <div className="space-y-6">

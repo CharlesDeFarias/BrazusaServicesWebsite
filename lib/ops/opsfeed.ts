@@ -114,6 +114,29 @@ export async function latestCleaningList(): Promise<CleaningListFeed | null> {
 }
 
 /**
+ * Standalone price-override layer (ops sheet `overrides` tab, cols
+ * unit_match | new_price | effective_from | client | active | reason). Corrections that live
+ * OUTSIDE Vitor's read-only Airtable; the invoice logic applies them by unit-name match.
+ * Mirrors tools/overrides.py. Returns active rows only.
+ */
+export interface PriceOverride { unitMatch: string; newPrice: number; effectiveFrom: string }
+
+const TRUTHY = new Set(['true', '1', 'yes', 'x', 'checked'])
+
+export async function priceOverrides(): Promise<PriceOverride[]> {
+  const rows = await readTab('overrides!A2:F').catch(() => [] as string[][])
+  const out: PriceOverride[] = []
+  for (const r of rows) {
+    const [um, price, eff, , active] = r
+    if (!um || !TRUTHY.has(String(active ?? '').trim().toLowerCase())) continue
+    const p = Number(price)
+    if (!Number.isFinite(p)) continue
+    out.push({ unitMatch: um.trim(), newPrice: p, effectiveFrom: String(eff ?? '').slice(0, 10) })
+  }
+  return out
+}
+
+/**
  * Per-day schedule notes, editable by Charles/Clara in the ops sheet `schedule` tab
  * (rows [date, note]). The employee assignments come from Airtable; only the freeform
  * per-day note lives here. Last row per date wins (edit-in-place or append both work).

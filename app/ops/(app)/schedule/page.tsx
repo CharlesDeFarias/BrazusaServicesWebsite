@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { requireUser } from '@/lib/ops/auth'
-import { dateRange, fetchForecastSummary, type ForecastSummaryRow } from '@/lib/ops/forecast'
+import { dateRange, fetchForecast, type ForecastDay, type ForecastUnit } from '@/lib/ops/forecast'
 import { fetchSchedule, type ScheduleDay } from '@/lib/ops/schedule'
 import { dayMeta, type DayMeta } from '@/lib/ops/opsfeed'
 import { DayStatus } from '@/components/ops/DayStatus'
-import { Card } from '@/components/ops/Card'
+import { WeekRosterButton } from '@/components/ops/WeekRosterButton'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 import { SourceNote } from '@/components/ops/SourceNote'
 import { bostonToday } from '@/lib/ops/time'
@@ -13,15 +13,18 @@ export const dynamic = 'force-dynamic'
 
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-// Thatch buildings — anything else in a forecast label is a non-Thatch (residential) client,
-// which we color-code so it stands out.
 const THATCH = [
   'prentiss', '30 webro', '80 dot', '304 newb', 'charles', 'burbank', 'highl', 'symphony',
   'quarters', 'newbury', 'dorchester', 'broadway', 'jmf',
 ]
-function isNonThatch(label: string): boolean {
-  const l = label.toLowerCase()
-  return !THATCH.some((b) => l.includes(b))
+const isNonThatch = (label: string) => !THATCH.some((b) => label.toLowerCase().includes(b))
+
+function unitBadge(u: ForecastUnit): string {
+  if (u.kind === 'ca') return 'CA'
+  if (u.kind === 'restock') return 'Restock'
+  if (u.kind === 'linen') return 'Linen'
+  if (u.kind === 'mid') return `${u.label} (Mid)`
+  return u.label
 }
 
 function shiftDate(iso: string, days: number): string {
@@ -39,18 +42,17 @@ export default async function SchedulePage({
   const params = await searchParams
   const todayISO = bostonToday()
   const start = /^\d{4}-\d{2}-\d{2}$/.test(params.start ?? '') ? params.start! : todayISO
-  // Default 7 days; "See more" extends the window a week at a time (far days load on demand).
   const numDays = Math.min(Math.max(Number(params.days) || 7, 7), 35)
   const dates = dateRange(start, numDays)
 
-  let days: ScheduleDay[] = []
-  let summary = new Map<string, ForecastSummaryRow[]>()
+  let forecast: ForecastDay[] = []
+  let sched: ScheduleDay[] = []
   let meta = new Map<string, DayMeta>()
   let error: string | null = null
   try {
-    ;[days, summary, meta] = await Promise.all([
+    ;[forecast, sched, meta] = await Promise.all([
+      fetchForecast(dates),
       fetchSchedule(dates),
-      fetchForecastSummary(dates),
       dayMeta().catch(() => new Map<string, DayMeta>()),
     ])
   } catch {
@@ -58,7 +60,20 @@ export default async function SchedulePage({
   }
 
   const end = dates[dates.length - 1]
-  const scheduleByDate = new Map(days.map((d) => [d.date, d]))
+  const forecastByDate = new Map(forecast.map((d) => [d.date, d]))
+  const scheduleByDate = new Map(sched.map((d) => [d.date, d]))
+
+  // for the week-roster button: each visible day's current meta
+  const weekDays = dates.map((date) => {
+    const m = meta.get(date)
+    return {
+      date,
+      rosterConfirmed: m?.rosterConfirmed ?? false,
+      scheduleSent: m?.scheduleSent ?? false,
+      cleanersNotified: m?.cleanersNotified ?? false,
+      assignments: m?.assignments ?? '',
+    }
+  })
 
   return (
     <div className="space-y-5">
@@ -74,33 +89,31 @@ export default async function SchedulePage({
         </div>
       </div>
 
+      {!error && <WeekRosterButton days={weekDays} />}
+
       {error && <ErrorState>{error}</ErrorState>}
-      {!error && days.length === 0 && summary.size === 0 && (
+      {!error && forecast.length === 0 && sched.length === 0 && (
         <EmptyState>Nothing scheduled or forecast in this range yet.</EmptyState>
       )}
 
       {!error &&
         dates.map((date) => {
-          const day = scheduleByDate.get(date)
-          const rows = summary.get(date) ?? []
+          const day = forecastByDate.get(date)
+          const groups = day?.groups ?? []
+          const s = scheduleByDate.get(date)
           const m = meta.get(date)
-          if (!day && rows.length === 0 && !m) return null
+          const employees = s?.employees ?? []
+          const allUnits = groups.flatMap((g) => g.units)
+          const total = allUnits.length
+          const checkins = allUnits.filter((u) => u.checkin).length
+          if (total === 0 && employees.length === 0 && !m) return null
           const d = new Date(`${date}T00:00:00`)
-          const employees = day?.employees ?? []
-          const totalCleans = rows.reduce((s, r) => s + r.total, 0)
-          const totalCheckins = rows.reduce((s, r) => s + r.checkins, 0)
           return (
             <section key={date} className="space-y-2">
               <h2 className="font-medium text-white">
                 {date.slice(8)}/{date.slice(5, 7)} — {WEEKDAYS[d.getDay()]}
-                {totalCleans > 0 && (
-                  <span className="text-white-35 text-sm">
-                    {' '}· {totalCleans} cleans · {totalCheckins} check-ins · {employees.length} staff
-                  </span>
-                )}
               </h2>
-              <Card className="px-3 py-3 space-y-3">
-                {/* Day planning status: roster / sent / notified + cleaner assignments */}
+              <div className="space-y-3 rounded-lg border border-white-10 bg-white-5 px-3 py-3">
                 <DayStatus
                   date={date}
                   initial={{
@@ -116,7 +129,7 @@ export default async function SchedulePage({
                     {employees.map((name) => (
                       <span
                         key={name}
-                        className="border-l-2 border-brand-gold bg-white-5 px-2 py-1 text-xs text-white"
+                        className="rounded border-l-2 border-brand-gold bg-white-5 px-2 py-1 text-xs text-white"
                       >
                         {name}
                       </span>
@@ -124,41 +137,54 @@ export default async function SchedulePage({
                   </div>
                 )}
 
-                {rows.length > 0 && (
-                  <div className="border-t border-white-10 pt-2 space-y-1">
-                    <p className="text-[11px] uppercase tracking-[0.1em] text-white-35">Forecast</p>
-                    {rows.map((r) => {
-                      const nonThatch = isNonThatch(r.label)
-                      return (
-                        <div key={r.label} className="flex flex-wrap items-baseline gap-x-2 text-sm">
+                {/* Actual units, one line per building */}
+                {groups.length > 0 && (
+                  <div className="border-t border-white-10 pt-2">
+                    {groups.map((g) => (
+                      <div
+                        key={g.property}
+                        className="flex flex-wrap items-baseline gap-x-1.5 border-b border-white-10 py-1.5 text-sm last:border-0"
+                      >
+                        <span
+                          className={
+                            isNonThatch(g.property)
+                              ? 'mr-1 whitespace-nowrap rounded bg-purple-400/15 px-1.5 font-semibold text-purple-300'
+                              : 'mr-1 whitespace-nowrap font-semibold text-white'
+                          }
+                        >
+                          {g.property}
+                        </span>
+                        {g.units.map((u, i) => (
                           <span
-                            className={
-                              nonThatch
-                                ? 'rounded bg-purple-400/15 px-1.5 font-medium text-purple-300'
-                                : 'font-medium text-white-70'
-                            }
-                            title={nonThatch ? 'non-Thatch (residential) client' : undefined}
+                            key={i}
+                            className={u.checkin ? 'font-semibold text-brand-gold' : 'text-white-60'}
                           >
-                            {r.label}
+                            {u.checkin ? `${unitBadge(u)}°` : unitBadge(u)}
+                            {i < g.units.length - 1 ? ',' : ''}
                           </span>
-                          <span className="whitespace-nowrap text-white-40">
-                            <span className="font-medium text-brand-gold">{r.checkins}</span> check-in
-                            {' · '}
-                            <span className="text-white-70">{r.total - r.checkins}</span> no check-in
-                          </span>
-                        </div>
-                      )
-                    })}
+                        ))}
+                      </div>
+                    ))}
                   </div>
                 )}
 
-                {day?.note && (
+                {/* Day total at the bottom */}
+                {total > 0 && (
                   <p className="border-t border-white-10 pt-2 text-sm text-white-70">
-                    <span className="text-brand-gold">Note: </span>
-                    {day.note}
+                    <span className="font-semibold text-brand-gold">{checkins}</span> check-ins ·{' '}
+                    <span className="font-semibold text-white">{total - checkins}</span> no check-in ·{' '}
+                    <span className="font-semibold text-white">{total}</span> total
+                    <span className="text-white-35"> · {employees.length} staff</span>
                   </p>
                 )}
-              </Card>
+
+                {s?.note && (
+                  <p className="border-t border-white-10 pt-2 text-sm text-white-70">
+                    <span className="text-brand-gold">Note: </span>
+                    {s.note}
+                  </p>
+                )}
+              </div>
             </section>
           )
         })}
@@ -176,9 +202,9 @@ export default async function SchedulePage({
 
       {!error && (
         <SourceNote
-          source="Airtable Scheduling + forecast · ops sheet ‘schedule’ (notes) + ‘daymeta’ (status/assignments)"
+          source="Airtable forecast + Scheduling · ops sheet ‘schedule’ (notes) + ‘daymeta’ (status/assignments)"
           loadedAt={new Date()}
-          note="Non-Thatch (residential) clients are highlighted. Tap the status flags to update; assign staff in Airtable."
+          note="Non-Thatch clients highlighted. Tap the status flags or “Confirm roster — whole week”."
         />
       )}
     </div>

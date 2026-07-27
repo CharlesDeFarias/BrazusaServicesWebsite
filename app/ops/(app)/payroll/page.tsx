@@ -1,5 +1,7 @@
 import { requireUser } from '@/lib/ops/auth'
 import { readPayrollFeed, type PayrollDay, type PayrollWeek } from '@/lib/ops/payroll'
+import { flags } from '@/lib/ops/opsfeed'
+import { AckButton } from '@/components/ops/AckButton'
 import { Card } from '@/components/ops/Card'
 import { DataTable } from '@/components/ops/DataTable'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
@@ -68,7 +70,9 @@ export default async function PayrollPage() {
   // Alerts: it's a new pay week if the latest pushed week is before this week's Monday; plus a
   // roll-up of anomaly notes and un-pushed days so issues are visible without scrolling.
   const thisMonday = mondayOf(today)
-  const needsNewWeek = !week || week.weekStart < thisMonday
+  const flg = await flags().catch(() => new Map<string, string>())
+  const payrollDone = flg.get(`payroll_done:${thisMonday}`) === 'true'
+  const needsNewWeek = (!week || week.weekStart < thisMonday) && !payrollDone
   const issueCount =
     (week?.anomalies?.length ?? 0) + days.reduce((s, d) => s + (d.anomalies?.length ?? 0), 0)
   const missingDays = recentDates.filter((dt) => !dayByDate.has(dt)).length
@@ -79,9 +83,12 @@ export default async function PayrollPage() {
       {error && <ErrorState tone="warning">{error}</ErrorState>}
 
       {!error && needsNewWeek && (
-        <div className="rounded-lg border border-sky-400/40 bg-sky-400/10 px-3 py-2 text-sm text-sky-200">
-          🗓️ New pay week started <span className="font-semibold">{thisMonday}</span> — time to run
-          payroll for the week that just ended.
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-sky-400/40 bg-sky-400/10 px-3 py-2 text-sm text-sky-200">
+          <span>
+            🗓️ New pay week started <span className="font-semibold">{thisMonday}</span> — time to run
+            payroll for the week that just ended.
+          </span>
+          <AckButton flagKey={`payroll_done:${thisMonday}`} initialDone={false} label="✓ Mark done" />
         </div>
       )}
       {!error && (issueCount > 0 || missingDays > 0) && (

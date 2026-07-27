@@ -32,7 +32,7 @@ export default async function CleaningListPage() {
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight">Cleaning List</h1>
+          <h1 className="text-xl font-bold text-white tracking-tight">Daily</h1>
           {feed && <p className="text-xs text-white-45">{heading}</p>}
         </div>
         {feed && <CopyButton text={feed.whatsappText} label="Copy for WhatsApp" />}
@@ -93,9 +93,13 @@ export default async function CleaningListPage() {
             </div>
           )}
 
-          <p className="text-sm text-white-70">
-            <span className="font-semibold text-white">{feed.totals.cleans}</span> cleans ·{' '}
-            <span className="font-semibold text-white">{feed.totals.checkins}</span> check-ins
+          <p className="border-t border-white-10 pt-2 text-sm text-white-70">
+            <span className="font-semibold text-brand-gold">{feed.totals.checkins}</span> check-ins ·{' '}
+            <span className="font-semibold text-white">
+              {feed.totals.cleans - feed.totals.checkins}
+            </span>{' '}
+            no check-in ·{' '}
+            <span className="font-semibold text-white">{feed.totals.cleans}</span> total
             {feed.totals.residential > 0 && ` · ${feed.totals.residential} residential`}
           </p>
 

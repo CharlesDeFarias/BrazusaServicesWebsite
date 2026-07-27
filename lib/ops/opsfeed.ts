@@ -234,6 +234,21 @@ export interface DayMeta {
   at: string
 }
 
+/**
+ * General single-value flags (ops sheet `flags` tab: key | value | by | at), latest per key.
+ * Used e.g. for "payroll_done:<monday>" so the Payroll banner can be marked done. Fresh read.
+ */
+export async function flags(): Promise<Map<string, string>> {
+  const rows = await readTab('flags!A:D', 0).catch(() => [] as string[][])
+  const out = new Map<string, string>()
+  for (const r of rows) {
+    const [key, value] = r
+    if (!key || key === 'key') continue
+    out.set(key, String(value ?? ''))
+  }
+  return out
+}
+
 export async function dayMeta(): Promise<Map<string, DayMeta>> {
   const rows = await readTab('daymeta!A:G', 0).catch(() => [] as string[][]) // fresh: reflects toggles
   const byDate = new Map<string, DayMeta>()

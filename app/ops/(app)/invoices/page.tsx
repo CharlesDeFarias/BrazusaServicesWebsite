@@ -112,11 +112,15 @@ export default async function InvoicesPage({
 
       {/* Unconfirmed items across all clients (since the confirmed-through watermark) */}
       {unconfirmed.length > 0 && (
-        <details className="rounded-lg border border-amber-400/25 bg-amber-400/5">
-          <summary className="cursor-pointer select-none px-3 py-2 text-sm font-semibold text-amber-300">
-            {unconfirmed.length} unconfirmed item{unconfirmed.length === 1 ? '' : 's'} to review
-            <span className="ml-2 font-normal text-white-40">
-              · {unconfByClient.size} client{unconfByClient.size === 1 ? '' : 's'}
+        <details className="group rounded-lg border-2 border-amber-400/40 bg-amber-400/10">
+          <summary className="flex cursor-pointer select-none items-center gap-2 px-4 py-3 text-base font-semibold text-amber-200 [&::-webkit-details-marker]:hidden">
+            <span className="text-lg leading-none transition-transform group-open:rotate-90">▸</span>
+            <span className="flex-1">
+              {unconfirmed.length} item{unconfirmed.length === 1 ? '' : 's'} to review
+              <span className="ml-2 text-sm font-normal text-white-45 group-open:hidden">· tap to open</span>
+            </span>
+            <span className="rounded-full bg-amber-400/20 px-2 py-0.5 text-xs">
+              {unconfByClient.size} client{unconfByClient.size === 1 ? '' : 's'}
             </span>
           </summary>
           <div className="space-y-4 px-3 pb-3">

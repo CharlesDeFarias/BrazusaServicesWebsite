@@ -1,5 +1,6 @@
 import { latestCleaningList, dayMeta } from '@/lib/ops/opsfeed'
 import { fetchSchedule } from '@/lib/ops/schedule'
+import { SortToggle, unitComparator } from '@/components/ops/SortToggle'
 import { CopyButton } from '@/components/ops/CopyButton'
 import { SourceNote } from '@/components/ops/SourceNote'
 import { ErrorState, EmptyState } from '@/components/ops/StateMessage'
@@ -8,7 +9,13 @@ export const dynamic = 'force-dynamic'
 
 const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-export default async function CleaningListPage() {
+export default async function CleaningListPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sort?: string }>
+}) {
+  const mode: 'num' | 'ci' = (await searchParams).sort === 'ci' ? 'ci' : 'num'
+  const cmp = unitComparator(mode)
   let feed = null
   let employees: string[] = []
   let route = ''
@@ -40,7 +47,12 @@ export default async function CleaningListPage() {
           <h1 className="text-xl font-bold text-white tracking-tight">Daily</h1>
           {feed && <p className="text-xs text-white-45">{heading}</p>}
         </div>
-        {feed && <CopyButton text={feed.whatsappText} label="Copy for WhatsApp" />}
+        <div className="flex items-center gap-2">
+          {feed && (
+            <SortToggle mode={mode} numHref="/ops/cleaning-list?sort=num" ciHref="/ops/cleaning-list?sort=ci" />
+          )}
+          {feed && <CopyButton text={feed.whatsappText} label="Copy for WhatsApp" />}
+        </div>
       </div>
 
       {error && <ErrorState>{error}</ErrorState>}
@@ -71,14 +83,14 @@ export default async function CleaningListPage() {
                 className="flex flex-wrap items-baseline gap-x-1.5 border-b border-white-10 py-1.5 text-sm last:border-0"
               >
                 <span className="mr-1 whitespace-nowrap font-semibold text-white">{g.building}</span>
-                {g.units.map((u, i) => (
+                {[...g.units].sort(cmp).map((u, i, arr) => (
                   <span
                     key={i}
                     className={u.checkin ? 'font-semibold text-brand-gold' : 'text-white-60'}
                     title={u.checkin ? 'same-day check-in' : undefined}
                   >
                     {u.label}
-                    {i < g.units.length - 1 ? ',' : ''}
+                    {i < arr.length - 1 ? ',' : ''}
                   </span>
                 ))}
               </div>

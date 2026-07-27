@@ -5,6 +5,7 @@ import { fetchSchedule, type ScheduleDay } from '@/lib/ops/schedule'
 import { dayMeta, type DayMeta } from '@/lib/ops/opsfeed'
 import { DayStatus } from '@/components/ops/DayStatus'
 import { WeekRosterButton } from '@/components/ops/WeekRosterButton'
+import { SortToggle, unitComparator } from '@/components/ops/SortToggle'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 import { SourceNote } from '@/components/ops/SourceNote'
 import { bostonToday } from '@/lib/ops/time'
@@ -27,17 +28,6 @@ function unitBadge(u: ForecastUnit): string {
   return u.label
 }
 
-// order: check-ins first (numeric), then non-check-ins (numeric)
-function unitCmp(a: ForecastUnit, b: ForecastUnit): number {
-  const key = (u: ForecastUnit): [number, number, string] => {
-    const m = /^(\d+)/.exec(u.label)
-    return [u.checkin ? 0 : 1, m ? Number(m[1]) : 9999, u.label]
-  }
-  const [a0, a1, a2] = key(a)
-  const [b0, b1, b2] = key(b)
-  return a0 - b0 || a1 - b1 || a2.localeCompare(b2)
-}
-
 function shiftDate(iso: string, days: number): string {
   const d = new Date(`${iso}T00:00:00`)
   d.setDate(d.getDate() + days)
@@ -47,7 +37,7 @@ function shiftDate(iso: string, days: number): string {
 export default async function SchedulePage({
   searchParams,
 }: {
-  searchParams: Promise<{ start?: string; days?: string }>
+  searchParams: Promise<{ start?: string; days?: string; sort?: string }>
 }) {
   await requireUser()
   const params = await searchParams
@@ -55,6 +45,9 @@ export default async function SchedulePage({
   const start = /^\d{4}-\d{2}-\d{2}$/.test(params.start ?? '') ? params.start! : todayISO
   const numDays = Math.min(Math.max(Number(params.days) || 7, 7), 35)
   const dates = dateRange(start, numDays)
+  const mode: 'num' | 'ci' = params.sort === 'ci' ? 'ci' : 'num'
+  const cmp = unitComparator(mode)
+  const q = `start=${start}&days=${numDays}`
 
   let forecast: ForecastDay[] = []
   let sched: ScheduleDay[] = []
@@ -100,7 +93,12 @@ export default async function SchedulePage({
         </div>
       </div>
 
-      {!error && <WeekRosterButton days={weekDays} />}
+      {!error && (
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <WeekRosterButton days={weekDays} />
+          <SortToggle mode={mode} numHref={`/ops/schedule?${q}&sort=num`} ciHref={`/ops/schedule?${q}&sort=ci`} />
+        </div>
+      )}
 
       {error && <ErrorState>{error}</ErrorState>}
       {!error && forecast.length === 0 && sched.length === 0 && (
@@ -165,7 +163,7 @@ export default async function SchedulePage({
                         >
                           {g.property}
                         </span>
-                        {[...g.units].sort(unitCmp).map((u, i, arr) => (
+                        {[...g.units].sort(cmp).map((u, i, arr) => (
                           <span
                             key={i}
                             className={u.checkin ? 'font-semibold text-brand-gold' : 'text-white-60'}

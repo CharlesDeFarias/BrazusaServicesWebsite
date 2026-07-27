@@ -1,6 +1,7 @@
 import { latestCleaningList, dayMeta } from '@/lib/ops/opsfeed'
 import { fetchSchedule } from '@/lib/ops/schedule'
 import { SortToggle, unitComparator } from '@/components/ops/SortToggle'
+import { RoutePlanner } from '@/components/ops/RoutePlanner'
 import { CopyButton } from '@/components/ops/CopyButton'
 import { SourceNote } from '@/components/ops/SourceNote'
 import { ErrorState, EmptyState } from '@/components/ops/StateMessage'
@@ -140,14 +141,24 @@ export default async function CleaningListPage({
             </div>
           )}
 
-          {/* Posted plan / route for the cleaners (sent the night before or morning of) */}
+          {/* Posted plan / route: manual (daymeta) first, else auto-found from Group A "Schedule
+              de Hoje", else a planner to compose + copy one. */}
           <div className="rounded-lg border border-white-10 bg-white-5 px-3 py-2">
             <span className="text-[11px] uppercase tracking-wide text-white-35">Posted route / plan</span>
             {route ? (
               <p className="whitespace-pre-wrap text-sm text-white-70">{route}</p>
+            ) : feed.route ? (
+              <>
+                <p className="whitespace-pre-wrap text-sm text-white-70">{feed.route}</p>
+                <p className="mt-1 text-[11px] text-white-35">from WhatsApp (Group A)</p>
+              </>
+            ) : employees.length > 0 ? (
+              <div className="mt-1">
+                <RoutePlanner employees={employees} />
+              </div>
             ) : (
               <p className="text-sm text-white-35 italic">
-                Not set yet — add it on the Schedule page (day’s assignments).
+                No route posted, and no cleaners scheduled yet.
               </p>
             )}
           </div>

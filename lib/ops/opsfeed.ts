@@ -93,6 +93,7 @@ export interface CleaningResidential { client: string; address: string; task: st
 export interface CleaningListFeed {
   date: string
   generatedAt: string
+  route: string // auto-found from Group A "Schedule de Hoje"
   buildings: CleaningBuilding[]
   residential: CleaningResidential[]
   held: { unit: string }[]
@@ -110,6 +111,7 @@ export function parseCleaningListRow(row: string[] | undefined): CleaningListFee
     return {
       date: d.date ?? '',
       generatedAt: generatedAt ?? d.generatedAt ?? '',
+      route: d.route ?? '',
       buildings: (d.buildings ?? []) as CleaningBuilding[],
       residential: (d.residential ?? []) as CleaningResidential[],
       held: (d.held ?? []) as { unit: string }[],

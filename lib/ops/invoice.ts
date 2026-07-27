@@ -1,5 +1,5 @@
 import { listAll, listAllCached, OPS_TABLES, type AirtableRecord } from './airtable'
-import { priceOverrides, type PriceOverride } from './opsfeed'
+import { priceOverrides, lineKey, type PriceOverride } from './opsfeed'
 
 /**
  * Invoice builder - TypeScript port of BrazusaOps tools/invoicing/invoice.py
@@ -13,6 +13,7 @@ export interface InvoiceLine {
   desc: string
   amount: number
   note: string
+  key: string // stable per-line id for confirmations (see lineKey)
 }
 
 export interface Invoice {
@@ -110,7 +111,7 @@ export function buildInvoiceData(
     const amount = overridePrice(
       String(f['Unit (Text)'] ?? ''), date, Number(f['Base Price'] ?? 0) || 0, overrides)
     if (!byProp.has(property)) byProp.set(property, [])
-    byProp.get(property)!.push({ date, desc, amount, note })
+    byProp.get(property)!.push({ date, desc, amount, note, key: lineKey(property, date, desc) })
   }
 
   if (!client) return null

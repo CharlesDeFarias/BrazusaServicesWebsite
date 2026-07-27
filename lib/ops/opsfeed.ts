@@ -137,6 +137,54 @@ export async function priceOverrides(): Promise<PriceOverride[]> {
 }
 
 /**
+ * Invoice line-item confirmations (ops sheet `confirmations` tab: key | status | note | by | at).
+ * A watermark row (key "*confirmed_through*") means every line dated <= that day counts as
+ * confirmed without a per-line row. Explicit line rows (dad's confirm/flag clicks, appended by
+ * /api/ops/confirm) override the watermark; latest row per key wins. Mirrors tools/confirmations.py.
+ */
+export type ConfirmStatus = 'confirmed' | 'flagged' | 'pending'
+export interface LineConfirmation { status: ConfirmStatus; note: string; by: string; at: string }
+export interface ConfirmationsFeed { confirmedThrough: string; byKey: Map<string, LineConfirmation> }
+
+const WATERMARK = '*confirmed_through*'
+
+/** Stable per-line id shared by the invoice builder, the page, and the write API. */
+export function lineKey(property: string, date: string, desc: string): string {
+  return `${property}||${date}||${desc}`
+}
+
+export async function lineConfirmations(): Promise<ConfirmationsFeed> {
+  const rows = await readTab('confirmations!A:E').catch(() => [] as string[][])
+  let confirmedThrough = ''
+  const byKey = new Map<string, LineConfirmation>()
+  for (const r of rows) {
+    const [key, status, note, by, at] = r
+    if (!key || key === 'key') continue
+    if (key === WATERMARK) {
+      confirmedThrough = String(status ?? '').slice(0, 10)
+      continue
+    }
+    const s = String(status ?? '').trim().toLowerCase()
+    const st: ConfirmStatus = s === 'confirmed' || s === 'flagged' ? s : 'pending'
+    byKey.set(key, { status: st, note: note ?? '', by: by ?? '', at: at ?? '' }) // latest wins
+  }
+  return { confirmedThrough, byKey }
+}
+
+/** Effective status of a line: explicit row wins, else watermark, else pending. */
+export function effectiveConfirmation(
+  feed: ConfirmationsFeed,
+  key: string,
+  date: string
+): LineConfirmation {
+  const explicit = feed.byKey.get(key)
+  if (explicit) return explicit
+  if (feed.confirmedThrough && date <= feed.confirmedThrough)
+    return { status: 'confirmed', note: '', by: 'seed', at: '' }
+  return { status: 'pending', note: '', by: '', at: '' }
+}
+
+/**
  * Per-day schedule notes, editable by Charles/Clara in the ops sheet `schedule` tab
  * (rows [date, note]). The employee assignments come from Airtable; only the freeform
  * per-day note lives here. Last row per date wins (edit-in-place or append both work).

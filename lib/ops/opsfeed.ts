@@ -1,4 +1,5 @@
-import { google } from 'googleapis'
+import { google, type sheets_v4 } from 'googleapis'
+import { unstable_cache } from 'next/cache'
 
 /**
  * Reads the local-published ops feed tabs from the ops Google Sheet:
@@ -7,12 +8,18 @@ import { google } from 'googleapis'
  * Latest row wins. Same sheet as payroll (OPS_SHEET_ID, falling back to OPS_PAYROLL_SHEET_ID).
  */
 
-function getAuth() {
+// Reuse one Sheets client across requests: building GoogleAuth + fetching a token per read was
+// adding a round-trip to every page. The client caches its own access token internally.
+let _sheets: sheets_v4.Sheets | null = null
+function sheetsClient(): sheets_v4.Sheets {
+  if (_sheets) return _sheets
   const keyJson = Buffer.from(process.env.GOOGLE_SERVICE_ACCOUNT_KEY!, 'base64').toString('utf-8')
-  return new google.auth.GoogleAuth({
+  const auth = new google.auth.GoogleAuth({
     credentials: JSON.parse(keyJson),
     scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
   })
+  _sheets = google.sheets({ version: 'v4', auth })
+  return _sheets
 }
 
 function sheetId(): string {
@@ -21,10 +28,18 @@ function sheetId(): string {
   return id
 }
 
-async function readTab(range: string): Promise<string[][]> {
-  const sheets = google.sheets({ version: 'v4', auth: getAuth() })
-  const res = await sheets.spreadsheets.values.get({ spreadsheetId: sheetId(), range })
+async function readTabRaw(range: string): Promise<string[][]> {
+  const res = await sheetsClient().spreadsheets.values.get({ spreadsheetId: sheetId(), range })
   return (res.data.values ?? []) as string[][]
+}
+
+/**
+ * Cached tab read. Repeat loads within `ttl` seconds are instant. Pass ttl <= 0 for a fresh read
+ * (used for the confirmations tab, so dad's just-saved confirm/flag shows on the next page load).
+ */
+function readTab(range: string, ttl = 20): Promise<string[][]> {
+  if (ttl <= 0) return readTabRaw(range)
+  return unstable_cache(() => readTabRaw(range), ['opsheet', range], { revalidate: ttl })()
 }
 
 export type BreezewayTask = [name: string, date: string, title: string]
@@ -154,7 +169,7 @@ export function lineKey(property: string, date: string, desc: string): string {
 }
 
 export async function lineConfirmations(): Promise<ConfirmationsFeed> {
-  const rows = await readTab('confirmations!A:E').catch(() => [] as string[][])
+  const rows = await readTab('confirmations!A:E', 0).catch(() => [] as string[][]) // fresh: reflects dad's writes
   let confirmedThrough = ''
   const byKey = new Map<string, LineConfirmation>()
   for (const r of rows) {

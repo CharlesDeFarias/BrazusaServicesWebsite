@@ -5,8 +5,7 @@ import { usePathname } from 'next/navigation'
 
 const LINKS = [
   { href: '/ops/cleaning-list', label: 'Cleaning List' },
-  { href: '/ops/forecast', label: 'Forecast' },
-  { href: '/ops/schedule', label: 'Schedule' },
+  { href: '/ops/schedule', label: 'Schedule' }, // Forecast folded in (workload + staffing)
   { href: '/ops/payroll', label: 'Payroll' },
   { href: '/ops/invoices', label: 'Invoices' },
   { href: '/ops/inventory', label: 'Inventory' },

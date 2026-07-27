@@ -20,7 +20,7 @@ export default function OpsLoginPage() {
     }).catch(() => null)
     setBusy(false)
     if (res?.ok) {
-      router.push('/ops/forecast')
+      router.push('/ops/cleaning-list')
       router.refresh()
     } else {
       setError('Invalid passcode')

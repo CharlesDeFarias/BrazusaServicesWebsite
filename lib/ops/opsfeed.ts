@@ -186,6 +186,41 @@ export async function lineConfirmations(): Promise<ConfirmationsFeed> {
   return { confirmedThrough, byKey }
 }
 
+/**
+ * Per-day planning status for the merged Forecast+Schedule page (ops sheet `daymeta` tab:
+ * date | roster_confirmed | schedule_sent | cleaners_notified | assignments | by | at).
+ * Append-only, latest row per date wins. Dad taps "roster confirmed"; Charles sets the rest.
+ */
+export interface DayMeta {
+  date: string
+  rosterConfirmed: boolean
+  scheduleSent: boolean
+  cleanersNotified: boolean
+  assignments: string
+  by: string
+  at: string
+}
+
+export async function dayMeta(): Promise<Map<string, DayMeta>> {
+  const rows = await readTab('daymeta!A:G', 0).catch(() => [] as string[][]) // fresh: reflects toggles
+  const byDate = new Map<string, DayMeta>()
+  for (const r of rows) {
+    const [date, rc, ss, cn, assignments, by, at] = r
+    if (!date || date === 'date') continue
+    const t = (v: string | undefined) => TRUTHY.has(String(v ?? '').trim().toLowerCase())
+    byDate.set(date, {
+      date,
+      rosterConfirmed: t(rc),
+      scheduleSent: t(ss),
+      cleanersNotified: t(cn),
+      assignments: assignments ?? '',
+      by: by ?? '',
+      at: at ?? '',
+    })
+  }
+  return byDate
+}
+
 /** Effective status of a line: explicit row wins, else watermark, else pending. */
 export function effectiveConfirmation(
   feed: ConfirmationsFeed,

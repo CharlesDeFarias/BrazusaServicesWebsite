@@ -169,6 +169,53 @@ export function listBillableClients(
     .sort((a, b) => b.total - a.total)
 }
 
+export interface OpenInvoiceLine {
+  client: string
+  property: string // = building
+  date: string
+  desc: string
+  amount: number
+  note: string
+  key: string
+}
+
+/**
+ * All billable lines across ALL clients in [fromDate, toDate], deduped, with overrides applied
+ * and the same `key` as buildInvoiceData. The invoices page filters these by confirmation status
+ * to show the "unconfirmed items" section. Range is small (watermark -> today), so the fetch is cheap.
+ */
+export async function fetchOpenInvoiceLines(fromDate: string, toDate: string): Promise<OpenInvoiceLine[]> {
+  const { tasks, contactNames, propertyNames, templateNames, overrides } = await fetchMonthTasks(
+    `${fromDate}..${toDate}`
+  )
+  const sorted = [...tasks].sort((a, b) =>
+    String(a.fields['Scheduled Date'] ?? '').localeCompare(String(b.fields['Scheduled Date'] ?? ''))
+  )
+  const out: OpenInvoiceLine[] = []
+  const seen = new Set<string>()
+  for (const t of sorted) {
+    const f = t.fields
+    const date = String(f['Scheduled Date'] ?? '').slice(0, 10)
+    const property = propertyNames.get(first(f['Property']) ?? '') ?? 'Other'
+    const desc =
+      templateNames.get(first(f['Template']) ?? '') || String(f['Unit (Text)'] ?? '').trim() || 'Task'
+    const note = String(f['Invoice Note'] ?? '')
+    const dedupe = `${first(f['Unit'])}|${date}|${first(f['Template'])}|${desc}|${note}`
+    if (seen.has(dedupe)) continue
+    seen.add(dedupe)
+    const amount = overridePrice(
+      String(f['Unit (Text)'] ?? ''), date, Number(f['Base Price'] ?? 0) || 0, overrides)
+    const key = lineKey(property, date, desc)
+    const clients = new Set(
+      (Array.isArray(f['Billing Contact']) ? (f['Billing Contact'] as string[]) : []).map((id) =>
+        canonicalClient(contactNames.get(id) ?? 'Unknown')
+      )
+    )
+    for (const client of clients) out.push({ client, property, date, desc, amount, note, key })
+  }
+  return out
+}
+
 export async function fetchMonthTasks(month: string): Promise<{
   tasks: AirtableRecord[]
   contactNames: Map<string, string>

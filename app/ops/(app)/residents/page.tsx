@@ -32,7 +32,7 @@ export default async function ResidentsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold text-white tracking-tight">Residents &amp; Codes</h1>
+      <h1 className="text-xl font-bold text-white tracking-tight">Info</h1>
 
       {error && <ErrorState>{error}</ErrorState>}
       {!error && residents.length === 0 && <EmptyState>No residents found.</EmptyState>}

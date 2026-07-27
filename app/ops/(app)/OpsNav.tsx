@@ -9,7 +9,7 @@ const LINKS = [
   { href: '/ops/payroll', label: 'Payroll' },
   { href: '/ops/invoices', label: 'Invoices' },
   { href: '/ops/inventory', label: 'Inventory' },
-  { href: '/ops/residents', label: 'Residents' },
+  { href: '/ops/residents', label: 'Info' },
   // internal-ops (Reconcile folded in) last, out of the way for dad/Vitor
   { href: '/ops/breezeway', label: 'Breezeway' },
 ]

@@ -33,13 +33,15 @@ function shiftDate(iso: string, days: number): string {
 export default async function SchedulePage({
   searchParams,
 }: {
-  searchParams: Promise<{ start?: string }>
+  searchParams: Promise<{ start?: string; days?: string }>
 }) {
   await requireUser()
   const params = await searchParams
   const todayISO = bostonToday()
   const start = /^\d{4}-\d{2}-\d{2}$/.test(params.start ?? '') ? params.start! : todayISO
-  const dates = dateRange(start, 7)
+  // Default 7 days; "See more" extends the window a week at a time (far days load on demand).
+  const numDays = Math.min(Math.max(Number(params.days) || 7, 7), 35)
+  const dates = dateRange(start, numDays)
 
   let days: ScheduleDay[] = []
   let summary = new Map<string, ForecastSummaryRow[]>()
@@ -160,6 +162,17 @@ export default async function SchedulePage({
             </section>
           )
         })}
+
+      {!error && numDays < 35 && (
+        <div className="pt-1">
+          <Link
+            href={`/ops/schedule?start=${start}&days=${numDays + 7}`}
+            className="text-sm text-brand-gold hover:underline"
+          >
+            See more →
+          </Link>
+        </div>
+      )}
 
       {!error && (
         <SourceNote

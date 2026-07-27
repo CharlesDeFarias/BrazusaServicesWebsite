@@ -1,11 +1,17 @@
 import Link from 'next/link'
 import { requireUser } from '@/lib/ops/auth'
-import { buildInvoiceData, fetchMonthTasks, listBillableClients } from '@/lib/ops/invoice'
+import {
+  buildInvoiceData,
+  fetchMonthTasks,
+  listBillableClients,
+  fetchOpenInvoiceLines,
+  type OpenInvoiceLine,
+} from '@/lib/ops/invoice'
 import { lineConfirmations, effectiveConfirmation, type ConfirmationsFeed } from '@/lib/ops/opsfeed'
 import { LineConfirm } from '@/components/ops/LineConfirm'
 import { DataTable } from '@/components/ops/DataTable'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
-import { bostonMonth } from '@/lib/ops/time'
+import { bostonMonth, bostonToday } from '@/lib/ops/time'
 
 export const dynamic = 'force-dynamic'
 
@@ -56,11 +62,30 @@ export default async function InvoicesPage({
 
   // Line confirmations (dad confirms/flags each line; seeded confirmed through a watermark date).
   const empty: ConfirmationsFeed = { confirmedThrough: '', byKey: new Map() }
-  const confs = invoice ? await lineConfirmations().catch(() => empty) : empty
+  const confs = await lineConfirmations().catch(() => empty)
   const counts = { confirmed: 0, flagged: 0, pending: 0 }
   if (invoice)
     for (const p of invoice.byProperty)
       for (const l of p.lines) counts[effectiveConfirmation(confs, l.key, l.date).status]++
+
+  // Unconfirmed items across ALL clients since the confirmed-through watermark (not retroactive).
+  const openFrom = confs.confirmedThrough || bostonToday()
+  let openLines: OpenInvoiceLine[] = []
+  try {
+    openLines = await fetchOpenInvoiceLines(openFrom, bostonToday())
+  } catch {
+    /* keep the section empty on error */
+  }
+  const unconfirmed = openLines.filter(
+    (l) => effectiveConfirmation(confs, l.key, l.date).status !== 'confirmed'
+  )
+  const unconfByClient = new Map<string, OpenInvoiceLine[]>()
+  for (const l of unconfirmed) {
+    if (!unconfByClient.has(l.client)) unconfByClient.set(l.client, [])
+    unconfByClient.get(l.client)!.push(l)
+  }
+  for (const [, lines] of unconfByClient)
+    lines.sort((a, b) => a.property.localeCompare(b.property) || a.date.localeCompare(b.date))
 
   return (
     <div className="space-y-6">
@@ -84,6 +109,53 @@ export default async function InvoicesPage({
       </div>
 
       {error && <ErrorState>{error}</ErrorState>}
+
+      {/* Unconfirmed items across all clients (since the confirmed-through watermark) */}
+      {unconfirmed.length > 0 && (
+        <details className="rounded-lg border border-amber-400/25 bg-amber-400/5">
+          <summary className="cursor-pointer select-none px-3 py-2 text-sm font-semibold text-amber-300">
+            {unconfirmed.length} unconfirmed item{unconfirmed.length === 1 ? '' : 's'} to review
+            <span className="ml-2 font-normal text-white-40">
+              · {unconfByClient.size} client{unconfByClient.size === 1 ? '' : 's'}
+            </span>
+          </summary>
+          <div className="space-y-4 px-3 pb-3">
+            {[...unconfByClient.entries()].map(([client, lines]) => (
+              <div key={client}>
+                <h3 className="mb-1 text-sm font-medium text-white">{client}</h3>
+                <DataTable className="divide-y divide-white-10 text-sm">
+                  {lines.map((l, i) => {
+                    const c = effectiveConfirmation(confs, l.key, l.date)
+                    const showBuilding = i === 0 || lines[i - 1].property !== l.property
+                    return (
+                      <div key={i} className="space-y-1 px-3 py-2">
+                        <div className="flex justify-between gap-3">
+                          <span className="whitespace-nowrap text-white-35">{l.date}</span>
+                          <span className="flex-1 text-white-70">
+                            {showBuilding && (
+                              <span className="mr-1 rounded bg-white-10 px-1 text-[11px] uppercase tracking-wide text-white-45">
+                                {l.property}
+                              </span>
+                            )}
+                            {l.desc}
+                          </span>
+                          <span className="whitespace-nowrap">{money(l.amount)}</span>
+                        </div>
+                        <LineConfirm
+                          lineKey={l.key}
+                          initialStatus={c.status}
+                          initialNote={c.note}
+                          initialBy={c.by}
+                        />
+                      </div>
+                    )
+                  })}
+                </DataTable>
+              </div>
+            ))}
+          </div>
+        </details>
+      )}
 
       {!error && !clientSub && (
         <DataTable className="divide-y divide-white-10">

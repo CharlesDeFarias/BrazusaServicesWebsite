@@ -194,9 +194,9 @@ export async function fetchForecast(dates: string[]): Promise<ForecastDay[]> {
     listAllCached(OPS_TABLES.reservations, {
       filterByFormula: `AND({Check-in (Text)}>='${resvLoISO}',{Check-in (Text)}<='${hi}')`,
     }, 60),
-    listAllCached(OPS_TABLES.taskTypes, {}, 300),
-    listAllCached(OPS_TABLES.properties, {}, 300),
-    listAllCached(OPS_TABLES.contacts, {}, 300),
+    listAllCached(OPS_TABLES.taskTypes, {}, 1800),
+    listAllCached(OPS_TABLES.properties, {}, 1800),
+    listAllCached(OPS_TABLES.contacts, {}, 1800),
   ])
   const taskTypes = new Map(typeRecs.map((r) => [r.id, String(r.fields['Name'] ?? '')]))
   const propertyNames = new Map(
@@ -231,9 +231,9 @@ export async function fetchForecastSummary(
     listAllCached(OPS_TABLES.reservations, {
       filterByFormula: `AND({Check-in (Text)}>='${lo}',{Check-in (Text)}<='${hi}')`,
     }, 60),
-    listAllCached(OPS_TABLES.taskTypes, {}, 300),
-    listAllCached(OPS_TABLES.properties, {}, 300),
-    listAllCached(OPS_TABLES.contacts, {}, 300),
+    listAllCached(OPS_TABLES.taskTypes, {}, 1800),
+    listAllCached(OPS_TABLES.properties, {}, 1800),
+    listAllCached(OPS_TABLES.contacts, {}, 1800),
   ])
   const taskTypes = new Map(typeRecs.map((r) => [r.id, String(r.fields['Name'] ?? '')]))
   const propertyNames = new Map(

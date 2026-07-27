@@ -35,9 +35,9 @@ function stripResident(unitName: string): string {
 
 export async function fetchResidents(): Promise<Resident[]> {
   const [unitRecs, contactRecs, propRecs] = await Promise.all([
-    listAllCached(OPS_TABLES.units, {}, 300),
-    listAllCached(OPS_TABLES.contacts, {}, 300),
-    listAllCached(OPS_TABLES.properties, {}, 300),
+    listAllCached(OPS_TABLES.units, {}, 1800),
+    listAllCached(OPS_TABLES.contacts, {}, 1800),
+    listAllCached(OPS_TABLES.properties, {}, 1800),
   ])
   const propName = new Map(propRecs.map((r) => [r.id, String(r.fields['Property Name'] ?? '')]))
   const contact = new Map(

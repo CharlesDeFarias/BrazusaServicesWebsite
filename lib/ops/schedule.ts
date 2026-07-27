@@ -21,7 +21,7 @@ export async function fetchSchedule(dates: string[]): Promise<ScheduleDay[]> {
 
   const [rows, staff] = await Promise.all([
     listAllCached(OPS_TABLES.scheduling, {}, 120),
-    listAllCached(OPS_TABLES.staff, {}, 300),
+    listAllCached(OPS_TABLES.staff, {}, 1800),
   ])
   const nameById = new Map(
     staff.map((s) => [s.id, String(s.fields['Full Name'] ?? '').trim()])

@@ -227,14 +227,14 @@ export async function fetchMonthTasks(month: string): Promise<{
     ? month.split('..')
     : [`${month}-01`, `${month}-31`]
   const [tasks, contacts, props, templates, overrides] = await Promise.all([
-    // Big paginated fetch (~1.4k July rows / ~7s cold) that changes slowly -> cache 5 min so
+    // Big paginated fetch (~1.4k July rows / ~7s cold) that changes slowly -> cache 10 min so
     // only the first load per window pays it; repeat loads are instant.
     listAllCached(OPS_TABLES.tasks, {
       filterByFormula: `AND({Scheduled Date (Text)}>='${lo}',{Scheduled Date (Text)}<='${hi}')`,
-    }, 300),
-    listAllCached(OPS_TABLES.contacts, {}, 300),
-    listAllCached(OPS_TABLES.properties, {}, 300),
-    listAllCached(OPS_TABLES.pricingTemplates, {}, 300),
+    }, 600),
+    listAllCached(OPS_TABLES.contacts, {}, 1800),
+    listAllCached(OPS_TABLES.properties, {}, 1800),
+    listAllCached(OPS_TABLES.pricingTemplates, {}, 1800),
     priceOverrides(),
   ])
   return {

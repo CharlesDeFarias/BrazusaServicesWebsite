@@ -31,6 +31,14 @@ function weekday(iso: string): string {
   return WEEKDAY[new Date(`${iso}T00:00:00`).getDay()]
 }
 
+/** Monday of the week containing `iso`. */
+function mondayOf(iso: string): string {
+  const d = new Date(`${iso}T00:00:00`)
+  const dow = d.getDay()
+  d.setDate(d.getDate() + (dow === 0 ? -6 : 1 - dow))
+  return d.toISOString().slice(0, 10)
+}
+
 export default async function PayrollPage() {
   await requireUser()
 
@@ -45,17 +53,25 @@ export default async function PayrollPage() {
     error = 'Payroll feed not available yet (sheet not configured or no pushes).'
   }
 
-  const week = weeks?.[0]
-
-  // Recent days = every day since the displayed week's last day (so a backlog gap is visible),
-  // most-recent first. Fall back to whatever days were pushed if no week is shown.
   const today = bostonToday()
+  const thisMonday = mondayOf(today)
   const dayByDate = new Map(days.map((d) => [d.date, d]))
+
+  // The payroll TABLE always shows the most recent FULLY-ENDED week — never the in-progress
+  // current week (whose Sunday hasn't passed yet).
+  const week =
+    [...weeks]
+      .sort((a, b) => b.weekStart.localeCompare(a.weekStart))
+      .find((w) => shiftDate(w.weekStart, 6) < today) ?? undefined
   const weekEnd = week ? shiftDate(week.weekStart, 6) : null
-  const recentDates =
-    weekEnd && today > weekEnd
-      ? datesBetween(shiftDate(weekEnd, 1), today).reverse()
-      : days.map((d) => d.date).sort((a, b) => b.localeCompare(a)).slice(0, 7)
+
+  // Recent days = the CURRENT pay week's days (this Monday → today), PLUS any day flagged with an
+  // anomaly (missing clock-in/out) that still needs attention. Most recent first.
+  const currentWeek = datesBetween(thisMonday, today)
+  const anomalyDates = days.filter((d) => (d.anomalies?.length ?? 0) > 0).map((d) => d.date)
+  const recentDates = [...new Set([...currentWeek, ...anomalyDates])].sort((a, b) =>
+    b.localeCompare(a)
+  )
 
   // Roll-up of anomaly notes and un-pushed days so issues are visible without scrolling.
   const issueCount =
@@ -144,10 +160,10 @@ export default async function PayrollPage() {
       {recentDates.length > 0 && (
         <section className="space-y-2">
           <h2 className="font-medium text-white">
-            Recent days
-            {weekEnd && (
-              <span className="text-xs text-white-35 ml-2">since the {weekEnd} pay week</span>
-            )}
+            Current week
+            <span className="text-xs text-white-35 ml-2">
+              (from {thisMonday}) + anything needing attention
+            </span>
           </h2>
           <div className="space-y-3">
             {recentDates.map((date) => {

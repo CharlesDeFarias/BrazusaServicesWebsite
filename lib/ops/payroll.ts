@@ -27,11 +27,13 @@ export interface PayrollWeekLine {
   hours: number
   sessions: number
   pay: number
+  fixed?: boolean // true = flat non-punch line (management pay); not in Vitor's cleaner run
 }
 
 export interface PayrollWeek {
   weekStart: string
   lines: PayrollWeekLine[]
+  cleanerSubtotal?: number // punch-derived total (excludes fixed lines); compare to Vitor's run
   total: number
   anomalies: { worker: string; date: string; detail: string }[]
   pushedAt: string

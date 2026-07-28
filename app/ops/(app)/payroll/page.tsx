@@ -126,13 +126,44 @@ export default async function PayrollPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white-10">
-              {week.lines.map((l) => (
-                <tr key={l.payee}>
-                  <td className="px-3 py-2">{l.payee}</td>
-                  <td className="px-3 py-2 text-right text-white-40">{l.hours > 0 ? l.hours.toFixed(1) : '—'}</td>
-                  <td className="px-3 py-2 text-right font-medium">{money(l.pay)}</td>
+              {week.lines
+                .filter((l) => !l.fixed)
+                .map((l) => (
+                  <tr key={l.payee}>
+                    <td className="px-3 py-2">{l.payee}</td>
+                    <td className="px-3 py-2 text-right text-white-40">
+                      {l.hours > 0 ? l.hours.toFixed(1) : '—'}
+                    </td>
+                    <td className="px-3 py-2 text-right font-medium">{money(l.pay)}</td>
+                  </tr>
+                ))}
+              {/* Punch-derived subtotal — this is the number that should match Vitor's cleaner run.
+                  Shown separately so a fixed management line can never mask a payroll undercount. */}
+              {week.cleanerSubtotal != null && week.lines.some((l) => l.fixed) && (
+                <tr className="bg-white-5">
+                  <td className="px-3 py-2 text-white-60">Cleaner checks (matches Vitor)</td>
+                  <td />
+                  <td className="px-3 py-2 text-right font-medium text-white-70">
+                    {money(week.cleanerSubtotal)}
+                  </td>
                 </tr>
-              ))}
+              )}
+              {week.lines
+                .filter((l) => l.fixed)
+                .map((l) => (
+                  <tr key={l.payee} className="text-white-60">
+                    <td className="px-3 py-2">
+                      {l.payee}
+                      <span className="ml-1.5 rounded bg-white-10 px-1 text-[10px] uppercase tracking-wide text-white-40">
+                        fixed
+                      </span>
+                    </td>
+                    <td className="px-3 py-2 text-right text-white-40">
+                      {l.hours > 0 ? l.hours.toFixed(1) : '—'}
+                    </td>
+                    <td className="px-3 py-2 text-right font-medium">{money(l.pay)}</td>
+                  </tr>
+                ))}
               <tr className="bg-white-5">
                 <td className="px-3 py-2 font-semibold">Grand total</td>
                 <td />

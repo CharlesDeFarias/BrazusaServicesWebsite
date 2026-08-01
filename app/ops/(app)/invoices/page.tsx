@@ -58,7 +58,9 @@ export default async function InvoicesPage({
       ? buildInvoiceData(data.tasks, data.contactNames, data.propertyNames, data.templateNames, clientSub, month, data.overrides)
       : null
   const clients =
-    data && !clientSub ? listBillableClients(data.tasks, data.contactNames, month, data.overrides) : []
+    data && !clientSub
+      ? listBillableClients(data.tasks, data.contactNames, month, data.overrides, data.templateNames)
+      : []
 
   // Line confirmations (dad confirms/flags each line; seeded confirmed through a watermark date).
   const empty: ConfirmationsFeed = { confirmedThrough: '', byKey: new Map() }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildInvoiceData, listBillableClients, overridePrice } from './invoice'
+import { buildInvoiceData, isBillableDesc, listBillableClients, overridePrice } from './invoice'
 import type { AirtableRecord } from './airtable'
 import type { PriceOverride } from './opsfeed'
 
@@ -11,7 +11,11 @@ const props = new Map([
   ['p1', '1 Test St'],
   ['p2', '2 Demo Ave'],
 ])
-const templates = new Map([['tpl1', '1 Test St 5g (Resident) - Apartment Cleaning']])
+const templates = new Map([
+  ['tpl1', '1 Test St 5g (Resident) - Apartment Cleaning'],
+  ['tplOps', '1 Test St Common Areas - Operational Tasks'],
+  ['tplLinen', '1 Test St Common Areas - Linens Organization & Inventory'],
+])
 
 function task(date: string, billing: string, prop: string, tpl: string | null, price: number): AirtableRecord {
   return {
@@ -65,6 +69,26 @@ describe('buildInvoiceData', () => {
     const inv = buildInvoiceData(tasks, contacts, props, templates, 'acme', '2026-06')!
     expect(inv.taskCount).toBe(2)
     expect(inv.total).toBe(180)
+  })
+
+  it('excludes internal Operational Tasks + Linens Organization (Vitor never bills them)', () => {
+    const tasks = [
+      task('2026-06-19', 'c1', 'p1', 'tpl1', 130), // billable clean
+      task('2026-06-20', 'c1', 'p1', 'tplOps', 200), // operational -> excluded
+      task('2026-06-21', 'c1', 'p1', 'tplLinen', 100), // linens mgmt -> excluded
+    ]
+    const inv = buildInvoiceData(tasks, contacts, props, templates, 'acme', '2026-06')!
+    expect(inv.taskCount).toBe(1)
+    expect(inv.total).toBe(130) // not 430
+  })
+})
+
+describe('isBillableDesc', () => {
+  it('bills real cleans, drops operational/linens upkeep', () => {
+    expect(isBillableDesc('58 Burbank St Common Areas - Standard Cleaning')).toBe(true)
+    expect(isBillableDesc('94 Charles St 3 - Departure Cleaning')).toBe(true)
+    expect(isBillableDesc('6 Prentiss St Common Areas - Operational Tasks')).toBe(false)
+    expect(isBillableDesc('304 Newbury St Common Areas - Linens Organization & Inventory')).toBe(false)
   })
 })
 

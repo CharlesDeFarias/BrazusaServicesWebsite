@@ -39,6 +39,19 @@ export function canonicalClient(name: string): string {
 }
 
 /**
+ * Task types Vitor does NOT bill to the client: internal/operational upkeep (month-end common-area
+ * "Operational Tasks", "Linens Organization & Inventory", linen/storage management). They carry a
+ * Base Price in Airtable but never appear on his invoices, so including them over-bills (July 2026:
+ * $1,200 of phantom Thatch charges). Billable = Departure / Standard / Mid-Stay / Restock.
+ */
+const NON_BILLABLE = ['operational task', 'linens organization', 'linen organization',
+  'linen management', 'storage closet']
+export function isBillableDesc(desc: string): boolean {
+  const d = (desc ?? '').toLowerCase()
+  return !NON_BILLABLE.some((x) => d.includes(x))
+}
+
+/**
  * Apply the standalone price-override layer: if an active override's unit_match is a substring
  * of the task's Unit (Text) and the task date >= effective_from, use its price instead of the
  * Base Price. Longest match wins (most specific). Mirrors tools/overrides.py::price_for.
@@ -103,6 +116,7 @@ export function buildInvoiceData(
       templateNames.get(first(f['Template']) ?? '') ||
       String(f['Unit (Text)'] ?? '').trim() ||
       'Task'
+    if (!isBillableDesc(desc)) continue // internal/operational upkeep, not client-billable (matches Vitor)
     const note = String(f['Invoice Note'] ?? '')
     const key = `${first(f['Unit'])}|${date}|${first(f['Template'])}|${desc}|${note}`
     if (seen.has(key)) continue
@@ -137,7 +151,8 @@ export function listBillableClients(
   tasks: AirtableRecord[],
   contactNames: Map<string, string>,
   month: string,
-  overrides: PriceOverride[] = []
+  overrides: PriceOverride[] = [],
+  templateNames: Map<string, string> = new Map()
 ): BillableClient[] {
   const agg = new Map<string, { taskCount: number; total: number; firstDate: string; lastDate: string }>()
   const range = month.includes('..') ? month.split('..') : null
@@ -146,6 +161,8 @@ export function listBillableClients(
     const f = t.fields
     const date = String(f['Scheduled Date'] ?? '').slice(0, 10)
     if (range ? date < range[0] || date > range[1] : !date.startsWith(month)) continue
+    const desc = templateNames.get(first(f['Template']) ?? '') || String(f['Task Name'] ?? '')
+    if (!isBillableDesc(desc)) continue // exclude internal/operational tasks from client totals
     const key = `${first(f['Unit'])}|${date}|${first(f['Template'])}|${String(f['Task Name'] ?? '')}`
     if (seen.has(key)) continue
     seen.add(key)
@@ -199,6 +216,7 @@ export async function fetchOpenInvoiceLines(fromDate: string, toDate: string): P
     const property = propertyNames.get(first(f['Property']) ?? '') ?? 'Other'
     const desc =
       templateNames.get(first(f['Template']) ?? '') || String(f['Unit (Text)'] ?? '').trim() || 'Task'
+    if (!isBillableDesc(desc)) continue // internal/operational upkeep, not client-billable (matches Vitor)
     const note = String(f['Invoice Note'] ?? '')
     const dedupe = `${first(f['Unit'])}|${date}|${first(f['Template'])}|${desc}|${note}`
     if (seen.has(dedupe)) continue

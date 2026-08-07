@@ -1,7 +1,8 @@
 import { requireUser } from '@/lib/ops/auth'
-import { latestInventory } from '@/lib/ops/opsfeed'
+import { latestInventory, inventoryCatalog, INV_BUILDINGS } from '@/lib/ops/opsfeed'
 import { CopyButton } from '@/components/ops/CopyButton'
 import { SourceNote } from '@/components/ops/SourceNote'
+import { InventoryCatalog } from '@/components/ops/InventoryCatalog'
 import { EmptyState, ErrorState } from '@/components/ops/StateMessage'
 
 export const dynamic = 'force-dynamic'
@@ -16,6 +17,7 @@ export default async function InventoryPage() {
   } catch {
     error = 'Could not read the inventory snapshot (sheet not configured).'
   }
+  const catalog = await inventoryCatalog().catch(() => [])
 
   const chip = (status: string) =>
     status === 'out'
@@ -105,6 +107,19 @@ export default async function InventoryPage() {
             note="Parsing-first MVP. Review-queue items need a building or a new alias; fulfillment + linen transfers come next."
           />
         </div>
+      )}
+
+      {/* Catalog — read-only supply + linen master seeded from the Thatch workbook */}
+      {catalog.length > 0 && (
+        <section className="space-y-2 border-t border-white-10 pt-4">
+          <div>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.08em] text-white-45">Catalog</h2>
+            <p className="text-xs text-white-35">
+              Supply &amp; linen master across the 6 buildings. Read-only snapshot from the Thatch sheet.
+            </p>
+          </div>
+          <InventoryCatalog items={catalog} buildings={[...INV_BUILDINGS]} />
+        </section>
       )}
     </div>
   )

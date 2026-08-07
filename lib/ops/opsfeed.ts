@@ -164,6 +164,47 @@ export async function latestInventory(): Promise<InventoryFeed | null> {
 }
 
 /**
+ * Inventory catalog — the supply + linen master seeded from the 'BrazUSA x Thatch Main Sheet'
+ * workbook into the ops-sheet `inv_master` tab (see tools/inventory_ingest.py). Read-only snapshot:
+ * one row per item with per-building stock status. Distinct from `latestInventory` (which is the
+ * live WhatsApp shortage parse).
+ */
+export const INV_BUILDINGS = [
+  'Prentiss House', '94 Charles', '304 Newbury', '58 Burbank', '80 Dorchester', '30 W Broadway',
+]
+export interface CatalogItem {
+  kind: string // 'supply' | 'linen'
+  vendor: string
+  name: string
+  pt: string
+  description: string
+  stock: Record<string, string> // building -> 'In Stock' | 'Low Stock' | 'Out of Stock' | ''
+}
+
+export async function inventoryCatalog(): Promise<CatalogItem[]> {
+  const rows = await readTab('inv_master!A:K', 300) // static seed; 5-min cache
+  if (rows.length < 2) return []
+  const header = (rows[0] ?? []).map((h) => (h ?? '').trim().toLowerCase())
+  const idx = (n: string) => header.indexOf(n.toLowerCase())
+  const bi = INV_BUILDINGS.map((b) => idx(b))
+  const iName = idx('name')
+  const out: CatalogItem[] = []
+  for (const r of rows.slice(1)) {
+    const name = (r[iName] ?? '').trim()
+    if (!name) continue
+    out.push({
+      kind: (r[idx('kind')] ?? '').trim(),
+      vendor: (r[idx('vendor')] ?? '').trim(),
+      name,
+      pt: (r[idx('pt')] ?? '').trim(),
+      description: (r[idx('description')] ?? '').trim(),
+      stock: Object.fromEntries(INV_BUILDINGS.map((b, i) => [b, (r[bi[i]] ?? '').trim()])),
+    })
+  }
+  return out
+}
+
+/**
  * Standalone price-override layer (ops sheet `overrides` tab, cols
  * unit_match | new_price | effective_from | client | active | reason). Corrections that live
  * OUTSIDE Vitor's read-only Airtable; the invoice logic applies them by unit-name match.

@@ -90,7 +90,9 @@ export default async function InventoryPage() {
             ))
           )}
 
-          {feed.buyList && (
+          {/* Only render the buy-list collapsible when it has ACTUAL items (not just the header line),
+              else it shows an empty "one line of text" panel when there are no shortages. */}
+          {feed.buyList.split('\n').some((l) => l.trim() && !/buy list/i.test(l)) && (
             <details className="rounded-lg border border-white-10 bg-white-5">
               <summary className="cursor-pointer select-none px-3 py-2 text-sm font-semibold text-white-70">
                 Buy list (by supplier)

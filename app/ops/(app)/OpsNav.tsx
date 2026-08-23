@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 
 const LINKS = [
   { href: '/ops/cleaning-list', label: 'Daily' },
+  { href: '/ops/checkouts', label: 'Checkouts' }, // pre-10AM: who has actually vacated
   { href: '/ops/schedule', label: 'Schedule' }, // Forecast folded in (workload + staffing)
   { href: '/ops/payroll', label: 'Payroll' },
   { href: '/ops/invoices', label: 'Invoices' },

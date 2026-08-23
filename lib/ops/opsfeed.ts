@@ -164,6 +164,42 @@ export async function latestInventory(): Promise<InventoryFeed | null> {
 }
 
 /**
+ * Checkout status — who has ACTUALLY vacated today (the pre-10AM check). Produced locally by
+ * tools/checkout_status.py from a read-only capture of Breezeway guest conversations (the auto
+ * "You successfully checked out" message is the signal), cross-referenced with the day's expected
+ * checkouts. Ops sheet `checkouts` tab rows: [generated_at, json]; latest wins.
+ */
+export type CheckoutStatus = 'OUT' | 'LATE' | 'PENDING' | 'NO-CONV'
+export interface CheckoutRow { building: string; unit: string; guest: string; status: CheckoutStatus; detail: string }
+export interface CheckoutFeed {
+  date: string
+  generatedAt: string
+  capturedAt: string
+  rows: CheckoutRow[]
+  counts: Record<CheckoutStatus, number>
+  text: string
+}
+
+export async function latestCheckouts(): Promise<CheckoutFeed | null> {
+  const rows = await readTab('checkouts!A:B', 30)
+  if (rows.length === 0) return null
+  const [generatedAt, json] = rows[rows.length - 1]
+  try {
+    const d = JSON.parse(json ?? '')
+    return {
+      date: d.date ?? '',
+      generatedAt: generatedAt ?? d.generatedAt ?? '',
+      capturedAt: d.capturedAt ?? '',
+      rows: (d.rows ?? []) as CheckoutRow[],
+      counts: d.counts ?? { OUT: 0, LATE: 0, PENDING: 0, 'NO-CONV': 0 },
+      text: d.text ?? '',
+    }
+  } catch {
+    return null
+  }
+}
+
+/**
  * Inventory catalog — the supply + linen master seeded from the 'BrazUSA x Thatch Main Sheet'
  * workbook into the ops-sheet `inv_master` tab (see tools/inventory_ingest.py). Read-only snapshot:
  * one row per item with per-building stock status. Distinct from `latestInventory` (which is the

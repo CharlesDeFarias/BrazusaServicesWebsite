@@ -83,8 +83,9 @@ export default async function ResidentsPage() {
       <section className="space-y-2">
         <h2 className="text-sm font-semibold uppercase tracking-[0.08em] text-white-45">Door codes</h2>
         <p className="text-xs text-white-35">
-          By building. Edit in the ops sheet ‘codes’ tab (building, unit, code, notes). Seeded from
-          the Thatch main sheet — verify before relying on any single code.
+          By building. Edit in the ops sheet ‘codes’ tab (building, unit, code, notes). Every code’s
+          note should carry when it was last confirmed (“confirmed YYYY-MM-DD”) — treat undated codes
+          as unverified.
         </p>
         {codes.length === 0 ? (
           <EmptyState>No codes published yet.</EmptyState>

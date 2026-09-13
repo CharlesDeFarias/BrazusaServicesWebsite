@@ -53,3 +53,4 @@ tsconfig.tsbuildinfo
 # Large media files — keep local only
 *.mp4
 .ops-payroll-dev.json
+gilselia/

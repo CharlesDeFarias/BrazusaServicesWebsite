@@ -77,7 +77,7 @@ const areas = ['Beacon Hill', 'Back Bay', 'Fenway', 'South Boston', 'Dorchester'
 
 const steps = [
   { n: '1', title: 'Walkthrough this week', body: 'We walk the building with you or your manager and note what the current vendor is missing.' },
-  { n: '2', title: 'Per-visit proposal', body: 'Itemized price per visit, so the board can compare line by line. Liability and workers’ comp certificates provided before day one.' },
+  { n: '2', title: 'Per-visit proposal', body: 'Itemized price per visit, easy to compare line by line with what you pay now. Liability and workers’ comp certificates provided before day one.' },
   { n: '3', title: 'Trial month', body: 'No long contract. If the building does not look better, walking away costs nothing.' },
 ]
 
@@ -365,7 +365,7 @@ export default function CondosPage(): JSX.Element {
             ))}
           </div>
           <p className="text-sm mt-8" style={{ color: 'var(--color-white-50)', maxWidth: '640px', lineHeight: 1.6 }}>
-            In-unit cleaning for residents is an amenity your board offers at zero cost. And the
+            In-unit cleaning for residents is an amenity your building can offer at zero cost. And the
             more your building works with us, directly or through residents, the better your
             pricing gets.
           </p>
@@ -406,6 +406,7 @@ export default function CondosPage(): JSX.Element {
           <p className="mb-10 text-sm sm:text-[15px]" style={{ color: 'var(--color-warm-gray-dark)', maxWidth: '620px', lineHeight: 1.65 }}>
             Short-term rentals are the least forgiving market in cleaning: every miss becomes a
             public review. A company that survives years of that does not struggle with a lobby.
+            And our clients stay: the same core group has kept us for years.
           </p>
 
           <div className="grid grid-cols-1" style={{ gap: '14px' }}>

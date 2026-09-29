@@ -12,58 +12,73 @@ const dayLoop = [
   {
     time: '7:00 AM',
     title: 'Routes confirmed',
-    body: 'Every crew gets its building list for the day, confirmed before anyone is on the road. Your building is a fixed stop, not a maybe.',
+    body: 'Every crew gets its building list before anyone is on the road. Your building is a fixed stop, not a maybe.',
   },
   {
     time: 'Morning',
     title: 'Common areas done early',
-    body: 'Lobbies, hallways, elevators, and trash rooms are cleaned before the building gets busy, on the same route our crews already run through your neighborhood.',
+    body: 'Lobbies, hallways, elevators, and trash rooms cleaned before the building gets busy.',
   },
   {
     time: 'On site',
     title: 'Problems get photographed',
-    body: 'A burned-out light, a leak, dumping in the trash room. Whatever is off gets a photo and a note the moment a cleaner sees it, not whenever someone remembers.',
+    body: 'A burned-out light, a leak, dumping. Whatever is off gets a photo and a note the moment a cleaner sees it.',
   },
   {
     time: 'Same day',
-    title: 'Completion confirmed in writing',
-    body: 'Your manager or board contact gets written confirmation the work happened, plus anything flagged. No calling around to check if the cleaners came.',
+    title: 'Confirmed in writing',
+    body: 'Written confirmation the work happened, with photos or video whenever you want them.',
   },
 ]
 
 const services = [
   { n: '01', name: 'Lobbies, hallways & stairwells', desc: 'Every shared floor, on a fixed schedule residents can feel.' },
-  { n: '02', name: 'Elevators & touchpoints', desc: 'Cabs, rails, handles, mailrooms, intercom panels. Every visit.' },
-  { n: '03', name: 'Trash & recycling rooms', desc: 'The rooms everyone notices when they slip. Overflow flagged early.' },
+  { n: '02', name: 'Elevators & touchpoints', desc: 'Cabs, rails, handles, mailrooms. Every visit.' },
+  { n: '03', name: 'Trash & recycling rooms', desc: 'Kept in order, overflow flagged early.' },
   { n: '04', name: 'Laundry & amenity spaces', desc: 'Gyms, roof decks, community rooms, on their own cadence.' },
-  { n: '05', name: 'Turnovers & move-outs', desc: 'Unit resets between owners or tenants, documented and confirmed.' },
-  { n: '06', name: 'Eyes on the building', desc: 'Lights, leaks, damage, dumping. Reported with photos, same day.' },
+  { n: '05', name: 'Turnovers & move-outs', desc: 'Unit resets between owners or tenants, documented.' },
+  { n: '06', name: 'In-unit residential cleaning', desc: 'Your residents can hire us directly for their own homes.' },
+]
+
+const howWeWork = [
+  {
+    title: 'A workforce other companies can’t reach',
+    body: 'We recruit from Greater Boston’s Brazilian cleaning community, the strongest crews in the market, and we remove their barriers: we handle the apps, the English, the scheduling. You get top crews at honest prices.',
+  },
+  {
+    title: 'We fit your systems',
+    body: 'Breezeway today; Yardi, AppFolio, or whatever your manager runs tomorrow. Portals, checklists, reports: we adapt to your requirements, and we use AI daily to tailor scheduling, reporting, and communication to each client.',
+  },
+  {
+    title: 'Three languages, zero barriers',
+    body: 'English, Portuguese, and Spanish natively, including with your building’s staff. With AI translation we can work with anyone, in any language.',
+  },
 ]
 
 const cases = [
   {
     client: 'National short-term-rental operator',
     result: '100+ Boston units, cleaned daily, for years.',
-    detail: 'Turnover coordination across multiple buildings with schedules that change by the hour. Same-day confirmations, consistent checklists, a direct line. Nothing falls through between guests.',
+    detail: 'Schedules that change by the hour, same-day confirmations, consistent checklists. Nothing falls through between guests.',
   },
   {
     client: 'Corporate housing (Fortune 500 tenants)',
     result: 'Short-notice turnovers with documented unit condition.',
-    detail: 'Furnished units housing traveling employees. Check-out and check-in within hours of each other, so every clean is on the clock and every unit condition is documented in writing.',
+    detail: 'Check-out and check-in within hours of each other, every clean on the clock, every unit condition in writing.',
   },
   {
     client: 'Office operations client',
     result: 'Cleaning runs on schedule with zero follow-ups.',
-    detail: 'Same team, same days, service completed without reminders. The client has never had to redirect the work. That is the standard your property manager inherits.',
+    detail: 'Same team, same days, no reminders needed. That is the standard your property manager inherits.',
   },
 ]
 
 const areas = ['Beacon Hill', 'Back Bay', 'Fenway', 'South Boston', 'Dorchester', 'Roxbury', 'Somerville', 'Dedham']
 
 const steps = [
-  { n: '1', title: 'Walkthrough this week', body: 'We walk the building with you or your manager and write down exactly what the current vendor is missing.' },
-  { n: '2', title: 'Per-visit proposal', body: 'A clear scope with a price per visit. Itemized, so the board can compare it line by line against what you pay now.' },
-  { n: '3', title: 'Trial month', body: 'No long contract to approve. Run us for a month; if the building does not look better, walking away costs nothing.' },
+  { n: '1', title: 'Walkthrough this week', body: 'We walk the building with you or your manager and note what the current vendor is missing.' },
+  { n: '2', title: 'Per-visit proposal', body: 'Itemized price per visit, so the board can compare line by line. Insurance certificates provided before day one.' },
+  { n: '3', title: 'Trial month', body: 'No long contract. If the building does not look better, walking away costs nothing.' },
 ]
 
 /* ---------- shared bits ---------- */
@@ -105,7 +120,7 @@ function SectionLabel({ children }: { children: string }): JSX.Element {
       <span
         style={{
           fontFamily: 'var(--font-syne)',
-          fontSize: '11px',
+          fontSize: '12px',
           fontWeight: 600,
           letterSpacing: '0.18em',
           color: 'var(--color-brand-gold)',
@@ -120,10 +135,10 @@ function SectionLabel({ children }: { children: string }): JSX.Element {
 
 const h2Style = (dark: boolean) => ({
   fontFamily: 'var(--font-ibm-plex-sans)',
-  fontSize: 'clamp(1.6rem, 4.5vw, 2.25rem)',
+  fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
   fontWeight: 700,
   letterSpacing: '-0.015em',
-  lineHeight: 1.12,
+  lineHeight: 1.1,
   color: dark ? '#FFFFFF' : 'var(--color-navy)',
 })
 
@@ -185,12 +200,8 @@ export default function CondosPage(): JSX.Element {
           </g>
           <line x1="130" y1="60" x2="220" y2="60" stroke="var(--color-brand-gold)" strokeWidth="1.5" opacity="0.8" />
         </svg>
-        <div className="mx-auto relative" style={{ maxWidth: '860px', padding: 'clamp(48px, 9vw, 88px) 24px clamp(48px, 8vw, 72px)' }}>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-7">
-            <div className="w-8 h-px" style={{ background: 'var(--color-white-30)' }} />
-            <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em]" style={{ color: 'var(--color-white-40)' }}>
-              Condominium &amp; HOA Cleaning &middot; Greater Boston
-            </span>
+        <div className="mx-auto relative" style={{ maxWidth: '860px', padding: 'clamp(44px, 8vw, 80px) 24px clamp(44px, 7vw, 64px)' }}>
+          <div className="mb-6">
             <span
               className="text-[10px] sm:text-[11px] uppercase tracking-[0.14em] px-2.5 py-1"
               style={{
@@ -204,30 +215,43 @@ export default function CondosPage(): JSX.Element {
             </span>
           </div>
 
+          {/* The category IS the headline (Vitor: the one line they need) */}
           <h1
+            className="mb-4"
+            style={{
+              fontFamily: 'var(--font-ibm-plex-sans)',
+              fontSize: 'clamp(2.1rem, 7vw, 3.75rem)',
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              lineHeight: 1.04,
+            }}
+          >
+            Condo &amp; HOA cleaning,
+            <br />
+            Greater Boston.
+          </h1>
+
+          <p
             className="mb-7"
             style={{
               fontFamily: 'var(--font-ibm-plex-sans)',
-              fontSize: 'clamp(2rem, 6.5vw, 3.5rem)',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              lineHeight: 1.06,
+              fontSize: 'clamp(1.05rem, 3vw, 1.4rem)',
+              fontWeight: 600,
+              letterSpacing: '-0.01em',
+              lineHeight: 1.3,
+              color: 'var(--color-brand-gold)',
             }}
           >
-            Common areas held to a{' '}
-            <span style={{ color: 'var(--color-brand-gold)' }}>five&#8209;star&#8209;guest</span>{' '}
-            standard.
-          </h1>
-
-          <div className="mb-7" style={{ width: '42px', height: '1px', background: 'var(--color-brand-gold)' }} />
-
-          <p className="mb-9" style={{ fontSize: 'clamp(15px, 2vw, 17px)', lineHeight: 1.65, color: 'var(--color-white-60)', maxWidth: '600px' }}>
-            Brazusa cleans 100+ Boston units every day for a national short&#8209;term&#8209;rental
-            operator, work that a paying guest inspects and rates within hours. Your building
-            gets those same crews, the same daily discipline, and written proof it happened.
+            Common areas held to a five&#8209;star&#8209;guest standard.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 mb-9">
+          <p className="mb-8" style={{ fontSize: 'clamp(15px, 2vw, 16.5px)', lineHeight: 1.6, color: 'var(--color-white-60)', maxWidth: '560px' }}>
+            Our crews clean 100+ Boston units every day for a national rental operator, where
+            paying guests rate every clean within hours. Your building gets those same crews
+            and written proof it happened.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 mb-8">
             {goldBtn}
             <a
               href="tel:7816867189"
@@ -239,7 +263,7 @@ export default function CondosPage(): JSX.Element {
           </div>
 
           <p className="text-[11px] sm:text-xs uppercase tracking-[0.16em]" style={{ color: 'var(--color-white-40)' }}>
-            Since 1994 &nbsp;&middot;&nbsp; Fully insured &nbsp;&middot;&nbsp; English &amp; Portuguese
+            Since 1994 &nbsp;&middot;&nbsp; Fully insured &nbsp;&middot;&nbsp; English &middot; Portugu&ecirc;s &middot; Espa&ntilde;ol
           </p>
         </div>
       </section>
@@ -273,16 +297,15 @@ export default function CondosPage(): JSX.Element {
       </section>
 
       {/* The daily loop */}
-      <section className="bg-off-white" style={{ padding: 'clamp(52px, 8vw, 76px) 24px' }}>
+      <section className="bg-off-white" style={{ padding: 'clamp(48px, 7vw, 68px) 24px' }}>
         <div className="mx-auto" style={{ maxWidth: '860px' }}>
           <SectionLabel>How a service day runs</SectionLabel>
           <h2 className="mb-4" style={h2Style(false)}>
-            You should never have to ask whether the cleaners came.
+            You&apos;ll never have to ask if we came.
           </h2>
           <p className="mb-10 text-sm sm:text-[15px]" style={{ color: 'var(--color-warm-gray-darker)', maxWidth: '680px', lineHeight: 1.65 }}>
-            Most building cleaning fails quietly: the vendor skips a day, nobody notices for a
-            week, and the board finds out from an angry email. Our day is built so that cannot
-            happen.
+            Most building cleaning fails quietly: a skipped day nobody notices until a resident
+            complains. Our day is built so that cannot happen.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '0' }}>
@@ -318,12 +341,12 @@ export default function CondosPage(): JSX.Element {
         </div>
       </section>
 
-      {/* Services */}
-      <section className="grain bg-navy text-white" style={{ padding: 'clamp(52px, 8vw, 76px) 24px' }}>
+      {/* Scope */}
+      <section className="grain bg-navy text-white" style={{ padding: 'clamp(48px, 7vw, 68px) 24px' }}>
         <div className="mx-auto" style={{ maxWidth: '860px' }}>
-          <SectionLabel>Scope</SectionLabel>
+          <SectionLabel>What we cover</SectionLabel>
           <h2 className="mb-10" style={h2Style(true)}>
-            Everything a condo building needs covered.
+            The whole building. Units too.
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '0 40px' }}>
             {services.map((s) => (
@@ -347,10 +370,29 @@ export default function CondosPage(): JSX.Element {
               </div>
             ))}
           </div>
-          <p className="text-xs mt-8" style={{ color: 'var(--color-white-40)' }}>
-            Building-specific tasks (porter work, supply restocking, seasonal jobs) get scoped in
-            the walkthrough, priced per visit, and written into the proposal.
+          <p className="text-sm mt-8" style={{ color: 'var(--color-white-50)', maxWidth: '640px', lineHeight: 1.6 }}>
+            In-unit cleaning for residents is an amenity your board offers at zero cost. And the
+            more your building works with us, directly or through residents, the better your
+            pricing gets.
           </p>
+        </div>
+      </section>
+
+      {/* How we work */}
+      <section className="bg-off-white" style={{ padding: 'clamp(48px, 7vw, 68px) 24px' }}>
+        <div className="mx-auto" style={{ maxWidth: '860px' }}>
+          <SectionLabel>How we work</SectionLabel>
+          <h2 className="mb-10" style={h2Style(false)}>
+            Better crews, better tech, no barriers.
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '28px' }}>
+            {howWeWork.map((item) => (
+              <div key={item.title} style={{ borderTop: '2px solid var(--color-brand-gold)', paddingTop: '16px' }}>
+                <h3 className="text-[15px] font-semibold mb-2" style={{ color: 'var(--color-navy)' }}>{item.title}</h3>
+                <p className="text-sm" style={{ color: 'var(--color-warm-gray-darker)', lineHeight: 1.6 }}>{item.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -359,18 +401,17 @@ export default function CondosPage(): JSX.Element {
         className="grain"
         style={{
           background: 'linear-gradient(to bottom, var(--color-linen-deep), var(--color-linen))',
-          padding: 'clamp(52px, 8vw, 76px) 24px',
+          padding: 'clamp(48px, 7vw, 68px) 24px',
         }}
       >
         <div className="mx-auto" style={{ maxWidth: '860px' }}>
           <SectionLabel>Track record</SectionLabel>
           <h2 className="mb-4" style={h2Style(false)}>
-            Judged daily in the least forgiving market there is.
+            Judged daily by paying guests.
           </h2>
-          <p className="mb-10 text-sm" style={{ color: 'var(--color-warm-gray-dark)', maxWidth: '580px', lineHeight: 1.65 }}>
-            Short-term rentals are the hardest cleaning discipline in the industry: every clean
-            is inspected by a paying guest the same day, and every miss becomes a public review.
-            A company that survives years of that does not struggle with a lobby.
+          <p className="mb-10 text-sm sm:text-[15px]" style={{ color: 'var(--color-warm-gray-dark)', maxWidth: '620px', lineHeight: 1.65 }}>
+            Short-term rentals are the least forgiving market in cleaning: every miss becomes a
+            public review. A company that survives years of that does not struggle with a lobby.
           </p>
 
           <div className="grid grid-cols-1" style={{ gap: '14px' }}>
@@ -445,19 +486,19 @@ export default function CondosPage(): JSX.Element {
       </section>
 
       {/* How it starts */}
-      <section className="bg-off-white" style={{ padding: 'clamp(48px, 8vw, 72px) 24px', borderTop: '1px solid var(--color-light-gray)' }}>
+      <section className="bg-off-white" style={{ padding: 'clamp(48px, 7vw, 68px) 24px' }}>
         <div className="mx-auto" style={{ maxWidth: '860px' }}>
           <SectionLabel>Getting started</SectionLabel>
           <h2 className="mb-10" style={h2Style(false)}>
-            Three steps. No committee-meeting marathon.
+            Three steps. No long contract.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: '28px' }}>
             {steps.map((s) => (
               <div key={s.n} style={{ borderTop: '1px solid var(--color-navy-15)', paddingTop: '16px' }}>
-                <p className="mb-2" style={{ fontFamily: 'var(--font-syne)', fontSize: '20px', fontWeight: 700, color: 'var(--color-brand-gold)' }}>
+                <p className="mb-2" style={{ fontFamily: 'var(--font-syne)', fontSize: '22px', fontWeight: 700, color: 'var(--color-brand-gold)' }}>
                   {s.n}
                 </p>
-                <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--color-navy)' }}>{s.title}</h3>
+                <h3 className="text-[15px] font-semibold mb-2" style={{ color: 'var(--color-navy)' }}>{s.title}</h3>
                 <p className="text-sm" style={{ color: 'var(--color-warm-gray-darker)', lineHeight: 1.6 }}>{s.body}</p>
               </div>
             ))}
@@ -466,7 +507,7 @@ export default function CondosPage(): JSX.Element {
       </section>
 
       {/* Final CTA */}
-      <section className="grain bg-navy text-white" style={{ padding: 'clamp(56px, 9vw, 84px) 24px' }}>
+      <section className="grain bg-navy text-white" style={{ padding: 'clamp(52px, 8vw, 76px) 24px' }}>
         <div className="mx-auto text-center" style={{ maxWidth: '600px' }}>
           <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] mb-5" style={{ color: 'var(--color-brand-gold)', fontFamily: 'var(--font-syne)', fontWeight: 600 }}>
             Met us at the New England Condominium Expo?
@@ -475,19 +516,19 @@ export default function CondosPage(): JSX.Element {
             className="mb-4"
             style={{
               fontFamily: 'var(--font-ibm-plex-sans)',
-              fontSize: 'clamp(1.6rem, 4.5vw, 2.25rem)',
+              fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
               fontWeight: 700,
               letterSpacing: '-0.015em',
-              lineHeight: 1.12,
+              lineHeight: 1.1,
             }}
           >
-            Tell us about your building. We&apos;ll take it from there.
+            Tell us about your building.
           </h2>
           <p className="text-sm mb-2" style={{ color: 'var(--color-white-60)', lineHeight: 1.65 }}>
             Name and a way to reach you is enough. A real person answers, usually the same day.
           </p>
           <p className="text-sm mb-9" style={{ color: 'var(--color-white-40)', lineHeight: 1.65 }}>
-            Falamos portugu&ecirc;s, including with your building&apos;s staff.
+            Falamos portugu&ecirc;s. Hablamos espa&ntilde;ol.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             {goldBtn}

@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Condo & HOA Cleaning | Brazusa Cleaning',
+  title: 'Condo & HOA Cleaning, Greater Boston | Brazusa Cleaning',
   description:
-    'Daily common-area and turnover cleaning for condo associations and property managers across Greater Boston. Bilingual crews already working in 100+ Boston units every day.',
+    'Common areas held to a five-star-guest standard. Daily cleaning for condo associations and property managers across Greater Boston; trilingual crews already in 100+ Boston units every day.',
   openGraph: {
-    title: 'Condo & HOA Cleaning | Brazusa Cleaning',
+    title: 'Condo & HOA Cleaning, Greater Boston | Brazusa Cleaning',
     description:
-      'Daily common-area and turnover cleaning for condo associations and property managers across Greater Boston.',
+      'Common areas held to a five-star-guest standard. Daily cleaning for condo associations and property managers across Greater Boston.',
     type: 'website',
     images: [{ url: '/images/property.webp' }],
   },

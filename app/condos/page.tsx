@@ -209,20 +209,6 @@ export default function CondosPage(): JSX.Element {
           <line x1="130" y1="60" x2="220" y2="60" stroke="var(--color-brand-gold)" strokeWidth="1.5" opacity="0.8" />
         </svg>
         <div className="mx-auto relative" style={{ maxWidth: '860px', padding: 'clamp(44px, 8vw, 80px) 24px clamp(44px, 7vw, 64px)' }}>
-          <div className="mb-6">
-            <span
-              className="text-[10px] sm:text-[11px] uppercase tracking-[0.14em] px-2.5 py-1"
-              style={{
-                fontFamily: 'var(--font-syne)',
-                fontWeight: 600,
-                color: 'var(--color-brand-gold)',
-                border: '1px solid var(--color-gold-60, rgba(196,154,68,0.6))',
-              }}
-            >
-              NE Condominium Expo 2026
-            </span>
-          </div>
-
           {/* The category IS the headline (Vitor: the one line they need) */}
           <h1
             className="mb-4"
@@ -271,7 +257,7 @@ export default function CondosPage(): JSX.Element {
           </div>
 
           <p className="text-[11px] sm:text-xs uppercase tracking-[0.16em]" style={{ color: 'var(--color-white-40)' }}>
-            Since 1994 &nbsp;&middot;&nbsp; Fully insured &nbsp;&middot;&nbsp; English &middot; Portugu&ecirc;s &middot; Espa&ntilde;ol
+            Since 1994 &nbsp;&middot;&nbsp; Fully insured &nbsp;&middot;&nbsp; EN &middot; PT &middot; ES
           </p>
         </div>
       </section>

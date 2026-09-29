@@ -1,7 +1,7 @@
 'use client'
 
-import { type JSX, useState } from 'react'
-import QuoteDrawer from '@/components/clean/QuoteDrawer'
+import { type JSX, useState, useEffect } from 'react'
+import CondoDrawer from '@/components/condos/CondoDrawer'
 import ScrollToTop from '@/components/clean/ScrollToTop'
 
 const GOOGLE_REVIEWS = 'https://maps.app.goo.gl/gvJ4MmpuShUocGB3A'
@@ -77,7 +77,7 @@ const areas = ['Beacon Hill', 'Back Bay', 'Fenway', 'South Boston', 'Dorchester'
 
 const steps = [
   { n: '1', title: 'Walkthrough this week', body: 'We walk the building with you or your manager and note what the current vendor is missing.' },
-  { n: '2', title: 'Per-visit proposal', body: 'Itemized price per visit, so the board can compare line by line. Insurance certificates provided before day one.' },
+  { n: '2', title: 'Per-visit proposal', body: 'Itemized price per visit, so the board can compare line by line. Liability and workers’ comp certificates provided before day one.' },
   { n: '3', title: 'Trial month', body: 'No long contract. If the building does not look better, walking away costs nothing.' },
 ]
 
@@ -146,6 +146,14 @@ const h2Style = (dark: boolean) => ({
 
 export default function CondosPage(): JSX.Element {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [showStickyBar, setShowStickyBar] = useState(false)
+
+  useEffect(() => {
+    const onScroll = (): void => setShowStickyBar(window.scrollY > 560)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const goldBtn = (
     <button
@@ -301,7 +309,7 @@ export default function CondosPage(): JSX.Element {
         <div className="mx-auto" style={{ maxWidth: '860px' }}>
           <SectionLabel>How a service day runs</SectionLabel>
           <h2 className="mb-4" style={h2Style(false)}>
-            You&apos;ll never have to ask if we came.
+            You&apos;ll never have to ask if we cleaned.
           </h2>
           <p className="mb-10 text-sm sm:text-[15px]" style={{ color: 'var(--color-warm-gray-darker)', maxWidth: '680px', lineHeight: 1.65 }}>
             Most building cleaning fails quietly: a skipped day nobody notices until a resident
@@ -453,7 +461,7 @@ export default function CondosPage(): JSX.Element {
             style={{ color: 'var(--color-navy)', border: '1px solid var(--color-navy-25)', background: '#FFFFFF' }}
           >
             <span aria-hidden style={{ color: 'var(--color-brand-gold)', fontSize: '15px' }}>&#9733;</span>
-            <span style={{ fontFamily: 'var(--font-syne)', letterSpacing: '0.03em' }}>Read our reviews on Google</span>
+            <span style={{ fontFamily: 'var(--font-syne)', letterSpacing: '0.03em' }}>4.9 on Google &middot; 45 reviews</span>
             <span aria-hidden style={{ color: 'var(--color-brand-gold)' }}>&#8599;</span>
           </a>
         </div>
@@ -576,8 +584,36 @@ export default function CondosPage(): JSX.Element {
         </div>
       </footer>
 
-      <QuoteDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} defaultSpaceType="property" />
-      <ScrollToTop drawerOpen={drawerOpen} />
+      {/* Sticky mobile action bar (appears after the hero scrolls away) */}
+      <div
+        className="sm:hidden fixed left-0 right-0 bottom-0 grid grid-cols-2 transition-transform duration-300"
+        style={{
+          transform: showStickyBar && !drawerOpen ? 'translateY(0)' : 'translateY(110%)',
+          zIndex: 50,
+          borderTop: '1px solid var(--color-white-10)',
+          boxShadow: '0 -2px 12px rgba(11,29,46,0.35)',
+        }}
+      >
+        <a
+          href="tel:7816867189"
+          className="flex items-center justify-center text-sm font-semibold py-4 min-h-[54px]"
+          style={{ background: 'var(--color-navy)', color: '#FFFFFF' }}
+        >
+          Call or text
+        </a>
+        <button
+          onClick={() => setDrawerOpen(true)}
+          className="text-sm font-semibold py-4 min-h-[54px] cursor-pointer text-navy"
+          style={{ background: 'var(--color-brand-gold)' }}
+        >
+          Request a proposal
+        </button>
+      </div>
+
+      <CondoDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      <div className="hidden sm:block">
+        <ScrollToTop drawerOpen={drawerOpen} />
+      </div>
     </main>
   )
 }

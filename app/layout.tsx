@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Syne } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 // Geist loaded under --font-ibm-plex-sans alias — variable name kept for backwards compat across all components
@@ -37,7 +38,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${ibmPlexSans.variable} ${syne.variable}`}>
-      <body className="overflow-x-hidden">{children}</body>
+      <body className="overflow-x-hidden">
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }

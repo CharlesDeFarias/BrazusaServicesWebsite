@@ -4,12 +4,8 @@ import type { JSX } from 'react'
 import Image from 'next/image'
 import NewsletterCTA from './NewsletterCTA'
 
-const serviceLinks = [
-  { label: 'Painting',     href: '/painting' },
-  { label: 'Construction', href: '/construction' },
-  { label: 'Roofing',      href: '/roofing' },
-  { label: 'Tiling',       href: '/tiling' },
-]
+// Trade pages (painting/construction/roofing/tiling) removed 2026-09-29:
+// the routes render nothing yet. Restore links here when the pages exist.
 
 export default function Footer(): JSX.Element {
   return (
@@ -69,29 +65,6 @@ export default function Footer(): JSX.Element {
             </a>
           </div>
 
-          <div>
-            <p
-              className="text-xs uppercase mb-5 text-white-20"
-              style={{
-                letterSpacing: '0.14em',
-                fontFamily: 'var(--font-syne)',
-              }}
-            >
-              Need more than cleaning? We also help with:
-            </p>
-            <ul className="space-y-2">
-              {serviceLinks.map((l) => (
-                <li key={l.label}>
-                  <a
-                    href={l.href}
-                    className="text-sm text-white-40 hover:text-white transition-colors"
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
         <p

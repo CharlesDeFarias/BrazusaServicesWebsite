@@ -9,7 +9,11 @@ export const metadata: Metadata = {
     description:
       'Common areas held to a five-star-guest standard. Daily cleaning for condo associations and property managers across Greater Boston.',
     type: 'website',
-    images: [{ url: '/images/property.webp' }],
+    images: [{ url: '/og/condos-og.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og/condos-og.png'],
   },
 }
 

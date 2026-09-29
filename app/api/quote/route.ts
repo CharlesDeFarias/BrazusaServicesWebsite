@@ -14,6 +14,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ success: false, error: 'Invalid JSON' }, { status: 400 })
   }
 
+  // Honeypot: the form's hidden "website" field is never filled by humans.
+  // Bots that fill it get a success response with nothing processed.
+  const honeypot = (rawBody as Record<string, unknown>).website
+  if (typeof honeypot === 'string' && honeypot.trim() !== '') {
+    return NextResponse.json({ success: true })
+  }
+
   const validation = validateQuote(rawBody)
   if (!validation.valid) {
     return NextResponse.json({ success: false, error: validation.error }, { status: 400 })

@@ -533,7 +533,8 @@ export default function CondosPage(): JSX.Element {
             Tell us about your building.
           </h2>
           <p className="text-sm mb-2" style={{ color: 'var(--color-white-60)', lineHeight: 1.65 }}>
-            Name and a way to reach you is enough. A real person answers, usually the same day.
+            Name and a way to reach you is enough. You&apos;ll be talking to Charles De Farias,
+            who runs our operations, usually the same day.
           </p>
           <p className="text-sm mb-9" style={{ color: 'var(--color-white-40)', lineHeight: 1.65 }}>
             Falamos portugu&ecirc;s. Hablamos espa&ntilde;ol.

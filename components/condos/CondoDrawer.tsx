@@ -30,6 +30,7 @@ export default function CondoDrawer({ isOpen, onClose }: CondoDrawerProps): JSX.
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
+  const [website, setWebsite] = useState('') // honeypot: humans never see or fill this
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -80,6 +81,7 @@ export default function CondoDrawer({ isOpen, onClose }: CondoDrawerProps): JSX.
           outcome: 'contact',
           address: building.trim() || undefined,
           notes: structured,
+          website,
         }),
       })
       if (!res.ok) throw new Error('Request failed')
@@ -155,6 +157,14 @@ export default function CondoDrawer({ isOpen, onClose }: CondoDrawerProps): JSX.
                 >
                   &times;
                 </button>
+              </div>
+
+              {/* Honeypot: hidden from humans, bots fill it and get silently dropped */}
+              <div aria-hidden style={{ position: 'absolute', left: '-9999px', height: 0, overflow: 'hidden' }}>
+                <label>
+                  Website
+                  <input tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
+                </label>
               </div>
 
               <div className="mb-4">

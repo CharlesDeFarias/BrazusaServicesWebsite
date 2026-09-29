@@ -1,9 +1,10 @@
 'use client'
 
 import { type JSX, useState } from 'react'
-import Footer from '@/components/clean/Footer'
 import QuoteDrawer from '@/components/clean/QuoteDrawer'
 import ScrollToTop from '@/components/clean/ScrollToTop'
+
+const GOOGLE_REVIEWS = 'https://maps.app.goo.gl/gvJ4MmpuShUocGB3A'
 
 /* ---------- content ---------- */
 
@@ -159,12 +160,47 @@ export default function CondosPage(): JSX.Element {
       </header>
 
       {/* Hero */}
-      <section className="grain bg-navy text-white overflow-hidden">
-        <div className="mx-auto" style={{ maxWidth: '860px', padding: 'clamp(48px, 9vw, 88px) 24px clamp(48px, 8vw, 72px)' }}>
-          <div className="flex items-center gap-3 mb-7">
+      <section className="grain bg-navy text-white overflow-hidden relative">
+        {/* Hairline skyline motif, desktop only */}
+        <svg
+          className="hidden lg:block absolute pointer-events-none"
+          style={{ right: '-40px', bottom: '0', height: '88%', opacity: 0.5 }}
+          viewBox="0 0 340 420"
+          fill="none"
+          aria-hidden
+        >
+          <g stroke="rgba(255,255,255,0.14)" strokeWidth="1">
+            <rect x="30" y="140" width="80" height="280" />
+            <rect x="130" y="60" width="90" height="360" />
+            <rect x="240" y="180" width="70" height="240" />
+            {Array.from({ length: 9 }).map((_, r) => (
+              <line key={`a${r}`} x1="38" y1={158 + r * 28} x2="102" y2={158 + r * 28} />
+            ))}
+            {Array.from({ length: 12 }).map((_, r) => (
+              <line key={`b${r}`} x1="138" y1={80 + r * 28} x2="212" y2={80 + r * 28} />
+            ))}
+            {Array.from({ length: 8 }).map((_, r) => (
+              <line key={`c${r}`} x1="248" y1={198 + r * 28} x2="302" y2={198 + r * 28} />
+            ))}
+          </g>
+          <line x1="130" y1="60" x2="220" y2="60" stroke="var(--color-brand-gold)" strokeWidth="1.5" opacity="0.8" />
+        </svg>
+        <div className="mx-auto relative" style={{ maxWidth: '860px', padding: 'clamp(48px, 9vw, 88px) 24px clamp(48px, 8vw, 72px)' }}>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-7">
             <div className="w-8 h-px" style={{ background: 'var(--color-white-30)' }} />
             <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em]" style={{ color: 'var(--color-white-40)' }}>
               Condominium &amp; HOA Cleaning &middot; Greater Boston
+            </span>
+            <span
+              className="text-[10px] sm:text-[11px] uppercase tracking-[0.14em] px-2.5 py-1"
+              style={{
+                fontFamily: 'var(--font-syne)',
+                fontWeight: 600,
+                color: 'var(--color-brand-gold)',
+                border: '1px solid var(--color-gold-60, rgba(196,154,68,0.6))',
+              }}
+            >
+              NE Condominium Expo 2026
             </span>
           </div>
 
@@ -213,7 +249,7 @@ export default function CondosPage(): JSX.Element {
         <div className="mx-auto grid grid-cols-3" style={{ maxWidth: '860px', gap: '16px' }}>
           {[
             { v: '100+', s: 'units cleaned daily' },
-            { v: '30 yrs', s: 'serving Greater Boston' },
+            { v: '30+ years', s: 'serving Greater Boston' },
             { v: '7 days', s: 'a week on the ground' },
           ].map((stat) => (
             <div key={stat.v} className="text-center">
@@ -243,7 +279,7 @@ export default function CondosPage(): JSX.Element {
           <h2 className="mb-4" style={h2Style(false)}>
             You should never have to ask whether the cleaners came.
           </h2>
-          <p className="mb-10 text-sm" style={{ color: 'var(--color-warm-gray-darker)', maxWidth: '560px', lineHeight: 1.65 }}>
+          <p className="mb-10 text-sm sm:text-[15px]" style={{ color: 'var(--color-warm-gray-darker)', maxWidth: '680px', lineHeight: 1.65 }}>
             Most building cleaning fails quietly: the vendor skips a day, nobody notices for a
             week, and the board finds out from an angry email. Our day is built so that cannot
             happen.
@@ -337,45 +373,74 @@ export default function CondosPage(): JSX.Element {
             A company that survives years of that does not struggle with a lobby.
           </p>
 
-          <div style={{ background: 'var(--color-white-40)', borderTop: '1px solid var(--color-light-gray)' }}>
-            {cases.map((c, i) => (
+          <div className="grid grid-cols-1" style={{ gap: '14px' }}>
+            {cases.map((c) => (
               <div
                 key={c.client}
                 className="px-5 py-5"
-                style={{ borderBottom: i < cases.length - 1 ? '1px solid var(--color-light-gray)' : 'none' }}
+                style={{
+                  background: '#FFFFFF',
+                  borderLeft: '2px solid var(--color-brand-gold)',
+                  boxShadow: '0 1px 2px rgba(11,29,46,0.06)',
+                }}
               >
                 <p className="mb-1.5" style={{ fontFamily: 'var(--font-ibm-plex-sans)', fontSize: '16.5px', fontWeight: 700, color: 'var(--color-navy)', lineHeight: 1.3 }}>
                   {c.result}
                 </p>
-                <p className="mb-2 text-sm" style={{ color: 'var(--color-warm-gray-dark)', lineHeight: 1.6 }}>{c.detail}</p>
-                <p style={{ fontSize: '11.5px', color: 'var(--color-warm-gray-light)' }}>{c.client}</p>
+                <p className="mb-2.5 text-sm" style={{ color: 'var(--color-warm-gray-dark)', lineHeight: 1.6 }}>{c.detail}</p>
+                <p
+                  className="uppercase"
+                  style={{
+                    fontFamily: 'var(--font-syne)',
+                    fontSize: '10px',
+                    fontWeight: 600,
+                    letterSpacing: '0.14em',
+                    color: 'var(--color-warm-gray)',
+                  }}
+                >
+                  {c.client}
+                </p>
               </div>
             ))}
           </div>
 
           <a
-            href="https://maps.app.goo.gl/gvJ4MmpuShUocGB3A"
+            href={GOOGLE_REVIEWS}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-8 text-sm font-semibold transition-opacity hover:opacity-70"
-            style={{ color: 'var(--color-navy)' }}
+            className="inline-flex items-center gap-2.5 mt-8 text-sm font-semibold px-6 py-3.5 transition-all duration-200 hover:opacity-80"
+            style={{ color: 'var(--color-navy)', border: '1px solid var(--color-navy-25)', background: '#FFFFFF' }}
           >
-            <span style={{ fontFamily: 'var(--font-syne)', letterSpacing: '0.04em' }}>Read our reviews on Google</span>
+            <span aria-hidden style={{ color: 'var(--color-brand-gold)', fontSize: '15px' }}>&#9733;</span>
+            <span style={{ fontFamily: 'var(--font-syne)', letterSpacing: '0.03em' }}>Read our reviews on Google</span>
             <span aria-hidden style={{ color: 'var(--color-brand-gold)' }}>&#8599;</span>
           </a>
         </div>
       </section>
 
       {/* Neighborhoods */}
-      <section className="bg-off-white" style={{ padding: '26px 24px', borderTop: '1px solid var(--color-light-gray)' }}>
-        <div className="mx-auto flex flex-wrap items-baseline gap-x-5 gap-y-1.5" style={{ maxWidth: '860px' }}>
-          <span className="text-[11px] uppercase tracking-[0.18em] mr-1" style={{ color: 'var(--color-warm-gray)', fontFamily: 'var(--font-syne)', fontWeight: 600 }}>
-            On our routes now
-          </span>
-          {areas.map((a) => (
-            <span key={a} className="text-sm" style={{ color: 'var(--color-navy)' }}>{a}</span>
-          ))}
-          <span className="text-sm" style={{ color: 'var(--color-warm-gray)' }}>+ Greater Boston</span>
+      <section className="grain bg-navy" style={{ padding: '36px 24px' }}>
+        <div className="mx-auto" style={{ maxWidth: '860px' }}>
+          <p
+            className="text-[11px] uppercase tracking-[0.18em] mb-4"
+            style={{ color: 'var(--color-brand-gold)', fontFamily: 'var(--font-syne)', fontWeight: 600 }}
+          >
+            Crews on the ground every morning in
+          </p>
+          <div className="flex flex-wrap" style={{ gap: '8px' }}>
+            {areas.map((a) => (
+              <span
+                key={a}
+                className="text-sm px-3.5 py-1.5"
+                style={{ color: 'var(--color-white-90)', border: '1px solid var(--color-white-15)' }}
+              >
+                {a}
+              </span>
+            ))}
+            <span className="text-sm px-3.5 py-1.5" style={{ color: 'var(--color-white-40)' }}>
+              + Greater Boston
+            </span>
+          </div>
         </div>
       </section>
 
@@ -418,9 +483,11 @@ export default function CondosPage(): JSX.Element {
           >
             Tell us about your building. We&apos;ll take it from there.
           </h2>
-          <p className="text-sm mb-9" style={{ color: 'var(--color-white-60)', lineHeight: 1.65 }}>
-            Name and a way to reach you is enough. A real person answers, usually the same day,
-            in English or Portuguese.
+          <p className="text-sm mb-2" style={{ color: 'var(--color-white-60)', lineHeight: 1.65 }}>
+            Name and a way to reach you is enough. A real person answers, usually the same day.
+          </p>
+          <p className="text-sm mb-9" style={{ color: 'var(--color-white-40)', lineHeight: 1.65 }}>
+            Falamos portugu&ecirc;s, including with your building&apos;s staff.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             {goldBtn}
@@ -435,7 +502,38 @@ export default function CondosPage(): JSX.Element {
         </div>
       </section>
 
-      <Footer />
+      {/* Footer (page-local: no newsletter, no links to unbuilt pages) */}
+      <footer className="bg-navy px-6" style={{ borderTop: '1px solid var(--color-white-10)', padding: '36px 24px 44px' }}>
+        <div className="mx-auto flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8" style={{ maxWidth: '860px' }}>
+          <div>
+            <div className="mb-3"><Wordmark /></div>
+            <p className="text-sm mb-1" style={{ color: 'var(--color-white-40)' }}>Greater Boston &amp; surrounding areas</p>
+            <a href="tel:7816867189" className="text-sm block transition-colors hover:text-white" style={{ color: 'var(--color-white-40)' }}>
+              781-686-7189
+            </a>
+            <a href="mailto:info@brazusa.com" className="text-sm block transition-colors hover:text-white" style={{ color: 'var(--color-white-40)' }}>
+              info@brazusa.com
+            </a>
+          </div>
+          <div className="flex flex-col sm:items-end gap-2">
+            <a
+              href={GOOGLE_REVIEWS}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm transition-colors hover:text-white"
+              style={{ color: 'var(--color-white-40)' }}
+            >
+              Reviews on Google &#8599;
+            </a>
+            <a href="/" className="text-sm transition-colors hover:text-white" style={{ color: 'var(--color-white-40)' }}>
+              Full site &#8599;
+            </a>
+            <p className="text-xs mt-2" style={{ color: 'var(--color-white-30, rgba(255,255,255,0.3))' }}>
+              &copy; {new Date().getFullYear()} Brazusa Cleaning. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
 
       <QuoteDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} defaultSpaceType="property" />
       <ScrollToTop drawerOpen={drawerOpen} />

@@ -54,3 +54,4 @@ tsconfig.tsbuildinfo
 *.mp4
 .ops-payroll-dev.json
 gilselia/
+tactics/
